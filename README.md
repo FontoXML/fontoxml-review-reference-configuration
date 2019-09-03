@@ -1,5 +1,10 @@
 # Review Reference Configuration
 
+## Notice
+
+We offer this repository to get you started with Fonto Review. We do not accept PRs on this repository right now.
+Contact your Fonto Support agent for feature requests and/or bug reports.
+
 ## Understanding the review (fontoxml-feedback) customization options
 
 Customizing the `fontoxml-feedback` addon is done by making a custom editor application package like 
