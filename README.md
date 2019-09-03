@@ -657,3 +657,7 @@ only makes sense if the content can be edited (only if the `productContext === '
 
 Conversely, you could use UI that is only relevant for the new "review" product context and 
 conditionally render that in a similar manner.
+
+## Support & Contributions
+
+The contents of this package is provides as is. Feel free to fork and use it as is or tailor it to your specific needs. Fonto maintains the code within this repository. With each release of the Fonto Review product a new version may be pushed to this repository. We don't have a formal process to accept PRs just yet, therefore we recommend to reach out to us via `team[at]fontoxml[dot]com`.
