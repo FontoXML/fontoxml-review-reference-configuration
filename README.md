@@ -1,9 +1,25 @@
 # Review Reference Configuration
 
-## Notice
+# Notice
 
 We offer this repository to get you started with Fonto Review. We do not accept PRs on this repository right now.
 Contact your Fonto Support agent for feature requests and/or bug reports.
+
+# Table of contents
+
+- [Understanding the review (fontoxml-feedback) customization options](#understanding-the-review-fontoxml-feedback-customization-options)
+- [(API 1) Adding new types of review annotations with registerReviewAnnotation](#api-1-adding-new-types-of-review-annotations-with-registerreviewannotation)
+	- [Creating your own CardContentComponent](#creating-your-own-cardcontentcomponent)
+	- [Props for the reviewAnnotation object](#props-for-the-reviewannotation-object)
+	- [Props for the reply objects (inside `reviewAnnotation.replies`)](#props-for-the-reply-objects-inside-reviewannotationreplies)
+- [(API 2) Customizing the filters](#api-2-customizing-the-filters)
+	- [Customize the filter logic used by FDT (and its dev-cms)](#customize-the-filter-logic-used-by-fdt-and-its-dev-cms)
+	- [FilterFormComponent](#filterformcomponent)
+	- [FilterFormSummaryComponent](#filterformsummarycomponent)
+	- [Setting the initial values for your custom FilterForm.](#setting-the-initial-values-for-your-custom-filterform)
+- [(API 3) Using InsertReviewAnnotationDropButton in your editor](#using-insertreviewannotationdropbutton-in-your-editor)
+- [(API 4) Customizing the masthead on the /review route with MastheadComponent](#api-4-customizing-the-masthead-on-the-review-route-with-mastheadcomponent)
+- [(API 5) Using a custom SheetFrameHeader component on the /review route.](#api-5-using-a-custom-sheetframeheader-component-on-the-review-route)
 
 ## Understanding the review (fontoxml-feedback) customization options
 
@@ -627,7 +643,7 @@ This package provides an example that initializes the filter to only show unreso
 This works together with the example FilterForm(Summary) and example reviewAnnotationFilter.  
 You can`import setInitialFilterFormValues from 'fontoxml-feedback/src/setInitialFilterFormValues.js'`.
 
-### Using InsertReviewAnnotationDropButton in your editor
+### (API 3) Using InsertReviewAnnotationDropButton in your editor
   
 InsertReviewAnnotationDropButton is a React component that uses FDS/Fx to create a Button which
 opens a Drop with MenuItems in it to create an annotation of each of the registered annotation types 
