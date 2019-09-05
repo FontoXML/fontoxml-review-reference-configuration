@@ -538,6 +538,10 @@ A mapping of a form component id/name to its current feedback or null.
 This starts out as an empty object and will be filled after onInitialize is called and change 
 whenever onFieldChange is called. (see below)
 
+- `isDisabled {boolean}`  
+This is true while an annotation is loading/processing a data call or when an annotation has a 
+non-idle busyState, eg. the edit or reply form is opened.
+
 - `isSubmitting {boolean}`  
 This is true when the filter form is being submitted, use this do display a loading/submitting state.
 

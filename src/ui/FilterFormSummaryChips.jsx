@@ -11,6 +11,9 @@ function FilterFormSummaryChips({
 	error,
 	// The filter form cannot accept any invalid input, so it is not used by the summary either.
 	feedbackByName: _feedbackByName,
+	// This is true while an annotation is loading/processing a data call or when an annotation
+	// has a non-idle busyState, eg. the edit or reply form is opened.
+	isDisabled,
 	// This is true while the /review/state endpoint is called (whenever onChange is
 	// called while the filter form is not visible).
 	// If the filter form is visible, the filter form header already handles and displays the
@@ -67,7 +70,7 @@ function FilterFormSummaryChips({
 
 					{valueByName.typeCommentTechnical && (
 						<Chip
-							isDisabled={isSubmitting}
+							isDisabled={isDisabled || isSubmitting}
 							label={t('Technical')}
 							tooltipContent={t('Only show technical comments.')}
 							onRemove={() =>
@@ -82,7 +85,7 @@ function FilterFormSummaryChips({
 					)}
 					{valueByName.typeCommentGeneral && (
 						<Chip
-							isDisabled={isSubmitting}
+							isDisabled={isDisabled || isSubmitting}
 							label={t('General')}
 							tooltipContent={t('Only show general comments.')}
 							onRemove={() =>
@@ -97,7 +100,7 @@ function FilterFormSummaryChips({
 					)}
 					{valueByName.typeCommentEditorial && (
 						<Chip
-							isDisabled={isSubmitting}
+							isDisabled={isDisabled || isSubmitting}
 							label={t('Editorial')}
 							tooltipContent={t('Only show editorial comments.')}
 							onRemove={() =>
@@ -112,7 +115,7 @@ function FilterFormSummaryChips({
 					)}
 					{valueByName.typeProposal && (
 						<Chip
-							isDisabled={isSubmitting}
+							isDisabled={isDisabled || isSubmitting}
 							label={t('Proposal')}
 							tooltipContent={t('Only show proposals.')}
 							onRemove={() => onChange({ ...valueByName, typeProposal: null })}
@@ -130,7 +133,7 @@ function FilterFormSummaryChips({
 
 					{valueByName.resolutionResolvedAccepted && (
 						<Chip
-							isDisabled={isSubmitting}
+							isDisabled={isDisabled || isSubmitting}
 							label={t('Accepted')}
 							tooltipContent={t('Only show resolved and accepted feedback.')}
 							onRemove={() =>
@@ -145,7 +148,7 @@ function FilterFormSummaryChips({
 					)}
 					{valueByName.resolutionResolvedRejected && (
 						<Chip
-							isDisabled={isSubmitting}
+							isDisabled={isDisabled || isSubmitting}
 							label={t('Rejected')}
 							tooltipContent={t('Only show resolved and rejected feedback.')}
 							onRemove={() =>
@@ -160,7 +163,7 @@ function FilterFormSummaryChips({
 					)}
 					{valueByName.resolutionUnresolved && (
 						<Chip
-							isDisabled={isSubmitting}
+							isDisabled={isDisabled || isSubmitting}
 							label={t('Unresolved')}
 							tooltipContent={t('Only show unresolved feedback.')}
 							onRemove={() =>
