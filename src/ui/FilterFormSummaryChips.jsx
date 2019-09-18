@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Block, Chip, ChipGroup, Flex, Icon, Label, Text } from 'fds/components';
+import { Block, Chip, ChipGroup, Flex, Icon, Label } from 'fds/components';
 
 import t from 'fontoxml-localization/src/t.js';
 
@@ -30,29 +30,10 @@ function FilterFormSummaryChips({
 	// This contains the exact value by name mapping used by the filter form for the current context.
 	valueByName
 }) {
-	const hasAnyValue =
-		valueByName.typeCommentTechnical ||
-		valueByName.typeCommentGeneral ||
-		valueByName.typeCommentEditorial ||
-		valueByName.typeProposal ||
-		valueByName.resolutionResolvedAccepted ||
-		valueByName.resolutionResolvedRejected ||
-		valueByName.resolutionUnresolved;
-	// No filter chosen (no value is set) and no error and not submitting, nothing to summarize;
-	if (!hasAnyValue && !error && !isSubmitting) {
-		// so nothing to render.
-		return null;
-	}
-
 	return (
 		<Block flex="none" paddingSize={{ top: 's', bottom: 'm' }}>
-			{error && !isSubmitting && (
-				<Text colorName="text-error-color">
-					{t('Something went wrong while updating the filter.')}
-				</Text>
-			)}
+			{!error && !isSubmitting && <Label isBold>{t('Filtered by:')}</Label>}
 
-			{hasAnyValue && !isSubmitting && <Label isBold>{t('Filtered by:')}</Label>}
 			{isSubmitting && (
 				<Flex spaceSize="s">
 					<Icon icon="spinner" colorName="icon-s-info-color" />
@@ -61,119 +42,133 @@ function FilterFormSummaryChips({
 				</Flex>
 			)}
 
-			{(valueByName.typeCommentTechnical ||
-				valueByName.typeCommentGeneral ||
-				valueByName.typeCommentEditorial ||
-				valueByName.typeProposal) && (
-				<ChipGroup>
-					<Label colorName="text-muted-color">{t('Type(s)')}</Label>
-
-					{valueByName.typeCommentTechnical && (
-						<Chip
-							isDisabled={isDisabled || isSubmitting}
-							label={t('Technical')}
-							tooltipContent={t('Only show technical comments.')}
-							onRemove={() =>
-								onChange({
-									...valueByName,
-									typeComment: null,
-									typeCommentTechnical: null
-								})
-							}
-							useHoverStyles={false}
-						/>
-					)}
-					{valueByName.typeCommentGeneral && (
-						<Chip
-							isDisabled={isDisabled || isSubmitting}
-							label={t('General')}
-							tooltipContent={t('Only show general comments.')}
-							onRemove={() =>
-								onChange({
-									...valueByName,
-									typeComment: null,
-									typeCommentGeneral: null
-								})
-							}
-							useHoverStyles={false}
-						/>
-					)}
-					{valueByName.typeCommentEditorial && (
-						<Chip
-							isDisabled={isDisabled || isSubmitting}
-							label={t('Editorial')}
-							tooltipContent={t('Only show editorial comments.')}
-							onRemove={() =>
-								onChange({
-									...valueByName,
-									typeComment: null,
-									typeCommentEditorial: null
-								})
-							}
-							useHoverStyles={false}
-						/>
-					)}
-					{valueByName.typeProposal && (
-						<Chip
-							isDisabled={isDisabled || isSubmitting}
-							label={t('Proposal')}
-							tooltipContent={t('Only show proposals.')}
-							onRemove={() => onChange({ ...valueByName, typeProposal: null })}
-							useHoverStyles={false}
-						/>
-					)}
-				</ChipGroup>
+			{error && !isSubmitting && (
+				<Label colorName="text-error-color" isBold>
+					{t('Something went wrong while updating the filter.')}
+				</Label>
 			)}
 
-			{(valueByName.resolutionResolvedAccepted ||
-				valueByName.resolutionResolvedRejected ||
-				valueByName.resolutionUnresolved) && (
-				<ChipGroup>
-					<Label colorName="text-muted-color">{t('Resolution(s)')}</Label>
+			<ChipGroup>
+				<Label colorName="text-muted-color">{t('Type(s)')}</Label>
 
-					{valueByName.resolutionResolvedAccepted && (
+				{valueByName.typeCommentTechnical && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Technical')}
+						tooltipContent={t('Only show technical comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typeComment: null,
+								typeCommentTechnical: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.typeCommentGeneral && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('General')}
+						tooltipContent={t('Only show general comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typeComment: null,
+								typeCommentGeneral: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.typeCommentEditorial && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Editorial')}
+						tooltipContent={t('Only show editorial comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typeComment: null,
+								typeCommentEditorial: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.typeProposal && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Proposal')}
+						tooltipContent={t('Only show proposals.')}
+						onRemove={() => onChange({ ...valueByName, typeProposal: null })}
+						useHoverStyles={false}
+					/>
+				)}
+				{!valueByName.typeCommentTechnical &&
+					!valueByName.typeCommentGeneral &&
+					!valueByName.typeCommentEditorial &&
+					!valueByName.typeProposal && (
 						<Chip
-							isDisabled={isDisabled || isSubmitting}
-							label={t('Accepted')}
-							tooltipContent={t('Only show resolved and accepted feedback.')}
-							onRemove={() =>
-								onChange({
-									...valueByName,
-									resolutionResolved: null,
-									resolutionResolvedAccepted: null
-								})
-							}
-							useHoverStyles={false}
+							isDisabled
+							label={t('Any')}
+							tooltipContent={t('Show feedback of any type.')}
 						/>
 					)}
-					{valueByName.resolutionResolvedRejected && (
+			</ChipGroup>
+
+			<ChipGroup>
+				<Label colorName="text-muted-color">{t('Resolution(s)')}</Label>
+
+				{valueByName.resolutionResolvedAccepted && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Accepted')}
+						tooltipContent={t('Only show resolved and accepted feedback.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								resolutionResolved: null,
+								resolutionResolvedAccepted: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.resolutionResolvedRejected && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Rejected')}
+						tooltipContent={t('Only show resolved and rejected feedback.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								resolutionResolved: null,
+								resolutionResolvedRejected: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.resolutionUnresolved && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Unresolved')}
+						tooltipContent={t('Only show unresolved feedback.')}
+						onRemove={() => onChange({ ...valueByName, resolutionUnresolved: null })}
+						useHoverStyles={false}
+					/>
+				)}
+				{!valueByName.resolutionResolvedAccepted &&
+					!valueByName.resolutionResolvedRejected &&
+					!valueByName.resolutionUnresolved && (
 						<Chip
-							isDisabled={isDisabled || isSubmitting}
-							label={t('Rejected')}
-							tooltipContent={t('Only show resolved and rejected feedback.')}
-							onRemove={() =>
-								onChange({
-									...valueByName,
-									resolutionResolved: null,
-									resolutionResolvedRejected: null
-								})
-							}
-							useHoverStyles={false}
+							isDisabled
+							label={t('Any')}
+							tooltipContent={t('Show feedback with any resolution.')}
 						/>
 					)}
-					{valueByName.resolutionUnresolved && (
-						<Chip
-							isDisabled={isDisabled || isSubmitting}
-							label={t('Unresolved')}
-							tooltipContent={t('Only show unresolved feedback.')}
-							onRemove={() =>
-								onChange({ ...valueByName, resolutionUnresolved: null })
-							}
-							useHoverStyles={false}
-						/>
-					)}
-				</ChipGroup>
-			)}
+			</ChipGroup>
 		</Block>
 	);
 }
