@@ -176,6 +176,7 @@ function ProposalCardContent({
 									<Label isBold>Proposed change</Label>
 
 									<Diff
+										isSingleLine={!reviewAnnotation.isSelected}
 										originalValue={reviewAnnotation.originalText}
 										value={reviewAnnotation.metadata.proposedChange}
 									/>
