@@ -37,6 +37,13 @@ export default function CardHeader({
 	showRemoveButton
 }) {
 	const authorAndTimestampLabel = useAuthorAndTimestampLabel(reviewAnnotation);
+	// We split the combined label into separate parts so we only truncated the author name and not
+	// the timestamp label if the horizontal space is limited.
+	// The ' – ' part contains a special "en-dash" symbol: –, which is slightly different than a
+	// regular dash: -. This means it will be very unlikely that ' – ' is occuring within the
+	// author name; "hyphenated names" such as Jan-Willem all use normal dashes (and don't even use
+	// spaces around the dash).
+	const [authorLabel, timestampLabel] = authorAndTimestampLabel.split(' – ');
 
 	const showPopoverButton = useMemo(() => {
 		if (
@@ -62,8 +69,16 @@ export default function CardHeader({
 	]);
 
 	return (
-		<Flex alignItems="center" justifyContent="space-between">
-			<Label colorName="text-muted-color">{authorAndTimestampLabel}</Label>
+		<Flex alignItems="center" justifyContent="space-between" spaceSize="m">
+			<Flex spaceSize="s">
+				<Label colorName="text-muted-color" tooltipContent={authorLabel}>
+					{authorLabel}
+				</Label>
+				<Flex flex="none" spaceSize="s">
+					<Label colorName="text-muted-color">–</Label>
+					<Label colorName="text-muted-color">{timestampLabel}</Label>
+				</Flex>
+			</Flex>
 
 			{(context === ContextType.EDITOR_SHARING_SIDEBAR ||
 				context === ContextType.REVIEW_SHARING_SIDEBAR) &&
@@ -80,7 +95,7 @@ export default function CardHeader({
 
 			{context !== ContextType.EDITOR_SHARING_SIDEBAR &&
 				context !== ContextType.REVIEW_SHARING_SIDEBAR && (
-					<Flex spaceSize="m">
+					<Flex flex="none" spaceSize="m">
 						{reviewAnnotation.targetFoundForRevision === false && (
 							<Icon colorName="text-warning-color" icon="flag" />
 						)}
