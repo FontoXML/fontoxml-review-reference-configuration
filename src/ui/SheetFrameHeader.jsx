@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import documentStateType from 'fontoxml-remote-documents/src/documentStateType.js';
 import useRemoteDocumentState from 'fontoxml-remote-documents/src/useRemoteDocumentState.js';
 
 import FxDocumentContextualOperationsWidget from 'fontoxml-fx/src/FxDocumentContextualOperationsWidget.jsx';
@@ -14,7 +15,7 @@ import FxSheetFrameHeaderDocumentStateLabel from 'fontoxml-fx/src/FxSheetFrameHe
 import FxSheetFrameHeaderInfoArea from 'fontoxml-fx/src/FxSheetFrameHeaderInfoArea.jsx';
 import FxSheetFrameHeaderLockArea from 'fontoxml-fx/src/FxSheetFrameHeaderLockArea.jsx';
 
-import { Flex, Label } from 'fds/components';
+import { Flex } from 'fds/components';
 
 // Note: all props are set automatically by the SDK, This component is not rendered manually.
 function SheetFrameHeader({
@@ -40,10 +41,24 @@ function SheetFrameHeader({
 			<FxSheetFrameHeaderInfoArea productContext={productContext}>
 				<FxDocumentMarkupLabel>{markupLabel}</FxDocumentMarkupLabel>
 
-				<FxSheetFrameHeaderDocumentStateLabel
-					documentId={documentId}
-					remoteDocumentState={remoteDocumentState}
-				/>
+				{productContext === 'editor' ? (
+					// In the editor product, always show all document states
+					<FxSheetFrameHeaderDocumentStateLabel
+						documentId={documentId}
+						remoteDocumentState={remoteDocumentState}
+					/>
+				) : remoteDocumentState.type === documentStateType.DOCUMENT_DIRTY_AND_OUT_OF_SYNC ||
+				  remoteDocumentState.type === documentStateType.DOCUMENT_OUT_OF_SYNC ||
+				  remoteDocumentState.type ===
+						documentStateType.LOCK_UNAVAILABLE_AND_OUT_OF_SYNC ? (
+					// On review product, only show out of sync states, lock state is not needed.
+					<FxSheetFrameHeaderDocumentStateLabel
+						documentId={documentId}
+						remoteDocumentState={remoteDocumentState}
+					/>
+				) : (
+					<Flex />
+				)}
 			</FxSheetFrameHeaderInfoArea>
 
 			<FxSheetFrameHeaderActionArea productContext={productContext}>
