@@ -74,10 +74,13 @@ export default function CardHeader({
 				<Label colorName="text-muted-color" tooltipContent={authorLabel}>
 					{authorLabel}
 				</Label>
-				<Flex flex="none" spaceSize="s">
-					<Label colorName="text-muted-color">–</Label>
-					<Label colorName="text-muted-color">{timestampLabel}</Label>
-				</Flex>
+
+				{timestampLabel && (
+					<Flex flex="none" spaceSize="s">
+						<Label colorName="text-muted-color">–</Label>
+						<Label colorName="text-muted-color">{timestampLabel}</Label>
+					</Flex>
+				)}
 			</Flex>
 
 			{(context === ContextType.EDITOR_SHARING_SIDEBAR ||
