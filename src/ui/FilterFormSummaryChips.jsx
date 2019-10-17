@@ -96,6 +96,99 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
+
+				{valueByName.typePublicationCommentTechnical && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Publication: Technical')}
+						tooltipContent={t('Only show technical publication comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typePublicationComment: null,
+								typePublicationCommentTechnical: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.typePublicationCommentGeneral && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Publication: General')}
+						tooltipContent={t('Only show general publication comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typePublicationComment: null,
+								typePublicationCommentGeneral: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.typePublicationCommentEditorial && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Publication: Editorial')}
+						tooltipContent={t('Only show editorial publication comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typePublicationComment: null,
+								typePublicationCommentEditorial: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+
+				{valueByName.typeObjectCommentTechnical && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Object: Technical')}
+						tooltipContent={t('Only show technical object comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typeObjectComment: null,
+								typeObjectCommentTechnical: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.typeObjectCommentGeneral && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Object: General')}
+						tooltipContent={t('Only show general object comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typeObjectComment: null,
+								typeObjectCommentGeneral: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+				{valueByName.typeObjectCommentEditorial && (
+					<Chip
+						isDisabled={isDisabled || isSubmitting}
+						label={t('Object: Editorial')}
+						tooltipContent={t('Only show editorial object comments.')}
+						onRemove={() =>
+							onChange({
+								...valueByName,
+								typeObjectComment: null,
+								typeObjectCommentEditorial: null
+							})
+						}
+						useHoverStyles={false}
+					/>
+				)}
+
 				{valueByName.typeProposal && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
@@ -108,6 +201,12 @@ function FilterFormSummaryChips({
 				{!valueByName.typeCommentTechnical &&
 					!valueByName.typeCommentGeneral &&
 					!valueByName.typeCommentEditorial &&
+					!valueByName.typePublicationCommentTechnical &&
+					!valueByName.typePublicationCommentGeneral &&
+					!valueByName.typePublicationCommentEditorial &&
+					!valueByName.typeObjectCommentTechnical &&
+					!valueByName.typeObjectCommentGeneral &&
+					!valueByName.typeObjectCommentEditorial &&
 					!valueByName.typeProposal && (
 						<Chip
 							isDisabled

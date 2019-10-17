@@ -40,39 +40,17 @@ Its biggest limitation is that it requires a lock on the document before being a
 annotation in the document.  
 Nor does it provide a dedicated review app under the /review route as this addon does.
 
-### (API 1) Adding new types of review annotations with registerReviewAnnotation
+### (API 1) Adding new types of review annotations with register*ReviewAnnotationType
 
-You can add new types of annotations through the `registerReviewAnnotationType()` function provided by 
-the fontoxml-feedback addon at `fontoxml-feedback/src/registerReviewAnnotationType.js`.
+You can add new types of annotations through the different registration methods.  
+The fontoxml-feedback add-on provides the following functions:
 
-You can call this function inside an `install.js` of your editor application package. You can call
-this function as many times as you like; once for each annotation type you want to register.
+- `fontoxml-feedback/src/registerObjectReviewAnnotationType.js`.
+- `fontoxml-feedback/src/registerPublicationReviewAnnotationType.js`.
+- `fontoxml-feedback/src/registerTextRangeReviewAnnotationType.js`.
 
-The function accepts an `id` and a `reviewAnnotationType` parameter object with several properties:
-
-- `id {string}`  
-The identifier, has to be unique for each annotation type.  
-This is also used as the value for `type` on a specific annotation (which is useful when customizing 
-the filter UI and logic and to distinguish it on the backend).
-
-- `reviewAnnotationType.icon {string}`  
-The icon for this type of annotation.
-
-- `reviewAnnotationType.label {string}`  
-The human readable name of this type of annotation.  
-The icon and label are used in the context menu shown when highlighting something in the 
-content-view on the /review route, and in the `InsertReviewAnnotationDropButton` component.  
-Which can be used inside your custom masthead on the /editor route (or anywhere else you like).
-
-- `reviewAnnotationType.priority {number}`  
-This determines the order of context menu and insert comment drop menu items.  
-A higher priority means it is displayed first (on the left or on top).
-
-- `reviewAnnotationType.CardContentComponent {React.Component}`  
-A component (definition) that will be rendered inside a `Card` for every annotation currently 
-visible, depending on the current filter. It is used on both the editor sidebar and the /review 
-route.  
-See the chapter below and the source code of this package for more information.
+You can call these functions inside an `install.js` of your editor application package. You can call
+these functions as many times as you like; once for each annotation type you want to register.
 
 #### Creating your own CardContentComponent
 

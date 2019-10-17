@@ -16,10 +16,20 @@ import t from 'fontoxml-localization/src/t.js';
 // These are used by the custom logic to create a dependency between outer and inner checkboxes.
 // That is not something FDS currently has out-of-the-box and something we wanted to experiment with
 // here, feel free to ignore this.
+const typePublicationCommentSubFieldNames = [
+	'typePublicationCommentTechnical',
+	'typePublicationCommentGeneral',
+	'typePublicationCommentEditorial'
+];
 const typeCommentSubFieldNames = [
 	'typeCommentTechnical',
 	'typeCommentGeneral',
 	'typeCommentEditorial'
+];
+const typeObjectCommentSubFieldNames = [
+	'typeObjectCommentTechnical',
+	'typeObjectCommentGeneral',
+	'typeObjectCommentEditorial'
 ];
 const resolutionResolvedSubFieldNames = [
 	'resolutionResolvedAccepted',
@@ -79,6 +89,42 @@ function FilterForm({
 			) {
 				onFieldChange({ name: 'typeComment', value, feedback: null });
 			}
+		} else if (typeFieldName === 'typePublicationComment') {
+			typePublicationCommentSubFieldNames.forEach(subFieldName => {
+				if (valueByName[subFieldName] !== value) {
+					onFieldChange({ name: subFieldName, value, feedback: null });
+				}
+			});
+		} else if (typePublicationCommentSubFieldNames.includes(typeFieldName)) {
+			const otherTypePublicationCommentSubFieldNames = typePublicationCommentSubFieldNames.filter(
+				subFieldName => subFieldName !== typeFieldName
+			);
+			if (
+				!value ||
+				otherTypePublicationCommentSubFieldNames.every(
+					subFieldName => valueByName[subFieldName] === value
+				)
+			) {
+				onFieldChange({ name: 'typePublicationComment', value, feedback: null });
+			}
+		} else if (typeFieldName === 'typeObjectComment') {
+			typeObjectCommentSubFieldNames.forEach(subFieldName => {
+				if (valueByName[subFieldName] !== value) {
+					onFieldChange({ name: subFieldName, value, feedback: null });
+				}
+			});
+		} else if (typeObjectCommentSubFieldNames.includes(typeFieldName)) {
+			const otherTypeObjectCommentSubFieldNames = typeObjectCommentSubFieldNames.filter(
+				subFieldName => subFieldName !== typeFieldName
+			);
+			if (
+				!value ||
+				otherTypeObjectCommentSubFieldNames.every(
+					subFieldName => valueByName[subFieldName] === value
+				)
+			) {
+				onFieldChange({ name: 'typeObjectComment', value, feedback: null });
+			}
 		}
 
 		onFieldChange({ name: typeFieldName, value, feedback: null });
@@ -115,33 +161,122 @@ function FilterForm({
 						{t('Type(s)')}
 					</Label>
 
-					<Checkbox
-						label={t('Comment')}
-						onChange={value => handleTypeFieldChange('typeComment', value)}
-						value={valueByName.typeComment}
-					/>
-					<Block applyCss={{ paddingLeft: '22px' }}>
+					<Block spaceVerticalSize="m">
+						<Block>
+							<Checkbox
+								label={t('Comment')}
+								onChange={value => handleTypeFieldChange('typeComment', value)}
+								value={valueByName.typeComment}
+							/>
+
+							<Block applyCss={{ paddingLeft: '22px' }}>
+								<Checkbox
+									label={t('Technical')}
+									onChange={value =>
+										handleTypeFieldChange('typeCommentTechnical', value)
+									}
+									value={valueByName.typeCommentTechnical}
+								/>
+								<Checkbox
+									label={t('General')}
+									onChange={value =>
+										handleTypeFieldChange('typeCommentGeneral', value)
+									}
+									value={valueByName.typeCommentGeneral}
+								/>
+								<Checkbox
+									label={t('Editorial')}
+									onChange={value =>
+										handleTypeFieldChange('typeCommentEditorial', value)
+									}
+									value={valueByName.typeCommentEditorial}
+								/>
+							</Block>
+						</Block>
+
+						<Block>
+							<Checkbox
+								label={t('Object Comment')}
+								onChange={value =>
+									handleTypeFieldChange('typeObjectComment', value)
+								}
+								value={valueByName.typeObjectComment}
+							/>
+
+							<Block applyCss={{ paddingLeft: '22px' }}>
+								<Checkbox
+									label={t('Technical')}
+									onChange={value =>
+										handleTypeFieldChange('typeObjectCommentTechnical', value)
+									}
+									value={valueByName.typeObjectCommentTechnical}
+								/>
+								<Checkbox
+									label={t('General')}
+									onChange={value =>
+										handleTypeFieldChange('typeObjectCommentGeneral', value)
+									}
+									value={valueByName.typeObjectCommentGeneral}
+								/>
+								<Checkbox
+									label={t('Editorial')}
+									onChange={value =>
+										handleTypeFieldChange('typeObjectCommentEditorial', value)
+									}
+									value={valueByName.typeObjectCommentEditorial}
+								/>
+							</Block>
+						</Block>
+
+						<Block>
+							<Checkbox
+								label={t('Publication Comment')}
+								onChange={value =>
+									handleTypeFieldChange('typePublicationComment', value)
+								}
+								value={valueByName.typePublicationComment}
+							/>
+
+							<Block applyCss={{ paddingLeft: '22px' }}>
+								<Checkbox
+									label={t('Technical')}
+									onChange={value =>
+										handleTypeFieldChange(
+											'typePublicationCommentTechnical',
+											value
+										)
+									}
+									value={valueByName.typePublicationCommentTechnical}
+								/>
+								<Checkbox
+									label={t('General')}
+									onChange={value =>
+										handleTypeFieldChange(
+											'typePublicationCommentGeneral',
+											value
+										)
+									}
+									value={valueByName.typePublicationCommentGeneral}
+								/>
+								<Checkbox
+									label={t('Editorial')}
+									onChange={value =>
+										handleTypeFieldChange(
+											'typePublicationCommentEditorial',
+											value
+										)
+									}
+									value={valueByName.typePublicationCommentEditorial}
+								/>
+							</Block>
+						</Block>
+
 						<Checkbox
-							label={t('Technical')}
-							onChange={value => handleTypeFieldChange('typeCommentTechnical', value)}
-							value={valueByName.typeCommentTechnical}
-						/>
-						<Checkbox
-							label={t('General')}
-							onChange={value => handleTypeFieldChange('typeCommentGeneral', value)}
-							value={valueByName.typeCommentGeneral}
-						/>
-						<Checkbox
-							label={t('Editorial')}
-							onChange={value => handleTypeFieldChange('typeCommentEditorial', value)}
-							value={valueByName.typeCommentEditorial}
+							label={t('Proposal')}
+							onChange={value => handleTypeFieldChange('typeProposal', value)}
+							value={valueByName.typeProposal}
 						/>
 					</Block>
-					<Checkbox
-						label={t('Proposal')}
-						onChange={value => handleTypeFieldChange('typeProposal', value)}
-						value={valueByName.typeProposal}
-					/>
 				</Block>
 
 				<Block flex="1">
@@ -149,34 +284,49 @@ function FilterForm({
 						{t('Resolution(s)')}
 					</Label>
 
-					<Checkbox
-						label={t('Resolved')}
-						onChange={value => handleResolutionFieldChange('resolutionResolved', value)}
-						value={valueByName.resolutionResolved}
-					/>
-					<Block applyCss={{ paddingLeft: '22px' }}>
+					<Block spaceVerticalSize="m">
+						<Block>
+							<Checkbox
+								label={t('Resolved')}
+								onChange={value =>
+									handleResolutionFieldChange('resolutionResolved', value)
+								}
+								value={valueByName.resolutionResolved}
+							/>
+
+							<Block applyCss={{ paddingLeft: '22px' }}>
+								<Checkbox
+									label={t('Accepted')}
+									onChange={value =>
+										handleResolutionFieldChange(
+											'resolutionResolvedAccepted',
+											value
+										)
+									}
+									value={valueByName.resolutionResolvedAccepted}
+								/>
+
+								<Checkbox
+									label={t('Rejected')}
+									onChange={value =>
+										handleResolutionFieldChange(
+											'resolutionResolvedRejected',
+											value
+										)
+									}
+									value={valueByName.resolutionResolvedRejected}
+								/>
+							</Block>
+						</Block>
+
 						<Checkbox
-							label={t('Accepted')}
+							label={t('Unresolved')}
 							onChange={value =>
-								handleResolutionFieldChange('resolutionResolvedAccepted', value)
+								handleResolutionFieldChange('resolutionUnresolved', value)
 							}
-							value={valueByName.resolutionResolvedAccepted}
-						/>
-						<Checkbox
-							label={t('Rejected')}
-							onChange={value =>
-								handleResolutionFieldChange('resolutionResolvedRejected', value)
-							}
-							value={valueByName.resolutionResolvedRejected}
+							value={valueByName.resolutionUnresolved}
 						/>
 					</Block>
-					<Checkbox
-						label={t('Unresolved')}
-						onChange={value =>
-							handleResolutionFieldChange('resolutionUnresolved', value)
-						}
-						value={valueByName.resolutionUnresolved}
-					/>
 				</Block>
 			</Flex>
 		</Block>
