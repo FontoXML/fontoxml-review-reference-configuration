@@ -17,22 +17,8 @@ import SheetFrameHeader from './ui/SheetFrameHeader.jsx';
 export default function install() {
 	registerTextRangeReviewAnnotationType('comment', {
 		icon: 'comment',
-		label: 'Add comment',
+		label: 'Comment',
 		priority: 3,
-		CardContentComponent: CommentCardContent
-	});
-
-	registerTextRangeReviewAnnotationType('proposal', {
-		icon: 'pencil-square-o',
-		label: 'Add proposal',
-		priority: 2,
-		CardContentComponent: ProposalCardContent
-	});
-
-	registerPublicationReviewAnnotationType('publication-comment', {
-		icon: 'files-o',
-		label: 'Add publication comment',
-		priority: 1,
 		CardContentComponent: CommentCardContent
 	});
 
@@ -45,7 +31,21 @@ export default function install() {
 		// This together leads to a single "Add comment" option that works for text ranges and
 		// objects.
 		icon: 'comment',
-		label: 'Add comment',
+		label: 'Comment',
+		priority: 3,
+		CardContentComponent: CommentCardContent
+	});
+
+	registerTextRangeReviewAnnotationType('proposal', {
+		icon: 'pencil-square-o',
+		label: 'Proposal',
+		priority: 2,
+		CardContentComponent: ProposalCardContent
+	});
+
+	registerPublicationReviewAnnotationType('publication-comment', {
+		icon: 'files-o',
+		label: 'Global comment',
 		priority: 1,
 		CardContentComponent: CommentCardContent
 	});
