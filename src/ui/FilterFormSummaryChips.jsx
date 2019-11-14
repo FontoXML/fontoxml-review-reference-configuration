@@ -100,7 +100,7 @@ function FilterFormSummaryChips({
 				{valueByName.typePublicationCommentTechnical && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
-						label={t('Publication: Technical')}
+						label={t('Global: Technical')}
 						tooltipContent={t('Only show technical publication comments.')}
 						onRemove={() =>
 							onChange({
@@ -115,7 +115,7 @@ function FilterFormSummaryChips({
 				{valueByName.typePublicationCommentGeneral && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
-						label={t('Publication: General')}
+						label={t('Global: General')}
 						tooltipContent={t('Only show general publication comments.')}
 						onRemove={() =>
 							onChange({
@@ -130,59 +130,13 @@ function FilterFormSummaryChips({
 				{valueByName.typePublicationCommentEditorial && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
-						label={t('Publication: Editorial')}
+						label={t('Global: Editorial')}
 						tooltipContent={t('Only show editorial publication comments.')}
 						onRemove={() =>
 							onChange({
 								...valueByName,
 								typePublicationComment: null,
 								typePublicationCommentEditorial: null
-							})
-						}
-						useHoverStyles={false}
-					/>
-				)}
-
-				{valueByName.typeObjectCommentTechnical && (
-					<Chip
-						isDisabled={isDisabled || isSubmitting}
-						label={t('Object: Technical')}
-						tooltipContent={t('Only show technical object comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typeObjectComment: null,
-								typeObjectCommentTechnical: null
-							})
-						}
-						useHoverStyles={false}
-					/>
-				)}
-				{valueByName.typeObjectCommentGeneral && (
-					<Chip
-						isDisabled={isDisabled || isSubmitting}
-						label={t('Object: General')}
-						tooltipContent={t('Only show general object comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typeObjectComment: null,
-								typeObjectCommentGeneral: null
-							})
-						}
-						useHoverStyles={false}
-					/>
-				)}
-				{valueByName.typeObjectCommentEditorial && (
-					<Chip
-						isDisabled={isDisabled || isSubmitting}
-						label={t('Object: Editorial')}
-						tooltipContent={t('Only show editorial object comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typeObjectComment: null,
-								typeObjectCommentEditorial: null
 							})
 						}
 						useHoverStyles={false}
@@ -204,9 +158,6 @@ function FilterFormSummaryChips({
 					!valueByName.typePublicationCommentTechnical &&
 					!valueByName.typePublicationCommentGeneral &&
 					!valueByName.typePublicationCommentEditorial &&
-					!valueByName.typeObjectCommentTechnical &&
-					!valueByName.typeObjectCommentGeneral &&
-					!valueByName.typeObjectCommentEditorial &&
 					!valueByName.typeProposal && (
 						<Chip
 							isDisabled
