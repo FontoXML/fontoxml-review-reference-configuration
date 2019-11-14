@@ -1,7 +1,7 @@
 module.exports = function matchAnnotationToCurrentFilter(filterFormValueByName, annotation) {
 	// This function filters annotations on type AND resolution.
 
-	const isTypeComment = annotation.type === 'comment';
+	const isTypeComment = annotation.type === 'comment' || annotation.type === 'object-comment';
 	const isTypeCommentTechnical =
 		isTypeComment && annotation.metadata && annotation.metadata.commentType === 'technical';
 	const isTypeCommentGeneral =
@@ -20,18 +20,6 @@ module.exports = function matchAnnotationToCurrentFilter(filterFormValueByName, 
 		annotation.metadata.commentType === 'general';
 	const isTypePublicationCommentEditorial =
 		isTypePublicationComment &&
-		annotation.metadata &&
-		annotation.metadata.commentType === 'editorial';
-
-	const isTypeObjectComment = annotation.type === 'object-comment';
-	const isTypeObjectCommentTechnical =
-		isTypeObjectComment &&
-		annotation.metadata &&
-		annotation.metadata.commentType === 'technical';
-	const isTypeObjectCommentGeneral =
-		isTypeObjectComment && annotation.metadata && annotation.metadata.commentType === 'general';
-	const isTypeObjectCommentEditorial =
-		isTypeObjectComment &&
 		annotation.metadata &&
 		annotation.metadata.commentType === 'editorial';
 
@@ -61,11 +49,6 @@ module.exports = function matchAnnotationToCurrentFilter(filterFormValueByName, 
 		(filterFormValueByName.typePublicationCommentEditorial &&
 			isTypePublicationCommentEditorial) ||
 		//
-		(filterFormValueByName.typeObjectComment && isTypeObjectComment) ||
-		(filterFormValueByName.typeObjectCommentTechnical && isTypeObjectCommentTechnical) ||
-		(filterFormValueByName.typeObjectCommentGeneral && isTypeObjectCommentGeneral) ||
-		(filterFormValueByName.typeObjectCommentEditorial && isTypeObjectCommentEditorial) ||
-		//
 		(filterFormValueByName.typeProposal && isTypeProposal) ||
 		//
 		(!filterFormValueByName.typeComment &&
@@ -77,11 +60,6 @@ module.exports = function matchAnnotationToCurrentFilter(filterFormValueByName, 
 			!filterFormValueByName.typePublicationCommentTechnical &&
 			!filterFormValueByName.typePublicationCommentGeneral &&
 			!filterFormValueByName.typePublicationCommentEditorial &&
-			//
-			!filterFormValueByName.typeObjectComment &&
-			!filterFormValueByName.typeObjectCommentTechnical &&
-			!filterFormValueByName.typeObjectCommentGeneral &&
-			!filterFormValueByName.typeObjectCommentEditorial &&
 			//
 			!filterFormValueByName.typeProposal);
 

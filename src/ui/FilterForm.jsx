@@ -26,11 +26,6 @@ const typeCommentSubFieldNames = [
 	'typeCommentGeneral',
 	'typeCommentEditorial'
 ];
-const typeObjectCommentSubFieldNames = [
-	'typeObjectCommentTechnical',
-	'typeObjectCommentGeneral',
-	'typeObjectCommentEditorial'
-];
 const resolutionResolvedSubFieldNames = [
 	'resolutionResolvedAccepted',
 	'resolutionResolvedRejected'
@@ -107,24 +102,6 @@ function FilterForm({
 			) {
 				onFieldChange({ name: 'typePublicationComment', value, feedback: null });
 			}
-		} else if (typeFieldName === 'typeObjectComment') {
-			typeObjectCommentSubFieldNames.forEach(subFieldName => {
-				if (valueByName[subFieldName] !== value) {
-					onFieldChange({ name: subFieldName, value, feedback: null });
-				}
-			});
-		} else if (typeObjectCommentSubFieldNames.includes(typeFieldName)) {
-			const otherTypeObjectCommentSubFieldNames = typeObjectCommentSubFieldNames.filter(
-				subFieldName => subFieldName !== typeFieldName
-			);
-			if (
-				!value ||
-				otherTypeObjectCommentSubFieldNames.every(
-					subFieldName => valueByName[subFieldName] === value
-				)
-			) {
-				onFieldChange({ name: 'typeObjectComment', value, feedback: null });
-			}
 		}
 
 		onFieldChange({ name: typeFieldName, value, feedback: null });
@@ -196,41 +173,7 @@ function FilterForm({
 
 						<Block>
 							<Checkbox
-								label={t('Object Comment')}
-								onChange={value =>
-									handleTypeFieldChange('typeObjectComment', value)
-								}
-								value={valueByName.typeObjectComment}
-							/>
-
-							<Block applyCss={{ paddingLeft: '22px' }}>
-								<Checkbox
-									label={t('Technical')}
-									onChange={value =>
-										handleTypeFieldChange('typeObjectCommentTechnical', value)
-									}
-									value={valueByName.typeObjectCommentTechnical}
-								/>
-								<Checkbox
-									label={t('General')}
-									onChange={value =>
-										handleTypeFieldChange('typeObjectCommentGeneral', value)
-									}
-									value={valueByName.typeObjectCommentGeneral}
-								/>
-								<Checkbox
-									label={t('Editorial')}
-									onChange={value =>
-										handleTypeFieldChange('typeObjectCommentEditorial', value)
-									}
-									value={valueByName.typeObjectCommentEditorial}
-								/>
-							</Block>
-						</Block>
-
-						<Block>
-							<Checkbox
-								label={t('Publication Comment')}
+								label={t('Global Comment')}
 								onChange={value =>
 									handleTypeFieldChange('typePublicationComment', value)
 								}
