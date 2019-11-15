@@ -22,6 +22,7 @@ import ResolveForm from '../shared/ResolveForm.jsx';
 import Replies from '../shared/Replies.jsx';
 
 import commentTypes from '../commentTypes.jsx';
+import publicationCommentTypes from '../publicationCommentTypes.jsx';
 import resolutions from '../feedbackResolutions.jsx';
 
 import CommentAddOrEditFormContent from './CommentAddOrEditFormContent.jsx';
@@ -137,13 +138,30 @@ function CommentCardContent({
 
 	let commentType = null;
 	if (
-		reviewAnnotation.busyState !== BusyState.ADDING &&
-		reviewAnnotation.busyState !== BusyState.EDITING
+		(reviewAnnotation.busyState !== BusyState.ADDING &&
+			reviewAnnotation.busyState !== BusyState.EDITING &&
+			reviewAnnotation.type === 'comment') ||
+		reviewAnnotation.type === 'object-comment'
 	) {
 		commentType = commentTypes.find(
 			commentType => commentType.value === reviewAnnotation.metadata.commentType
 		);
 		commentType = commentType ? commentType.label : reviewAnnotation.metadata.commentType;
+	}
+
+	let publicationCommentType = null;
+	if (
+		reviewAnnotation.busyState !== BusyState.ADDING &&
+		reviewAnnotation.busyState !== BusyState.EDITING &&
+		reviewAnnotation.type === 'publication-comment'
+	) {
+		publicationCommentType = publicationCommentTypes.find(
+			publicationCommentType =>
+				publicationCommentType.value === reviewAnnotation.metadata.commentType
+		);
+		publicationCommentType = publicationCommentType
+			? publicationCommentType.label
+			: reviewAnnotation.metadata.commentType;
 	}
 
 	const resolution =
@@ -179,7 +197,17 @@ function CommentCardContent({
 					reviewAnnotation.metadata.comment && (
 						<Block spaceVerticalSize="m">
 							<Block>
-								<Label isBold>{commentType ? commentType : 'Comment'}</Label>
+								{publicationCommentType ? (
+									<Flex alignItems="center" flexDirection="row" spaceSize="s">
+										<Icon icon="files-o" />
+										<Label isBold> {publicationCommentType} </Label>
+									</Flex>
+								) : (
+									<Flex alignItems="center" flexDirection="row" spaceSize="s">
+										<Icon icon="comment" />
+										<Label isBold> {commentType} </Label>
+									</Flex>
+								)}
 
 								{reviewAnnotation.isSelected && (
 									<Text>{reviewAnnotation.metadata.comment}</Text>

@@ -173,7 +173,10 @@ function ProposalCardContent({
 						<Block spaceVerticalSize="m">
 							{hasProposedChange && (
 								<Block>
-									<Label isBold>Proposed change</Label>
+									<Flex alignItems="center" flexDirection="row" spaceSize="s">
+										<Icon icon="pencil-square-o" />
+										<Label isBold>Proposed change</Label>
+									</Flex>
 
 									<Diff
 										isSingleLine={!reviewAnnotation.isSelected}
