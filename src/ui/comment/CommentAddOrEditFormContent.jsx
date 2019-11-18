@@ -1,6 +1,8 @@
 import React, { useEffect, Fragment } from 'react';
 
-import { FormRow, RadioButtonGroup, TextArea } from 'fds/components';
+import { Block, Icon, FormRow, RadioButtonGroup, TextArea } from 'fds/components';
+
+import { TargetType } from 'fontoxml-feedback/src/types.js';
 
 import commentTypes from '../commentTypes.jsx';
 
@@ -14,7 +16,14 @@ function validateCommentField(value) {
 	return null;
 }
 
-function CommentAddOrEditFormContent({ isDisabled, isEditing, onFieldChange, onFocusableRef }) {
+function CommentAddOrEditFormContent({
+	isDisabled,
+	isEditing,
+	onFieldChange,
+	onFocusableRef,
+	reviewAnnotation,
+	valueByName
+}) {
 	useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
@@ -25,9 +34,32 @@ function CommentAddOrEditFormContent({ isDisabled, isEditing, onFieldChange, onF
 		}
 	}, [isEditing, onFieldChange]);
 
+	const currentCommentType =
+		commentTypes.find(commentType => commentType.value === valueByName.commentType) ||
+		commentTypes[0];
+
+	let label = currentCommentType.label;
+
+	const isPublicationLevelComment =
+		reviewAnnotation.targets[0].type === TargetType.PUBLICATION_SELECTOR;
+	if (isPublicationLevelComment) {
+		label = 'Global ' + label[0].toLowerCase() + label.substring(1);
+	}
+
+	// @ts-ignore
+	label = (
+		<Block isInline spaceHorizontalSize="s">
+			<Block isInline>
+				<Icon icon={isPublicationLevelComment ? 'files-o' : 'comment'} />
+			</Block>
+
+			<span>{label}</span>
+		</Block>
+	);
+
 	return (
 		<Fragment>
-			<FormRow label="Comment" hasRequiredAsterisk isLabelBold labelColorName="text-color">
+			<FormRow label={label} hasRequiredAsterisk isLabelBold labelColorName="text-color">
 				<TextArea
 					isDisabled={isDisabled}
 					name="comment"

@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 
-import { FormRow, TextArea, TextAreaWithDiff } from 'fds/components';
+import { Block, Icon, FormRow, TextArea, TextAreaWithDiff } from 'fds/components';
 
 function validateProposedChangeField(value, originalText) {
 	if (value === originalText) {
@@ -32,7 +32,15 @@ function ProposalAddOrEditItemFormContent({
 	return (
 		<Fragment>
 			<FormRow
-				label="Proposed change"
+				label={
+					<Block isInline spaceHorizontalSize="s">
+						<Block isInline>
+							<Icon icon="pencil-square-o" />
+						</Block>
+
+						<span>Proposed change</span>
+					</Block>
+				}
 				hasRequiredAsterisk
 				isLabelBold
 				labelColorName="text-color"

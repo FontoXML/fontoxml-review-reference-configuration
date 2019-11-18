@@ -31,7 +31,7 @@ export default function AddOrEditForm({
 
 	return (
 		<ReviewAnnotationForm initialValueByName={reviewAnnotation.metadata} onSubmit={onSubmit}>
-			{({ isSubmitDisabled, onFieldChange, onFocusableRef, onSubmit }) => (
+			{({ isSubmitDisabled, onFieldChange, onFocusableRef, onSubmit, valueByName }) => (
 				<Fragment>
 					<ContentComponent
 						isDisabled={isDisabled}
@@ -39,6 +39,8 @@ export default function AddOrEditForm({
 						onFieldChange={onFieldChange}
 						onFocusableRef={onFocusableRef}
 						originalText={reviewAnnotation.originalText}
+						reviewAnnotation={reviewAnnotation}
+						valueByName={valueByName}
 					/>
 
 					<Flex flexDirection="column" paddingSize={{ top: 'm' }} spaceSize="m">
