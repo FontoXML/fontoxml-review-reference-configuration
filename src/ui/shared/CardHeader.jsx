@@ -100,7 +100,13 @@ export default function CardHeader({
 				context !== ContextType.REVIEW_SHARING_SIDEBAR && (
 					<Flex flex="none" spaceSize="m">
 						{reviewAnnotation.targetFoundForRevision === false && (
-							<Icon colorName="text-warning-color" icon="flag" />
+							<Icon
+								colorName="text-warning-color"
+								icon="low-vision"
+								tooltipContent={t(
+									'This comment lost its position in the document.'
+								)}
+							/>
 						)}
 
 						{reviewAnnotation.status === AnnotationStatus.PRIVATE && (
