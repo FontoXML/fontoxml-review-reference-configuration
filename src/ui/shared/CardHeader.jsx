@@ -101,7 +101,11 @@ export default function CardHeader({
 					<Flex flex="none" spaceSize="m">
 						{reviewAnnotation.targetFoundForRevision === false && (
 							<Icon
-								colorName="text-warning-color"
+								colorName={
+									reviewAnnotation.isSelected
+										? 'button-warning-background-selected'
+										: 'button-warning-background'
+								}
 								icon="low-vision"
 								tooltipContent={t(
 									'This comment lost its position in the document.'
