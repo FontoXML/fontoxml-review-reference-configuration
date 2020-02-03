@@ -2,43 +2,27 @@ import React from 'react';
 
 import configurationManager from 'fontoxml-configuration/src/configurationManager.js';
 
-import {
-	Button,
-	Flex,
-	Icon,
-	Label,
-	Masthead,
-	MastheadAlignRight,
-	MastheadContent
-} from 'fds/components';
+import { Flex, Icon, Label, Masthead, MastheadAlignRight, MastheadContent } from 'fds/components';
 
 import ReviewLogo from 'fontoxml-feedback/src/ReviewLogo.jsx';
 
 const configuredScope = configurationManager.get('scope');
 
-export default function MastheadForReview({ isOutlineVisible, onToggleOutline }) {
+export default function MastheadForReview() {
 	return (
 		<Masthead>
 			<MastheadContent>
 				<ReviewLogo />
 
-				<MastheadAlignRight>
-					<Flex alignItems="center" spaceSize="m">
-						<Button
-							icon="align-right icon-flip-vertical"
-							isSelected={isOutlineVisible}
-							onClick={onToggleOutline}
-						/>
+				{configuredScope.user && configuredScope.user.displayName && (
+					<MastheadAlignRight>
+						<Flex flex="none">
+							<Icon icon="user" />
 
-						{configuredScope.user && configuredScope.user.displayName && (
-							<Flex flex="none">
-								<Icon icon="user" />
-
-								<Label>{configuredScope.user.displayName}</Label>
-							</Flex>
-						)}
-					</Flex>
-				</MastheadAlignRight>
+							<Label>{configuredScope.user.displayName}</Label>
+						</Flex>
+					</MastheadAlignRight>
+				)}
 			</MastheadContent>
 		</Masthead>
 	);
