@@ -13,7 +13,6 @@ import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimest
 
 import t from 'fontoxml-localization/src/t.js';
 
-import AddOrEditForm from '../shared/AddOrEditForm.jsx';
 import CardFooter from '../shared/CardFooter.jsx';
 import CardHeader from '../shared/CardHeader.jsx';
 import ErrorStateMessage from '../shared/ErrorStateMessage.jsx';
@@ -25,9 +24,8 @@ import commentTypes from '../commentTypes.jsx';
 import publicationCommentTypes from '../publicationCommentTypes.jsx';
 import resolutions from '../feedbackResolutions.jsx';
 
-import CommentAddOrEditFormContent from './CommentAddOrEditFormContent.jsx';
+import CommentAddOrEditForm from './CommentAddOrEditForm.jsx';
 import CommentReplyContent from './CommentReplyContent.jsx';
-import CommentReplyFormContent from './CommentReplyFormContent.jsx';
 
 // 'outdent' the icon container to align it with other icons
 const iconContainerStyles = { marginLeft: '-26px' };
@@ -221,8 +219,7 @@ function CommentCardContent({
 
 				{(reviewAnnotation.busyState === BusyState.ADDING ||
 					reviewAnnotation.busyState === BusyState.EDITING) && (
-					<AddOrEditForm
-						ContentComponent={CommentAddOrEditFormContent}
+					<CommentAddOrEditForm
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}
 						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
@@ -257,7 +254,6 @@ function CommentCardContent({
 					reviewAnnotation.replies.length > 0 && (
 						<Replies
 							ContentComponent={CommentReplyContent}
-							FormContentComponent={CommentReplyFormContent}
 							context={context}
 							reviewAnnotation={reviewAnnotation}
 							onReplyEdit={onReplyEdit}

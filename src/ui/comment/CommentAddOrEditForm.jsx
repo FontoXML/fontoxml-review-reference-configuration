@@ -1,12 +1,11 @@
 import React, { useEffect, Fragment } from 'react';
 
 import { Block, Icon, FormRow, RadioButtonGroup, TextArea } from 'fds/components';
-
-import { TargetType } from 'fontoxml-feedback/src/types.js';
+import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
+import { BusyState, RecoveryOption, TargetType } from 'fontoxml-feedback/src/types.js';
 
 import commentTypes from '../commentTypes.jsx';
-
-const rows = { minimum: 2, maximum: 6 };
+import AddOrEditFormFooter from '../shared/AddOrEditFormFooter.jsx';
 
 function validateCommentField(value) {
 	if (!value) {
@@ -16,14 +15,24 @@ function validateCommentField(value) {
 	return null;
 }
 
+const rows = { minimum: 2, maximum: 6 };
+
 function CommentAddOrEditFormContent({
-	isDisabled,
-	isEditing,
+	isSubmitDisabled,
 	onFieldChange,
 	onFocusableRef,
+	onCancel,
+	onReviewAnnotationRefresh,
+	onSubmit,
 	reviewAnnotation,
 	valueByName
 }) {
+	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
+	const isDisabled =
+		reviewAnnotation.isLoading || (error && error.recovery !== RecoveryOption.RETRYABLE);
+	const isEditing = reviewAnnotation.busyState === BusyState.EDITING;
+	const isLoading = reviewAnnotation.isLoading;
+
 	useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
@@ -72,8 +81,37 @@ function CommentAddOrEditFormContent({
 			<FormRow label="Type" hasRequiredAsterisk isLabelBold labelColorName="text-color">
 				<RadioButtonGroup isDisabled={isDisabled} items={commentTypes} name="commentType" />
 			</FormRow>
+
+			<AddOrEditFormFooter
+				error={error}
+				isDisabled={isDisabled}
+				isLoading={isLoading}
+				isSubmitDisabled={!valueByName.comment || isSubmitDisabled}
+				onCancel={onCancel}
+				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+				onSubmit={onSubmit}
+			/>
 		</Fragment>
 	);
 }
 
-export default CommentAddOrEditFormContent;
+function CommentAddOrEditForm({ reviewAnnotation, onCancel, onReviewAnnotationRefresh, onSubmit }) {
+	return (
+		<ReviewAnnotationForm initialValueByName={reviewAnnotation.metadata} onSubmit={onSubmit}>
+			{({ isSubmitDisabled, onFieldChange, onFocusableRef, onSubmit, valueByName }) => (
+				<CommentAddOrEditFormContent
+					isSubmitDisabled={isSubmitDisabled}
+					onFieldChange={onFieldChange}
+					onFocusableRef={onFocusableRef}
+					onCancel={onCancel}
+					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+					onSubmit={onSubmit}
+					reviewAnnotation={reviewAnnotation}
+					valueByName={valueByName}
+				/>
+			)}
+		</ReviewAnnotationForm>
+	);
+}
+
+export default CommentAddOrEditForm;

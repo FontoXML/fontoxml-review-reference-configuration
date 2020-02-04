@@ -13,7 +13,6 @@ import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimest
 
 import t from 'fontoxml-localization/src/t.js';
 
-import AddOrEditForm from '../shared/AddOrEditForm.jsx';
 import CardFooter from '../shared/CardFooter.jsx';
 import CardHeader from '../shared/CardHeader.jsx';
 import ErrorStateMessage from '../shared/ErrorStateMessage.jsx';
@@ -23,9 +22,8 @@ import Replies from '../shared/Replies.jsx';
 
 import resolutions from '../feedbackResolutions.jsx';
 
-import ProposalAddOrEditFormContent from './ProposalAddOrEditFormContent.jsx';
+import ProposalAddOrEditForm from './ProposalAddOrEditForm.jsx';
 import ProposalReplyContent from './ProposalReplyContent.jsx';
-import ProposalReplyFormContent from './ProposalReplyFormContent.jsx';
 
 // negative margin to align the icon with the reply icons above (if any)
 const iconContainerStyles = { marginLeft: '-26px' };
@@ -203,8 +201,7 @@ function ProposalCardContent({
 
 				{(reviewAnnotation.busyState === BusyState.ADDING ||
 					reviewAnnotation.busyState === BusyState.EDITING) && (
-					<AddOrEditForm
-						ContentComponent={ProposalAddOrEditFormContent}
+					<ProposalAddOrEditForm
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}
 						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
@@ -239,7 +236,6 @@ function ProposalCardContent({
 					reviewAnnotation.replies.length > 0 && (
 						<Replies
 							ContentComponent={ProposalReplyContent}
-							FormContentComponent={ProposalReplyFormContent}
 							context={context}
 							reviewAnnotation={reviewAnnotation}
 							onReplyEdit={onReplyEdit}

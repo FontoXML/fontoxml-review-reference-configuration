@@ -7,11 +7,10 @@ import { AnnotationStatus, BusyState, ContextType } from 'fontoxml-feedback/src/
 import t from 'fontoxml-localization/src/t.js';
 
 import Reply from './Reply.jsx';
-import ReplyAddOrEditForm from './ReplyAddOrEditForm.jsx';
+import ReplyForm from './ReplyForm.jsx';
 
 export default function Replies({
 	ContentComponent,
-	FormContentComponent,
 	context,
 	reviewAnnotation,
 	onReplyEdit,
@@ -88,9 +87,8 @@ export default function Replies({
 					(isAddingReply || isEditingReply)
 				) {
 					return (
-						<ReplyAddOrEditForm
+						<ReplyForm
 							key={reply.id}
-							ContentComponent={FormContentComponent}
 							isLast={isLast}
 							reply={reply}
 							onCancel={onReplyFormCancel}
