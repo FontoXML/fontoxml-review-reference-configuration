@@ -64,12 +64,14 @@ function FilterForm({
 	// Otherwise the user cannot submit the filter form (using the "Set filters" button).
 
 	// These change handlers implement custom logic to create a dependency between outer and inner
-	// checkboxes. Feel free to ignore, its a crude / partially hardcoded implementation anyway.
+	// checkboxes. Feel free to ignore, it's a crude / partially hard-coded implementation anyway.
 	const handleTypeFieldChange = (typeFieldName, value) => {
+		const filterValue = value ? true : null;
+
 		if (typeFieldName === 'typeComment') {
 			typeCommentSubFieldNames.forEach(subFieldName => {
-				if (valueByName[subFieldName] !== value) {
-					onFieldChange({ name: subFieldName, value, feedback: null });
+				if (valueByName[subFieldName] !== filterValue) {
+					onFieldChange({ name: subFieldName, value: filterValue, feedback: null });
 				}
 			});
 		} else if (typeCommentSubFieldNames.includes(typeFieldName)) {
@@ -77,17 +79,17 @@ function FilterForm({
 				subFieldName => subFieldName !== typeFieldName
 			);
 			if (
-				!value ||
+				!filterValue ||
 				otherTypeCommentSubFieldNames.every(
-					subFieldName => valueByName[subFieldName] === value
+					subFieldName => valueByName[subFieldName] === filterValue
 				)
 			) {
-				onFieldChange({ name: 'typeComment', value, feedback: null });
+				onFieldChange({ name: 'typeComment', value: filterValue, feedback: null });
 			}
 		} else if (typeFieldName === 'typePublicationComment') {
 			typePublicationCommentSubFieldNames.forEach(subFieldName => {
-				if (valueByName[subFieldName] !== value) {
-					onFieldChange({ name: subFieldName, value, feedback: null });
+				if (valueByName[subFieldName] !== filterValue) {
+					onFieldChange({ name: subFieldName, value: filterValue, feedback: null });
 				}
 			});
 		} else if (typePublicationCommentSubFieldNames.includes(typeFieldName)) {
@@ -95,22 +97,28 @@ function FilterForm({
 				subFieldName => subFieldName !== typeFieldName
 			);
 			if (
-				!value ||
+				!filterValue ||
 				otherTypePublicationCommentSubFieldNames.every(
-					subFieldName => valueByName[subFieldName] === value
+					subFieldName => valueByName[subFieldName] === filterValue
 				)
 			) {
-				onFieldChange({ name: 'typePublicationComment', value, feedback: null });
+				onFieldChange({
+					name: 'typePublicationComment',
+					value: filterValue,
+					feedback: null
+				});
 			}
 		}
 
-		onFieldChange({ name: typeFieldName, value, feedback: null });
+		onFieldChange({ name: typeFieldName, value: filterValue, feedback: null });
 	};
 	const handleResolutionFieldChange = (resolutionFieldName, value) => {
+		const filterValue = value ? true : null;
+
 		if (resolutionFieldName === 'resolutionResolved') {
 			resolutionResolvedSubFieldNames.forEach(subFieldName => {
-				if (valueByName[subFieldName] !== value) {
-					onFieldChange({ name: subFieldName, value, feedback: null });
+				if (valueByName[subFieldName] !== filterValue) {
+					onFieldChange({ name: subFieldName, value: filterValue, feedback: null });
 				}
 			});
 		} else if (resolutionResolvedSubFieldNames.includes(resolutionFieldName)) {
@@ -118,16 +126,16 @@ function FilterForm({
 				subFieldName => subFieldName !== resolutionFieldName
 			);
 			if (
-				!value ||
+				!filterValue ||
 				otherResolutionResolvedSubFieldNames.every(
-					subFieldName => valueByName[subFieldName] === value
+					subFieldName => valueByName[subFieldName] === filterValue
 				)
 			) {
-				onFieldChange({ name: 'resolutionResolved', value, feedback: null });
+				onFieldChange({ name: 'resolutionResolved', value: filterValue, feedback: null });
 			}
 		}
 
-		onFieldChange({ name: resolutionFieldName, value, feedback: null });
+		onFieldChange({ name: resolutionFieldName, value: filterValue, feedback: null });
 	};
 
 	return (
