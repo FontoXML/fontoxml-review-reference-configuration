@@ -35,6 +35,8 @@ function ProposalAddOrEditFormContent({
 
 	const originalText = reviewAnnotation.originalText;
 
+	const proposedChangeIsModified = valueByName.proposedChange !== originalText;
+
 	useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
@@ -79,7 +81,7 @@ function ProposalAddOrEditFormContent({
 				error={error}
 				isDisabled={isDisabled}
 				isLoading={isLoading}
-				isSubmitDisabled={!valueByName.proposedChange || isSubmitDisabled}
+				isSubmitDisabled={!proposedChangeIsModified || isSubmitDisabled}
 				onCancel={onCancel}
 				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 				onSubmit={onSubmit}
