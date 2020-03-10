@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Block, Chip, ChipGroup, Flex, Icon, Label } from 'fds/components';
 
 import t from 'fontoxml-localization/src/t.js';
+
+import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions.js';
 
 function FilterFormSummaryChips({
 	// This is set if the /review/state endpoint is called (whenever onChange is
@@ -30,6 +32,23 @@ function FilterFormSummaryChips({
 	// This contains the exact value by name mapping used by the filter form for the current context.
 	valueByName
 }) {
+	// This processes the list of changed fields into a changedValueByName mapping which is then
+	// combined with the existing data (valueByName) to provide a new (complete) version of the data
+	// for the onChange prop.
+	const handleFieldsChange = useCallback(
+		changedFields => {
+			onChange({
+				...valueByName,
+				...changedFields.reduce((changedValueByName, changedField) => {
+					changedValueByName[changedField.name] = changedField.value;
+					return changedValueByName;
+				}, {})
+			});
+		},
+		[onChange, valueByName]
+	);
+	const onCheckboxChange = useNestedCheckboxesForFilterOptions(valueByName, handleFieldsChange);
+
 	return (
 		<Block flex="none" paddingSize={{ top: 's', bottom: 'm' }}>
 			{!error && !isSubmitting && <Label isBold>{t('Filtered by:')}</Label>}
@@ -56,13 +75,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Technical')}
 						tooltipContent={t('Only show technical comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typeComment: null,
-								typeCommentTechnical: null
-							})
-						}
+						onRemove={() => onCheckboxChange('typeCommentTechnical', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -71,13 +84,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('General')}
 						tooltipContent={t('Only show general comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typeComment: null,
-								typeCommentGeneral: null
-							})
-						}
+						onRemove={() => onCheckboxChange('typeCommentGeneral', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -86,13 +93,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Editorial')}
 						tooltipContent={t('Only show editorial comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typeComment: null,
-								typeCommentEditorial: null
-							})
-						}
+						onRemove={() => onCheckboxChange('typeCommentEditorial', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -102,13 +103,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Technical')}
 						tooltipContent={t('Only show technical publication comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typePublicationComment: null,
-								typePublicationCommentTechnical: null
-							})
-						}
+						onRemove={() => onCheckboxChange('typePublicationCommentTechnical', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -117,13 +112,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: General')}
 						tooltipContent={t('Only show general publication comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typePublicationComment: null,
-								typePublicationCommentGeneral: null
-							})
-						}
+						onRemove={() => onCheckboxChange('typePublicationCommentGeneral', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -132,13 +121,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Editorial')}
 						tooltipContent={t('Only show editorial publication comments.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								typePublicationComment: null,
-								typePublicationCommentEditorial: null
-							})
-						}
+						onRemove={() => onCheckboxChange('typePublicationCommentEditorial', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -148,7 +131,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Proposal')}
 						tooltipContent={t('Only show proposals.')}
-						onRemove={() => onChange({ ...valueByName, typeProposal: null })}
+						onRemove={() => onCheckboxChange('typeProposal', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -175,13 +158,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Accepted')}
 						tooltipContent={t('Only show resolved and accepted feedback.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								resolutionResolved: null,
-								resolutionResolvedAccepted: null
-							})
-						}
+						onRemove={() => onCheckboxChange('resolutionResolvedAccepted', null)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -190,13 +167,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Rejected')}
 						tooltipContent={t('Only show resolved and rejected feedback.')}
-						onRemove={() =>
-							onChange({
-								...valueByName,
-								resolutionResolved: null,
-								resolutionResolvedRejected: null
-							})
-						}
+						onRemove={() => onCheckboxChange('resolutionResolvedRejected', null)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -205,7 +176,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
 						tooltipContent={t('Only show unresolved feedback.')}
-						onRemove={() => onChange({ ...valueByName, resolutionUnresolved: null })}
+						onRemove={() => onCheckboxChange('resolutionUnresolved', null)}
 						useHoverStyles={false}
 					/>
 				)}

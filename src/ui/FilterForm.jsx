@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Block, Checkbox, Flex, Label } from 'fds/components';
 
 import t from 'fontoxml-localization/src/t.js';
+
+import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions.js';
 
 // This file describes a form to filter on all the different conceptual 'properties' of the feedback
 // items. These properties are stored in different places of the item. You can filter on whatever
@@ -12,24 +14,6 @@ import t from 'fontoxml-localization/src/t.js';
 // The idea is that you create a UI to gather whatever input you want from your users in this file.
 // This input is aggregated in valueByName, and passed to the /review/state endpoint as
 // filterFormValueByName.
-
-// These are used by the custom logic to create a dependency between outer and inner checkboxes.
-// That is not something FDS currently has out-of-the-box and something we wanted to experiment with
-// here, feel free to ignore this.
-const typePublicationCommentSubFieldNames = [
-	'typePublicationCommentTechnical',
-	'typePublicationCommentGeneral',
-	'typePublicationCommentEditorial'
-];
-const typeCommentSubFieldNames = [
-	'typeCommentTechnical',
-	'typeCommentGeneral',
-	'typeCommentEditorial'
-];
-const resolutionResolvedSubFieldNames = [
-	'resolutionResolvedAccepted',
-	'resolutionResolvedRejected'
-];
 
 function FilterForm({
 	// Not used by this implementation, the error is already visualized in the filter form header
@@ -63,80 +47,17 @@ function FilterForm({
 	// !Important! Make sure to always set the feedback property to null when calling onFieldChange.
 	// Otherwise the user cannot submit the filter form (using the "Set filters" button).
 
-	// These change handlers implement custom logic to create a dependency between outer and inner
-	// checkboxes. Feel free to ignore, it's a crude / partially hard-coded implementation anyway.
-	const handleTypeFieldChange = (typeFieldName, value) => {
-		const filterValue = value ? true : null;
+	// This processes the list of changed fields by simply calling onFieldChange for each of them,
+	// with a value of null for feedback, as explained before.
+	const handleFieldsChange = useCallback(
+		changedFields =>
+			changedFields.forEach(changedField =>
+				onFieldChange({ ...changedField, feedback: null })
+			),
+		[onFieldChange]
+	);
 
-		if (typeFieldName === 'typeComment') {
-			typeCommentSubFieldNames.forEach(subFieldName => {
-				if (valueByName[subFieldName] !== filterValue) {
-					onFieldChange({ name: subFieldName, value: filterValue, feedback: null });
-				}
-			});
-		} else if (typeCommentSubFieldNames.includes(typeFieldName)) {
-			const otherTypeCommentSubFieldNames = typeCommentSubFieldNames.filter(
-				subFieldName => subFieldName !== typeFieldName
-			);
-			if (
-				!filterValue ||
-				otherTypeCommentSubFieldNames.every(
-					subFieldName => valueByName[subFieldName] === filterValue
-				)
-			) {
-				onFieldChange({ name: 'typeComment', value: filterValue, feedback: null });
-			}
-		} else if (typeFieldName === 'typePublicationComment') {
-			typePublicationCommentSubFieldNames.forEach(subFieldName => {
-				if (valueByName[subFieldName] !== filterValue) {
-					onFieldChange({ name: subFieldName, value: filterValue, feedback: null });
-				}
-			});
-		} else if (typePublicationCommentSubFieldNames.includes(typeFieldName)) {
-			const otherTypePublicationCommentSubFieldNames = typePublicationCommentSubFieldNames.filter(
-				subFieldName => subFieldName !== typeFieldName
-			);
-			if (
-				!filterValue ||
-				otherTypePublicationCommentSubFieldNames.every(
-					subFieldName => valueByName[subFieldName] === filterValue
-				)
-			) {
-				onFieldChange({
-					name: 'typePublicationComment',
-					value: filterValue,
-					feedback: null
-				});
-			}
-		}
-
-		onFieldChange({ name: typeFieldName, value: filterValue, feedback: null });
-	};
-	const handleResolutionFieldChange = (resolutionFieldName, value) => {
-		const filterValue = value ? true : null;
-
-		if (resolutionFieldName === 'resolutionResolved') {
-			resolutionResolvedSubFieldNames.forEach(subFieldName => {
-				if (valueByName[subFieldName] !== filterValue) {
-					onFieldChange({ name: subFieldName, value: filterValue, feedback: null });
-				}
-			});
-		} else if (resolutionResolvedSubFieldNames.includes(resolutionFieldName)) {
-			const otherResolutionResolvedSubFieldNames = resolutionResolvedSubFieldNames.filter(
-				subFieldName => subFieldName !== resolutionFieldName
-			);
-			if (
-				!filterValue ||
-				otherResolutionResolvedSubFieldNames.every(
-					subFieldName => valueByName[subFieldName] === filterValue
-				)
-			) {
-				onFieldChange({ name: 'resolutionResolved', value: filterValue, feedback: null });
-			}
-		}
-
-		onFieldChange({ name: resolutionFieldName, value: filterValue, feedback: null });
-	};
+	const onCheckboxChange = useNestedCheckboxesForFilterOptions(valueByName, handleFieldsChange);
 
 	return (
 		<Block spaceVerticalSize="l">
@@ -150,7 +71,7 @@ function FilterForm({
 						<Block>
 							<Checkbox
 								label={t('Comment')}
-								onChange={value => handleTypeFieldChange('typeComment', value)}
+								onChange={value => onCheckboxChange('typeComment', value)}
 								value={valueByName.typeComment}
 							/>
 
@@ -158,21 +79,21 @@ function FilterForm({
 								<Checkbox
 									label={t('Technical')}
 									onChange={value =>
-										handleTypeFieldChange('typeCommentTechnical', value)
+										onCheckboxChange('typeCommentTechnical', value)
 									}
 									value={valueByName.typeCommentTechnical}
 								/>
 								<Checkbox
 									label={t('General')}
 									onChange={value =>
-										handleTypeFieldChange('typeCommentGeneral', value)
+										onCheckboxChange('typeCommentGeneral', value)
 									}
 									value={valueByName.typeCommentGeneral}
 								/>
 								<Checkbox
 									label={t('Editorial')}
 									onChange={value =>
-										handleTypeFieldChange('typeCommentEditorial', value)
+										onCheckboxChange('typeCommentEditorial', value)
 									}
 									value={valueByName.typeCommentEditorial}
 								/>
@@ -183,7 +104,7 @@ function FilterForm({
 							<Checkbox
 								label={t('Global Comment')}
 								onChange={value =>
-									handleTypeFieldChange('typePublicationComment', value)
+									onCheckboxChange('typePublicationComment', value)
 								}
 								value={valueByName.typePublicationComment}
 							/>
@@ -192,30 +113,21 @@ function FilterForm({
 								<Checkbox
 									label={t('Technical')}
 									onChange={value =>
-										handleTypeFieldChange(
-											'typePublicationCommentTechnical',
-											value
-										)
+										onCheckboxChange('typePublicationCommentTechnical', value)
 									}
 									value={valueByName.typePublicationCommentTechnical}
 								/>
 								<Checkbox
 									label={t('General')}
 									onChange={value =>
-										handleTypeFieldChange(
-											'typePublicationCommentGeneral',
-											value
-										)
+										onCheckboxChange('typePublicationCommentGeneral', value)
 									}
 									value={valueByName.typePublicationCommentGeneral}
 								/>
 								<Checkbox
 									label={t('Editorial')}
 									onChange={value =>
-										handleTypeFieldChange(
-											'typePublicationCommentEditorial',
-											value
-										)
+										onCheckboxChange('typePublicationCommentEditorial', value)
 									}
 									value={valueByName.typePublicationCommentEditorial}
 								/>
@@ -224,7 +136,7 @@ function FilterForm({
 
 						<Checkbox
 							label={t('Proposal')}
-							onChange={value => handleTypeFieldChange('typeProposal', value)}
+							onChange={value => onCheckboxChange('typeProposal', value)}
 							value={valueByName.typeProposal}
 						/>
 					</Block>
@@ -239,9 +151,7 @@ function FilterForm({
 						<Block>
 							<Checkbox
 								label={t('Resolved')}
-								onChange={value =>
-									handleResolutionFieldChange('resolutionResolved', value)
-								}
+								onChange={value => onCheckboxChange('resolutionResolved', value)}
 								value={valueByName.resolutionResolved}
 							/>
 
@@ -249,10 +159,7 @@ function FilterForm({
 								<Checkbox
 									label={t('Accepted')}
 									onChange={value =>
-										handleResolutionFieldChange(
-											'resolutionResolvedAccepted',
-											value
-										)
+										onCheckboxChange('resolutionResolvedAccepted', value)
 									}
 									value={valueByName.resolutionResolvedAccepted}
 								/>
@@ -260,10 +167,7 @@ function FilterForm({
 								<Checkbox
 									label={t('Rejected')}
 									onChange={value =>
-										handleResolutionFieldChange(
-											'resolutionResolvedRejected',
-											value
-										)
+										onCheckboxChange('resolutionResolvedRejected', value)
 									}
 									value={valueByName.resolutionResolvedRejected}
 								/>
@@ -272,9 +176,7 @@ function FilterForm({
 
 						<Checkbox
 							label={t('Unresolved')}
-							onChange={value =>
-								handleResolutionFieldChange('resolutionUnresolved', value)
-							}
+							onChange={value => onCheckboxChange('resolutionUnresolved', value)}
 							value={valueByName.resolutionUnresolved}
 						/>
 					</Block>
