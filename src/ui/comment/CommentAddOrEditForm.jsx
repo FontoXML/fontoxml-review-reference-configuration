@@ -3,6 +3,7 @@ import React, { useEffect, Fragment } from 'react';
 import { Block, Icon, FormRow, RadioButtonGroup, TextArea } from 'fds/components';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
 import { BusyState, RecoveryOption, TargetType } from 'fontoxml-feedback/src/types.js';
+import t from 'fontoxml-localization/src/t.js';
 
 import commentTypes from '../commentTypes.jsx';
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter.jsx';
@@ -72,6 +73,7 @@ function CommentAddOrEditFormContent({
 				<TextArea
 					isDisabled={isDisabled}
 					name="comment"
+					placeholder={t('Comment on the selected content')}
 					ref={onFocusableRef}
 					rows={rows}
 					validate={validateCommentField}

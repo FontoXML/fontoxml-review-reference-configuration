@@ -4,6 +4,7 @@ import { Block, Icon, FormRow, TextArea, TextAreaWithDiff } from 'fds/components
 
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
 import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types.js';
+import t from 'fontoxml-localization/src/t.js';
 
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter.jsx';
 
@@ -67,6 +68,7 @@ function ProposalAddOrEditFormContent({
 					isDisabled={isDisabled}
 					name="proposedChange"
 					originalValue={originalText}
+					placeholder={t('Leave empty to propose removing the selected content')}
 					ref={onFocusableRef}
 					rows={rows}
 					validate={value => validateProposedChangeField(value, originalText)}
@@ -74,7 +76,12 @@ function ProposalAddOrEditFormContent({
 			</FormRow>
 
 			<FormRow label="Motivation" isLabelBold labelColorName="text-color">
-				<TextArea isDisabled={isDisabled} name="comment" rows={rows} />
+				<TextArea
+					isDisabled={isDisabled}
+					name="comment"
+					rows={rows}
+					placeholder={t('Motivate your proposal')}
+				/>
 			</FormRow>
 
 			<AddOrEditFormFooter
