@@ -82,90 +82,88 @@ export default function CardHeader({
 					</Flex>
 				)}
 			</Flex>
-
-			{(context === ContextType.EDITOR_SHARING_SIDEBAR ||
-				context === ContextType.REVIEW_SHARING_SIDEBAR) &&
-				(!reviewAnnotation.error ||
-					reviewAnnotation.error.recovery === RecoveryOption.RETRYABLE) && (
-					<Block>
-						<Checkbox
-							isDisabled={reviewAnnotation.isLoading}
-							onChange={onReviewAnnotationShareAddRemoveToggle}
-							value={isSelectedToShare}
-						/>
-					</Block>
+			<Flex spaceSize="m">
+				{reviewAnnotation.targetFoundForRevision === false && (
+					<Icon
+						colorName={
+							reviewAnnotation.isSelected
+								? 'button-warning-background-selected'
+								: 'button-warning-background'
+						}
+						icon="low-vision"
+						tooltipContent={t('This comment lost its position in the document.')}
+					/>
 				)}
-
-			{context !== ContextType.EDITOR_SHARING_SIDEBAR &&
-				context !== ContextType.REVIEW_SHARING_SIDEBAR && (
-					<Flex flex="none" spaceSize="m">
-						{reviewAnnotation.targetFoundForRevision === false && (
-							<Icon
-								colorName={
-									reviewAnnotation.isSelected
-										? 'button-warning-background-selected'
-										: 'button-warning-background'
-								}
-								icon="low-vision"
-								tooltipContent={t(
-									'This comment lost its position in the document.'
-								)}
+				{(context === ContextType.EDITOR_SHARING_SIDEBAR ||
+					context === ContextType.REVIEW_SHARING_SIDEBAR) &&
+					(!reviewAnnotation.error ||
+						reviewAnnotation.error.recovery === RecoveryOption.RETRYABLE) && (
+						<Block>
+							<Checkbox
+								isDisabled={reviewAnnotation.isLoading}
+								onChange={onReviewAnnotationShareAddRemoveToggle}
+								value={isSelectedToShare}
 							/>
-						)}
+						</Block>
+					)}
 
-						{reviewAnnotation.status === AnnotationStatus.PRIVATE && (
-							<Badge label={t('Private')} />
-						)}
-						{reviewAnnotation.status === AnnotationStatus.RESOLVED && (
-							<Badge label={t(reviewAnnotation.resolvedMetadata.resolution)} />
-						)}
+				{context !== ContextType.EDITOR_SHARING_SIDEBAR &&
+					context !== ContextType.REVIEW_SHARING_SIDEBAR && (
+						<Flex flex="none" spaceSize="m">
+							{reviewAnnotation.status === AnnotationStatus.PRIVATE && (
+								<Badge label={t('Private')} />
+							)}
+							{reviewAnnotation.status === AnnotationStatus.RESOLVED && (
+								<Badge label={t(reviewAnnotation.resolvedMetadata.resolution)} />
+							)}
 
-						{showPopoverButton && (
-							<PopoverAnchor
-								renderAnchor={({ isPopoverOpened, onRef, togglePopover }) => (
-									<CompactButton
-										icon="ellipsis-h"
-										isDisabled={reviewAnnotation.isLoading}
-										isSelected={isPopoverOpened}
-										onClick={togglePopover}
-										onRef={onRef}
-									/>
-								)}
-								renderPopover={({ togglePopover }) => (
-									<Popover maxWidth="250px">
-										<PopoverBody paddingSize={0}>
-											<Menu>
-												{showEditButton && (
-													<MenuItem
-														icon="pencil"
-														isDisabled={reviewAnnotation.isLoading}
-														label={t('Edit')}
-														onClick={() => {
-															onReviewAnnotationEdit();
-															togglePopover();
-														}}
-													/>
-												)}
+							{showPopoverButton && (
+								<PopoverAnchor
+									renderAnchor={({ isPopoverOpened, onRef, togglePopover }) => (
+										<CompactButton
+											icon="ellipsis-h"
+											isDisabled={reviewAnnotation.isLoading}
+											isSelected={isPopoverOpened}
+											onClick={togglePopover}
+											onRef={onRef}
+										/>
+									)}
+									renderPopover={({ togglePopover }) => (
+										<Popover maxWidth="250px">
+											<PopoverBody paddingSize={0}>
+												<Menu>
+													{showEditButton && (
+														<MenuItem
+															icon="pencil"
+															isDisabled={reviewAnnotation.isLoading}
+															label={t('Edit')}
+															onClick={() => {
+																onReviewAnnotationEdit();
+																togglePopover();
+															}}
+														/>
+													)}
 
-												{showRemoveButton && (
-													<MenuItem
-														icon="times"
-														isDisabled={reviewAnnotation.isLoading}
-														label={t('Remove')}
-														onClick={() => {
-															onReviewAnnotationRemove();
-															togglePopover();
-														}}
-													/>
-												)}
-											</Menu>
-										</PopoverBody>
-									</Popover>
-								)}
-							/>
-						)}
-					</Flex>
-				)}
+													{showRemoveButton && (
+														<MenuItem
+															icon="times"
+															isDisabled={reviewAnnotation.isLoading}
+															label={t('Remove')}
+															onClick={() => {
+																onReviewAnnotationRemove();
+																togglePopover();
+															}}
+														/>
+													)}
+												</Menu>
+											</PopoverBody>
+										</Popover>
+									)}
+								/>
+							)}
+						</Flex>
+					)}
+			</Flex>
 		</Flex>
 	);
 }
