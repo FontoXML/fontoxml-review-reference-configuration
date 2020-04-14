@@ -85,54 +85,50 @@ export default function ResolveForm({
 									ref={onFocusableRef}
 									validate={validateResolutionField}
 								/>
+								<TextArea
+									isDisabled={isDisabled}
+									name="resolutionComment"
+									placeholder={t(
+										'Optionally describe how or why you resolved this comment…'
+									)}
+									rows={rows}
+								/>
+								{error && (
+									<ErrorToast
+										error={error}
+										onRefreshLinkClick={onReviewAnnotationRefresh}
+									/>
+								)}
 							</FormRow>
 						</Flex>
-
-						<Block applyCss={{ marginTop: '.25rem' }}>
-							<TextArea
-								isDisabled={isDisabled}
-								name="resolutionComment"
-								placeholder={t(
-									'Optionally describe how or why you resolved this comment…'
-								)}
-								rows={rows}
-							/>
-						</Block>
-
-						<Flex flexDirection="column" paddingSize={{ top: 'm' }} spaceSize="m">
-							{error && (
-								<ErrorToast
-									error={error}
-									onRefreshLinkClick={onReviewAnnotationRefresh}
-								/>
-							)}
-
-							<HorizontalSeparationLine />
-
-							<Flex justifyContent="flex-end" spaceSize="m">
-								<Button
-									isDisabled={isDisabled}
-									label={t('Cancel')}
-									onClick={onCancel}
-								/>
-
-								<Button
-									icon={isLoading ? 'spinner' : null}
-									isDisabled={
-										isDisabled ||
-										isLoading ||
-										isSubmitDisabled ||
-										(reviewAnnotation.error &&
-											reviewAnnotation.error.recovery !==
-												RecoveryOption.RETRYABLE)
-									}
-									label={determineSaveButtonLabel(error, isLoading)}
-									onClick={onSubmit}
-									type="primary"
-								/>
-							</Flex>
-						</Flex>
 					</Block>
+
+					<Flex flexDirection="column">
+						<HorizontalSeparationLine marginSizeBottom="m" marginSizeTop="m" />
+
+						<Flex justifyContent="flex-end" spaceSize="m">
+							<Button
+								isDisabled={isDisabled}
+								label={t('Cancel')}
+								onClick={onCancel}
+							/>
+
+							<Button
+								icon={isLoading ? 'spinner' : null}
+								isDisabled={
+									isDisabled ||
+									isLoading ||
+									isSubmitDisabled ||
+									(reviewAnnotation.error &&
+										reviewAnnotation.error.recovery !==
+											RecoveryOption.RETRYABLE)
+								}
+								label={determineSaveButtonLabel(error, isLoading)}
+								onClick={onSubmit}
+								type="primary"
+							/>
+						</Flex>
+					</Flex>
 				</Fragment>
 			)}
 		</ReviewAnnotationForm>
