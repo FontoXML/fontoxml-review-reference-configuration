@@ -51,7 +51,10 @@ function CommentCardContent({
 	onReplyFormSubmit,
 	onReplyErrorHide,
 	onReplyRefresh,
-	onReplyRemove
+	onReplyRemove,
+	// These are only used by ProposalCardContent, so alias them to a arg beginning with _ to make eslint happy
+	proposalState: _proposalState,
+	onProposalMerge: _onProposalMerge
 }) {
 	const hasReplyInNonIdleBusyState = useMemo(() => {
 		if (!reviewAnnotation.replies) {

@@ -1,6 +1,15 @@
 import React, { Fragment, useMemo } from 'react';
 
-import { Block, Diff, Flex, HorizontalSeparationLine, Icon, Label, Text } from 'fds/components';
+import {
+	Block,
+	Button,
+	Diff,
+	Flex,
+	HorizontalSeparationLine,
+	Icon,
+	Label,
+	Text
+} from 'fds/components';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
 import {
@@ -49,7 +58,8 @@ function ProposalCardContent({
 	onReplyFormSubmit,
 	onReplyErrorHide,
 	onReplyRefresh,
-	onReplyRemove
+	onReplyRemove,
+	onProposalMerge
 }) {
 	const hasReplyInNonIdleBusyState = useMemo(() => {
 		if (!reviewAnnotation.replies) {
@@ -142,6 +152,8 @@ function ProposalCardContent({
 		reviewAnnotation.metadata &&
 		reviewAnnotation.metadata.proposedChange !== undefined &&
 		reviewAnnotation.metadata.proposedChange !== null;
+
+	const proposalState = reviewAnnotation.proposalState;
 
 	return (
 		<>
@@ -288,8 +300,10 @@ function ProposalCardContent({
 						<ResolveForm
 							reviewAnnotation={reviewAnnotation}
 							onCancel={onReviewAnnotationFormCancel}
+							onProposalMerge={onProposalMerge}
 							onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 							onSubmit={onReviewAnnotationFormSubmit}
+							proposalState={proposalState}
 						/>
 					)}
 
@@ -305,6 +319,7 @@ function ProposalCardContent({
 			{showFooter && (
 				<CardFooter
 					reviewAnnotation={reviewAnnotation}
+					onProposalMerge={onProposalMerge}
 					onReviewAnnotationResolve={onReviewAnnotationResolve}
 					onReviewAnnotationShare={onReviewAnnotationShare}
 					onReviewAnnotationShowInCreatedContext={onReviewAnnotationShowInCreatedContext}
@@ -312,6 +327,7 @@ function ProposalCardContent({
 						onReviewAnnotationShowInResolvedContext
 					}
 					onReplyAdd={onReplyAdd}
+					proposalState={proposalState}
 					showCreatedContextButton={showCreatedContextButton}
 					showResolvedContextButton={showResolvedContextButton}
 					showReplyButton={showReplyButton}
