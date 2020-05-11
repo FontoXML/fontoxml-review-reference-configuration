@@ -13,6 +13,7 @@ import {
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
+import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton.jsx';
 import { RecoveryOption } from 'fontoxml-feedback/src/types.js';
 
 import t from 'fontoxml-localization/src/t.js';
@@ -43,8 +44,10 @@ const iconContainerStyles = { marginLeft: '-26px' };
 export default function ResolveForm({
 	reviewAnnotation,
 	onCancel,
+	onProposalMerge = null,
 	onReviewAnnotationRefresh,
-	onSubmit
+	onSubmit,
+	proposalState = null
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
@@ -112,6 +115,13 @@ export default function ResolveForm({
 								label={t('Cancel')}
 								onClick={onCancel}
 							/>
+
+							{onProposalMerge && proposalState && (
+								<ReviewAnnotationAcceptProposalButton
+									onProposalMerge={onProposalMerge}
+									proposalState={proposalState}
+								/>
+							)}
 
 							<Button
 								icon={isLoading ? 'spinner' : null}

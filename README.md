@@ -176,6 +176,23 @@ The text contained in the original selection that was made while creating the an
 This is useful to create some sort of a diff between the original content and proposed new content,
 see the example "proposal" annotation type in the source code.
 
+- `reviewAnnotation.proposalState`  
+This property reflects the proposal state for this annotation. Its value can be one of:
+`NOT_APPLICABLE`,  
+`ENABLED`,  
+`MERGING`,  
+`MERGED`,  
+`DISABLED_TEXT_CHANGED`,  
+`DISABLED_TEXT_CONTAINS_NEWLINES`,  
+`DISABLED_PROPOSAL_CONTAINS_NEWLINES`,  
+`DISABLED_TOMBSTONED`,  
+`DISABLED_VALIDATION_FAILED`,  
+`DISABLED_DOCUMENT_NOT_LOADED`,  
+`DISABLED_DOCUMENT_LOCKED`,  
+`DISABLED_DOCUMENT_OUT_OF_SYNC`,  
+`DISABLED_DOCUMENT_SAVE_ERROR`, or  
+`DISABLED_CONTENT_READONLY`.
+
 - `reviewAnnotation.targetFoundForRevision {boolean}`  
 Whether or not a target is found in the (currently displayed revision of the) document in which 
 this annotation was created.  
@@ -296,6 +313,12 @@ the annotation in its current state with its current data.
 When pressing the "resolved context" text link, call this callback;  
 this opens a modal with the revision of the document when the current card was resolved and a card 
 for the annotation in its current state with its current data.
+
+- `onProposalMerge`  
+When pressing the "merge proposal" button, call this callback;  
+this merges the proposed change into the content. The button associated to this callback is only
+useful in the editor route. This property can be passed to the ReviewAnnotationAcceptProposalButton.
+It uses the `proposedChange` property of the `metadata` object to do this. Model your data like this to enable the feature.
 
 ##### Props for the reply objects (inside `reviewAnnotation.replies`)
 - `reply.id  {string}`  

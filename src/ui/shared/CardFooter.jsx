@@ -1,23 +1,81 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback } from 'react';
 
-import { Button, Flex, HorizontalSeparationLine, Label, TextLink } from 'fds/components';
+import {
+	Button,
+	Flex,
+	HorizontalSeparationLine,
+	Menu,
+	MenuItem,
+	Drop,
+	DropButton
+} from 'fds/components';
 
+import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton.jsx';
 import { RecoveryOption, TargetType } from 'fontoxml-feedback/src/types.js';
 import t from 'fontoxml-localization/src/t.js';
 
 export default function CardFooter({
 	reviewAnnotation,
+	onProposalMerge = null,
 	onReviewAnnotationResolve,
 	onReviewAnnotationShare,
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	onReplyAdd,
+	proposalState = null,
 	showCreatedContextButton,
 	showResolvedContextButton,
 	showReplyButton,
 	showResolveButton,
 	showShareButton
 }) {
+	const renderViewInDropButton = useCallback(
+		({ isDropOpened, toggleDrop }) => (
+			<Button
+				icon="eye"
+				iconAfter={isDropOpened ? 'angle-up' : 'angle-down'}
+				isSelected={isDropOpened}
+				onClick={toggleDrop}
+			/>
+		),
+		[]
+	);
+
+	const renderViewInDrop = useCallback(
+		() => (
+			<Drop>
+				<Menu>
+					<MenuItem
+						icon="comment"
+						isDisabled={!showCreatedContextButton || reviewAnnotation.isLoading}
+						label={t('View in created context')}
+						onClick={onReviewAnnotationShowInCreatedContext}
+						tooltipContent={t(
+							'Open a modal which shows the version of the document of this comment when it was created.'
+						)}
+					/>
+
+					<MenuItem
+						icon="check"
+						isDisabled={!showResolvedContextButton || reviewAnnotation.isLoading}
+						label={t('View in resolved context')}
+						onClick={onReviewAnnotationShowInResolvedContext}
+						tooltipContent={t(
+							'Open a modal which shows the version of the document of this comment when it was resolved.'
+						)}
+					/>
+				</Menu>
+			</Drop>
+		),
+		[
+			onReviewAnnotationShowInCreatedContext,
+			onReviewAnnotationShowInResolvedContext,
+			reviewAnnotation.isLoading,
+			showCreatedContextButton,
+			showResolvedContextButton
+		]
+	);
+
 	return (
 		<Fragment>
 			<HorizontalSeparationLine marginSizeBottom="m" />
@@ -32,45 +90,27 @@ export default function CardFooter({
 				}
 				paddingSize="m"
 			>
-				{reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR && (
-					<Flex alignItems="center" spaceSize="s">
-						{(showCreatedContextButton || showResolvedContextButton) && (
-							<Label>View in:</Label>
-						)}
-
-						{showCreatedContextButton && (
-							<TextLink
-								isDisabled={reviewAnnotation.isLoading}
-								label={t('created context')}
-								onClick={onReviewAnnotationShowInCreatedContext}
-								tooltipContent={t(
-									'Open a modal which shows the version of the document of this comment when it was created.'
-								)}
-							/>
-						)}
-
-						{showCreatedContextButton && showResolvedContextButton && <Label>|</Label>}
-
-						{showResolvedContextButton && (
-							<TextLink
-								isDisabled={reviewAnnotation.isLoading}
-								label={t('resolved context')}
-								onClick={onReviewAnnotationShowInResolvedContext}
-								tooltipContent={t(
-									'Open a modal which shows the version of the document of this comment when it was resolved.'
-								)}
-							/>
-						)}
-					</Flex>
-				)}
+				{reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
+					(showCreatedContextButton || showResolvedContextButton) && (
+						<DropButton
+							renderButton={renderViewInDropButton}
+							renderDrop={renderViewInDrop}
+						/>
+					)}
 
 				<Flex alignItems="center" spaceSize="m">
 					{showReplyButton && (
 						<Button
 							icon="reply"
 							isDisabled={!!reviewAnnotation.error || reviewAnnotation.isLoading}
-							label={t('Reply')}
 							onClick={onReplyAdd}
+						/>
+					)}
+
+					{onProposalMerge && proposalState && (
+						<ReviewAnnotationAcceptProposalButton
+							onProposalMerge={onProposalMerge}
+							proposalState={proposalState}
 						/>
 					)}
 
