@@ -23,6 +23,7 @@ export default function CardFooter({
 	onReviewAnnotationShowInResolvedContext,
 	onReplyAdd,
 	proposalState = null,
+	showAcceptProposalButton,
 	showCreatedContextButton,
 	showResolvedContextButton,
 	showReplyButton,
@@ -107,7 +108,7 @@ export default function CardFooter({
 						/>
 					)}
 
-					{onProposalMerge && proposalState && (
+					{showAcceptProposalButton && (
 						<ReviewAnnotationAcceptProposalButton
 							onProposalMerge={onProposalMerge}
 							proposalState={proposalState}

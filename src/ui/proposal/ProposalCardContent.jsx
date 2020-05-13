@@ -73,6 +73,9 @@ function ProposalCardContent({
 		}, false);
 	}, [reviewAnnotation.replies]);
 
+	const showAcceptProposalButton =
+		context === ContextType.EDITOR_SIDEBAR && onProposalMerge && reviewAnnotation.proposalState;
+
 	const showCreatedContextButton =
 		context !== ContextType.CREATED_CONTEXT_MODAL &&
 		context !== ContextType.RESOLVED_CONTEXT_MODAL;
@@ -328,6 +331,7 @@ function ProposalCardContent({
 					}
 					onReplyAdd={onReplyAdd}
 					proposalState={proposalState}
+					showAcceptProposalButton={showAcceptProposalButton}
 					showCreatedContextButton={showCreatedContextButton}
 					showResolvedContextButton={showResolvedContextButton}
 					showReplyButton={showReplyButton}
