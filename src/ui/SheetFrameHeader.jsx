@@ -76,7 +76,10 @@ function SheetFrameHeader({
 				)}
 
 				{productContext === 'editor' && (
-					<FxDocumentContextualOperationsWidget contextNodeId={contextNodeId} />
+					<FxDocumentContextualOperationsWidget
+						contextNodeId={contextNodeId}
+						hierarchyNodeId={hierarchyNodeId}
+					/>
 				)}
 			</FxSheetFrameHeaderActionArea>
 		</FxSheetFrameHeaderContainer>
