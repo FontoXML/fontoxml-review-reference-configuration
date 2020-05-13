@@ -7,7 +7,7 @@ import {
 	Menu,
 	MenuItem,
 	Drop,
-	DropButton
+	DropAnchor
 } from 'fds/components';
 
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton.jsx';
@@ -30,13 +30,15 @@ export default function CardFooter({
 	showResolveButton,
 	showShareButton
 }) {
-	const renderViewInDropButton = useCallback(
-		({ isDropOpened, toggleDrop }) => (
+	const renderViewInDropAnchor = useCallback(
+		({ isDropOpened, isFocused, onRef, toggleDrop }) => (
 			<Button
 				icon="eye"
 				iconAfter={isDropOpened ? 'angle-up' : 'angle-down'}
+				isFocused={isFocused}
 				isSelected={isDropOpened}
 				onClick={toggleDrop}
+				onRef={onRef}
 			/>
 		),
 		[]
@@ -93,8 +95,8 @@ export default function CardFooter({
 			>
 				{reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
 					(showCreatedContextButton || showResolvedContextButton) && (
-						<DropButton
-							renderButton={renderViewInDropButton}
+						<DropAnchor
+							renderAnchor={renderViewInDropAnchor}
 							renderDrop={renderViewInDrop}
 						/>
 					)}
