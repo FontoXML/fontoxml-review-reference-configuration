@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { Block, Chip, ChipGroup, Flex, Icon, Label } from 'fds/components';
+import { Block, Checkbox, Chip, ChipGroup, Flex, Icon, Label } from 'fds/components';
 
 import t from 'fontoxml-localization/src/t.js';
 
@@ -35,12 +35,16 @@ function FilterFormSummaryChips({
 	// This processes the list of changed fields into a changedValueByName mapping which is then
 	// combined with the existing data (valueByName) to provide a new (complete) version of the data
 	// for the onChange prop.
+
 	const handleFieldsChange = useCallback(
 		changedFields => {
 			onChange({
 				...valueByName,
 				...changedFields.reduce((changedValueByName, changedField) => {
-					changedValueByName[changedField.name] = changedField.value;
+					changedValueByName[changedField.name] =
+						changedField.value === Checkbox.VALUE_INDETERMINATE
+							? false
+							: changedField.value;
 					return changedValueByName;
 				}, {})
 			});
@@ -158,7 +162,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Accepted')}
 						tooltipContent={t('Only show resolved and accepted feedback.')}
-						onRemove={() => onCheckboxChange('resolutionResolvedAccepted', null)}
+						onRemove={() => onCheckboxChange('resolutionResolvedAccepted', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -167,7 +171,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Rejected')}
 						tooltipContent={t('Only show resolved and rejected feedback.')}
-						onRemove={() => onCheckboxChange('resolutionResolvedRejected', null)}
+						onRemove={() => onCheckboxChange('resolutionResolvedRejected', false)}
 						useHoverStyles={false}
 					/>
 				)}
@@ -176,7 +180,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
 						tooltipContent={t('Only show unresolved feedback.')}
-						onRemove={() => onCheckboxChange('resolutionUnresolved', null)}
+						onRemove={() => onCheckboxChange('resolutionUnresolved', false)}
 						useHoverStyles={false}
 					/>
 				)}
