@@ -310,13 +310,15 @@ function ProposalCardContent({
 						/>
 					)}
 
-				{reviewAnnotation.error && reviewAnnotation.busyState === BusyState.SHARING && (
-					<ErrorToast
-						error={reviewAnnotation.error}
-						onRefreshLinkClick={onReviewAnnotationRefresh}
-						onRetryLinkClick={onReviewAnnotationShare}
-					/>
-				)}
+				{reviewAnnotation.error &&
+					(reviewAnnotation.busyState === BusyState.SHARING ||
+						reviewAnnotation.busyState === BusyState.REMOVING) && (
+						<ErrorToast
+							error={reviewAnnotation.error}
+							onRefreshLinkClick={onReviewAnnotationRefresh}
+							onRetryLinkClick={onReviewAnnotationShare}
+						/>
+					)}
 			</Block>
 
 			{showFooter && (
