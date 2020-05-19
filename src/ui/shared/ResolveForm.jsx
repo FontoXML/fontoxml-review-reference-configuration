@@ -14,7 +14,7 @@ import {
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton.jsx';
-import { RecoveryOption } from 'fontoxml-feedback/src/types.js';
+import { AnnotationStatus, RecoveryOption } from 'fontoxml-feedback/src/types.js';
 
 import t from 'fontoxml-localization/src/t.js';
 
@@ -116,12 +116,14 @@ export default function ResolveForm({
 								onClick={onCancel}
 							/>
 
-							{onProposalMerge && proposalState && (
-								<ReviewAnnotationAcceptProposalButton
-									onProposalMerge={onProposalMerge}
-									proposalState={proposalState}
-								/>
-							)}
+							{onProposalMerge &&
+								proposalState &&
+								reviewAnnotation.status !== AnnotationStatus.RESOLVED && (
+									<ReviewAnnotationAcceptProposalButton
+										onProposalMerge={onProposalMerge}
+										proposalState={proposalState}
+									/>
+								)}
 
 							<Button
 								icon={isLoading ? 'spinner' : null}

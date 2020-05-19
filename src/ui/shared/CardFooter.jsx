@@ -11,7 +11,7 @@ import {
 } from 'fds/components';
 
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton.jsx';
-import { RecoveryOption, TargetType } from 'fontoxml-feedback/src/types.js';
+import { AnnotationStatus, RecoveryOption, TargetType } from 'fontoxml-feedback/src/types.js';
 import t from 'fontoxml-localization/src/t.js';
 
 export default function CardFooter({
@@ -110,12 +110,13 @@ export default function CardFooter({
 						/>
 					)}
 
-					{showAcceptProposalButton && (
-						<ReviewAnnotationAcceptProposalButton
-							onProposalMerge={onProposalMerge}
-							proposalState={proposalState}
-						/>
-					)}
+					{showAcceptProposalButton &&
+						reviewAnnotation.status !== AnnotationStatus.RESOLVED && (
+							<ReviewAnnotationAcceptProposalButton
+								onProposalMerge={onProposalMerge}
+								proposalState={proposalState}
+							/>
+						)}
 
 					{showShareButton && (
 						<Button
