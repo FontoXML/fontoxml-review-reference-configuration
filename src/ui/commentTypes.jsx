@@ -11,8 +11,8 @@
 // buttons.
 
 const commentTypes = [
-	{ value: 'technical', label: 'Technical comment' },
 	{ value: 'general', label: 'General comment' },
-	{ value: 'editorial', label: 'Editorial comment' }
+	{ value: 'editorial', label: 'Editorial comment' },
+	{ value: 'technical', label: 'Technical comment' }
 ];
 export default commentTypes;
