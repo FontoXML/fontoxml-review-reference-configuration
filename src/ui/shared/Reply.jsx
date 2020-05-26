@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { Fragment, useCallback } from 'react';
 
 import {
 	Block,
+	Button,
 	CompactButton,
 	Flex,
 	HorizontalSeparationLine,
@@ -11,7 +12,10 @@ import {
 } from 'fds/components';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
+import { BusyState } from 'fontoxml-feedback/src/types.js';
 import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
+
+import t from 'fontoxml-localization/src/t.js';
 
 import ReplyActionsMenuPopover from './ReplyActionsMenuPopover.jsx';
 
@@ -22,6 +26,7 @@ export default function Reply({
 	ContentComponent,
 	isLast,
 	reviewAnnotation,
+	onCancelRetryRemove,
 	onHide,
 	onRefresh,
 	onRemove,
@@ -36,6 +41,10 @@ export default function Reply({
 
 	const handleEditButtonClick = useCallback(() => onShowEditForm(reply.id), [
 		onShowEditForm,
+		reply.id
+	]);
+	const handleCancelRemoveButtonClick = useCallback(() => onCancelRetryRemove(reply.id), [
+		onCancelRetryRemove,
 		reply.id
 	]);
 	const handleRemoveButtonClick = useCallback(() => onRemove(reply.id), [onRemove, reply.id]);
@@ -56,7 +65,7 @@ export default function Reply({
 					<Flex justifyContent="space-between">
 						<Label colorName="text-muted-color">{authorAndTimestampLabel}</Label>
 
-						{showActionsMenuButton && (
+						{showActionsMenuButton && !reply.error && (
 							<PopoverAnchor
 								renderAnchor={({ isPopoverOpened, onRef, togglePopover }) => (
 									<CompactButton
@@ -84,7 +93,38 @@ export default function Reply({
 						type={reviewAnnotation.type}
 					/>
 
-					{error && (
+					{/* If there was an error while removing the annotation, we show that error in an ErrorToast.
+					Instead of showing the regular footer, show something that looks similar to the footer you
+					see when editing a reply.
+					And make sure to render that footer in the error state (Retry remove label on the primary button).*/}
+					{error && reply.busyState === BusyState.REMOVING && (
+						<Fragment>
+							<ErrorToast
+								error={error}
+								onHideLinkClick={handleHideClick}
+								onRefreshLinkClick={handleRefreshLinkClick}
+								onRetryLinkClick={handleRemoveButtonClick}
+							/>
+
+							<HorizontalSeparationLine marginSizeBottom="m" marginSizeTop="m" />
+
+							<Flex justifyContent="flex-end" spaceSize="m">
+								<Button
+									isDisabled={isDisabled}
+									label={t('Cancel')}
+									onClick={handleCancelRemoveButtonClick}
+								/>
+
+								<Button
+									label={t('Retry remove')}
+									onClick={handleRemoveButtonClick}
+									type="primary"
+								/>
+							</Flex>
+						</Fragment>
+					)}
+
+					{error && reply.busyState !== BusyState.REMOVING && (
 						<ErrorToast
 							error={error}
 							onHideLinkClick={handleHideClick}

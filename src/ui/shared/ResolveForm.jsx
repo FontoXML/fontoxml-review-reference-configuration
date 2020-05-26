@@ -100,6 +100,7 @@ export default function ResolveForm({
 									<ErrorToast
 										error={error}
 										onRefreshLinkClick={onReviewAnnotationRefresh}
+										onRetryLinkClick={onSubmit}
 									/>
 								)}
 							</FormRow>

@@ -116,6 +116,7 @@ function ReplyFormContent({
 								error={error}
 								onHideLinkClick={onHideLinkClick}
 								onRefreshLinkClick={onRefreshLinkClick}
+								onRetryLinkClick={onSubmit}
 							/>
 						)}
 					</Block>

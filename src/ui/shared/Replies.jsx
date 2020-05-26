@@ -105,6 +105,7 @@ export default function Replies({
 						ContentComponent={ContentComponent}
 						isLast={isLast}
 						reviewAnnotation={reviewAnnotation}
+						onCancelRetryRemove={onReplyFormCancel}
 						onHide={onReplyErrorHide}
 						onRefresh={onReplyRefresh}
 						onRemove={onReplyRemove}

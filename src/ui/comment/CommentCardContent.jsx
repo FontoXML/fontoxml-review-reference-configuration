@@ -314,20 +314,28 @@ function CommentCardContent({
 						/>
 					)}
 
-				{reviewAnnotation.error &&
-					(reviewAnnotation.busyState === BusyState.SHARING ||
-						reviewAnnotation.busyState === BusyState.REMOVING) && (
-						<ErrorToast
-							error={reviewAnnotation.error}
-							onRefreshLinkClick={onReviewAnnotationRefresh}
-							onRetryLinkClick={onReviewAnnotationShare}
-						/>
-					)}
+				{reviewAnnotation.error && reviewAnnotation.busyState === BusyState.SHARING && (
+					<ErrorToast
+						error={reviewAnnotation.error}
+						onRefreshLinkClick={onReviewAnnotationRefresh}
+						onRetryLinkClick={onReviewAnnotationShare}
+					/>
+				)}
+
+				{reviewAnnotation.error && reviewAnnotation.busyState === BusyState.REMOVING && (
+					<ErrorToast
+						error={reviewAnnotation.error}
+						onRefreshLinkClick={onReviewAnnotationRefresh}
+						onRetryLinkClick={onReviewAnnotationRemove}
+					/>
+				)}
 			</Block>
 
 			{showFooter && (
 				<CardFooter
 					reviewAnnotation={reviewAnnotation}
+					onReviewAnnotationFormCancel={onReviewAnnotationFormCancel}
+					onReviewAnnotationRemove={onReviewAnnotationRemove}
 					onReviewAnnotationResolve={onReviewAnnotationResolve}
 					onReviewAnnotationShare={onReviewAnnotationShare}
 					onReviewAnnotationShowInCreatedContext={onReviewAnnotationShowInCreatedContext}
@@ -335,6 +343,7 @@ function CommentCardContent({
 						onReviewAnnotationShowInResolvedContext
 					}
 					onReplyAdd={onReplyAdd}
+					showAcceptProposalButton={false}
 					showCreatedContextButton={showCreatedContextButton}
 					showResolvedContextButton={showResolvedContextButton}
 					showReplyButton={showReplyButton}
