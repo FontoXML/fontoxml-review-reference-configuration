@@ -92,7 +92,7 @@ export default function ResolveForm({
 									isDisabled={isDisabled}
 									name="resolutionComment"
 									placeholder={t(
-										'Optionally describe how or why you resolved this comment…'
+										'Optionally describe how or why you resolved this comment'
 									)}
 									rows={rows}
 								/>
