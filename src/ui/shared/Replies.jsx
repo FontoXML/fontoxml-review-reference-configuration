@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { Fragment, useCallback, useMemo, useState } from 'react';
 
-import { Block, CompactStateMessage, HorizontalSeparationLine } from 'fds/components';
+import { Block, CompactStateMessage, HorizontalSeparationLine, TextLink } from 'fds/components';
 
 import { AnnotationStatus, BusyState, ContextType } from 'fontoxml-feedback/src/types.js';
 
@@ -20,6 +20,8 @@ export default function Replies({
 	onReplyRefresh,
 	onReplyRemove
 }) {
+	const [areRepliesExpanded, setAreRepliesExpanded] = useState(false);
+
 	const showActionsMenuButton = useMemo(() => {
 		if (
 			context === ContextType.CREATED_CONTEXT_MODAL ||
@@ -40,9 +42,44 @@ export default function Replies({
 		}, reviewAnnotation.busyState !== BusyState.RESOLVING);
 	}, [context, reviewAnnotation.busyState, reviewAnnotation.replies, reviewAnnotation.status]);
 
+	const repliesToShow = useMemo(() => {
+		if (!areRepliesExpanded && reviewAnnotation.replies.length > 2) {
+			// If the last reply is a reply which is being added, show the latest 3 replies
+			const lastReply = reviewAnnotation.replies[reviewAnnotation.replies.length - 1];
+			if (lastReply.busyState === BusyState.ADDING) {
+				return reviewAnnotation.replies.slice(reviewAnnotation.replies.length - 3);
+			}
+
+			// Otherwise show the latest 2 replies
+			return reviewAnnotation.replies.slice(reviewAnnotation.replies.length - 2);
+		}
+
+		return reviewAnnotation.replies;
+	}, [areRepliesExpanded, reviewAnnotation.replies]);
+
+	const collapsedRepliesCount = reviewAnnotation.replies.length - repliesToShow.length;
+
+	const handleExpandRepliesTextLinkClick = useCallback(() => setAreRepliesExpanded(true), []);
+
 	return (
 		<Block>
-			{reviewAnnotation.replies.map((reply, index) => {
+			{collapsedRepliesCount > 0 && (
+				<Fragment>
+					<HorizontalSeparationLine />
+
+					<Block style={{ padding: '.5rem 0 .5rem 1.625rem' }}>
+						<TextLink
+							label={t(
+								'Show {COLLAPSED_REPLIES_COUNT, plural, one {1 more reply} other {# more replies}}',
+								{ COLLAPSED_REPLIES_COUNT: collapsedRepliesCount }
+							)}
+							onClick={handleExpandRepliesTextLinkClick}
+						/>
+					</Block>
+				</Fragment>
+			)}
+
+			{repliesToShow.map((reply, index) => {
 				const isLast = index === reviewAnnotation.replies.length - 1;
 
 				if (reply.isLoading && reply.busyState === BusyState.IDLE) {
