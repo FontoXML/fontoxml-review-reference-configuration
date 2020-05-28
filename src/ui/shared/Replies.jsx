@@ -12,6 +12,7 @@ import ReplyForm from './ReplyForm.jsx';
 export default function Replies({
 	ContentComponent,
 	context,
+	hasResolution,
 	reviewAnnotation,
 	onReplyEdit,
 	onReplyFormCancel,
@@ -43,19 +44,25 @@ export default function Replies({
 	}, [context, reviewAnnotation.busyState, reviewAnnotation.replies, reviewAnnotation.status]);
 
 	const repliesToShow = useMemo(() => {
-		if (!areRepliesExpanded && reviewAnnotation.replies.length > 2) {
-			// If the last reply is a reply which is being added, show the latest 3 replies
-			const lastReply = reviewAnnotation.replies[reviewAnnotation.replies.length - 1];
-			if (lastReply.busyState === BusyState.ADDING) {
-				return reviewAnnotation.replies.slice(reviewAnnotation.replies.length - 3);
-			}
-
-			// Otherwise show the latest 2 replies
-			return reviewAnnotation.replies.slice(reviewAnnotation.replies.length - 2);
+		if (areRepliesExpanded) {
+			return reviewAnnotation.replies;
 		}
 
-		return reviewAnnotation.replies;
-	}, [areRepliesExpanded, reviewAnnotation.replies]);
+		// Show 2 if there's no resolution, otherwise show 1 because a resolution is visually
+		// similar to a reply.
+		let numberOfRepliesToShow = hasResolution ? 1 : 2;
+
+		// If the last reply is a reply which is being added, show the latest 3 replies
+		// If there's also a resolution, show 2 replies
+		const lastReply = reviewAnnotation.replies[reviewAnnotation.replies.length - 1];
+		if (lastReply.busyState === BusyState.ADDING) {
+			numberOfRepliesToShow = hasResolution ? 2 : 3;
+		}
+
+		return reviewAnnotation.replies.slice(
+			reviewAnnotation.replies.length - numberOfRepliesToShow
+		);
+	}, [areRepliesExpanded, hasResolution, reviewAnnotation.replies]);
 
 	const collapsedRepliesCount = reviewAnnotation.replies.length - repliesToShow.length;
 

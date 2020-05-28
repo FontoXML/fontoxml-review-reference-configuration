@@ -252,6 +252,7 @@ function ProposalCardContent({
 						<Replies
 							ContentComponent={ProposalReplyContent}
 							context={context}
+							hasResolution={!!resolution}
 							reviewAnnotation={reviewAnnotation}
 							onReplyEdit={onReplyEdit}
 							onReplyFormCancel={onReplyFormCancel}

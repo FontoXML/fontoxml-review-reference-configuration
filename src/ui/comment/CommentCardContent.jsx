@@ -258,6 +258,7 @@ function CommentCardContent({
 						<Replies
 							ContentComponent={CommentReplyContent}
 							context={context}
+							hasResolution={!!resolution}
 							reviewAnnotation={reviewAnnotation}
 							onReplyEdit={onReplyEdit}
 							onReplyFormCancel={onReplyFormCancel}
