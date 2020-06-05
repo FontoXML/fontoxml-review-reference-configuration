@@ -138,20 +138,18 @@ export default function CardFooter({
 			<Flex
 				alignItems="center"
 				justifyContent={
-					reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
-					(showCreatedContextButton || showResolvedContextButton)
+					showCreatedContextButton || showResolvedContextButton
 						? 'space-between'
 						: 'flex-end'
 				}
 				paddingSize="m"
 			>
-				{reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
-					(showCreatedContextButton || showResolvedContextButton) && (
-						<DropAnchor
-							renderAnchor={renderViewInDropAnchor}
-							renderDrop={renderViewInDrop}
-						/>
-					)}
+				{(showCreatedContextButton || showResolvedContextButton) && (
+					<DropAnchor
+						renderAnchor={renderViewInDropAnchor}
+						renderDrop={renderViewInDrop}
+					/>
+				)}
 
 				<Flex alignItems="center" spaceSize="m">
 					{showReplyButton && (

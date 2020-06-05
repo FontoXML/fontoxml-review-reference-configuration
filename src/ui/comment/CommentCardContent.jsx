@@ -7,7 +7,8 @@ import {
 	AnnotationStatus,
 	BusyState,
 	ContextType,
-	RecoveryOption
+	RecoveryOption,
+	TargetType
 } from 'fontoxml-feedback/src/types.js';
 import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
 
@@ -27,7 +28,7 @@ import resolutions from '../feedbackResolutions.jsx';
 import CommentAddOrEditForm from './CommentAddOrEditForm.jsx';
 import CommentReplyContent from './CommentReplyContent.jsx';
 
-// 'outdent' the icon container to align it with other icons
+// 'outdent' the icon container to align it with other icons above it
 const iconContainerStyles = { marginLeft: '-26px' };
 
 function CommentCardContent({
@@ -69,15 +70,18 @@ function CommentCardContent({
 	}, [reviewAnnotation.replies]);
 
 	const showCreatedContextButton =
+		reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
 		context !== ContextType.CREATED_CONTEXT_MODAL &&
 		context !== ContextType.RESOLVED_CONTEXT_MODAL;
 
 	const showResolvedContextButton =
+		reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
 		context !== ContextType.CREATED_CONTEXT_MODAL &&
 		context !== ContextType.RESOLVED_CONTEXT_MODAL &&
 		reviewAnnotation.status === AnnotationStatus.RESOLVED;
 
 	const showReplyButton = reviewAnnotation.status !== AnnotationStatus.RESOLVED;
+
 	const showResolveButton =
 		reviewAnnotation.status !== AnnotationStatus.PRIVATE &&
 		reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
@@ -86,28 +90,26 @@ function CommentCardContent({
 
 	const showShareButton =
 		reviewAnnotation.status === AnnotationStatus.PRIVATE &&
-		context !== ContextType.EDITOR_SHARING_SIDEBAR &&
-		context !== ContextType.REVIEW_SHARING_SIDEBAR &&
-		context !== ContextType.CREATED_CONTEXT_MODAL &&
-		context !== ContextType.RESOLVED_CONTEXT_MODAL;
+		(context === ContextType.EDITOR_SIDEBAR || context === ContextType.REVIEW_SIDEBAR);
+
+	const showAnyFooterButton =
+		showCreatedContextButton ||
+		showResolvedContextButton ||
+		showReplyButton ||
+		showResolveButton ||
+		showShareButton;
 
 	const showFooter =
+		showAnyFooterButton &&
+		(context === ContextType.EDITOR_SIDEBAR || context === ContextType.REVIEW_SIDEBAR) &&
 		reviewAnnotation.isSelected &&
-		(context !== ContextType.CREATED_CONTEXT_MODAL &&
-			context !== ContextType.RESOLVED_CONTEXT_MODAL &&
-			context !== ContextType.EDITOR_SHARING_SIDEBAR &&
-			context !== ContextType.REVIEW_SHARING_SIDEBAR &&
-			reviewAnnotation.busyState !== BusyState.ADDING &&
-			reviewAnnotation.busyState !== BusyState.EDITING &&
-			reviewAnnotation.busyState !== BusyState.RESOLVING &&
-			!hasReplyInNonIdleBusyState) &&
-		(showCreatedContextButton ||
-			showResolvedContextButton ||
-			showReplyButton ||
-			showResolveButton ||
-			showShareButton);
+		reviewAnnotation.busyState !== BusyState.ADDING &&
+		reviewAnnotation.busyState !== BusyState.EDITING &&
+		reviewAnnotation.busyState !== BusyState.RESOLVING &&
+		!hasReplyInNonIdleBusyState;
 
 	const resolvedAuthorAndTimestampLabel = useAuthorAndTimestampLabel(reviewAnnotation, true);
+
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
 		reviewAnnotation.error &&

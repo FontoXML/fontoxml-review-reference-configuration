@@ -1,22 +1,14 @@
 import React, { Fragment, useMemo } from 'react';
 
-import {
-	Block,
-	Button,
-	Diff,
-	Flex,
-	HorizontalSeparationLine,
-	Icon,
-	Label,
-	Text
-} from 'fds/components';
+import { Block, Diff, Flex, HorizontalSeparationLine, Icon, Label, Text } from 'fds/components';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
 import {
 	AnnotationStatus,
 	BusyState,
 	ContextType,
-	RecoveryOption
+	RecoveryOption,
+	TargetType
 } from 'fontoxml-feedback/src/types.js';
 import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
 
@@ -34,7 +26,7 @@ import resolutions from '../feedbackResolutions.jsx';
 import ProposalAddOrEditForm from './ProposalAddOrEditForm.jsx';
 import ProposalReplyContent from './ProposalReplyContent.jsx';
 
-// negative margin to align the icon with the reply icons above (if any)
+// 'outdent' the icon container to align it with other icons above it
 const iconContainerStyles = { marginLeft: '-26px' };
 
 function ProposalCardContent({
@@ -77,15 +69,18 @@ function ProposalCardContent({
 		context === ContextType.EDITOR_SIDEBAR && onProposalMerge && reviewAnnotation.proposalState;
 
 	const showCreatedContextButton =
+		reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
 		context !== ContextType.CREATED_CONTEXT_MODAL &&
 		context !== ContextType.RESOLVED_CONTEXT_MODAL;
 
 	const showResolvedContextButton =
+		reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
 		context !== ContextType.CREATED_CONTEXT_MODAL &&
 		context !== ContextType.RESOLVED_CONTEXT_MODAL &&
 		reviewAnnotation.status === AnnotationStatus.RESOLVED;
 
 	const showReplyButton = reviewAnnotation.status !== AnnotationStatus.RESOLVED;
+
 	const showResolveButton =
 		reviewAnnotation.status !== AnnotationStatus.PRIVATE &&
 		reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
@@ -94,26 +89,24 @@ function ProposalCardContent({
 
 	const showShareButton =
 		reviewAnnotation.status === AnnotationStatus.PRIVATE &&
-		context !== ContextType.EDITOR_SHARING_SIDEBAR &&
-		context !== ContextType.REVIEW_SHARING_SIDEBAR &&
-		context !== ContextType.CREATED_CONTEXT_MODAL &&
-		context !== ContextType.RESOLVED_CONTEXT_MODAL;
+		(context === ContextType.EDITOR_SIDEBAR || context === ContextType.REVIEW_SIDEBAR);
+
+	const showAnyFooterButton =
+		showAcceptProposalButton ||
+		showCreatedContextButton ||
+		showResolvedContextButton ||
+		showReplyButton ||
+		showResolveButton ||
+		showShareButton;
 
 	const showFooter =
+		showAnyFooterButton &&
+		(context === ContextType.EDITOR_SIDEBAR || context === ContextType.REVIEW_SIDEBAR) &&
 		reviewAnnotation.isSelected &&
-		(context !== ContextType.CREATED_CONTEXT_MODAL &&
-			context !== ContextType.RESOLVED_CONTEXT_MODAL &&
-			context !== ContextType.EDITOR_SHARING_SIDEBAR &&
-			context !== ContextType.REVIEW_SHARING_SIDEBAR &&
-			reviewAnnotation.busyState !== BusyState.ADDING &&
-			reviewAnnotation.busyState !== BusyState.EDITING &&
-			reviewAnnotation.busyState !== BusyState.RESOLVING &&
-			!hasReplyInNonIdleBusyState) &&
-		(showCreatedContextButton ||
-			showResolvedContextButton ||
-			showReplyButton ||
-			showResolveButton ||
-			showShareButton);
+		reviewAnnotation.busyState !== BusyState.ADDING &&
+		reviewAnnotation.busyState !== BusyState.EDITING &&
+		reviewAnnotation.busyState !== BusyState.RESOLVING &&
+		!hasReplyInNonIdleBusyState;
 
 	const resolvedAuthorAndTimestampLabel = useAuthorAndTimestampLabel(reviewAnnotation, true);
 
