@@ -284,21 +284,26 @@ function CommentCardContent({
 							>
 								<Icon icon="check" colorName="icon-s-muted-color" />
 
-								<Label colorName="text-muted-color" isBlock>
+								<Label isBlock isBold>
 									{resolvedAuthorAndTimestampLabel}
 								</Label>
 							</Flex>
 
 							<Block>
-								<Label isBold isBlock>
-									{t('Resolved')}
-								</Label>
+								<Flex>
+									{resolution.value === 'accepted' && (
+										<Icon icon="fas fa-check-square" />
+									)}
+
+									{resolution.value === 'rejected' && (
+										<Icon icon="fas fa-times-square" />
+									)}
+									<Label isBold isBlock>
+										{t('Resolved')} - {t(resolution.displayLabel)}
+									</Label>
+								</Flex>
 
 								<Text>
-									{resolution.displayLabel}
-									{reviewAnnotation.resolvedMetadata &&
-										reviewAnnotation.resolvedMetadata.resolutionComment &&
-										' - '}
 									{reviewAnnotation.resolvedMetadata &&
 										reviewAnnotation.resolvedMetadata.resolutionComment}
 								</Text>
