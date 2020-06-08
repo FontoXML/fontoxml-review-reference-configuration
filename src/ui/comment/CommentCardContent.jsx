@@ -282,15 +282,15 @@ function CommentCardContent({
 								flex="none"
 								spaceSize="m"
 							>
-								<Icon icon="check" colorName="icon-s-muted-color" />
+								<Icon icon="check" />
 
 								<Label isBlock isBold>
 									{resolvedAuthorAndTimestampLabel}
 								</Label>
 							</Flex>
 
-							<Block>
-								<Flex>
+							<Block spaceVerticalSize="s">
+								<Flex spaceSize="m">
 									{resolution.value === 'accepted' && (
 										<Icon icon="fas fa-check-square" />
 									)}
