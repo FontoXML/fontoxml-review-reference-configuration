@@ -38,6 +38,7 @@ export default function Reply({
 	const isDisabled = reply.isLoading;
 
 	const authorAndTimestampLabel = useAuthorAndTimestampLabel(reply);
+	const [authorLabel, timestampLabel] = authorAndTimestampLabel.split(' – ');
 
 	const handleEditButtonClick = useCallback(() => onShowEditForm(reply.id), [
 		onShowEditForm,
@@ -58,13 +59,22 @@ export default function Reply({
 
 			<Flex flex="none" paddingSize={isLast ? { top: 'm' } : { vertical: 'm' }} spaceSize="m">
 				<Flex alignItems="flex-start" applyCss={iconContainerStyles} flex="none">
-					<Icon icon="reply" colorName="icon-s-muted-color" />
+					<Icon icon="reply" />
 				</Flex>
 
 				<Block flex="1" spaceVerticalSize="m">
 					<Flex justifyContent="space-between">
-						<Label colorName="text-muted-color">{authorAndTimestampLabel}</Label>
+						<Flex spaceSize="m" alignItems="baseline">
+							<Label isBold size="l" tooltipContent={authorLabel}>
+								{authorLabel}
+							</Label>
 
+							{timestampLabel && (
+								<Flex flex="none" spaceSize="s">
+									<Label isBold>{timestampLabel}</Label>
+								</Flex>
+							)}
+						</Flex>
 						{showActionsMenuButton && !reply.error && (
 							<PopoverAnchor
 								renderAnchor={({ isPopoverOpened, onRef, togglePopover }) => (

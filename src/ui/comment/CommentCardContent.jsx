@@ -199,7 +199,7 @@ function CommentCardContent({
 					reviewAnnotation.busyState !== BusyState.EDITING &&
 					reviewAnnotation.metadata.comment && (
 						<Block spaceVerticalSize="m">
-							<Block>
+							<Block spaceVerticalSize="m">
 								{publicationCommentType ? (
 									<Flex alignItems="center" flexDirection="row" spaceSize="s">
 										<Icon icon="files-o" />
@@ -280,9 +280,10 @@ function CommentCardContent({
 								alignItems="center"
 								applyCss={iconContainerStyles}
 								flex="none"
-								spaceSize="m"
+								spaceSize="s"
 							>
-								<Icon icon="check" />
+								{resolution.value === 'accepted' && <Icon icon="check" />}
+								{resolution.value === 'rejected' && <Icon icon="times" />}
 
 								<Label isBlock isBold>
 									{resolvedAuthorAndTimestampLabel}
@@ -290,7 +291,7 @@ function CommentCardContent({
 							</Flex>
 
 							<Block spaceVerticalSize="s">
-								<Flex spaceSize="m">
+								<Flex spaceSize="s">
 									{resolution.value === 'accepted' && (
 										<Icon icon="fas fa-check-square" />
 									)}

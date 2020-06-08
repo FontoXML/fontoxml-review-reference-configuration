@@ -56,8 +56,7 @@ function ProposalAddOrEditFormContent({
 						<Block isInline>
 							<Icon icon="pencil-square-o" />
 						</Block>
-
-						<span>Proposed change</span>
+						<span>{t('Proposed change')}</span>
 					</Block>
 				}
 				hasRequiredAsterisk

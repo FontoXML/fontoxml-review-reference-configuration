@@ -11,7 +11,6 @@ import {
 	TargetType
 } from 'fontoxml-feedback/src/types.js';
 import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
-
 import t from 'fontoxml-localization/src/t.js';
 
 import CardFooter from '../shared/CardFooter.jsx';
@@ -181,7 +180,7 @@ function ProposalCardContent({
 								<Block>
 									<Flex alignItems="center" flexDirection="row" spaceSize="s">
 										<Icon icon="pencil-square-o" />
-										<Label isBold>Proposed change</Label>
+										<Label isBold>{t('Proposed change')}</Label>
 									</Flex>
 
 									<Diff
@@ -194,7 +193,7 @@ function ProposalCardContent({
 
 							{reviewAnnotation.metadata.comment && (
 								<Block>
-									<Label isBold>Motivation</Label>
+									<Label isBold>{t('Motivation')}</Label>
 
 									{reviewAnnotation.isSelected && (
 										<Text>{reviewAnnotation.metadata.comment}</Text>

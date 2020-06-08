@@ -70,15 +70,14 @@ export default function CardHeader({
 
 	return (
 		<Flex alignItems="center" justifyContent="space-between" spaceSize="m">
-			<Flex spaceSize="s">
-				<Label colorName="text-muted-color" tooltipContent={authorLabel}>
+			<Flex spaceSize="m" alignItems="baseline">
+				<Label isBold size="l" tooltipContent={authorLabel}>
 					{authorLabel}
 				</Label>
 
 				{timestampLabel && (
 					<Flex flex="none" spaceSize="s">
-						<Label colorName="text-muted-color">–</Label>
-						<Label colorName="text-muted-color">{timestampLabel}</Label>
+						<Label isBold>{timestampLabel}</Label>
 					</Flex>
 				)}
 			</Flex>
