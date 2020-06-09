@@ -50,38 +50,40 @@ function ProposalAddOrEditFormContent({
 
 	return (
 		<Fragment>
-			<FormRow
-				label={
-					<Block isInline spaceHorizontalSize="s">
-						<Block isInline>
-							<Icon icon="pencil-square-o" />
+			<Block spaceVerticalSize="m">
+				<FormRow
+					label={
+						<Block isInline spaceHorizontalSize="s" spaceVerticalSize="m">
+							<Block isInline>
+								<Icon icon="fas fa-pencil-square-o" />
+							</Block>
+							<span>{t('Proposed change')}</span>
 						</Block>
-						<span>{t('Proposed change')}</span>
-					</Block>
-				}
-				hasRequiredAsterisk
-				isLabelBold
-				labelColorName="text-color"
-			>
-				<TextAreaWithDiff
-					isDisabled={isDisabled}
-					name="proposedChange"
-					originalValue={originalText}
-					placeholder={t('Leave empty to propose removing the selected content')}
-					ref={onFocusableRef}
-					rows={rows}
-					validate={value => validateProposedChangeField(value, originalText)}
-				/>
-			</FormRow>
+					}
+					hasRequiredAsterisk
+					isLabelBold
+					labelColorName="text-color"
+				>
+					<TextAreaWithDiff
+						isDisabled={isDisabled}
+						name="proposedChange"
+						originalValue={originalText}
+						placeholder={t('Leave empty to propose removing the selected content')}
+						ref={onFocusableRef}
+						rows={rows}
+						validate={value => validateProposedChangeField(value, originalText)}
+					/>
+				</FormRow>
 
-			<FormRow label="Motivation" isLabelBold labelColorName="text-color">
-				<TextArea
-					isDisabled={isDisabled}
-					name="comment"
-					rows={rows}
-					placeholder={t('Motivate your proposal')}
-				/>
-			</FormRow>
+				<FormRow label={t('Motivation')} isLabelBold labelColorName="text-color">
+					<TextArea
+						isDisabled={isDisabled}
+						name="comment"
+						rows={rows}
+						placeholder={t('Motivate your proposal')}
+					/>
+				</FormRow>
+			</Block>
 
 			<AddOrEditFormFooter
 				error={error}

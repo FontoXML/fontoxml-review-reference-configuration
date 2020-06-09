@@ -59,7 +59,7 @@ export default function Reply({
 
 			<Flex flex="none" paddingSize={isLast ? { top: 'm' } : { vertical: 'm' }} spaceSize="m">
 				<Flex alignItems="flex-start" applyCss={iconContainerStyles} flex="none">
-					<Icon icon="reply" />
+					<Icon icon="fas fa-reply" />
 				</Flex>
 
 				<Block flex="1" spaceVerticalSize="m">

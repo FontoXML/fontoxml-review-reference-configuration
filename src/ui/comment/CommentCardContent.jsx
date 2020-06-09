@@ -207,7 +207,7 @@ function CommentCardContent({
 									</Flex>
 								) : (
 									<Flex alignItems="center" flexDirection="row" spaceSize="s">
-										<Icon icon="comment" />
+										<Icon icon="fas fa-comment" />
 										<Label isBold> {commentType} </Label>
 									</Flex>
 								)}
@@ -239,7 +239,7 @@ function CommentCardContent({
 							<HorizontalSeparationLine marginSizeBottom="m" />
 
 							<Flex spaceSize="s">
-								<Icon icon="reply" />
+								<Icon icon="fas fa-reply" />
 								<Label>
 									{t('{REPLIES_COUNT, plural, one {1 reply} other {# replies}}', {
 										REPLIES_COUNT:

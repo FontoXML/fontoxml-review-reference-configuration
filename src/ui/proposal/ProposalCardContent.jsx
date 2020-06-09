@@ -175,24 +175,26 @@ function ProposalCardContent({
 				{reviewAnnotation.busyState !== BusyState.ADDING &&
 					reviewAnnotation.busyState !== BusyState.EDITING &&
 					(hasProposedChange || reviewAnnotation.metadata.comment) && (
-						<Block spaceVerticalSize="m">
+						<Block spaceVerticalSize="l">
 							{hasProposedChange && (
 								<Block>
-									<Flex alignItems="center" flexDirection="row" spaceSize="s">
-										<Icon icon="pencil-square-o" />
-										<Label isBold>{t('Proposed change')}</Label>
-									</Flex>
+									<Flex flexDirection="column" spaceSize="m">
+										<Flex alignItems="center" flexDirection="row" spaceSize="s">
+											<Icon icon="fas fa-pencil-square-o" />
+											<Label isBold>{t('Proposed change')}</Label>
+										</Flex>
 
-									<Diff
-										isSingleLine={!reviewAnnotation.isSelected}
-										originalValue={reviewAnnotation.originalText}
-										value={reviewAnnotation.metadata.proposedChange}
-									/>
+										<Diff
+											isSingleLine={!reviewAnnotation.isSelected}
+											originalValue={reviewAnnotation.originalText}
+											value={reviewAnnotation.metadata.proposedChange}
+										/>
+									</Flex>
 								</Block>
 							)}
 
 							{reviewAnnotation.metadata.comment && (
-								<Block>
+								<Block spaceVerticalSize="m">
 									<Label isBold>{t('Motivation')}</Label>
 
 									{reviewAnnotation.isSelected && (
@@ -223,7 +225,7 @@ function ProposalCardContent({
 							<HorizontalSeparationLine marginSizeBottom="m" />
 
 							<Flex spaceSize="s">
-								<Icon icon="reply" />
+								<Icon icon="fas fa-reply" />
 								<Label>
 									{t('{REPLIES_COUNT, plural, one {1 reply} other {# replies}}', {
 										REPLIES_COUNT:
@@ -266,11 +268,9 @@ function ProposalCardContent({
 								flex="none"
 								spaceSize="m"
 							>
-								<Icon icon="check" colorName="icon-s-muted-color" />
+								<Icon icon="check" />
 
-								<Label colorName="text-muted-color" isBlock>
-									{resolvedAuthorAndTimestampLabel}
-								</Label>
+								<Label isBlock>{resolvedAuthorAndTimestampLabel}</Label>
 							</Flex>
 
 							<Block>

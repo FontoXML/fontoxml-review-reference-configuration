@@ -74,6 +74,7 @@ function ReplyFormContent({
 	const isLoading = reply.isLoading && (isAdding || isEditing);
 
 	const authorAndTimestampLabel = useAuthorAndTimestampLabel(reply);
+	const [authorLabel, timestampLabel] = authorAndTimestampLabel.split(' – ');
 
 	return (
 		<Fragment>
@@ -81,7 +82,7 @@ function ReplyFormContent({
 
 			<Flex flex="none" paddingSize={{ top: 'm' }} spaceSize="m">
 				<Flex alignItems="flex-start" applyCss={iconContainerStyles} flex="none">
-					<Icon icon="reply" colorName="icon-s-muted-color" />
+					<Icon icon="fas fa-reply" />
 				</Flex>
 
 				<Block
@@ -90,11 +91,18 @@ function ReplyFormContent({
 					spaceVerticalSize="m"
 				>
 					<Block spaceVerticalSize="s">
-						{isEditing && (
-							<Label colorName="text-muted-color" isBlock>
-								{authorAndTimestampLabel}
-							</Label>
-						)}
+						<Flex spaceSize="m" alignItems="baseline">
+							{isEditing && (
+								<Label isBold size="l" tooltipContent={authorLabel}>
+									{authorLabel}
+								</Label>
+							)}
+							{isEditing && timestampLabel && (
+								<Flex flex="none" spaceSize="s">
+									<Label isBold>{timestampLabel}</Label>
+								</Flex>
+							)}
+						</Flex>
 
 						<FormRow
 							label="Reply"

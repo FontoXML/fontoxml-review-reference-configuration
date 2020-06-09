@@ -133,7 +133,7 @@ export default function CardHeader({
 												<Menu>
 													{showEditButton && (
 														<MenuItem
-															icon="pencil"
+															icon="fas fa-pencil"
 															isDisabled={reviewAnnotation.isLoading}
 															label={t('Edit')}
 															onClick={() => {

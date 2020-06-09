@@ -93,7 +93,7 @@ export default function ResolveForm({
 								spaceSize="m"
 							>
 								<Block applyCss={{ marginTop: '6px' }}>
-									<Icon icon="check" colorName="icon-s-muted-color" />
+									<Icon icon="check" />
 								</Block>
 
 								<FormRow

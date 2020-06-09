@@ -21,7 +21,11 @@ export default function ReplyActionsMenuPopover({
 		<Popover>
 			<PopoverBody paddingSize={0}>
 				<Menu>
-					<MenuItem icon="pencil-square-o" label="Edit" onClick={handleEditButtonClick} />
+					<MenuItem
+						icon="fas fa-pencil-square-o"
+						label="Edit"
+						onClick={handleEditButtonClick}
+					/>
 
 					<MenuItem icon="times" label="Remove" onClick={handleRemoveButtonClick} />
 				</Menu>
