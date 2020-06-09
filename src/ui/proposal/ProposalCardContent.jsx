@@ -108,6 +108,7 @@ function ProposalCardContent({
 		!hasReplyInNonIdleBusyState;
 
 	const resolvedAuthorAndTimestampLabel = useAuthorAndTimestampLabel(reviewAnnotation, true);
+	const [authorLabel, timestampLabel] = resolvedAuthorAndTimestampLabel.split(' – ');
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
@@ -270,19 +271,34 @@ function ProposalCardContent({
 							>
 								<Icon icon="check" />
 
-								<Label isBlock>{resolvedAuthorAndTimestampLabel}</Label>
+								<Flex spaceSize="m" alignItems="baseline">
+									<Label isBold size="l" tooltipContent={authorLabel}>
+										{authorLabel}
+									</Label>
+
+									{timestampLabel && (
+										<Flex flex="none" spaceSize="s">
+											<Label isBold>{timestampLabel}</Label>
+										</Flex>
+									)}
+								</Flex>
 							</Flex>
 
 							<Block>
-								<Label isBold isBlock>
-									{t('Resolved')}
-								</Label>
+								<Flex spaceSize="s">
+									{resolution.value === 'accepted' && (
+										<Icon icon="fas fa-check-square" />
+									)}
+
+									{resolution.value === 'rejected' && (
+										<Icon icon="fas fa-times-square" />
+									)}
+									<Label isBold isBlock>
+										{t('Resolved')} - {t(resolution.displayLabel)}
+									</Label>
+								</Flex>
 
 								<Text>
-									{resolution.displayLabel}
-									{reviewAnnotation.resolvedMetadata &&
-										reviewAnnotation.resolvedMetadata.resolutionComment &&
-										' - '}
 									{reviewAnnotation.resolvedMetadata &&
 										reviewAnnotation.resolvedMetadata.resolutionComment}
 								</Text>

@@ -50,7 +50,7 @@ function ProposalAddOrEditFormContent({
 
 	return (
 		<Fragment>
-			<Block spaceVerticalSize="m">
+			<Block spaceVerticalSize="l">
 				<FormRow
 					label={
 						<Block isInline spaceHorizontalSize="s" spaceVerticalSize="m">

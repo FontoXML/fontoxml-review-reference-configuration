@@ -78,7 +78,7 @@ export default function CardFooter({
 			<Drop>
 				<Menu>
 					<MenuItem
-						icon="comment"
+						icon="fas fa-comment"
 						isDisabled={!showCreatedContextButton}
 						label={t('View in created context')}
 						onClick={onReviewAnnotationShowInCreatedContext}

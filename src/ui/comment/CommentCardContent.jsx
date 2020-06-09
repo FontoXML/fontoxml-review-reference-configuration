@@ -109,6 +109,7 @@ function CommentCardContent({
 		!hasReplyInNonIdleBusyState;
 
 	const resolvedAuthorAndTimestampLabel = useAuthorAndTimestampLabel(reviewAnnotation, true);
+	const [authorLabel, timestampLabel] = resolvedAuthorAndTimestampLabel.split(' – ');
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
@@ -285,9 +286,17 @@ function CommentCardContent({
 								{resolution.value === 'accepted' && <Icon icon="check" />}
 								{resolution.value === 'rejected' && <Icon icon="times" />}
 
-								<Label isBlock isBold>
-									{resolvedAuthorAndTimestampLabel}
-								</Label>
+								<Flex spaceSize="m" alignItems="baseline">
+									<Label isBold size="l" tooltipContent={authorLabel}>
+										{authorLabel}
+									</Label>
+
+									{timestampLabel && (
+										<Flex flex="none" spaceSize="s">
+											<Label isBold>{timestampLabel}</Label>
+										</Flex>
+									)}
+								</Flex>
 							</Flex>
 
 							<Block spaceVerticalSize="s">
