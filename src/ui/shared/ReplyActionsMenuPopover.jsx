@@ -28,7 +28,7 @@ export default function ReplyActionsMenuPopover({
 						onClick={handleEditButtonClick}
 					/>
 
-					<MenuItem icon="times" label="Remove" onClick={handleRemoveButtonClick} />
+					<MenuItem icon="times" label={t('Remove')} onClick={handleRemoveButtonClick} />
 				</Menu>
 			</PopoverBody>
 		</Popover>
