@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 
 import { Menu, MenuItem, Popover, PopoverBody } from 'fds/components';
+import t from 'fontoxml-localization/src/t.js';
 
 export default function ReplyActionsMenuPopover({
 	onEditButtonClick,
@@ -23,7 +24,7 @@ export default function ReplyActionsMenuPopover({
 				<Menu>
 					<MenuItem
 						icon="fas fa-pencil-square-o"
-						label="Edit"
+						label={t('Edit')}
 						onClick={handleEditButtonClick}
 					/>
 
