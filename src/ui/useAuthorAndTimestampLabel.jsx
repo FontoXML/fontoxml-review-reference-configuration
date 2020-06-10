@@ -7,14 +7,10 @@ import t from 'fontoxml-localization/src/t.js';
 const configuredScope = configurationManager.get('scope');
 
 /**
- * A custom React hook that formats the author and timestamp of the given reviewAnnotation or reply
- * as a single human-friendly label ready for display.
+ * A custom React hook that formats the author and timestamp of the given reviewAnnotation or reply.
+ *
  * Renders the author name as "You" if the author id matches the current scope user id.
  *
- * Note: the authorLabel and timestampLabel are joined together by this string: " – ".
- * This uses a special "en-dash" symbol: –, which is slightly different than a regular dash: -.
- * This allows you to easily split these labels if necessary. Without risking accidental splits on
- * parts of the author name.
  * The timestamp label will not contain any kind of dashes.
  *
  * @param  {object}   reviewAnnotationOrReply
@@ -24,10 +20,7 @@ const configuredScope = configurationManager.get('scope');
  * @param  {string}   [fallback=t('Author not available')]  A string to display when the (resolved)
  * author field is not set on the given reviewAnnotationOrReply.
  *
- * @return {object}
- *
- * @category add-on/fontoxml-feedback
- * @fontosdk
+ * @return {object} Object containing the 'author' and the 'timestamp' keys.
  * @react
  */
 export default function useAuthorAndTimestampLabel(
@@ -39,14 +32,15 @@ export default function useAuthorAndTimestampLabel(
 		let authorLabel = t('You');
 
 		if (reviewAnnotationOrReply.busyState === BusyState.ADDING) {
-			return authorLabel;
+			return { author: authorLabel };
 		}
 
 		const authorField = forResolvedReviewAnnotation ? 'resolvedAuthor' : 'author';
 		const timestampField = forResolvedReviewAnnotation ? 'resolvedTimestamp' : 'timestamp';
 
+		// Use fallback value if author is not present. Return author.
 		if (!reviewAnnotationOrReply[authorField]) {
-			return fallback;
+			return { author: fallback };
 		}
 
 		if (
@@ -56,16 +50,21 @@ export default function useAuthorAndTimestampLabel(
 			authorLabel = reviewAnnotationOrReply[authorField].displayName;
 		}
 
+		// Author label localization
+		authorLabel = t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
+
+		// If no timestamp, return localized authorname.
 		let timestamp = reviewAnnotationOrReply[timestampField];
 		if (!timestamp) {
-			return authorLabel;
+			return { author: authorLabel };
 		}
 
-		authorLabel = t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
+		// Timestamp localization
 		timestamp = t('{TIMESTAMP, fonto_date}, {TIMESTAMP, time, short}', {
 			TIMESTAMP: timestamp
 		});
 
+		// Return author and timestamp.
 		return {
 			author: authorLabel,
 			timestamp: timestamp
