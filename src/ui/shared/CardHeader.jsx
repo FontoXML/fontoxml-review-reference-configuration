@@ -6,7 +6,6 @@ import {
 	CompactButton,
 	Flex,
 	Icon,
-	Label,
 	Menu,
 	MenuItem,
 	Popover,
@@ -21,9 +20,9 @@ import {
 	ContextType,
 	RecoveryOption
 } from 'fontoxml-feedback/src/types.js';
-import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
-
 import t from 'fontoxml-localization/src/t.js';
+
+import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel.jsx';
 
 export default function CardHeader({
 	context,
@@ -36,15 +35,6 @@ export default function CardHeader({
 	showEditButton,
 	showRemoveButton
 }) {
-	const authorAndTimestampLabel = useAuthorAndTimestampLabel(reviewAnnotation);
-	// We split the combined label into separate parts so we only truncated the author name and not
-	// the timestamp label if the horizontal space is limited.
-	// The ' – ' part contains a special "en-dash" symbol: –, which is slightly different than a
-	// regular dash: -. This means it will be very unlikely that ' – ' is occuring within the
-	// author name; "hyphenated names" such as Jan-Willem all use normal dashes (and don't even use
-	// spaces around the dash).
-	const [authorLabel, timestampLabel] = authorAndTimestampLabel.split(' – ');
-
 	const showPopoverButton = useMemo(() => {
 		if (
 			context === ContextType.CREATED_CONTEXT_MODAL ||
@@ -70,17 +60,8 @@ export default function CardHeader({
 
 	return (
 		<Flex alignItems="center" justifyContent="space-between" spaceSize="m">
-			<Flex spaceSize="m" alignItems="baseline">
-				<Label isBold size="l" tooltipContent={authorLabel}>
-					{authorLabel}
-				</Label>
+			<AuthorAndTimestampLabel reviewAnnotation={reviewAnnotation} />
 
-				{timestampLabel && (
-					<Flex flex="none" spaceSize="s">
-						<Label isBold>{timestampLabel}</Label>
-					</Flex>
-				)}
-			</Flex>
 			<Flex spaceSize="m">
 				{reviewAnnotation.targetFoundForRevision === false && (
 					<Icon

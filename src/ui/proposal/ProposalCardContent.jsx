@@ -10,9 +10,9 @@ import {
 	RecoveryOption,
 	TargetType
 } from 'fontoxml-feedback/src/types.js';
-import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
 import t from 'fontoxml-localization/src/t.js';
 
+import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel.jsx';
 import CardFooter from '../shared/CardFooter.jsx';
 import CardHeader from '../shared/CardHeader.jsx';
 import ErrorStateMessage from '../shared/ErrorStateMessage.jsx';
@@ -106,9 +106,6 @@ function ProposalCardContent({
 		reviewAnnotation.busyState !== BusyState.EDITING &&
 		reviewAnnotation.busyState !== BusyState.RESOLVING &&
 		!hasReplyInNonIdleBusyState;
-
-	const resolvedAuthorAndTimestampLabel = useAuthorAndTimestampLabel(reviewAnnotation, true);
-	const [authorLabel, timestampLabel] = resolvedAuthorAndTimestampLabel.split(' – ');
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
@@ -270,18 +267,10 @@ function ProposalCardContent({
 								spaceSize="m"
 							>
 								<Icon icon="check" />
-
-								<Flex spaceSize="m" alignItems="baseline">
-									<Label isBold size="l" tooltipContent={authorLabel}>
-										{authorLabel}
-									</Label>
-
-									{timestampLabel && (
-										<Flex flex="none" spaceSize="s">
-											<Label isBold>{timestampLabel}</Label>
-										</Flex>
-									)}
-								</Flex>
+								<AuthorAndTimestampLabel
+									reviewAnnotation={reviewAnnotation}
+									forResolvedReviewAnnotation={true}
+								/>
 							</Flex>
 
 							<Block>

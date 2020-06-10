@@ -13,10 +13,9 @@ import {
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
 import { BusyState } from 'fontoxml-feedback/src/types.js';
-import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
-
 import t from 'fontoxml-localization/src/t.js';
 
+import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel.jsx';
 import ReplyActionsMenuPopover from './ReplyActionsMenuPopover.jsx';
 
 // 2px to visually align the reply icon nicely to the authorLabel
@@ -36,9 +35,6 @@ export default function Reply({
 }) {
 	const error = reply.error;
 	const isDisabled = reply.isLoading;
-
-	const authorAndTimestampLabel = useAuthorAndTimestampLabel(reply);
-	const [authorLabel, timestampLabel] = authorAndTimestampLabel.split(' – ');
 
 	const handleEditButtonClick = useCallback(() => onShowEditForm(reply.id), [
 		onShowEditForm,
@@ -64,17 +60,8 @@ export default function Reply({
 
 				<Block flex="1" spaceVerticalSize="m">
 					<Flex justifyContent="space-between">
-						<Flex spaceSize="m" alignItems="baseline">
-							<Label isBold size="l" tooltipContent={authorLabel}>
-								{authorLabel}
-							</Label>
+						<AuthorAndTimestampLabel reviewAnnotation={reviewAnnotation} />
 
-							{timestampLabel && (
-								<Flex flex="none" spaceSize="s">
-									<Label isBold>{timestampLabel}</Label>
-								</Flex>
-							)}
-						</Flex>
 						{showActionsMenuButton && !reply.error && (
 							<PopoverAnchor
 								renderAnchor={({ isPopoverOpened, onRef, togglePopover }) => (
