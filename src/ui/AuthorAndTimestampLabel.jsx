@@ -13,18 +13,20 @@ function AuthorAndTimestampLabel({
 		reviewAnnotation,
 		forResolvedReviewAnnotation
 	);
-	const authorLabel = resolvedAuthorAndTimestampLabel.author;
+	const authorLabel = resolvedAuthorAndTimestampLabel.authorLabel;
 	const timestampLabel = resolvedAuthorAndTimestampLabel.timestamp;
 
-	// Create label. If we have both, split with a dash, else, show only author.
-	let completeLabel = authorLabel;
-	if (timestampLabel) {
-		completeLabel = completeLabel + ' – ' + timestampLabel;
-	}
-
 	return (
-		<Flex>
-			<Label isBold={bold}>{completeLabel}</Label>
+		<Flex spacesize="m">
+			<Flex flex="0 1 auto">
+				<Label isBold={bold} tooltipContent={authorLabel + ' '}>
+					{authorLabel}
+				</Label>
+			</Flex>
+			<Flex flex="0 0 auto">
+				{timestampLabel && <Label isBold={bold}>{'–'}</Label>}
+				{timestampLabel && <Label isBold={bold}>{timestampLabel}</Label>}
+			</Flex>
 		</Flex>
 	);
 }
