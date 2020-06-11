@@ -17,16 +17,16 @@ function AuthorAndTimestampLabel({
 	const timestampLabel = resolvedAuthorAndTimestampLabel.timestamp;
 
 	return (
-		<Flex spacesize="m">
-			<Flex flex="0 1 auto">
-				<Label isBold={bold} tooltipContent={authorLabel + ' '}>
-					{authorLabel}
-				</Label>
-			</Flex>
-			<Flex flex="0 0 auto">
-				{timestampLabel && <Label isBold={bold}>{'–'}</Label>}
-				{timestampLabel && <Label isBold={bold}>{timestampLabel}</Label>}
-			</Flex>
+		<Flex alignItems="center" justifyContent="space-between" spaceSize="s">
+			<Label isBold={bold} tooltipContent={authorLabel}>
+				{authorLabel}
+			</Label>
+			{timestampLabel && (
+				<Flex flex="0 0 auto" spaceSize="s">
+					<Label isBold={bold}>–</Label>
+					<Label isBold={bold}>{timestampLabel}</Label>
+				</Flex>
+			)}
 		</Flex>
 	);
 }
