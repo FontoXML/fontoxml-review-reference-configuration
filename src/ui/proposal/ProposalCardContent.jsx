@@ -266,7 +266,9 @@ function ProposalCardContent({
 								flex="none"
 								spaceSize="m"
 							>
-								<Icon icon="check" />
+								{resolution.value === 'accepted' && <Icon icon="check" />}
+								{resolution.value === 'rejected' && <Icon icon="times" />}
+
 								<AuthorAndTimestampLabel
 									reviewAnnotation={reviewAnnotation}
 									forResolvedReviewAnnotation={true}
