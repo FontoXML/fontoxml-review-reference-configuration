@@ -60,7 +60,10 @@ export default function CardHeader({
 
 	return (
 		<Flex alignItems="center" justifyContent="space-between" spaceSize="m">
-			<AuthorAndTimestampLabel reviewAnnotation={reviewAnnotation} />
+			<AuthorAndTimestampLabel
+				reviewAnnotation={reviewAnnotation}
+				bold={!reviewAnnotation.isSelected}
+			/>
 
 			<Flex spaceSize="m">
 				{reviewAnnotation.targetFoundForRevision === false && (

@@ -4,7 +4,11 @@ import { Flex, Label } from 'fds/components';
 
 import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel.jsx';
 
-function AuthorAndTimestampLabel({ reviewAnnotation, forResolvedReviewAnnotation = false }) {
+function AuthorAndTimestampLabel({
+	reviewAnnotation,
+	bold = true,
+	forResolvedReviewAnnotation = false
+}) {
 	const resolvedAuthorAndTimestampLabel = useAuthorAndTimestampLabel(
 		reviewAnnotation,
 		forResolvedReviewAnnotation
@@ -12,17 +16,15 @@ function AuthorAndTimestampLabel({ reviewAnnotation, forResolvedReviewAnnotation
 	const authorLabel = resolvedAuthorAndTimestampLabel.author;
 	const timestampLabel = resolvedAuthorAndTimestampLabel.timestamp;
 
-	return (
-		<Flex spaceSize="m" alignItems="baseline">
-			<Label isBold size="l" tooltipContent={authorLabel}>
-				{authorLabel}
-			</Label>
+	// Create label. If we have both, split with a dash, else, show only author.
+	let completeLabel = authorLabel;
+	if (timestampLabel) {
+		completeLabel = completeLabel + ' – ' + timestampLabel;
+	}
 
-			{timestampLabel && (
-				<Flex flex="none" spaceSize="s">
-					<Label isBold>{timestampLabel}</Label>
-				</Flex>
-			)}
+	return (
+		<Flex>
+			<Label isBold={bold}>{completeLabel}</Label>
 		</Flex>
 	);
 }

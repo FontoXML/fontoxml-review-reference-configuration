@@ -7,7 +7,6 @@ import {
 	Flex,
 	HorizontalSeparationLine,
 	Icon,
-	Label,
 	PopoverAnchor
 } from 'fds/components';
 
