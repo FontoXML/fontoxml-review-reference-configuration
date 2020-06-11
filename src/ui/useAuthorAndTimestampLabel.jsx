@@ -66,7 +66,7 @@ export default function useAuthorAndTimestampLabel(
 
 		// Return author and timestamp.
 		return {
-			authorLabel,
+			author: authorLabel,
 			timestamp
 		};
 	}, [fallback, forResolvedReviewAnnotation, reviewAnnotationOrReply]);

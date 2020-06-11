@@ -9,7 +9,7 @@ function AuthorAndTimestampLabel({ reviewAnnotation, forResolvedReviewAnnotation
 		reviewAnnotation,
 		forResolvedReviewAnnotation
 	);
-	const authorLabel = resolvedAuthorAndTimestampLabel.authorLabel;
+	const authorLabel = resolvedAuthorAndTimestampLabel.author;
 	const timestampLabel = resolvedAuthorAndTimestampLabel.timestamp;
 
 	return (
