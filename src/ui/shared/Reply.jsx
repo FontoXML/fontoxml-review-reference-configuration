@@ -59,7 +59,7 @@ export default function Reply({
 
 				<Block flex="1" spaceVerticalSize="m">
 					<Flex justifyContent="space-between">
-						<AuthorAndTimestampLabel reviewAnnotation={reviewAnnotation} />
+						<AuthorAndTimestampLabel reviewAnnotation={reply} />
 
 						{showActionsMenuButton && !reply.error && (
 							<PopoverAnchor
