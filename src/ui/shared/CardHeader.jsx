@@ -65,7 +65,7 @@ export default function CardHeader({
 				bold={!reviewAnnotation.isSelected}
 			/>
 
-			<Flex spaceSize="m">
+			<Flex flex="0 0 auto" spaceSize="m">
 				{reviewAnnotation.targetFoundForRevision === false && (
 					<Icon
 						colorName={
