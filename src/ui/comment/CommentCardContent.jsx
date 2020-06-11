@@ -299,7 +299,7 @@ function CommentCardContent({
 										<Icon icon="fas fa-times-square" />
 									)}
 									<Label isBold isBlock>
-										{t('Resolved')} - {t(resolution.displayLabel)}
+										{t(resolution.displayLabel)}
 									</Label>
 								</Flex>
 
