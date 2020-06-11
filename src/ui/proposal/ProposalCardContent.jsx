@@ -10,10 +10,9 @@ import {
 	RecoveryOption,
 	TargetType
 } from 'fontoxml-feedback/src/types.js';
-import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
-
 import t from 'fontoxml-localization/src/t.js';
 
+import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel.jsx';
 import CardFooter from '../shared/CardFooter.jsx';
 import CardHeader from '../shared/CardHeader.jsx';
 import ErrorStateMessage from '../shared/ErrorStateMessage.jsx';
@@ -108,8 +107,6 @@ function ProposalCardContent({
 		reviewAnnotation.busyState !== BusyState.RESOLVING &&
 		!hasReplyInNonIdleBusyState;
 
-	const resolvedAuthorAndTimestampLabel = useAuthorAndTimestampLabel(reviewAnnotation, true);
-
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
 		reviewAnnotation.error &&
@@ -176,25 +173,27 @@ function ProposalCardContent({
 				{reviewAnnotation.busyState !== BusyState.ADDING &&
 					reviewAnnotation.busyState !== BusyState.EDITING &&
 					(hasProposedChange || reviewAnnotation.metadata.comment) && (
-						<Block spaceVerticalSize="m">
+						<Block spaceVerticalSize="l">
 							{hasProposedChange && (
 								<Block>
-									<Flex alignItems="center" flexDirection="row" spaceSize="s">
-										<Icon icon="pencil-square-o" />
-										<Label isBold>Proposed change</Label>
-									</Flex>
+									<Flex flexDirection="column" spaceSize="m">
+										<Flex alignItems="center" flexDirection="row" spaceSize="s">
+											<Icon icon="fas fa-pencil-square-o" />
+											<Label isBold>{t('Proposed change')}</Label>
+										</Flex>
 
-									<Diff
-										isSingleLine={!reviewAnnotation.isSelected}
-										originalValue={reviewAnnotation.originalText}
-										value={reviewAnnotation.metadata.proposedChange}
-									/>
+										<Diff
+											isSingleLine={!reviewAnnotation.isSelected}
+											originalValue={reviewAnnotation.originalText}
+											value={reviewAnnotation.metadata.proposedChange}
+										/>
+									</Flex>
 								</Block>
 							)}
 
 							{reviewAnnotation.metadata.comment && (
-								<Block>
-									<Label isBold>Motivation</Label>
+								<Block spaceVerticalSize="m">
+									<Label isBold>{t('Motivation')}</Label>
 
 									{reviewAnnotation.isSelected && (
 										<Text>{reviewAnnotation.metadata.comment}</Text>
@@ -224,7 +223,7 @@ function ProposalCardContent({
 							<HorizontalSeparationLine marginSizeBottom="m" />
 
 							<Flex spaceSize="s">
-								<Icon icon="reply" />
+								<Icon icon="fas fa-reply" />
 								<Label>
 									{t('{REPLIES_COUNT, plural, one {1 reply} other {# replies}}', {
 										REPLIES_COUNT:
@@ -267,23 +266,30 @@ function ProposalCardContent({
 								flex="none"
 								spaceSize="m"
 							>
-								<Icon icon="check" colorName="icon-s-muted-color" />
+								{resolution.value === 'accepted' && <Icon icon="check" />}
+								{resolution.value === 'rejected' && <Icon icon="times" />}
 
-								<Label colorName="text-muted-color" isBlock>
-									{resolvedAuthorAndTimestampLabel}
-								</Label>
+								<AuthorAndTimestampLabel
+									reviewAnnotation={reviewAnnotation}
+									forResolvedReviewAnnotation={true}
+								/>
 							</Flex>
 
 							<Block>
-								<Label isBold isBlock>
-									{t('Resolved')}
-								</Label>
+								<Flex spaceSize="s">
+									{resolution.value === 'accepted' && (
+										<Icon icon="fas fa-check-square" />
+									)}
+
+									{resolution.value === 'rejected' && (
+										<Icon icon="fas fa-times-square" />
+									)}
+									<Label isBold isBlock>
+										{t(resolution.displayLabel)}
+									</Label>
+								</Flex>
 
 								<Text>
-									{resolution.displayLabel}
-									{reviewAnnotation.resolvedMetadata &&
-										reviewAnnotation.resolvedMetadata.resolutionComment &&
-										' - '}
 									{reviewAnnotation.resolvedMetadata &&
 										reviewAnnotation.resolvedMetadata.resolutionComment}
 								</Text>

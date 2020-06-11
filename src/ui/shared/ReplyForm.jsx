@@ -14,9 +14,9 @@ import {
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
 import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types.js';
-import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
-
 import t from 'fontoxml-localization/src/t.js';
+
+import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel.jsx';
 
 function determineSaveButtonLabel(error, isEditing, isLoading) {
 	if (error && error.recovery === RecoveryOption.RETRYABLE) {
@@ -73,15 +73,13 @@ function ReplyFormContent({
 	const isDisabled = reply.isLoading || (error && error.recovery !== RecoveryOption.RETRYABLE);
 	const isLoading = reply.isLoading && (isAdding || isEditing);
 
-	const authorAndTimestampLabel = useAuthorAndTimestampLabel(reply);
-
 	return (
 		<Fragment>
 			<HorizontalSeparationLine />
 
 			<Flex flex="none" paddingSize={{ top: 'm' }} spaceSize="m">
 				<Flex alignItems="flex-start" applyCss={iconContainerStyles} flex="none">
-					<Icon icon="reply" colorName="icon-s-muted-color" />
+					<Icon icon="fas fa-reply" />
 				</Flex>
 
 				<Block
@@ -90,11 +88,7 @@ function ReplyFormContent({
 					spaceVerticalSize="m"
 				>
 					<Block spaceVerticalSize="s">
-						{isEditing && (
-							<Label colorName="text-muted-color" isBlock>
-								{authorAndTimestampLabel}
-							</Label>
-						)}
+						{isEditing && <AuthorAndTimestampLabel reviewAnnotation={reply} />}
 
 						<FormRow
 							label="Reply"

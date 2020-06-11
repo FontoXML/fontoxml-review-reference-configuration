@@ -78,7 +78,7 @@ export default function CardFooter({
 			<Drop>
 				<Menu>
 					<MenuItem
-						icon="comment"
+						icon="fas fa-comment"
 						isDisabled={!showCreatedContextButton}
 						label={t('View in created context')}
 						onClick={onReviewAnnotationShowInCreatedContext}
@@ -154,7 +154,7 @@ export default function CardFooter({
 				<Flex alignItems="center" spaceSize="m">
 					{showReplyButton && (
 						<Button
-							icon="reply"
+							icon="fas fa-reply"
 							isDisabled={!!reviewAnnotation.error || reviewAnnotation.isLoading}
 							onClick={onReplyAdd}
 						/>

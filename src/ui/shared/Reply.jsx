@@ -7,16 +7,14 @@ import {
 	Flex,
 	HorizontalSeparationLine,
 	Icon,
-	Label,
 	PopoverAnchor
 } from 'fds/components';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
 import { BusyState } from 'fontoxml-feedback/src/types.js';
-import useAuthorAndTimestampLabel from 'fontoxml-feedback/src/useAuthorAndTimestampLabel.jsx';
-
 import t from 'fontoxml-localization/src/t.js';
 
+import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel.jsx';
 import ReplyActionsMenuPopover from './ReplyActionsMenuPopover.jsx';
 
 // 2px to visually align the reply icon nicely to the authorLabel
@@ -37,8 +35,6 @@ export default function Reply({
 	const error = reply.error;
 	const isDisabled = reply.isLoading;
 
-	const authorAndTimestampLabel = useAuthorAndTimestampLabel(reply);
-
 	const handleEditButtonClick = useCallback(() => onShowEditForm(reply.id), [
 		onShowEditForm,
 		reply.id
@@ -58,12 +54,12 @@ export default function Reply({
 
 			<Flex flex="none" paddingSize={isLast ? { top: 'm' } : { vertical: 'm' }} spaceSize="m">
 				<Flex alignItems="flex-start" applyCss={iconContainerStyles} flex="none">
-					<Icon icon="reply" colorName="icon-s-muted-color" />
+					<Icon icon="fas fa-reply" />
 				</Flex>
 
 				<Block flex="1" spaceVerticalSize="m">
 					<Flex justifyContent="space-between">
-						<Label colorName="text-muted-color">{authorAndTimestampLabel}</Label>
+						<AuthorAndTimestampLabel reviewAnnotation={reply} />
 
 						{showActionsMenuButton && !reply.error && (
 							<PopoverAnchor

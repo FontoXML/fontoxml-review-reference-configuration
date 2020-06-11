@@ -3,7 +3,6 @@ import React, { Fragment, useCallback, useMemo, useState } from 'react';
 import { Block, CompactStateMessage, HorizontalSeparationLine, TextLink } from 'fds/components';
 
 import { AnnotationStatus, BusyState, ContextType } from 'fontoxml-feedback/src/types.js';
-
 import t from 'fontoxml-localization/src/t.js';
 
 import Reply from './Reply.jsx';
