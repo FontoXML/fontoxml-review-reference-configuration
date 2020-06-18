@@ -82,38 +82,25 @@ function ReplyFormContent({
 					<Icon icon="fas fa-reply" />
 				</Flex>
 
-				<Block
-					applyCss={{ marginTop: isEditing ? 0 : '-0.25rem' }}
-					flex="1"
-					spaceVerticalSize="m"
-				>
-					<Block spaceVerticalSize="s">
-						{isEditing && <AuthorAndTimestampLabel reviewAnnotation={reply} />}
+				<Block applyCss={{ marginTop: 0 }} flex="1" spaceVerticalSize="m">
+					<AuthorAndTimestampLabel reviewAnnotation={reply} />
 
-						<FormRow
-							label="Reply"
-							hasRequiredAsterisk
-							isLabelBold
-							labelColorName="text-color"
-						>
-							<TextArea
-								isDisabled={isDisabled}
-								name="reply"
-								ref={onFocusableRef}
-								rows={rows}
-								validate={validateReplyField}
-							/>
-						</FormRow>
+					<TextArea
+						isDisabled={isDisabled}
+						name="reply"
+						ref={onFocusableRef}
+						rows={rows}
+						validate={validateReplyField}
+					/>
 
-						{error && (
-							<ErrorToast
-								error={error}
-								onHideLinkClick={onHideLinkClick}
-								onRefreshLinkClick={onRefreshLinkClick}
-								onRetryLinkClick={onSubmit}
-							/>
-						)}
-					</Block>
+					{error && (
+						<ErrorToast
+							error={error}
+							onHideLinkClick={onHideLinkClick}
+							onRefreshLinkClick={onRefreshLinkClick}
+							onRetryLinkClick={onSubmit}
+						/>
+					)}
 				</Block>
 			</Flex>
 
