@@ -40,6 +40,35 @@ Its biggest limitation is that it requires a lock on the document before being a
 annotation in the document.  
 Nor does it provide a dedicated review app under the /review route as this addon does.
 
+### Metadata data model for this configuration
+
+This configuration saves a specific datamodel in the `metadata` properties of `reviewAnnotation`s. The data model is described below:
+
+#### reviewAnnotation
+
+There are four types of reviewAnnotation's registered (see the `src/install.js` file for more info):
+
+- Regular text comments (id: comment)
+- Comments on images (id: object-comment)
+- Change proposals (id: proposal)
+- Comments on the entire publication (id: publication-comment)
+
+The `comment`, `object-comment` and `publication-comment` all use the same data model in the metadata:
+
+- `comment`: A string value with the comment the user put in
+- `commentType`: A string value with the comment type the user selected. One of: `editorial`, `technical` or `general`.
+
+The `proposal` uses the following data model:
+
+- `proposedChange`: A string value with the change that is proposed.
+- `comment`: A string value with the motivation for this change proposal.
+
+#### reply
+
+The data model for replies is the same for all `reviewAnnotation` types:
+
+- `reply`: A string value with the reply content.
+
 ### (API 1) Adding new types of review annotations with register*ReviewAnnotationType
 
 You can add new types of annotations through the different registration methods.  
