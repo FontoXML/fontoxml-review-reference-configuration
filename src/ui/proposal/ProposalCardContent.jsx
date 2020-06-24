@@ -303,7 +303,7 @@ function ProposalCardContent({
 						<ResolveForm
 							reviewAnnotation={reviewAnnotation}
 							onCancel={onReviewAnnotationFormCancel}
-							onProposalMerge={onProposalMerge}
+							onProposalMerge={showAcceptProposalButton && onProposalMerge}
 							onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 							onSubmit={onReviewAnnotationFormSubmit}
 							proposalState={proposalState}
