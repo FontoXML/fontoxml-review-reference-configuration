@@ -14,14 +14,16 @@ function AuthorAndTimestampLabel({ reviewAnnotation, forResolvedReviewAnnotation
 	const shouldBeBold = !reviewAnnotation.isSelected || forResolvedReviewAnnotation;
 
 	return (
-		<Flex alignItems="center" spaceSize="s">
+		<Flex alignItems="center" flex="1" spaceSize="s">
 			<Label isBold={shouldBeBold} tooltipContent={authorLabel}>
 				{authorLabel}
 			</Label>
 			{timestampLabel && (
-				<Flex flex="0 0 auto" spaceSize="s">
+				<Flex flex="1" spaceSize="s">
 					<Label isBold={shouldBeBold}>–</Label>
-					<Label isBold={shouldBeBold}>{timestampLabel}</Label>
+					<Label isBold={shouldBeBold} tooltipContent={timestampLabel}>
+						{timestampLabel}
+					</Label>
 				</Flex>
 			)}
 		</Flex>
