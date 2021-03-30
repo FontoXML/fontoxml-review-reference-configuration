@@ -19,7 +19,6 @@ Contact your Fonto Support agent for feature requests and/or bug reports.
 	- [Setting the initial values for your custom FilterForm.](#setting-the-initial-values-for-your-custom-filterform)
 - [(API 3) Using InsertReviewAnnotationDropButton in your editor](#using-insertreviewannotationdropbutton-in-your-editor)
 - [(API 4) Customizing the masthead on the /review route with MastheadComponent](#api-4-customizing-the-masthead-on-the-review-route-with-mastheadcomponent)
-- [(API 5) Using a custom SheetFrameHeader component on the /review route.](#api-5-using-a-custom-sheetframeheader-component-on-the-review-route)
 
 ## Understanding the review (fontoxml-feedback) customization options
 
@@ -702,13 +701,3 @@ If you do not register a custom component, a default masthead is used. (Which is
 used by this package.)
 
 Feel free to customize the masthead with whatever FDS component you see fit.
-
-### (API 5) Using a custom SheetFrameHeader component on the /review route.
-
-Lastly this package also registers a custom `SheetFrameHeader` component as an example.  
-The component itself is not changed in any way from the default sheet frame header. It's included
-as an example to highlight how the `productContext` prop is used to conditionally render UI that
-only makes sense if the content can be edited (only if the `productContext === 'editor'`).
-
-Conversely, you could use UI that is only relevant for the new "review" product context and 
-conditionally render that in a similar manner.

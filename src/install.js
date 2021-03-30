@@ -12,8 +12,6 @@ import FilterForm from './ui/FilterForm.jsx';
 
 import MastheadForReview from './ui/MastheadForReview.jsx';
 
-import SheetFrameHeader from './ui/SheetFrameHeader.jsx';
-
 export default function install() {
 	registerTextRangeReviewAnnotationType('comment', {
 		icon: 'fas fa-comment',
@@ -56,6 +54,4 @@ export default function install() {
 	uiManager.registerReactComponent('FilterFormSummaryComponent', FilterFormSummaryChips);
 
 	uiManager.registerReactComponent('MastheadForReview', MastheadForReview);
-
-	uiManager.registerReactComponent('SheetFrameHeader', SheetFrameHeader);
 }
