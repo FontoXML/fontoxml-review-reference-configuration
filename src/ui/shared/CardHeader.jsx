@@ -102,6 +102,7 @@ export default function CardHeader({
 									renderAnchor={({ isPopoverOpened, onRef, togglePopover }) => (
 										<CompactButton
 											icon="ellipsis-h"
+											tooltipContent={t('More actions')}
 											isDisabled={reviewAnnotation.isLoading}
 											isSelected={isPopoverOpened}
 											onClick={togglePopover}
