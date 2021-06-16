@@ -66,6 +66,7 @@ export default function Reply({
 								renderAnchor={({ isPopoverOpened, onRef, togglePopover }) => (
 									<CompactButton
 										icon="ellipsis-h"
+										tooltipContent={t('More actions')}
 										isDisabled={isDisabled}
 										isSelected={isPopoverOpened}
 										onClick={togglePopover}
