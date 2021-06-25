@@ -53,7 +53,7 @@ function ProposalAddOrEditFormContent({
 			<Block spaceVerticalSize="l">
 				<FormRow
 					label={
-						<Block isInline spaceHorizontalSize="s" spaceVerticalSize="m">
+						<Block isInline spaceHorizontalSize="s">
 							<Block isInline>
 								<Icon icon="fas fa-pencil-square-o" />
 							</Block>
