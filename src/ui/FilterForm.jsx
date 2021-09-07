@@ -122,129 +122,125 @@ function FilterForm({
 	);
 
 	return (
-		<Block spaceVerticalSize="l">
-			<Flex>
-				<Block flex="1">
-					<Label colorName="text-muted-color" isBlock>
-						{t('Type(s)')}
-					</Label>
+		<Flex spaceSize="l">
+			<Block flex="none" spaceVerticalSize="s">
+				<Label isBold>
+					{t('Type(s) of feedback')}
+				</Label>
 
-					<Block spaceVerticalSize="m">
-						<Block>
+				<Block spaceVerticalSize="l">
+					<Block spaceVerticalSize="s">
+						<Checkbox
+							label={t('Comment')}
+							onChange={value => onCheckboxChange('typeComment', value)}
+							value={valueByNameForUI.typeComment}
+						/>
+
+						<Block applyCss={{ paddingLeft: '22px' }} spaceVerticalSize="s">
 							<Checkbox
-								label={t('Comment')}
-								onChange={value => onCheckboxChange('typeComment', value)}
-								value={valueByNameForUI.typeComment}
-							/>
-
-							<Block applyCss={{ paddingLeft: '22px' }}>
-								<Checkbox
-									label={t('Technical')}
-									onChange={value =>
-										onCheckboxChange('typeCommentTechnical', value)
-									}
-									value={valueByNameForUI.typeCommentTechnical}
-								/>
-								<Checkbox
-									label={t('General')}
-									onChange={value =>
-										onCheckboxChange('typeCommentGeneral', value)
-									}
-									value={valueByNameForUI.typeCommentGeneral}
-								/>
-								<Checkbox
-									label={t('Editorial')}
-									onChange={value =>
-										onCheckboxChange('typeCommentEditorial', value)
-									}
-									value={valueByNameForUI.typeCommentEditorial}
-								/>
-							</Block>
-						</Block>
-
-						<Block>
-							<Checkbox
-								label={t('Global Comment')}
+								label={t('Technical')}
 								onChange={value =>
-									onCheckboxChange('typePublicationComment', value)
+									onCheckboxChange('typeCommentTechnical', value)
 								}
-								value={valueByNameForUI.typePublicationComment}
+								value={valueByNameForUI.typeCommentTechnical}
 							/>
-
-							<Block applyCss={{ paddingLeft: '22px' }}>
-								<Checkbox
-									label={t('Technical')}
-									onChange={value =>
-										onCheckboxChange('typePublicationCommentTechnical', value)
-									}
-									value={valueByNameForUI.typePublicationCommentTechnical}
-								/>
-								<Checkbox
-									label={t('General')}
-									onChange={value =>
-										onCheckboxChange('typePublicationCommentGeneral', value)
-									}
-									value={valueByNameForUI.typePublicationCommentGeneral}
-								/>
-								<Checkbox
-									label={t('Editorial')}
-									onChange={value =>
-										onCheckboxChange('typePublicationCommentEditorial', value)
-									}
-									value={valueByNameForUI.typePublicationCommentEditorial}
-								/>
-							</Block>
-						</Block>
-
-						<Checkbox
-							label={t('Proposal')}
-							onChange={value => onCheckboxChange('typeProposal', value)}
-							value={valueByNameForUI.typeProposal}
-						/>
-					</Block>
-				</Block>
-
-				<Block flex="1">
-					<Label colorName="text-muted-color" isBlock>
-						{t('Resolution(s)')}
-					</Label>
-
-					<Block spaceVerticalSize="m">
-						<Block>
 							<Checkbox
-								label={t('Resolved')}
-								onChange={value => onCheckboxChange('resolutionResolved', value)}
-								value={valueByNameForUI.resolutionResolved}
+								label={t('General')}
+								onChange={value =>
+									onCheckboxChange('typeCommentGeneral', value)
+								}
+								value={valueByNameForUI.typeCommentGeneral}
 							/>
-
-							<Block applyCss={{ paddingLeft: '22px' }}>
-								<Checkbox
-									label={t('Accepted')}
-									onChange={value =>
-										onCheckboxChange('resolutionResolvedAccepted', value)
-									}
-									value={valueByNameForUI.resolutionResolvedAccepted}
-								/>
-
-								<Checkbox
-									label={t('Rejected')}
-									onChange={value =>
-										onCheckboxChange('resolutionResolvedRejected', value)
-									}
-									value={valueByNameForUI.resolutionResolvedRejected}
-								/>
-							</Block>
+							<Checkbox
+								label={t('Editorial')}
+								onChange={value =>
+									onCheckboxChange('typeCommentEditorial', value)
+								}
+								value={valueByNameForUI.typeCommentEditorial}
+							/>
 						</Block>
+					</Block>
+
+					<Block spaceVerticalSize="s">
+						<Checkbox
+							label={t('Global Comment')}
+							onChange={value =>
+								onCheckboxChange('typePublicationComment', value)
+							}
+							value={valueByNameForUI.typePublicationComment}
+						/>
+
+						<Block applyCss={{ paddingLeft: '22px' }} spaceVerticalSize="s">
+							<Checkbox
+								label={t('Technical')}
+								onChange={value =>
+									onCheckboxChange('typePublicationCommentTechnical', value)
+								}
+								value={valueByNameForUI.typePublicationCommentTechnical}
+							/>
+							<Checkbox
+								label={t('General')}
+								onChange={value =>
+									onCheckboxChange('typePublicationCommentGeneral', value)
+								}
+								value={valueByNameForUI.typePublicationCommentGeneral}
+							/>
+							<Checkbox
+								label={t('Editorial')}
+								onChange={value =>
+									onCheckboxChange('typePublicationCommentEditorial', value)
+								}
+								value={valueByNameForUI.typePublicationCommentEditorial}
+							/>
+						</Block>
+					</Block>
+
+					<Checkbox
+						label={t('Proposal')}
+						onChange={value => onCheckboxChange('typeProposal', value)}
+						value={valueByNameForUI.typeProposal}
+					/>
+				</Block>
+			</Block>
+
+			<Block flex="none" spaceVerticalSize="s">
+				<Label isBold>
+					{t('Resolution')}
+				</Label>
+
+				<Block spaceVerticalSize="s">
+					<Checkbox
+						label={t('Resolved')}
+						onChange={value => onCheckboxChange('resolutionResolved', value)}
+						value={valueByNameForUI.resolutionResolved}
+					/>
+
+					<Block applyCss={{ paddingLeft: '22px' }} spaceVerticalSize="s">
+						<Checkbox
+							label={t('Accepted')}
+							onChange={value =>
+								onCheckboxChange('resolutionResolvedAccepted', value)
+							}
+							value={valueByNameForUI.resolutionResolvedAccepted}
+						/>
 
 						<Checkbox
-							label={t('Unresolved')}
-							onChange={value => onCheckboxChange('resolutionUnresolved', value)}
-							value={valueByNameForUI.resolutionUnresolved}
+							label={t('Rejected')}
+							onChange={value =>
+								onCheckboxChange('resolutionResolvedRejected', value)
+							}
+							value={valueByNameForUI.resolutionResolvedRejected}
 						/>
 					</Block>
+
+					<Checkbox
+						label={t('Unresolved')}
+						onChange={value => onCheckboxChange('resolutionUnresolved', value)}
+						value={valueByNameForUI.resolutionUnresolved}
+					/>
 				</Block>
-			</Flex>
-		</Block>
+			</Block>
+		</Flex>
 	);
 }
 

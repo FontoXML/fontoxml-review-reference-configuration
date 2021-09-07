@@ -54,25 +54,9 @@ function FilterFormSummaryChips({
 	const onCheckboxChange = useNestedCheckboxesForFilterOptions(valueByName, handleFieldsChange);
 
 	return (
-		<Block flex="none" paddingSize={{ top: 's', bottom: 'm' }}>
-			{!error && !isSubmitting && <Label isBold>{t('Filtered by:')}</Label>}
-
-			{isSubmitting && (
-				<Flex spaceSize="s">
-					<Icon icon="spinner" colorName="icon-s-info-color" />
-
-					<Label isBold>{t('Updating filter…')}</Label>
-				</Flex>
-			)}
-
-			{error && !isSubmitting && (
-				<Label colorName="text-error-color" isBold>
-					{t('Something went wrong while updating the filter.')}
-				</Label>
-			)}
-
+		<Block>
 			<ChipGroup>
-				<Label colorName="text-muted-color">{t('Type(s)')}</Label>
+				<Label isBold>{t('Filtered by:')}</Label>
 
 				{valueByName.typeCommentTechnical && (
 					<Chip
@@ -139,23 +123,6 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
-				{!valueByName.typeCommentTechnical &&
-					!valueByName.typeCommentGeneral &&
-					!valueByName.typeCommentEditorial &&
-					!valueByName.typePublicationCommentTechnical &&
-					!valueByName.typePublicationCommentGeneral &&
-					!valueByName.typePublicationCommentEditorial &&
-					!valueByName.typeProposal && (
-						<Chip
-							isDisabled
-							label={t('Any')}
-							tooltipContent={t('Show feedback of any type.')}
-						/>
-					)}
-			</ChipGroup>
-
-			<ChipGroup>
-				<Label colorName="text-muted-color">{t('Resolution(s)')}</Label>
 
 				{valueByName.resolutionResolvedAccepted && (
 					<Chip
@@ -184,16 +151,38 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
+
 				{!valueByName.resolutionResolvedAccepted &&
 					!valueByName.resolutionResolvedRejected &&
-					!valueByName.resolutionUnresolved && (
+					!valueByName.resolutionUnresolved && 
+					!valueByName.typeCommentTechnical &&
+					!valueByName.typeCommentGeneral &&
+					!valueByName.typeCommentEditorial &&
+					!valueByName.typePublicationCommentTechnical &&
+					!valueByName.typePublicationCommentGeneral &&
+					!valueByName.typePublicationCommentEditorial &&
+					!valueByName.typeProposal && (
 						<Chip
 							isDisabled
 							label={t('Any')}
-							tooltipContent={t('Show feedback with any resolution.')}
+							tooltipContent={t('Show feedback of any type.')}
 						/>
 					)}
 			</ChipGroup>
+
+			{isSubmitting && (
+				<Flex spaceSize="s">
+					<Icon icon="spinner" colorName="icon-s-info-color" />
+
+					<Label isBold>{t('Updating filter…')}</Label>
+				</Flex>
+			)}
+
+			{error && !isSubmitting && (
+				<Label colorName="text-error-color" isBold>
+					{t('Something went wrong while updating the filter.')}
+				</Label>
+			)}
 		</Block>
 	);
 }
