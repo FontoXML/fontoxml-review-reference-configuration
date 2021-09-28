@@ -173,7 +173,7 @@ export default function ResolveForm({
 						<Flex flexDirection="column">
 							<HorizontalSeparationLine marginSizeBottom="m" marginSizeTop="m" />
 
-							<Flex justifyContent="flex-end" spaceSize="m">
+							<Flex justifyContent="flex-end" spaceSize="l">
 								<Button
 									isDisabled={isDisabled}
 									label={t('Cancel')}

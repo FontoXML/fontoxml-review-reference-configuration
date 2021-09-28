@@ -151,7 +151,7 @@ export default function CardFooter({
 					/>
 				)}
 
-				<Flex alignItems="center" spaceSize="m">
+				<Flex alignItems="center" spaceSize="l">
 					{showReplyButton && (
 						<Button
 							icon="fas fa-reply"
