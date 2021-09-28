@@ -107,7 +107,7 @@ function ReplyFormContent({
 			<Flex flexDirection="column" paddingSize={{ bottom: isLast ? 0 : 'm' }}>
 				<HorizontalSeparationLine marginSizeBottom="m" marginSizeTop="m" />
 
-				<Flex justifyContent="flex-end" spaceSize="m">
+				<Flex justifyContent="flex-end" spaceSize="l">
 					<Button
 						isDisabled={isDisabled}
 						label={t('Cancel')}
