@@ -1,3 +1,5 @@
+import t from 'fontoxml-localization/src/t.js';
+
 // These are the possible values for the 'resolution' field in item.resolvedMetadata.
 // This does not include the 'unresolved' option because you cannot 'resolve' something by choosing
 // and 'unresolved' resolution conceptually.
@@ -5,7 +7,7 @@
 // resolved card.
 
 const resolutions = [
-	{ value: 'accepted', label: 'accept', displayLabel: 'Accepted' },
-	{ value: 'rejected', label: 'reject', displayLabel: 'Rejected' }
+	{ value: 'accepted', label: t('accept'), displayLabel: t('Accepted') },
+	{ value: 'rejected', label: t('reject'), displayLabel: t('Rejected') }
 ];
 export default resolutions;

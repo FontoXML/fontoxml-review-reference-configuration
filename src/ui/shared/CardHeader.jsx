@@ -93,8 +93,10 @@ export default function CardHeader({
 							{reviewAnnotation.status === AnnotationStatus.PRIVATE && (
 								<Badge label={t('Private')} />
 							)}
-							{reviewAnnotation.status === AnnotationStatus.RESOLVED && (
-								<Badge label={t(reviewAnnotation.resolvedMetadata.resolution)} />
+							{reviewAnnotation.status === AnnotationStatus.RESOLVED && 
+							reviewAnnotation.resolvedMetadata && 
+							reviewAnnotation.resolvedMetadata.resolution && (
+								<Badge label={reviewAnnotation.resolvedMetadata.resolution} />
 							)}
 
 							{showPopoverButton && (
