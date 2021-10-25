@@ -42,7 +42,7 @@ export default function install() {
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
-		icon: 'files-o',
+		icon: 'global-comments-stacked-icons',
 		label: 'Global comment',
 		priority: 1,
 		CardContentComponent: CommentCardContent
