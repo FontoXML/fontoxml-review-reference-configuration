@@ -60,7 +60,7 @@ function CommentAddOrEditFormContent({
 	label = (
 		<Block isInline spaceHorizontalSize="s">
 			<Block isInline>
-				<Icon icon={isPublicationLevelComment ? 'files-o' : 'fas fa-comment'} />
+				<Icon icon={isPublicationLevelComment ? 'files-o' : 'fal fa-comment'} />
 			</Block>
 
 			<span>{label}</span>

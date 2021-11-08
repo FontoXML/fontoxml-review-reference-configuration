@@ -14,7 +14,7 @@ import MastheadForReview from './ui/MastheadForReview.jsx';
 
 export default function install() {
 	registerTextRangeReviewAnnotationType('comment', {
-		icon: 'fas fa-comment',
+		icon: 'fal fa-comment',
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent
@@ -28,7 +28,7 @@ export default function install() {
 		// /review route both only show menu items / buttons for annotation types that are enabled.
 		// This together leads to a single "Add comment" option that works for text ranges and
 		// objects.
-		icon: 'fas fa-comment',
+		icon: 'fal fa-comment',
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent

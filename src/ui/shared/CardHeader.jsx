@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import {
 	Block,
+	Button,
 	Checkbox,
 	CompactButton,
 	Flex,
@@ -89,9 +90,15 @@ export default function CardHeader({
 
 				{context !== ContextType.EDITOR_SHARING_SIDEBAR &&
 					context !== ContextType.REVIEW_SHARING_SIDEBAR && (
-						<Flex flex="none" spaceSize="m">
-							{reviewAnnotation.status === AnnotationStatus.PRIVATE && (
-								<Badge label={t('Private')} />
+						<Flex alignItems="center" flex="none" spaceSize="m">
+							{reviewAnnotation.busyState === BusyState.ADDING && !reviewAnnotation.isSelected && reviewAnnotation.status === AnnotationStatus.PRIVATE && (
+								<Button icon="fas fa-user-lock" isDisabled/>
+							)}
+							{reviewAnnotation.busyState !== BusyState.ADDING && !reviewAnnotation.isSelected && reviewAnnotation.status === AnnotationStatus.PRIVATE && (
+								<Button icon="fas fa-user-lock" type="transparent"/>
+							)}
+							{reviewAnnotation.busyState !== BusyState.ADDING && reviewAnnotation.isSelected && reviewAnnotation.status === AnnotationStatus.PRIVATE && (
+								<Button icon="fas fa-user-lock" label={t('Share')} type="primary"/>
 							)}
 							{reviewAnnotation.status === AnnotationStatus.RESOLVED && 
 							reviewAnnotation.resolvedMetadata && 
@@ -109,6 +116,7 @@ export default function CardHeader({
 											isSelected={isPopoverOpened}
 											onClick={togglePopover}
 											onRef={onRef}
+											type="transparent"
 										/>
 									)}
 									renderPopover={({ togglePopover }) => (

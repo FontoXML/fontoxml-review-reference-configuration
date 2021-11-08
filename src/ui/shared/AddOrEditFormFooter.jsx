@@ -33,8 +33,6 @@ function AddOrEditFormFooter({
 				/>
 			)}
 
-			<HorizontalSeparationLine />
-
 			<Flex justifyContent="flex-end" spaceSize="l">
 				<Button isDisabled={isDisabled} label={t('Cancel')} onClick={onCancel} />
 
