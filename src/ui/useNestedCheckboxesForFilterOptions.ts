@@ -21,17 +21,17 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 				children: [
 					{
 						name: 'typeCommentTechnical',
-						value: valueByName.typeCommentTechnical
+						value: valueByName.typeCommentTechnical,
 					},
 					{
 						name: 'typeCommentGeneral',
-						value: valueByName.typeCommentGeneral
+						value: valueByName.typeCommentGeneral,
 					},
 					{
 						name: 'typeCommentEditorial',
-						value: valueByName.typeCommentEditorial
-					}
-				]
+						value: valueByName.typeCommentEditorial,
+					},
+				],
 			},
 			{
 				name: 'typePublicationComment',
@@ -39,17 +39,17 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 				children: [
 					{
 						name: 'typePublicationCommentTechnical',
-						value: valueByName.typePublicationCommentTechnical
+						value: valueByName.typePublicationCommentTechnical,
 					},
 					{
 						name: 'typePublicationCommentGeneral',
-						value: valueByName.typePublicationCommentGeneral
+						value: valueByName.typePublicationCommentGeneral,
 					},
 					{
 						name: 'typePublicationCommentEditorial',
-						value: valueByName.typePublicationCommentEditorial
-					}
-				]
+						value: valueByName.typePublicationCommentEditorial,
+					},
+				],
 			},
 			{ name: 'typeProposal', value: valueByName.typeProposal },
 			{
@@ -58,15 +58,18 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 				children: [
 					{
 						name: 'resolutionResolvedAccepted',
-						value: valueByName.resolutionResolvedAccepted
+						value: valueByName.resolutionResolvedAccepted,
 					},
 					{
 						name: 'resolutionResolvedRejected',
-						value: valueByName.resolutionResolvedRejected
-					}
-				]
+						value: valueByName.resolutionResolvedRejected,
+					},
+				],
 			},
-			{ name: 'resolutionUnresolved', value: valueByName.resolutionUnresolved }
+			{
+				name: 'resolutionUnresolved',
+				value: valueByName.resolutionUnresolved,
+			},
 		],
 		// This is just a derivative of valueByName (which is not nested in this case).
 		// So it will also change whenever one of the referenced properties in valueByName changes.
@@ -83,7 +86,7 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 			valueByName.typePublicationComment,
 			valueByName.typePublicationCommentEditorial,
 			valueByName.typePublicationCommentGeneral,
-			valueByName.typePublicationCommentTechnical
+			valueByName.typePublicationCommentTechnical,
 		]
 	);
 
@@ -106,8 +109,8 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 
 					if (parentNode) {
 						// update the parent based on the new values of all siblings
-						const someSiblingWillHaveDifferentValue = parentNode.children.some(
-							childNode => {
+						const someSiblingWillHaveDifferentValue =
+							parentNode.children.some((childNode) => {
 								if (childNode.name === name) {
 									// The node were are currently changing will of course have the
 									// correct (same) value were currently setting.
@@ -125,34 +128,39 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 								}
 
 								return childNode.value !== value;
-							}
-						);
-						const newValueForParent = someSiblingWillHaveDifferentValue
-							? Checkbox.VALUE_INDETERMINATE
-							: value;
+							});
+						const newValueForParent =
+							someSiblingWillHaveDifferentValue
+								? Checkbox.VALUE_INDETERMINATE
+								: value;
 						if (newValueForParent !== parentNode.value) {
 							changedCheckboxes.push({
 								name: parentNode.name,
-								value: newValueForParent
+								value: newValueForParent,
 							});
 						}
 					}
 
 					if (Array.isArray(node.children)) {
 						// set each childNode to same value
-						node.children.forEach(childNode => {
+						node.children.forEach((childNode) => {
 							if (childNode.value !== value) {
-								changedCheckboxes.push({ name: childNode.name, value });
+								changedCheckboxes.push({
+									name: childNode.name,
+									value,
+								});
 							}
 						});
 					}
 				} else if (Array.isArray(node.children)) {
 					// recurse until we find a node.name that matches the name were looking for
-					node.children.forEach(childNode => walkTree(childNode, node));
+					node.children.forEach((childNode) =>
+						walkTree(childNode, node)
+					);
 				}
 			};
 			// start by looping through each tree in the forest and walking each tree
-			checkboxForest.forEach(childNode => walkTree(childNode, null));
+			checkboxForest.forEach((childNode) => walkTree(childNode, null));
 
 			if (changedCheckboxes.length > 0) {
 				onFieldsChange(changedCheckboxes);

@@ -1,23 +1,23 @@
-import registerTextRangeReviewAnnotationType from 'fontoxml-feedback/src/registerTextRangeReviewAnnotationType.js';
-import registerPublicationReviewAnnotationType from 'fontoxml-feedback/src/registerPublicationReviewAnnotationType.js';
-import registerObjectReviewAnnotationType from 'fontoxml-feedback/src/registerObjectReviewAnnotationType.js';
-import setInitialFilterFormValues from 'fontoxml-feedback/src/setInitialFilterFormValues.js';
-import uiManager from 'fontoxml-modular-ui/src/uiManager.js';
+import registerTextRangeReviewAnnotationType from 'fontoxml-feedback/src/registerTextRangeReviewAnnotationType';
+import registerPublicationReviewAnnotationType from 'fontoxml-feedback/src/registerPublicationReviewAnnotationType';
+import registerObjectReviewAnnotationType from 'fontoxml-feedback/src/registerObjectReviewAnnotationType';
+import setInitialFilterFormValues from 'fontoxml-feedback/src/setInitialFilterFormValues';
+import uiManager from 'fontoxml-modular-ui/src/uiManager';
 
-import CommentCardContent from './ui/comment/CommentCardContent.jsx';
-import ProposalCardContent from './ui/proposal/ProposalCardContent.jsx';
+import CommentCardContent from './ui/comment/CommentCardContent';
+import ProposalCardContent from './ui/proposal/ProposalCardContent';
 
-import FilterFormSummaryChips from './ui/FilterFormSummaryChips.jsx';
-import FilterForm from './ui/FilterForm.jsx';
+import FilterFormSummaryChips from './ui/FilterFormSummaryChips';
+import FilterForm from './ui/FilterForm';
 
-import MastheadForReview from './ui/MastheadForReview.jsx';
+import MastheadForReview from './ui/MastheadForReview';
 
 export default function install() {
 	registerTextRangeReviewAnnotationType('comment', {
-		icon: 'fal fa-comment',
+		icon: 'fas fa-comment',
 		label: 'Comment',
 		priority: 3,
-		CardContentComponent: CommentCardContent
+		CardContentComponent: CommentCardContent,
 	});
 
 	registerObjectReviewAnnotationType('object-comment', {
@@ -28,30 +28,36 @@ export default function install() {
 		// /review route both only show menu items / buttons for annotation types that are enabled.
 		// This together leads to a single "Add comment" option that works for text ranges and
 		// objects.
-		icon: 'fal fa-comment',
+		icon: 'fas fa-comment',
 		label: 'Comment',
 		priority: 3,
-		CardContentComponent: CommentCardContent
+		CardContentComponent: CommentCardContent,
 	});
 
 	registerTextRangeReviewAnnotationType('proposal', {
 		icon: 'fas fa-pencil-square-o',
 		label: 'Proposal',
 		priority: 2,
-		CardContentComponent: ProposalCardContent
+		CardContentComponent: ProposalCardContent,
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
 		icon: 'global-comments-stacked-icons',
 		label: 'Global comment',
 		priority: 1,
-		CardContentComponent: CommentCardContent
+		CardContentComponent: CommentCardContent,
 	});
 
-	setInitialFilterFormValues({ resolutionUnresolved: true }, { resolutionUnresolved: true });
+	setInitialFilterFormValues(
+		{ resolutionUnresolved: true },
+		{ resolutionUnresolved: true }
+	);
 
 	uiManager.registerReactComponent('FilterFormComponent', FilterForm);
-	uiManager.registerReactComponent('FilterFormSummaryComponent', FilterFormSummaryChips);
+	uiManager.registerReactComponent(
+		'FilterFormSummaryComponent',
+		FilterFormSummaryChips
+	);
 
 	uiManager.registerReactComponent('MastheadForReview', MastheadForReview);
 }

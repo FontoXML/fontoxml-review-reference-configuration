@@ -1,10 +1,18 @@
 import React, { useCallback } from 'react';
 
-import { Block, Checkbox, Chip, ChipGroup, Flex, Icon, Label } from 'fds/components';
+import {
+	Block,
+	Checkbox,
+	Chip,
+	ChipGroup,
+	Flex,
+	Icon,
+	Label,
+} from 'fds/components';
 
-import t from 'fontoxml-localization/src/t.js';
+import t from 'fontoxml-localization/src/t';
 
-import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions.js';
+import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
 
 function FilterFormSummaryChips({
 	// This is set if the /review/state endpoint is called (whenever onChange is
@@ -30,14 +38,14 @@ function FilterFormSummaryChips({
 	// Not used by this implementation: the summary can be the same for each product context.
 	productContext: _productContext,
 	// This contains the exact value by name mapping used by the filter form for the current context.
-	valueByName
+	valueByName,
 }) {
 	// This processes the list of changed fields into a changedValueByName mapping which is then
 	// combined with the existing data (valueByName) to provide a new (complete) version of the data
 	// for the onChange prop.
 
 	const handleFieldsChange = useCallback(
-		changedFields => {
+		(changedFields) => {
 			onChange({
 				...valueByName,
 				...changedFields.reduce((changedValueByName, changedField) => {
@@ -46,12 +54,15 @@ function FilterFormSummaryChips({
 							? false
 							: changedField.value;
 					return changedValueByName;
-				}, {})
+				}, {}),
 			});
 		},
 		[onChange, valueByName]
 	);
-	const onCheckboxChange = useNestedCheckboxesForFilterOptions(valueByName, handleFieldsChange);
+	const onCheckboxChange = useNestedCheckboxesForFilterOptions(
+		valueByName,
+		handleFieldsChange
+	);
 
 	return (
 		<Block>
@@ -63,7 +74,9 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Technical')}
 						tooltipContent={t('Only show technical comments.')}
-						onRemove={() => onCheckboxChange('typeCommentTechnical', false)}
+						onRemove={() =>
+							onCheckboxChange('typeCommentTechnical', false)
+						}
 						useHoverStyles={false}
 					/>
 				)}
@@ -72,7 +85,9 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('General')}
 						tooltipContent={t('Only show general comments.')}
-						onRemove={() => onCheckboxChange('typeCommentGeneral', false)}
+						onRemove={() =>
+							onCheckboxChange('typeCommentGeneral', false)
+						}
 						useHoverStyles={false}
 					/>
 				)}
@@ -81,7 +96,9 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Editorial')}
 						tooltipContent={t('Only show editorial comments.')}
-						onRemove={() => onCheckboxChange('typeCommentEditorial', false)}
+						onRemove={() =>
+							onCheckboxChange('typeCommentEditorial', false)
+						}
 						useHoverStyles={false}
 					/>
 				)}
@@ -90,8 +107,15 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Technical')}
-						tooltipContent={t('Only show technical publication comments.')}
-						onRemove={() => onCheckboxChange('typePublicationCommentTechnical', false)}
+						tooltipContent={t(
+							'Only show technical publication comments.'
+						)}
+						onRemove={() =>
+							onCheckboxChange(
+								'typePublicationCommentTechnical',
+								false
+							)
+						}
 						useHoverStyles={false}
 					/>
 				)}
@@ -99,8 +123,15 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: General')}
-						tooltipContent={t('Only show general publication comments.')}
-						onRemove={() => onCheckboxChange('typePublicationCommentGeneral', false)}
+						tooltipContent={t(
+							'Only show general publication comments.'
+						)}
+						onRemove={() =>
+							onCheckboxChange(
+								'typePublicationCommentGeneral',
+								false
+							)
+						}
 						useHoverStyles={false}
 					/>
 				)}
@@ -108,8 +139,15 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Editorial')}
-						tooltipContent={t('Only show editorial publication comments.')}
-						onRemove={() => onCheckboxChange('typePublicationCommentEditorial', false)}
+						tooltipContent={t(
+							'Only show editorial publication comments.'
+						)}
+						onRemove={() =>
+							onCheckboxChange(
+								'typePublicationCommentEditorial',
+								false
+							)
+						}
 						useHoverStyles={false}
 					/>
 				)}
@@ -128,8 +166,15 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Accepted')}
-						tooltipContent={t('Only show resolved and accepted feedback.')}
-						onRemove={() => onCheckboxChange('resolutionResolvedAccepted', false)}
+						tooltipContent={t(
+							'Only show resolved and accepted feedback.'
+						)}
+						onRemove={() =>
+							onCheckboxChange(
+								'resolutionResolvedAccepted',
+								false
+							)
+						}
 						useHoverStyles={false}
 					/>
 				)}
@@ -137,8 +182,15 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Rejected')}
-						tooltipContent={t('Only show resolved and rejected feedback.')}
-						onRemove={() => onCheckboxChange('resolutionResolvedRejected', false)}
+						tooltipContent={t(
+							'Only show resolved and rejected feedback.'
+						)}
+						onRemove={() =>
+							onCheckboxChange(
+								'resolutionResolvedRejected',
+								false
+							)
+						}
 						useHoverStyles={false}
 					/>
 				)}
@@ -147,14 +199,16 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
 						tooltipContent={t('Only show unresolved feedback.')}
-						onRemove={() => onCheckboxChange('resolutionUnresolved', false)}
+						onRemove={() =>
+							onCheckboxChange('resolutionUnresolved', false)
+						}
 						useHoverStyles={false}
 					/>
 				)}
 
 				{!valueByName.resolutionResolvedAccepted &&
 					!valueByName.resolutionResolvedRejected &&
-					!valueByName.resolutionUnresolved && 
+					!valueByName.resolutionUnresolved &&
 					!valueByName.typeCommentTechnical &&
 					!valueByName.typeCommentGeneral &&
 					!valueByName.typeCommentEditorial &&

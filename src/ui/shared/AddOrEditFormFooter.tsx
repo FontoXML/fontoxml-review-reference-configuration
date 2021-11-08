@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { Button, Flex, HorizontalSeparationLine } from 'fds/components';
-import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
-import { RecoveryOption } from 'fontoxml-feedback/src/types.js';
+import { Block, Button, Flex } from 'fds/components';
+import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import { RecoveryOption } from 'fontoxml-feedback/src/types';
 
-import t from 'fontoxml-localization/src/t.js';
+import t from 'fontoxml-localization/src/t';
 
 function determineSaveButtonLabel(error, isLoading) {
 	if (isLoading) {
 		return t('Saving…');
 	}
 
-	return error && error.recovery === RecoveryOption.RETRYABLE ? t('Retry save') : t('Save');
+	return error && error.recovery === RecoveryOption.RETRYABLE
+		? t('Retry save')
+		: t('Save');
 }
 
 function AddOrEditFormFooter({
@@ -21,10 +23,10 @@ function AddOrEditFormFooter({
 	isSubmitDisabled,
 	onCancel,
 	onReviewAnnotationRefresh,
-	onSubmit
+	onSubmit,
 }) {
 	return (
-		<Flex flexDirection="column" paddingSize={{ top: 'm' }} spaceSize="m">
+		<Flex flexDirection="column" paddingSize={{ top: 'l' }} spaceSize="m">
 			{error && (
 				<ErrorToast
 					error={error}
@@ -34,15 +36,23 @@ function AddOrEditFormFooter({
 			)}
 
 			<Flex justifyContent="flex-end" spaceSize="l">
-				<Button isDisabled={isDisabled} label={t('Cancel')} onClick={onCancel} />
+				<Block flex="0 1 auto">
+					<Button
+						isDisabled={isDisabled}
+						label={t('Cancel')}
+						onClick={onCancel}
+					/>
+				</Block>
 
-				<Button
-					icon={isLoading ? 'spinner' : null}
-					isDisabled={isDisabled || isSubmitDisabled}
-					label={determineSaveButtonLabel(error, isLoading)}
-					onClick={onSubmit}
-					type="primary"
-				/>
+				<Block flex="0 1 auto">
+					<Button
+						icon={isLoading ? 'spinner' : null}
+						isDisabled={isDisabled || isSubmitDisabled}
+						label={determineSaveButtonLabel(error, isLoading)}
+						onClick={onSubmit}
+						type="primary"
+					/>
+				</Block>
 			</Flex>
 		</Flex>
 	);

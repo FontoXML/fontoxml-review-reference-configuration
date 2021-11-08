@@ -1,12 +1,23 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
 
-import { Block, Icon, FormRow, RadioButtonGroup, TextArea } from 'fds/components';
-import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
-import { BusyState, RecoveryOption, TargetType } from 'fontoxml-feedback/src/types.js';
-import t from 'fontoxml-localization/src/t.js';
+import {
+	Block,
+	Flex,
+	FormRow,
+	Icon,
+	RadioButtonGroup,
+	TextArea,
+} from 'fds/components';
+import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import {
+	BusyState,
+	RecoveryOption,
+	TargetType,
+} from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
 
-import commentTypes from '../commentTypes.jsx';
-import AddOrEditFormFooter from '../shared/AddOrEditFormFooter.jsx';
+import commentTypes from '../commentTypes';
+import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
 
 function validateCommentField(value) {
 	if (!value) {
@@ -26,11 +37,12 @@ function CommentAddOrEditFormContent({
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
-	valueByName
+	valueByName,
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
-		reviewAnnotation.isLoading || (error && error.recovery !== RecoveryOption.RETRYABLE);
+		reviewAnnotation.isLoading ||
+		(error && error.recovery !== RecoveryOption.RETRYABLE);
 	const isEditing = reviewAnnotation.busyState === BusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
 
@@ -39,14 +51,15 @@ function CommentAddOrEditFormContent({
 			onFieldChange({
 				name: 'commentType',
 				value: commentTypes[0].value,
-				feedback: null
+				feedback: null,
 			});
 		}
 	}, [isEditing, onFieldChange]);
 
 	const currentCommentType =
-		commentTypes.find(commentType => commentType.value === valueByName.commentType) ||
-		commentTypes[0];
+		commentTypes.find(
+			(commentType) => commentType.value === valueByName.commentType
+		) || commentTypes[0];
 
 	let label = currentCommentType.label;
 
@@ -56,20 +69,27 @@ function CommentAddOrEditFormContent({
 		label = 'Global ' + label[0].toLowerCase() + label.substring(1);
 	}
 
-	// @ts-ignore
-	label = (
-		<Block isInline spaceHorizontalSize="s">
-			<Block isInline>
-				<Icon icon={isPublicationLevelComment ? 'files-o' : 'fal fa-comment'} />
-			</Block>
-
-			<span>{label}</span>
-		</Block>
-	);
-
 	return (
-		<Fragment>
-			<FormRow label={label} hasRequiredAsterisk isLabelBold labelColorName="text-color">
+		<>
+			<FormRow
+				hasRequiredAsterisk
+				isLabelBold
+				label={
+					<Flex alignItems="center" isInline spaceSize="s">
+						<Icon
+							icon={
+								isPublicationLevelComment
+									? 'global-comments-stacked-icons'
+									: 'fal fa-comment'
+							}
+							isInline
+						/>
+
+						<Block isInline>{label}</Block>
+					</Flex>
+				}
+				labelColorName="text-color"
+			>
 				<TextArea
 					isDisabled={isDisabled}
 					name="comment"
@@ -80,8 +100,17 @@ function CommentAddOrEditFormContent({
 				/>
 			</FormRow>
 
-			<FormRow label="Type" hasRequiredAsterisk isLabelBold labelColorName="text-color">
-				<RadioButtonGroup isDisabled={isDisabled} items={commentTypes} name="commentType" />
+			<FormRow
+				label={t('Type')}
+				hasRequiredAsterisk
+				isLabelBold
+				labelColorName="text-color"
+			>
+				<RadioButtonGroup
+					isDisabled={isDisabled}
+					items={commentTypes}
+					name="commentType"
+				/>
 			</FormRow>
 
 			<AddOrEditFormFooter
@@ -93,14 +122,28 @@ function CommentAddOrEditFormContent({
 				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 				onSubmit={onSubmit}
 			/>
-		</Fragment>
+		</>
 	);
 }
 
-function CommentAddOrEditForm({ reviewAnnotation, onCancel, onReviewAnnotationRefresh, onSubmit }) {
+function CommentAddOrEditForm({
+	reviewAnnotation,
+	onCancel,
+	onReviewAnnotationRefresh,
+	onSubmit,
+}) {
 	return (
-		<ReviewAnnotationForm initialValueByName={reviewAnnotation.metadata} onSubmit={onSubmit}>
-			{({ isSubmitDisabled, onFieldChange, onFocusableRef, onSubmit, valueByName }) => (
+		<ReviewAnnotationForm
+			initialValueByName={reviewAnnotation.metadata}
+			onSubmit={onSubmit}
+		>
+			{({
+				isSubmitDisabled,
+				onFieldChange,
+				onFocusableRef,
+				onSubmit,
+				valueByName,
+			}) => (
 				<CommentAddOrEditFormContent
 					isSubmitDisabled={isSubmitDisabled}
 					onFieldChange={onFieldChange}

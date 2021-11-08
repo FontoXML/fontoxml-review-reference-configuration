@@ -1,16 +1,26 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
 
-import { Block, Icon, FormRow, TextArea, TextAreaWithDiff } from 'fds/components';
+import {
+	Block,
+	Flex,
+	Icon,
+	FormRow,
+	TextArea,
+	TextAreaWithDiff,
+} from 'fds/components';
 
-import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
-import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types.js';
-import t from 'fontoxml-localization/src/t.js';
+import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
 
-import AddOrEditFormFooter from '../shared/AddOrEditFormFooter.jsx';
+import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
 
 function validateProposedChangeField(value, originalText) {
 	if (value === originalText) {
-		return { connotation: 'error', message: 'Proposed change is required.' };
+		return {
+			connotation: 'error',
+			message: 'Proposed change is required.',
+		};
 	}
 
 	return null;
@@ -26,39 +36,43 @@ function ProposalAddOrEditFormContent({
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
-	valueByName
+	valueByName,
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
-		reviewAnnotation.isLoading || (error && error.recovery !== RecoveryOption.RETRYABLE);
+		reviewAnnotation.isLoading ||
+		(error && error.recovery !== RecoveryOption.RETRYABLE);
 	const isEditing = reviewAnnotation.busyState === BusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
 
 	const originalText = reviewAnnotation.originalText;
 
-	const proposedChangeIsModified = valueByName.proposedChange !== originalText;
+	const proposedChangeIsModified =
+		valueByName.proposedChange !== originalText;
 
 	useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
 				name: 'proposedChange',
 				value: originalText,
-				feedback: validateProposedChangeField(originalText, originalText)
+				feedback: validateProposedChangeField(
+					originalText,
+					originalText
+				),
 			});
 		}
 	}, [isEditing, onFieldChange, originalText]);
 
 	return (
-		<Fragment>
+		<>
 			<Block spaceVerticalSize="l">
 				<FormRow
 					label={
-						<Block isInline spaceHorizontalSize="s">
-							<Block isInline>
-								<Icon icon="fas fa-pencil-square-o" />
-							</Block>
-							<span>{t('Proposed change')}</span>
-						</Block>
+						<Flex alignItems="center" isInline spaceSize="s">
+							<Icon icon="fal fa-pencil-square-o" isInline />
+
+							<Block isInline>{t('Proposed change')}</Block>
+						</Flex>
 					}
 					hasRequiredAsterisk
 					isLabelBold
@@ -68,14 +82,22 @@ function ProposalAddOrEditFormContent({
 						isDisabled={isDisabled}
 						name="proposedChange"
 						originalValue={originalText}
-						placeholder={t('Leave empty to propose removing the selected content')}
+						placeholder={t(
+							'Leave empty to propose removing the selected content'
+						)}
 						ref={onFocusableRef}
 						rows={rows}
-						validate={value => validateProposedChangeField(value, originalText)}
+						validate={(value) =>
+							validateProposedChangeField(value, originalText)
+						}
 					/>
 				</FormRow>
 
-				<FormRow label={t('Motivation')} isLabelBold labelColorName="text-color">
+				<FormRow
+					label={t('Motivation')}
+					isLabelBold
+					labelColorName="text-color"
+				>
 					<TextArea
 						isDisabled={isDisabled}
 						name="comment"
@@ -94,7 +116,7 @@ function ProposalAddOrEditFormContent({
 				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 				onSubmit={onSubmit}
 			/>
-		</Fragment>
+		</>
 	);
 }
 
@@ -102,11 +124,20 @@ function ProposalAddOrEditForm({
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
-	onSubmit
+	onSubmit,
 }) {
 	return (
-		<ReviewAnnotationForm initialValueByName={reviewAnnotation.metadata} onSubmit={onSubmit}>
-			{({ isSubmitDisabled, onFieldChange, onFocusableRef, onSubmit, valueByName }) => (
+		<ReviewAnnotationForm
+			initialValueByName={reviewAnnotation.metadata}
+			onSubmit={onSubmit}
+		>
+			{({
+				isSubmitDisabled,
+				onFieldChange,
+				onFocusableRef,
+				onSubmit,
+				valueByName,
+			}) => (
 				<ProposalAddOrEditFormContent
 					isSubmitDisabled={isSubmitDisabled}
 					onFieldChange={onFieldChange}

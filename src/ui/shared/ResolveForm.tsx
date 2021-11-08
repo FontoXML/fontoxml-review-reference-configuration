@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import {
 	Block,
@@ -10,20 +10,20 @@ import {
 	RadioButtonGroup,
 	Text,
 	TextArea,
-	Toast
+	Toast,
 } from 'fds/components';
 
-import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
-import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
-import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton.jsx';
+import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import {
 	AnnotationStatus,
 	ProposalState as ProposalStateTypes,
-	RecoveryOption
-} from 'fontoxml-feedback/src/types.js';
-import t from 'fontoxml-localization/src/t.js';
+	RecoveryOption,
+} from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
 
-import resolutions from '../feedbackResolutions.jsx';
+import resolutions from '../feedbackResolutions';
 
 const rows = { minimum: 2, maximum: 6 };
 
@@ -32,7 +32,9 @@ function determineSaveButtonLabel(error, isLoading) {
 		return t('Resolving…');
 	}
 
-	return error && error.recovery === RecoveryOption.RETRYABLE ? t('Retry resolve') : t('Resolve');
+	return error && error.recovery === RecoveryOption.RETRYABLE
+		? t('Retry resolve')
+		: t('Resolve');
 }
 
 function validateResolutionField(value) {
@@ -43,8 +45,168 @@ function validateResolutionField(value) {
 	return null;
 }
 
-// negative margin to align the icon with the reply icons above (if any)
-const iconContainerStyles = { marginLeft: '-26px' };
+function ResolveFormContent({
+	isSubmitDisabled,
+	onCancel,
+	onFocusableRef,
+	onProposalMerge,
+	onReviewAnnotationRefresh,
+	onSubmit,
+	reviewAnnotation,
+	valueByName,
+}) {
+	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
+	const isDisabled =
+		reviewAnnotation.isLoading ||
+		(error && error.recovery !== RecoveryOption.RETRYABLE);
+	const isLoading = reviewAnnotation.isLoading;
+
+	const proposalState = reviewAnnotation.proposalState;
+
+	const isRejectingMergedProposal =
+		reviewAnnotation.type === 'proposal' &&
+		proposalState === ProposalStateTypes.MERGED &&
+		valueByName.resolution === 'rejected';
+	const isAcceptingUnmergedProposal =
+		reviewAnnotation.type === 'proposal' &&
+		proposalState === ProposalStateTypes.ENABLED &&
+		valueByName.resolution === 'accepted';
+	const isAcceptingChangedProposal =
+		reviewAnnotation.type === 'proposal' &&
+		proposalState !== ProposalStateTypes.ENABLED &&
+		proposalState !== ProposalStateTypes.MERGING &&
+		proposalState !== ProposalStateTypes.MERGED &&
+		valueByName.resolution === 'accepted';
+
+	return (
+		<Block spaceVerticalSize="m">
+			<HorizontalSeparationLine />
+
+			<Block spaceVerticalSize="l">
+				<Flex flexDirection="column" spaceSize="s">
+					<Flex
+						alignItems="center"
+						flexDirection="row"
+						justifyContent="flex-start"
+						spaceSize="s"
+					>
+						<Icon icon="check" />
+
+						<FormRow
+							label={t('Resolve and')}
+							hasRequiredAsterisk
+							labelColorName="text-color"
+						></FormRow>
+					</Flex>
+
+					<RadioButtonGroup
+						isDisabled={isDisabled}
+						items={resolutions}
+						name="resolution"
+						ref={onFocusableRef}
+						validate={validateResolutionField}
+					/>
+				</Flex>
+
+				<TextArea
+					isDisabled={isDisabled}
+					name="resolutionComment"
+					placeholder={t(
+						'Optionally describe how or why you resolved this comment'
+					)}
+					rows={rows}
+				/>
+
+				{error && (
+					<ErrorToast
+						error={error}
+						onRefreshLinkClick={onReviewAnnotationRefresh}
+						onRetryLinkClick={onSubmit}
+					/>
+				)}
+
+				{isRejectingMergedProposal && (
+					<Toast
+						icon="info-circle"
+						connotation="info"
+						content={
+							<Text colorName="text-info-color">
+								{t(
+									'Are you sure you want to mark this as rejected? The proposed change was applied.'
+								)}
+							</Text>
+						}
+					/>
+				)}
+				{isAcceptingUnmergedProposal && (
+					<Toast
+						icon="info-circle"
+						connotation="info"
+						content={
+							<Text colorName="text-info-color">
+								{t(
+									'Are you sure you want to mark this as accepted? The proposed change was not applied.'
+								)}
+							</Text>
+						}
+					/>
+				)}
+				{isAcceptingChangedProposal && (
+					<Toast
+						icon="info-circle"
+						connotation="info"
+						content={
+							<Text colorName="text-info-color">
+								{t(
+									'Please check if the proposed change has been applied to the text before accepting.'
+								)}
+							</Text>
+						}
+					/>
+				)}
+
+				<Flex justifyContent="flex-end" spaceSize="l">
+					<Block flex="0 1 auto">
+						<Button
+							isDisabled={isDisabled}
+							label={t('Cancel')}
+							onClick={onCancel}
+						/>
+					</Block>
+
+					{reviewAnnotation.type === 'proposal' &&
+						reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
+						onProposalMerge &&
+						proposalState && (
+							<Block flex="0 1 auto">
+								<ReviewAnnotationAcceptProposalButton
+									onProposalMerge={onProposalMerge}
+									proposalState={proposalState}
+								/>
+							</Block>
+						)}
+
+					<Block flex="0 1 auto">
+						<Button
+							icon={isLoading ? 'spinner' : null}
+							isDisabled={
+								isDisabled ||
+								isLoading ||
+								isSubmitDisabled ||
+								(reviewAnnotation.error &&
+									reviewAnnotation.error.recovery !==
+										RecoveryOption.RETRYABLE)
+							}
+							label={determineSaveButtonLabel(error, isLoading)}
+							onClick={onSubmit}
+							type="primary"
+						/>
+					</Block>
+				</Flex>
+			</Block>
+		</Block>
+	);
+}
 
 export default function ResolveForm({
 	reviewAnnotation,
@@ -52,162 +214,25 @@ export default function ResolveForm({
 	onProposalMerge = null,
 	onReviewAnnotationRefresh,
 	onSubmit,
-	proposalState = null
 }) {
-	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
-	const isDisabled =
-		reviewAnnotation.isLoading || (error && error.recovery !== RecoveryOption.RETRYABLE);
-	const isLoading = reviewAnnotation.isLoading;
-
 	return (
 		<ReviewAnnotationForm
 			key={reviewAnnotation.id}
 			initialValueByName={reviewAnnotation.resolvedMetadata}
 			onSubmit={onSubmit}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => {
-				const isRejectingMergedProposal =
-					reviewAnnotation.type === 'proposal' &&
-					proposalState === ProposalStateTypes.MERGED &&
-					valueByName.resolution === 'rejected';
-				const isAcceptingUnmergedProposal =
-					reviewAnnotation.type === 'proposal' &&
-					proposalState === ProposalStateTypes.ENABLED &&
-					valueByName.resolution === 'accepted';
-				const isAcceptingChangedProposal =
-					reviewAnnotation.type === 'proposal' &&
-					proposalState !== ProposalStateTypes.ENABLED &&
-					proposalState !== ProposalStateTypes.MERGING &&
-					proposalState !== ProposalStateTypes.MERGED &&
-					valueByName.resolution === 'accepted';
-
-				return (
-					<Fragment>
-						<HorizontalSeparationLine />
-
-						<Block applyCss={{ paddingLeft: '26px', paddingTop: '4px' }}>
-							<Flex
-								alignItems="flex-start"
-								applyCss={iconContainerStyles}
-								flex="none"
-								spaceSize="m"
-							>
-								<Block applyCss={{ marginTop: '6px' }}>
-									<Icon icon="check" />
-								</Block>
-
-								<FormRow
-									label="Resolve and:"
-									hasRequiredAsterisk
-									isLabelBold
-									labelColorName="text-color"
-								>
-									<RadioButtonGroup
-										isDisabled={isDisabled}
-										items={resolutions}
-										name="resolution"
-										ref={onFocusableRef}
-										validate={validateResolutionField}
-									/>
-
-									<TextArea
-										isDisabled={isDisabled}
-										name="resolutionComment"
-										placeholder={t(
-											'Optionally describe how or why you resolved this comment'
-										)}
-										rows={rows}
-									/>
-
-									{error && (
-										<ErrorToast
-											error={error}
-											onRefreshLinkClick={onReviewAnnotationRefresh}
-											onRetryLinkClick={onSubmit}
-										/>
-									)}
-
-									{isRejectingMergedProposal && (
-										<Toast
-											icon="info-circle"
-											connotation="info"
-											content={
-												<Text colorName="text-info-color">
-													{t(
-														'Are you sure you want to mark this as rejected? The proposed change was applied.'
-													)}
-												</Text>
-											}
-										/>
-									)}
-									{isAcceptingUnmergedProposal && (
-										<Toast
-											icon="info-circle"
-											connotation="info"
-											content={
-												<Text colorName="text-info-color">
-													{t(
-														'Are you sure you want to mark this as accepted? The proposed change was not applied.'
-													)}
-												</Text>
-											}
-										/>
-									)}
-									{isAcceptingChangedProposal && (
-										<Toast
-											icon="info-circle"
-											connotation="info"
-											content={
-												<Text colorName="text-info-color">
-													{t(
-														'Please check if the proposed change has been applied to the text before accepting.'
-													)}
-												</Text>
-											}
-										/>
-									)}
-								</FormRow>
-							</Flex>
-						</Block>
-
-						<Flex flexDirection="column">
-							<HorizontalSeparationLine marginSizeBottom="m" marginSizeTop="m" />
-
-							<Flex justifyContent="flex-end" spaceSize="l">
-								<Button
-									isDisabled={isDisabled}
-									label={t('Cancel')}
-									onClick={onCancel}
-								/>
-
-								{reviewAnnotation.type === 'proposal' &&
-									reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
-									onProposalMerge && (
-										<ReviewAnnotationAcceptProposalButton
-											onProposalMerge={onProposalMerge}
-											proposalState={proposalState}
-										/>
-									)}
-
-								<Button
-									icon={isLoading ? 'spinner' : null}
-									isDisabled={
-										isDisabled ||
-										isLoading ||
-										isSubmitDisabled ||
-										(reviewAnnotation.error &&
-											reviewAnnotation.error.recovery !==
-												RecoveryOption.RETRYABLE)
-									}
-									label={determineSaveButtonLabel(error, isLoading)}
-									onClick={onSubmit}
-									type="primary"
-								/>
-							</Flex>
-						</Flex>
-					</Fragment>
-				);
-			}}
+			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
+				<ResolveFormContent
+					isSubmitDisabled={isSubmitDisabled}
+					onCancel={onCancel}
+					onFocusableRef={onFocusableRef}
+					onProposalMerge={onProposalMerge}
+					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+					onSubmit={onSubmit}
+					reviewAnnotation={reviewAnnotation}
+					valueByName={valueByName}
+				/>
+			)}
 		</ReviewAnnotationForm>
 	);
 }

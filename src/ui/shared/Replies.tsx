@@ -1,15 +1,23 @@
-import React, { Fragment, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
-import { Block, CompactStateMessage, HorizontalSeparationLine, TextLink } from 'fds/components';
+import {
+	Block,
+	CompactStateMessage,
+	HorizontalSeparationLine,
+	TextLink,
+} from 'fds/components';
 
-import { AnnotationStatus, BusyState, ContextType } from 'fontoxml-feedback/src/types.js';
-import t from 'fontoxml-localization/src/t.js';
+import {
+	AnnotationStatus,
+	BusyState,
+	ContextType,
+} from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
 
-import Reply from './Reply.jsx';
-import ReplyForm from './ReplyForm.jsx';
+import Reply from './Reply';
+import ReplyForm from './ReplyForm';
 
 export default function Replies({
-	ContentComponent,
 	context,
 	hasResolution,
 	reviewAnnotation,
@@ -18,7 +26,7 @@ export default function Replies({
 	onReplyFormSubmit,
 	onReplyErrorHide,
 	onReplyRefresh,
-	onReplyRemove
+	onReplyRemove,
 }) {
 	const [areRepliesExpanded, setAreRepliesExpanded] = useState(false);
 
@@ -33,14 +41,25 @@ export default function Replies({
 			return false;
 		}
 
-		return reviewAnnotation.replies.reduce((showActionsMenuButton, reply) => {
-			if (!showActionsMenuButton) {
-				return showActionsMenuButton;
-			}
+		return reviewAnnotation.replies.reduce(
+			(showActionsMenuButton, reply) => {
+				if (!showActionsMenuButton) {
+					return showActionsMenuButton;
+				}
 
-			return reply.busyState !== BusyState.ADDING && reply.busyState !== BusyState.EDITING;
-		}, reviewAnnotation.busyState !== BusyState.RESOLVING);
-	}, [context, reviewAnnotation.busyState, reviewAnnotation.replies, reviewAnnotation.status]);
+				return (
+					reply.busyState !== BusyState.ADDING &&
+					reply.busyState !== BusyState.EDITING
+				);
+			},
+			reviewAnnotation.busyState !== BusyState.RESOLVING
+		);
+	}, [
+		context,
+		reviewAnnotation.busyState,
+		reviewAnnotation.replies,
+		reviewAnnotation.status,
+	]);
 
 	const repliesToShow = useMemo(() => {
 		if (areRepliesExpanded) {
@@ -53,36 +72,44 @@ export default function Replies({
 
 		// If the last reply is a reply which is being added, show the latest 3 replies
 		// If there's also a resolution, show 2 replies
-		const lastReply = reviewAnnotation.replies[reviewAnnotation.replies.length - 1];
+		const lastReply =
+			reviewAnnotation.replies[reviewAnnotation.replies.length - 1];
 		if (lastReply.busyState === BusyState.ADDING) {
 			maxNumberOfRepliesToShow = hasResolution ? 2 : 3;
 		}
 
 		return reviewAnnotation.replies.slice(
-			Math.max(reviewAnnotation.replies.length - maxNumberOfRepliesToShow, 0)
+			Math.max(
+				reviewAnnotation.replies.length - maxNumberOfRepliesToShow,
+				0
+			)
 		);
 	}, [areRepliesExpanded, hasResolution, reviewAnnotation.replies]);
 
-	const collapsedRepliesCount = reviewAnnotation.replies.length - repliesToShow.length;
+	const collapsedRepliesCount =
+		reviewAnnotation.replies.length - repliesToShow.length;
 
-	const handleExpandRepliesTextLinkClick = useCallback(() => setAreRepliesExpanded(true), []);
+	const handleExpandRepliesTextLinkClick = useCallback(
+		() => setAreRepliesExpanded(true),
+		[]
+	);
 
 	return (
-		<Block>
+		<Block spaceVerticalSize="m">
 			{collapsedRepliesCount > 0 && (
-				<Fragment>
+				<>
 					<HorizontalSeparationLine />
 
-					<Block style={{ padding: '.5rem 0 .5rem 1.625rem' }}>
-						<TextLink
-							label={t(
-								'Show {COLLAPSED_REPLIES_COUNT, plural, one {1 more reply} other {# more replies}}',
-								{ COLLAPSED_REPLIES_COUNT: collapsedRepliesCount }
-							)}
-							onClick={handleExpandRepliesTextLinkClick}
-						/>
-					</Block>
-				</Fragment>
+					<TextLink
+						label={t(
+							'Show {COLLAPSED_REPLIES_COUNT, plural, one {1 more reply} other {# more replies}}',
+							{
+								COLLAPSED_REPLIES_COUNT: collapsedRepliesCount,
+							}
+						)}
+						onClick={handleExpandRepliesTextLinkClick}
+					/>
+				</>
 			)}
 
 			{repliesToShow.map((reply, index) => {
@@ -104,7 +131,10 @@ export default function Replies({
 							/>
 						</Block>
 					);
-				} else if (reply.isLoading && reply.busyState === BusyState.REMOVING) {
+				} else if (
+					reply.isLoading &&
+					reply.busyState === BusyState.REMOVING
+				) {
 					return (
 						<Block
 							key={reply.id}
@@ -132,7 +162,6 @@ export default function Replies({
 					return (
 						<ReplyForm
 							key={reply.id}
-							isLast={isLast}
 							reply={reply}
 							onCancel={onReplyFormCancel}
 							onHide={onReplyErrorHide}
@@ -145,8 +174,6 @@ export default function Replies({
 				return (
 					<Reply
 						key={reply.id}
-						ContentComponent={ContentComponent}
-						isLast={isLast}
 						reviewAnnotation={reviewAnnotation}
 						onCancelRetryRemove={onReplyFormCancel}
 						onHide={onReplyErrorHide}

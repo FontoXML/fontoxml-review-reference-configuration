@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 
 import { Block, Checkbox, Flex, Label } from 'fds/components';
 
-import t from 'fontoxml-localization/src/t.js';
+import t from 'fontoxml-localization/src/t';
 
-import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions.js';
+import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
 
 function determineParentFieldValue(subFieldNames, valueByNameForUI) {
 	return subFieldNames.reduce((value, subFieldName) => {
@@ -66,7 +66,7 @@ function FilterForm({
 	// all of which are optional.)
 	showFeedback: _showFeedback,
 	// The current values of the filter form fields.
-	valueByName
+	valueByName,
 }) {
 	// If you use your own Form (field) components, make sure to call onFieldChange whenever a field
 	// changes. This makes sure the filter form fields update whenever the user edits the form.
@@ -81,8 +81,8 @@ function FilterForm({
 	// This processes the list of changed fields by simply calling onFieldChange for each of them,
 	// with a value of null for feedback, as explained before.
 	const handleFieldsChange = useCallback(
-		changedFields =>
-			changedFields.forEach(changedField =>
+		(changedFields) =>
+			changedFields.forEach((changedField) =>
 				onFieldChange({
 					...changedField,
 					// Do not send Checkbox.VALUE_INDETERMINATE to the backend.
@@ -90,7 +90,7 @@ function FilterForm({
 						changedField.value === Checkbox.VALUE_INDETERMINATE
 							? false
 							: changedField.value,
-					feedback: null
+					feedback: null,
 				})
 			),
 		[onFieldChange]
@@ -99,7 +99,12 @@ function FilterForm({
 	// Determine Checkbox.VALUE_INDETERMINATE for the UI based on the valuesByName (from the backend).
 	const valueByNameForUI = { ...valueByName };
 	valueByNameForUI.typeComment = determineParentFieldValue(
-		['typeComment', 'typeCommentTechnical', 'typeCommentGeneral', 'typeCommentEditorial'],
+		[
+			'typeComment',
+			'typeCommentTechnical',
+			'typeCommentGeneral',
+			'typeCommentEditorial',
+		],
 		valueByNameForUI
 	);
 	valueByNameForUI.typePublicationComment = determineParentFieldValue(
@@ -107,12 +112,16 @@ function FilterForm({
 			'typePublicationComment',
 			'typePublicationCommentTechnical',
 			'typePublicationCommentGeneral',
-			'typePublicationCommentEditorial'
+			'typePublicationCommentEditorial',
 		],
 		valueByNameForUI
 	);
 	valueByNameForUI.resolutionResolved = determineParentFieldValue(
-		['resolutionResolved', 'resolutionResolvedAccepted', 'resolutionResolvedRejected'],
+		[
+			'resolutionResolved',
+			'resolutionResolvedAccepted',
+			'resolutionResolvedRejected',
+		],
 		valueByNameForUI
 	);
 
@@ -124,37 +133,49 @@ function FilterForm({
 	return (
 		<Flex spaceSize="l">
 			<Block flex="none" spaceVerticalSize="s">
-				<Label isBold>
-					{t('Type(s) of feedback')}
-				</Label>
+				<Label isBold>{t('Type(s) of feedback')}</Label>
 
 				<Block spaceVerticalSize="l">
 					<Block spaceVerticalSize="s">
 						<Checkbox
 							label={t('Comment')}
-							onChange={value => onCheckboxChange('typeComment', value)}
+							onChange={(value) =>
+								onCheckboxChange('typeComment', value)
+							}
 							value={valueByNameForUI.typeComment}
 						/>
 
-						<Block applyCss={{ paddingLeft: '22px' }} spaceVerticalSize="s">
+						<Block
+							applyCss={{ paddingLeft: '22px' }}
+							spaceVerticalSize="s"
+						>
 							<Checkbox
 								label={t('Technical')}
-								onChange={value =>
-									onCheckboxChange('typeCommentTechnical', value)
+								onChange={(value) =>
+									onCheckboxChange(
+										'typeCommentTechnical',
+										value
+									)
 								}
 								value={valueByNameForUI.typeCommentTechnical}
 							/>
 							<Checkbox
 								label={t('General')}
-								onChange={value =>
-									onCheckboxChange('typeCommentGeneral', value)
+								onChange={(value) =>
+									onCheckboxChange(
+										'typeCommentGeneral',
+										value
+									)
 								}
 								value={valueByNameForUI.typeCommentGeneral}
 							/>
 							<Checkbox
 								label={t('Editorial')}
-								onChange={value =>
-									onCheckboxChange('typeCommentEditorial', value)
+								onChange={(value) =>
+									onCheckboxChange(
+										'typeCommentEditorial',
+										value
+									)
 								}
 								value={valueByNameForUI.typeCommentEditorial}
 							/>
@@ -164,70 +185,102 @@ function FilterForm({
 					<Block spaceVerticalSize="s">
 						<Checkbox
 							label={t('Global Comment')}
-							onChange={value =>
-								onCheckboxChange('typePublicationComment', value)
+							onChange={(value) =>
+								onCheckboxChange(
+									'typePublicationComment',
+									value
+								)
 							}
 							value={valueByNameForUI.typePublicationComment}
 						/>
 
-						<Block applyCss={{ paddingLeft: '22px' }} spaceVerticalSize="s">
+						<Block
+							applyCss={{ paddingLeft: '22px' }}
+							spaceVerticalSize="s"
+						>
 							<Checkbox
 								label={t('Technical')}
-								onChange={value =>
-									onCheckboxChange('typePublicationCommentTechnical', value)
+								onChange={(value) =>
+									onCheckboxChange(
+										'typePublicationCommentTechnical',
+										value
+									)
 								}
-								value={valueByNameForUI.typePublicationCommentTechnical}
+								value={
+									valueByNameForUI.typePublicationCommentTechnical
+								}
 							/>
 							<Checkbox
 								label={t('General')}
-								onChange={value =>
-									onCheckboxChange('typePublicationCommentGeneral', value)
+								onChange={(value) =>
+									onCheckboxChange(
+										'typePublicationCommentGeneral',
+										value
+									)
 								}
-								value={valueByNameForUI.typePublicationCommentGeneral}
+								value={
+									valueByNameForUI.typePublicationCommentGeneral
+								}
 							/>
 							<Checkbox
 								label={t('Editorial')}
-								onChange={value =>
-									onCheckboxChange('typePublicationCommentEditorial', value)
+								onChange={(value) =>
+									onCheckboxChange(
+										'typePublicationCommentEditorial',
+										value
+									)
 								}
-								value={valueByNameForUI.typePublicationCommentEditorial}
+								value={
+									valueByNameForUI.typePublicationCommentEditorial
+								}
 							/>
 						</Block>
 					</Block>
 
 					<Checkbox
 						label={t('Proposal')}
-						onChange={value => onCheckboxChange('typeProposal', value)}
+						onChange={(value) =>
+							onCheckboxChange('typeProposal', value)
+						}
 						value={valueByNameForUI.typeProposal}
 					/>
 				</Block>
 			</Block>
 
 			<Block flex="none" spaceVerticalSize="s">
-				<Label isBold>
-					{t('Resolution')}
-				</Label>
+				<Label isBold>{t('Resolution')}</Label>
 
 				<Block spaceVerticalSize="s">
 					<Checkbox
 						label={t('Resolved')}
-						onChange={value => onCheckboxChange('resolutionResolved', value)}
+						onChange={(value) =>
+							onCheckboxChange('resolutionResolved', value)
+						}
 						value={valueByNameForUI.resolutionResolved}
 					/>
 
-					<Block applyCss={{ paddingLeft: '22px' }} spaceVerticalSize="s">
+					<Block
+						applyCss={{ paddingLeft: '22px' }}
+						spaceVerticalSize="s"
+					>
 						<Checkbox
 							label={t('Accepted')}
-							onChange={value =>
-								onCheckboxChange('resolutionResolvedAccepted', value)
+							onChange={(value) =>
+								onCheckboxChange(
+									'resolutionResolvedAccepted',
+									value
+								)
 							}
 							value={valueByNameForUI.resolutionResolvedAccepted}
 						/>
 
 						<Checkbox
 							label={t('Rejected')}
-							onChange={value =>
-								onCheckboxChange('resolutionResolvedRejected', value)
+							onChange={(value) =>
+								onCheckboxChange(
+									'resolutionResolvedRejected',
+									value
+								)
 							}
 							value={valueByNameForUI.resolutionResolvedRejected}
 						/>
@@ -235,7 +288,9 @@ function FilterForm({
 
 					<Checkbox
 						label={t('Unresolved')}
-						onChange={value => onCheckboxChange('resolutionUnresolved', value)}
+						onChange={(value) =>
+							onCheckboxChange('resolutionUnresolved', value)
+						}
 						value={valueByNameForUI.resolutionUnresolved}
 					/>
 				</Block>

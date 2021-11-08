@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
-import configurationManager from 'fontoxml-configuration/src/configurationManager.js';
-import { BusyState } from 'fontoxml-feedback/src/types.js';
-import t from 'fontoxml-localization/src/t.js';
+import configurationManager from 'fontoxml-configuration/src/configurationManager';
+import { BusyState } from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
 
 const configuredScope = configurationManager.get('scope');
 
@@ -35,8 +35,12 @@ export default function useAuthorAndTimestampLabel(
 			return { author: authorLabel };
 		}
 
-		const authorField = forResolvedReviewAnnotation ? 'resolvedAuthor' : 'author';
-		const timestampField = forResolvedReviewAnnotation ? 'resolvedTimestamp' : 'timestamp';
+		const authorField = forResolvedReviewAnnotation
+			? 'resolvedAuthor'
+			: 'author';
+		const timestampField = forResolvedReviewAnnotation
+			? 'resolvedTimestamp'
+			: 'timestamp';
 
 		// Use fallback value if author is not present. Return author.
 		if (!reviewAnnotationOrReply[authorField]) {
@@ -61,13 +65,13 @@ export default function useAuthorAndTimestampLabel(
 
 		// Timestamp localization
 		timestamp = t('{TIMESTAMP, fonto_date}, {TIMESTAMP, time, short}', {
-			TIMESTAMP: timestamp
+			TIMESTAMP: timestamp,
 		});
 
 		// Return author and timestamp.
 		return {
 			author: authorLabel,
-			timestamp
+			timestamp,
 		};
 	}, [fallback, forResolvedReviewAnnotation, reviewAnnotationOrReply]);
 }

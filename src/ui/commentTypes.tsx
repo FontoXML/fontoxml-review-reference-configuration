@@ -5,14 +5,14 @@
 // creating a feedback item. If you choose 'Comment', you'll get the choice of these 'subtypes' in
 // the add item form.
 // The choice between 'comment' and 'proposal' is stored on the item.type (different registered
-// feedback types, see install.js).
+// feedback types, see install.ts).
 // The choice between the comment types is stored on item.metadata.type.
-// As you'll see in the FilterForm.jsx, this information is combined into a choice between 4 radio
+// As you'll see in the FilterForm.tsx, this information is combined into a choice between 4 radio
 // buttons.
 
 const commentTypes = [
 	{ value: 'general', label: 'General comment' },
 	{ value: 'editorial', label: 'Editorial comment' },
-	{ value: 'technical', label: 'Technical comment' }
+	{ value: 'technical', label: 'Technical comment' },
 ];
 export default commentTypes;

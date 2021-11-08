@@ -1,22 +1,20 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import {
 	Block,
 	Button,
 	Flex,
-	FormRow,
 	HorizontalSeparationLine,
 	Icon,
-	Label,
-	TextArea
+	TextArea,
 } from 'fds/components';
 
-import ErrorToast from 'fontoxml-feedback/src/ErrorToast.jsx';
-import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm.jsx';
-import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types.js';
-import t from 'fontoxml-localization/src/t.js';
+import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
 
-import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel.jsx';
+import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 
 function determineSaveButtonLabel(error, isEditing, isLoading) {
 	if (error && error.recovery === RecoveryOption.RETRYABLE) {
@@ -44,9 +42,6 @@ function determineSaveButtonLabel(error, isEditing, isLoading) {
 
 const rows = { minimum: 2, maximum: 6 };
 
-// 2px to visually align the reply icon nicely to the authorLabel
-const iconContainerStyles = { marginTop: '2px' };
-
 function validateReplyField(value) {
 	if (!value) {
 		return { connotation: 'error', message: 'Reply is required.' };
@@ -56,7 +51,6 @@ function validateReplyField(value) {
 }
 
 function ReplyFormContent({
-	isLast,
 	isSubmitDisabled,
 	onCancelButtonClick,
 	onFocusableRef,
@@ -64,56 +58,61 @@ function ReplyFormContent({
 	onRefreshLinkClick,
 	onSubmit,
 	reply,
-	valueByName
+	valueByName,
 }) {
 	const isAdding = reply.busyState === BusyState.ADDING;
 	const isEditing = reply.busyState === BusyState.EDITING;
 
 	const error = reply.error && (isAdding || isEditing) ? reply.error : null;
-	const isDisabled = reply.isLoading || (error && error.recovery !== RecoveryOption.RETRYABLE);
+	const isDisabled =
+		reply.isLoading ||
+		(error && error.recovery !== RecoveryOption.RETRYABLE);
 	const isLoading = reply.isLoading && (isAdding || isEditing);
 
 	return (
-		<Fragment>
-			<HorizontalSeparationLine />
+		<Block spaceVerticalSize="l">
+			<Flex flexDirection="column" spaceSize="m">
+				<HorizontalSeparationLine />
 
-			<Flex flex="none" paddingSize={{ top: 'm' }} spaceSize="m">
-				<Flex alignItems="flex-start" applyCss={iconContainerStyles} flex="none">
-					<Icon icon="fas fa-reply" />
+				<Flex
+					alignItems="center"
+					style={{ minHeight: '2rem' }}
+					spaceSize="s"
+				>
+					<Icon icon="fal fa-reply" />
+
+					<AuthorAndTimestampLabel reviewAnnotation={reply} />
 				</Flex>
 
-				<Block applyCss={{ marginTop: 0 }} flex="1" spaceVerticalSize="m">
-					<AuthorAndTimestampLabel reviewAnnotation={reply} />
+				<TextArea
+					isDisabled={isDisabled}
+					name="reply"
+					ref={onFocusableRef}
+					rows={rows}
+					validate={validateReplyField}
+					placeholder={t('Type your reply')}
+				/>
 
-					<TextArea
-						isDisabled={isDisabled}
-						name="reply"
-						ref={onFocusableRef}
-						rows={rows}
-						validate={validateReplyField}
+				{error && (
+					<ErrorToast
+						error={error}
+						onHideLinkClick={onHideLinkClick}
+						onRefreshLinkClick={onRefreshLinkClick}
+						onRetryLinkClick={onSubmit}
 					/>
-
-					{error && (
-						<ErrorToast
-							error={error}
-							onHideLinkClick={onHideLinkClick}
-							onRefreshLinkClick={onRefreshLinkClick}
-							onRetryLinkClick={onSubmit}
-						/>
-					)}
-				</Block>
+				)}
 			</Flex>
 
-			<Flex flexDirection="column" paddingSize={{ bottom: isLast ? 0 : 'm' }}>
-				<HorizontalSeparationLine marginSizeBottom="m" marginSizeTop="m" />
-
-				<Flex justifyContent="flex-end" spaceSize="l">
+			<Flex justifyContent="flex-end" spaceSize="l">
+				<Block flex="0 1 auto">
 					<Button
 						isDisabled={isDisabled}
 						label={t('Cancel')}
 						onClick={onCancelButtonClick}
 					/>
+				</Block>
 
+				<Block flex="0 1 auto">
 					<Button
 						icon={isLoading ? 'spinner' : null}
 						isDisabled={
@@ -121,27 +120,42 @@ function ReplyFormContent({
 							isLoading ||
 							!valueByName.reply ||
 							isSubmitDisabled ||
-							(reply.error && reply.error.recovery !== RecoveryOption.RETRYABLE)
+							(reply.error &&
+								reply.error.recovery !==
+									RecoveryOption.RETRYABLE)
 						}
-						label={determineSaveButtonLabel(error, isEditing, isLoading)}
+						label={determineSaveButtonLabel(
+							error,
+							isEditing,
+							isLoading
+						)}
 						onClick={onSubmit}
 						type="primary"
 					/>
-				</Flex>
+				</Block>
 			</Flex>
-		</Fragment>
+		</Block>
 	);
 }
 
-function ReplyForm({ isLast, reply, onCancel, onHide, onRefresh, onSubmit }) {
-	const handleHideLinkClick = useCallback(() => onHide(reply.id), [onHide, reply.id]);
-	const handleRefreshLinkClick = useCallback(() => onRefresh(reply.id), [onRefresh, reply.id]);
+function ReplyForm({ reply, onCancel, onHide, onRefresh, onSubmit }) {
+	const handleHideLinkClick = useCallback(
+		() => onHide(reply.id),
+		[onHide, reply.id]
+	);
+	const handleRefreshLinkClick = useCallback(
+		() => onRefresh(reply.id),
+		[onRefresh, reply.id]
+	);
 
-	const handleCancelButtonClick = useCallback(() => onCancel(reply.id), [onCancel, reply.id]);
-	const handleSubmit = useCallback(valueByName => onSubmit(reply.id, valueByName), [
-		onSubmit,
-		reply.id
-	]);
+	const handleCancelButtonClick = useCallback(
+		() => onCancel(reply.id),
+		[onCancel, reply.id]
+	);
+	const handleSubmit = useCallback(
+		(valueByName) => onSubmit(reply.id, valueByName),
+		[onSubmit, reply.id]
+	);
 
 	return (
 		<ReviewAnnotationForm
@@ -151,7 +165,6 @@ function ReplyForm({ isLast, reply, onCancel, onHide, onRefresh, onSubmit }) {
 		>
 			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
 				<ReplyFormContent
-					isLast={isLast}
 					isSubmitDisabled={isSubmitDisabled}
 					onCancelButtonClick={handleCancelButtonClick}
 					onFocusableRef={onFocusableRef}
