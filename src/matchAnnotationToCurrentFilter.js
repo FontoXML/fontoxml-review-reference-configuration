@@ -1,13 +1,23 @@
-module.exports = function matchAnnotationToCurrentFilter(filterFormValueByName, annotation) {
+module.exports = function matchAnnotationToCurrentFilter(
+	filterFormValueByName,
+	annotation
+) {
 	// This function filters annotations on type AND resolution.
 
-	const isTypeComment = annotation.type === 'comment' || annotation.type === 'object-comment';
+	const isTypeComment =
+		annotation.type === 'comment' || annotation.type === 'object-comment';
 	const isTypeCommentTechnical =
-		isTypeComment && annotation.metadata && annotation.metadata.commentType === 'technical';
+		isTypeComment &&
+		annotation.metadata &&
+		annotation.metadata.commentType === 'technical';
 	const isTypeCommentGeneral =
-		isTypeComment && annotation.metadata && annotation.metadata.commentType === 'general';
+		isTypeComment &&
+		annotation.metadata &&
+		annotation.metadata.commentType === 'general';
 	const isTypeCommentEditorial =
-		isTypeComment && annotation.metadata && annotation.metadata.commentType === 'editorial';
+		isTypeComment &&
+		annotation.metadata &&
+		annotation.metadata.commentType === 'editorial';
 
 	const isTypePublicationComment = annotation.type === 'publication-comment';
 	const isTypePublicationCommentTechnical =
@@ -38,14 +48,18 @@ module.exports = function matchAnnotationToCurrentFilter(filterFormValueByName, 
 
 	const matchesType =
 		(filterFormValueByName.typeComment && isTypeComment) ||
-		(filterFormValueByName.typeCommentTechnical && isTypeCommentTechnical) ||
+		(filterFormValueByName.typeCommentTechnical &&
+			isTypeCommentTechnical) ||
 		(filterFormValueByName.typeCommentGeneral && isTypeCommentGeneral) ||
-		(filterFormValueByName.typeCommentEditorial && isTypeCommentEditorial) ||
+		(filterFormValueByName.typeCommentEditorial &&
+			isTypeCommentEditorial) ||
 		//
-		(filterFormValueByName.typePublicationComment && isTypePublicationComment) ||
+		(filterFormValueByName.typePublicationComment &&
+			isTypePublicationComment) ||
 		(filterFormValueByName.typePublicationCommentTechnical &&
 			isTypePublicationCommentTechnical) ||
-		(filterFormValueByName.typePublicationCommentGeneral && isTypePublicationCommentGeneral) ||
+		(filterFormValueByName.typePublicationCommentGeneral &&
+			isTypePublicationCommentGeneral) ||
 		(filterFormValueByName.typePublicationCommentEditorial &&
 			isTypePublicationCommentEditorial) ||
 		//
@@ -65,8 +79,10 @@ module.exports = function matchAnnotationToCurrentFilter(filterFormValueByName, 
 
 	const matchesResolution =
 		(filterFormValueByName.resolutionResolved && isResolved) ||
-		(filterFormValueByName.resolutionResolvedAccepted && isResolvedAndAccepted) ||
-		(filterFormValueByName.resolutionResolvedRejected && isResolvedAndRejected) ||
+		(filterFormValueByName.resolutionResolvedAccepted &&
+			isResolvedAndAccepted) ||
+		(filterFormValueByName.resolutionResolvedRejected &&
+			isResolvedAndRejected) ||
 		(filterFormValueByName.resolutionUnresolved && isUnresolved) ||
 		(!filterFormValueByName.resolutionResolved &&
 			!filterFormValueByName.resolutionResolvedAccepted &&
