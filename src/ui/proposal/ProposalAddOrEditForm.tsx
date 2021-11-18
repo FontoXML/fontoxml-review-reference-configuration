@@ -128,14 +128,11 @@ function ProposalAddOrEditForm({
 }) {
 	return (
 		<ReviewAnnotationForm
-			annotationId={reviewAnnotation.id}
 			initialValueByName={reviewAnnotation.metadata}
-			onCancel={onCancel}
 			onSubmit={onSubmit}
 		>
 			{({
 				isSubmitDisabled,
-				onCancel,
 				onFieldChange,
 				onFocusableRef,
 				onSubmit,

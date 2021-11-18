@@ -134,17 +134,14 @@ function CommentAddOrEditForm({
 }) {
 	return (
 		<ReviewAnnotationForm
-			annotationId={reviewAnnotation.id}
 			initialValueByName={reviewAnnotation.metadata}
 			onSubmit={onSubmit}
-			onCancel={onCancel}
 		>
 			{({
 				isSubmitDisabled,
 				onFieldChange,
 				onFocusableRef,
 				onSubmit,
-				onCancel,
 				valueByName,
 			}) => (
 				<CommentAddOrEditFormContent

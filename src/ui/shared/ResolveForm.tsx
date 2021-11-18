@@ -213,13 +213,11 @@ export default function ResolveForm({
 }) {
 	return (
 		<ReviewAnnotationForm
-			annotationId={reviewAnnotation.id}
 			initialValueByName={reviewAnnotation.resolvedMetadata}
 			key={reviewAnnotation.id}
-			onCancel={onCancel}
 			onSubmit={onSubmit}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onCancel, onSubmit, valueByName }) => (
+			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
 				<ResolveFormContent
 					isSubmitDisabled={isSubmitDisabled}
 					onCancel={onCancel}

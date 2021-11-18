@@ -138,14 +138,7 @@ function ReplyFormContent({
 	);
 }
 
-function ReplyForm({
-	onCancel,
-	onHide,
-	onRefresh,
-	onSubmit,
-	reply,
-	reviewAnnotationId,
-}) {
+function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }) {
 	const handleHideLinkClick = React.useCallback(
 		() => onHide(reply.id),
 		[onHide, reply.id]
@@ -167,15 +160,13 @@ function ReplyForm({
 	return (
 		<ReviewAnnotationForm
 			key={reply.id}
-			annotationId={reviewAnnotationId}
 			initialValueByName={reply.metadata}
-			onCancel={handleCancelButtonClick}
 			onSubmit={handleSubmit}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onCancel, onSubmit, valueByName }) => (
+			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
 				<ReplyFormContent
 					isSubmitDisabled={isSubmitDisabled}
-					onCancelButtonClick={onCancel}
+					onCancelButtonClick={handleCancelButtonClick}
 					onFocusableRef={onFocusableRef}
 					onHideLinkClick={handleHideLinkClick}
 					onRefreshLinkClick={handleRefreshLinkClick}
