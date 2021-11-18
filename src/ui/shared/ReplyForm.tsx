@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -138,21 +138,28 @@ function ReplyFormContent({
 	);
 }
 
-function ReplyForm({ reply, onCancel, onHide, onRefresh, onSubmit }) {
-	const handleHideLinkClick = useCallback(
+function ReplyForm({
+	onCancel,
+	onHide,
+	onRefresh,
+	onSubmit,
+	reply,
+	reviewAnnotationId,
+}) {
+	const handleHideLinkClick = React.useCallback(
 		() => onHide(reply.id),
 		[onHide, reply.id]
 	);
-	const handleRefreshLinkClick = useCallback(
+	const handleRefreshLinkClick = React.useCallback(
 		() => onRefresh(reply.id),
 		[onRefresh, reply.id]
 	);
 
-	const handleCancelButtonClick = useCallback(
+	const handleCancelButtonClick = React.useCallback(
 		() => onCancel(reply.id),
 		[onCancel, reply.id]
 	);
-	const handleSubmit = useCallback(
+	const handleSubmit = React.useCallback(
 		(valueByName) => onSubmit(reply.id, valueByName),
 		[onSubmit, reply.id]
 	);
@@ -160,13 +167,15 @@ function ReplyForm({ reply, onCancel, onHide, onRefresh, onSubmit }) {
 	return (
 		<ReviewAnnotationForm
 			key={reply.id}
+			annotationId={reviewAnnotationId}
 			initialValueByName={reply.metadata}
+			onCancel={handleCancelButtonClick}
 			onSubmit={handleSubmit}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
+			{({ isSubmitDisabled, onFocusableRef, onCancel, onSubmit, valueByName }) => (
 				<ReplyFormContent
 					isSubmitDisabled={isSubmitDisabled}
-					onCancelButtonClick={handleCancelButtonClick}
+					onCancelButtonClick={onCancel}
 					onFocusableRef={onFocusableRef}
 					onHideLinkClick={handleHideLinkClick}
 					onRefreshLinkClick={handleRefreshLinkClick}

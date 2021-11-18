@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -28,9 +28,9 @@ export default function Replies({
 	onReplyRefresh,
 	onReplyRemove,
 }) {
-	const [areRepliesExpanded, setAreRepliesExpanded] = useState(false);
+	const [areRepliesExpanded, setAreRepliesExpanded] = React.useState(false);
 
-	const showActionsMenuButton = useMemo(() => {
+	const showActionsMenuButton = React.useMemo(() => {
 		if (
 			context === ContextType.CREATED_CONTEXT_MODAL ||
 			context === ContextType.EDITOR_SHARING_SIDEBAR ||
@@ -61,7 +61,7 @@ export default function Replies({
 		reviewAnnotation.status,
 	]);
 
-	const repliesToShow = useMemo(() => {
+	const repliesToShow = React.useMemo(() => {
 		if (areRepliesExpanded) {
 			return reviewAnnotation.replies;
 		}
@@ -89,7 +89,7 @@ export default function Replies({
 	const collapsedRepliesCount =
 		reviewAnnotation.replies.length - repliesToShow.length;
 
-	const handleExpandRepliesTextLinkClick = useCallback(
+	const handleExpandRepliesTextLinkClick = React.useCallback(
 		() => setAreRepliesExpanded(true),
 		[]
 	);
@@ -162,6 +162,7 @@ export default function Replies({
 					return (
 						<ReplyForm
 							key={reply.id}
+							reviewAnnotationId={reviewAnnotation.id}
 							reply={reply}
 							onCancel={onReplyFormCancel}
 							onHide={onReplyErrorHide}

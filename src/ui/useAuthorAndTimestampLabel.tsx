@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import * as React from 'react';
 
 import configurationManager from 'fontoxml-configuration/src/configurationManager';
 import { BusyState } from 'fontoxml-feedback/src/types';
@@ -28,7 +28,7 @@ export default function useAuthorAndTimestampLabel(
 	forResolvedReviewAnnotation,
 	fallback = t('Author not available')
 ) {
-	return useMemo(() => {
+	return React.useMemo(() => {
 		let authorLabel = t('You');
 
 		if (reviewAnnotationOrReply.busyState === BusyState.ADDING) {

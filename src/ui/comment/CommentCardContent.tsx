@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import * as React from 'react';
 
 import { Block, Flex, Icon, Label } from 'fds/components';
 
@@ -50,7 +50,7 @@ function CommentCardContent({
 	proposalState: _proposalState,
 	onProposalMerge: _onProposalMerge,
 }) {
-	const hasReplyInNonIdleBusyState = useMemo(() => {
+	const hasReplyInNonIdleBusyState = React.useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;
 		}

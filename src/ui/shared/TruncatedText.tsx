@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Block, TextLink, Text } from 'fds/components';
 import { applyCss } from 'fds/system';

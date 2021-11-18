@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -78,7 +78,7 @@ export default function CardHeader({
 		!reviewAnnotation.error &&
 		!reviewAnnotation.isLoading;
 
-	const showPopoverButton = useMemo(() => {
+	const showPopoverButton = React.useMemo(() => {
 		if (
 			context === ContextType.CREATED_CONTEXT_MODAL ||
 			reviewAnnotation.busyState !== BusyState.IDLE ||
@@ -100,7 +100,7 @@ export default function CardHeader({
 		showRemoveButton,
 	]);
 
-	const renderAnchor = useCallback(
+	const renderAnchor = React.useCallback(
 		({ isDropOpened, isFocused, onRef, setIsDropOpened }) => {
 			return (
 				<Button
@@ -120,7 +120,7 @@ export default function CardHeader({
 		[]
 	);
 
-	const renderViewInDrop = useCallback(
+	const renderViewInDrop = React.useCallback(
 		({ closeOuterDrop }) => {
 			return (
 				<Drop>
@@ -160,7 +160,7 @@ export default function CardHeader({
 		]
 	);
 
-	const renderDrop = useCallback(
+	const renderDrop = React.useCallback(
 		({ setIsDropOpened }) => {
 			return (
 				<Drop>
@@ -258,7 +258,7 @@ export default function CardHeader({
 		shareButtonType = 'transparent';
 	}
 
-	const resolutionBadgeTooltipContent = useMemo(() => {
+	const resolutionBadgeTooltipContent = React.useMemo(() => {
 		if (!reviewAnnotation.resolvedMetadata?.resolution) {
 			return undefined;
 		}

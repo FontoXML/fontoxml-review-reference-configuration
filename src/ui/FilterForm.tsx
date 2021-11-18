@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 
 import { Block, Checkbox, Flex, Label } from 'fds/components';
 
@@ -80,7 +80,7 @@ function FilterForm({
 
 	// This processes the list of changed fields by simply calling onFieldChange for each of them,
 	// with a value of null for feedback, as explained before.
-	const handleFieldsChange = useCallback(
+	const handleFieldsChange = React.useCallback(
 		(changedFields) =>
 			changedFields.forEach((changedField) =>
 				onFieldChange({

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import * as React from 'react';
 
 import { Checkbox } from 'fds/components';
 
@@ -13,7 +13,7 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 	// (When clicking on an indeterminate checkbox, it will become true.)
 
 	// This object describes how the data is nested.
-	const checkboxForest = useMemo(
+	const checkboxForest = React.useMemo(
 		() => [
 			{
 				name: 'typeComment',
@@ -95,7 +95,7 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 	// They will be applied to the valueByName mapping, this is done in the onFieldsChange
 	// callback provided by FilterForm and FilterFormSummaryChips.
 	// onFieldsChange is called at the end of this callback with the list of changed fields.
-	const onCheckboxChange = useCallback(
+	const onCheckboxChange = React.useCallback(
 		(name, value) => {
 			const changedCheckboxes = [];
 

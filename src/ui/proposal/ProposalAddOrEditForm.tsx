@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -50,7 +50,7 @@ function ProposalAddOrEditFormContent({
 	const proposedChangeIsModified =
 		valueByName.proposedChange !== originalText;
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
 				name: 'proposedChange',
@@ -128,11 +128,14 @@ function ProposalAddOrEditForm({
 }) {
 	return (
 		<ReviewAnnotationForm
+			annotationId={reviewAnnotation.id}
 			initialValueByName={reviewAnnotation.metadata}
+			onCancel={onCancel}
 			onSubmit={onSubmit}
 		>
 			{({
 				isSubmitDisabled,
+				onCancel,
 				onFieldChange,
 				onFocusableRef,
 				onSubmit,

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -32,24 +32,24 @@ export default function Reply({
 	const error = reply.error;
 	const isDisabled = reply.isLoading;
 
-	const handleEditButtonClick = useCallback(
+	const handleEditButtonClick = React.useCallback(
 		() => onShowEditForm(reply.id),
 		[onShowEditForm, reply.id]
 	);
-	const handleCancelRemoveButtonClick = useCallback(
+	const handleCancelRemoveButtonClick = React.useCallback(
 		() => onCancelRetryRemove(reply.id),
 		[onCancelRetryRemove, reply.id]
 	);
-	const handleRemoveButtonClick = useCallback(
+	const handleRemoveButtonClick = React.useCallback(
 		() => onRemove(reply.id),
 		[onRemove, reply.id]
 	);
 
-	const handleHideClick = useCallback(
+	const handleHideClick = React.useCallback(
 		() => onHide(reply.id),
 		[onHide, reply.id]
 	);
-	const handleRefreshLinkClick = useCallback(
+	const handleRefreshLinkClick = React.useCallback(
 		() => onRefresh(reply.id),
 		[onRefresh, reply.id]
 	);

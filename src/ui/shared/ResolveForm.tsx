@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -166,13 +166,11 @@ function ResolveFormContent({
 				)}
 
 				<Flex justifyContent="flex-end" spaceSize="l">
-					<Block flex="0 1 auto">
-						<Button
-							isDisabled={isDisabled}
-							label={t('Cancel')}
-							onClick={onCancel}
-						/>
-					</Block>
+					<Button
+						isDisabled={isDisabled}
+						label={t('Cancel')}
+						onClick={onCancel}
+					/>
 
 					{reviewAnnotation.type === 'proposal' &&
 						reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
@@ -186,22 +184,20 @@ function ResolveFormContent({
 							</Block>
 						)}
 
-					<Block flex="0 1 auto">
-						<Button
-							icon={isLoading ? 'spinner' : null}
-							isDisabled={
-								isDisabled ||
-								isLoading ||
-								isSubmitDisabled ||
-								(reviewAnnotation.error &&
-									reviewAnnotation.error.recovery !==
-										RecoveryOption.RETRYABLE)
-							}
-							label={determineSaveButtonLabel(error, isLoading)}
-							onClick={onSubmit}
-							type="primary"
-						/>
-					</Block>
+					<Button
+						icon={isLoading ? 'spinner' : null}
+						isDisabled={
+							isDisabled ||
+							isLoading ||
+							isSubmitDisabled ||
+							(reviewAnnotation.error &&
+								reviewAnnotation.error.recovery !==
+									RecoveryOption.RETRYABLE)
+						}
+						label={determineSaveButtonLabel(error, isLoading)}
+						onClick={onSubmit}
+						type="primary"
+					/>
 				</Flex>
 			</Block>
 		</Block>
@@ -217,11 +213,13 @@ export default function ResolveForm({
 }) {
 	return (
 		<ReviewAnnotationForm
-			key={reviewAnnotation.id}
+			annotationId={reviewAnnotation.id}
 			initialValueByName={reviewAnnotation.resolvedMetadata}
+			key={reviewAnnotation.id}
+			onCancel={onCancel}
 			onSubmit={onSubmit}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
+			{({ isSubmitDisabled, onFocusableRef, onCancel, onSubmit, valueByName }) => (
 				<ResolveFormContent
 					isSubmitDisabled={isSubmitDisabled}
 					onCancel={onCancel}

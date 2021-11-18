@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Block, HorizontalSeparationLine, TextInput } from 'fds/components';
 import t from 'fontoxml-localization/src/t';

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -8,7 +8,6 @@ import {
 	HorizontalSeparationLine,
 	Icon,
 	Label,
-	Text,
 } from 'fds/components';
 
 import {
@@ -53,7 +52,7 @@ function ProposalCardContent({
 	onReplyRemove,
 	onProposalMerge,
 }) {
-	const hasReplyInNonIdleBusyState = useMemo(() => {
+	const hasReplyInNonIdleBusyState = React.useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;
 		}

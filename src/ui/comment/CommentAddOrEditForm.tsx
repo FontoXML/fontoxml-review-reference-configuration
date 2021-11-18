@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -46,7 +46,7 @@ function CommentAddOrEditFormContent({
 	const isEditing = reviewAnnotation.busyState === BusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
 				name: 'commentType',
@@ -134,14 +134,17 @@ function CommentAddOrEditForm({
 }) {
 	return (
 		<ReviewAnnotationForm
+			annotationId={reviewAnnotation.id}
 			initialValueByName={reviewAnnotation.metadata}
 			onSubmit={onSubmit}
+			onCancel={onCancel}
 		>
 			{({
 				isSubmitDisabled,
 				onFieldChange,
 				onFocusableRef,
 				onSubmit,
+				onCancel,
 				valueByName,
 			}) => (
 				<CommentAddOrEditFormContent

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -6,7 +6,6 @@ import {
 	HorizontalSeparationLine,
 	Icon,
 	Label,
-	Text,
 } from 'fds/components';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';

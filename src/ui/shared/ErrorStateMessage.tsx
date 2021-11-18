@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Button, CompactStateMessage, Flex } from 'fds/components';
 

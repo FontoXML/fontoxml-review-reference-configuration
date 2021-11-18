@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -44,7 +44,7 @@ function FilterFormSummaryChips({
 	// combined with the existing data (valueByName) to provide a new (complete) version of the data
 	// for the onChange prop.
 
-	const handleFieldsChange = useCallback(
+	const handleFieldsChange = React.useCallback(
 		(changedFields) => {
 			onChange({
 				...valueByName,

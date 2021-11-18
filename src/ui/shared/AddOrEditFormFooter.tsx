@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Block, Button, Flex } from 'fds/components';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
