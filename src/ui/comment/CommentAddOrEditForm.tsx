@@ -75,17 +75,17 @@ function CommentAddOrEditFormContent({
 				hasRequiredAsterisk
 				isLabelBold
 				label={
-					<Flex alignItems="center" isInline spaceSize="s">
+					<Flex alignItems="center" flexDirection="row" spaceSize="s">
 						<Icon
 							icon={
 								isPublicationLevelComment
 									? 'global-comments-stacked-icons'
 									: 'fal fa-comment'
 							}
-							isInline
+						
 						/>
 
-						<Block isInline>{label}</Block>
+						<Block>{label}</Block>
 					</Flex>
 				}
 				labelColorName="text-color"

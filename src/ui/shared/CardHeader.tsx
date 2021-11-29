@@ -250,7 +250,6 @@ export default function CardHeader({
 	) {
 		shareButtonType = 'primary';
 	} else if (
-		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState === BusyState.ADDING
 	) {
 		shareButtonType = 'default';
