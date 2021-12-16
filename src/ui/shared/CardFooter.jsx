@@ -63,6 +63,7 @@ export default function CardFooter({
 				isSelected={isDropOpened}
 				onClick={toggleDrop}
 				onRef={onRef}
+				tooltipContent={t("View in another context")}
 			/>
 		),
 		[
@@ -157,6 +158,7 @@ export default function CardFooter({
 							icon="fas fa-reply"
 							isDisabled={!!reviewAnnotation.error || reviewAnnotation.isLoading}
 							onClick={onReplyAdd}
+							tooltipContent={t("Reply")}
 						/>
 					)}
 
