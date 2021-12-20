@@ -20,7 +20,7 @@ import commentTypes from '../commentTypes';
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
 
 function validateCommentField(value) {
-	if (!value) {
+	if (!value || value.trim() === '') {
 		return { connotation: 'error', message: 'Comment is required.' };
 	}
 
@@ -117,7 +117,7 @@ function CommentAddOrEditFormContent({
 				error={error}
 				isDisabled={isDisabled}
 				isLoading={isLoading}
-				isSubmitDisabled={!valueByName.comment || isSubmitDisabled}
+				isSubmitDisabled={!valueByName.comment || valueByName.comment.trim() === '' || isSubmitDisabled}
 				onCancel={onCancel}
 				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 				onSubmit={onSubmit}

@@ -189,6 +189,7 @@ function ResolveFormContent({
 						isDisabled={
 							isDisabled ||
 							isLoading ||
+							!valueByName.resolution ||
 							isSubmitDisabled ||
 							(reviewAnnotation.error &&
 								reviewAnnotation.error.recovery !==

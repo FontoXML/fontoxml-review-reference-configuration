@@ -43,7 +43,7 @@ function determineSaveButtonLabel(error, isEditing, isLoading) {
 const rows = { minimum: 2, maximum: 6 };
 
 function validateReplyField(value) {
-	if (!value) {
+	if (!value || value.trim() === '') {
 		return { connotation: 'error', message: 'Reply is required.' };
 	}
 
@@ -119,6 +119,7 @@ function ReplyFormContent({
 							isDisabled ||
 							isLoading ||
 							!valueByName.reply ||
+							valueByName.reply.trim() === '' ||
 							isSubmitDisabled ||
 							(reply.error &&
 								reply.error.recovery !==
