@@ -177,6 +177,21 @@ function ProposalCardContent({
 										<Label isBold>
 											{t('Proposed change')}
 										</Label>
+
+										{reviewAnnotation.targetFoundForRevision ===
+											false && (
+											<Icon
+												colorName={
+													reviewAnnotation.isSelected
+														? 'button-warning-background-selected'
+														: 'button-warning-background'
+												}
+												icon="fas fa-unlink"
+												tooltipContent={t(
+													'This proposed change lost its position in the content'
+												)}
+											/>
+										)}
 									</Flex>
 
 									<TruncatedText>
