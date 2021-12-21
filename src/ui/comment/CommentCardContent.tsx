@@ -17,6 +17,7 @@ import LoadingStateMessage from '../shared/LoadingStateMessage';
 
 import commentTypes from '../commentTypes';
 import publicationCommentTypes from '../publicationCommentTypes';
+import { CARD_HEADER_HEIGHT } from './../constants';
 
 import CommentAddOrEditForm from './CommentAddOrEditForm';
 import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
@@ -181,7 +182,7 @@ function CommentCardContent({
 					reviewAnnotation.metadata.comment && (
 						<Block>
 							<Flex
-								style={{ minHeight: '2rem' }}
+								style={{ height: CARD_HEADER_HEIGHT }}
 								alignItems="center"
 								flexDirection="row"
 								spaceSize="s"

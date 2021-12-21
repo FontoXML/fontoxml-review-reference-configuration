@@ -18,6 +18,7 @@ import t from 'fontoxml-localization/src/t';
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import ReplyActionsDrop from './ReplyActionsDrop';
 import TruncatedText from './TruncatedText';
+import { CARD_HEADER_HEIGHT } from './../constants';
 
 export default function Reply({
 	reviewAnnotation,
@@ -60,11 +61,10 @@ export default function Reply({
 
 			<Block>
 				<Flex
-					// Use minHeight to prevent jumpiness if buttons are mounted/unmounted
-					style={{ minHeight: '2rem' }}
 					alignItems="center"
 					flexDirection="row"
 					justifyContent="space-between"
+					style={{ height: CARD_HEADER_HEIGHT }}
 				>
 					<Flex flexDirection="row" spaceSize="s">
 						<Icon icon="fal fa-reply" />

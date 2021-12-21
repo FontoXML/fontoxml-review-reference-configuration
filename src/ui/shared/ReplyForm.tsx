@@ -14,6 +14,7 @@ import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
+import { CARD_HEADER_HEIGHT } from './../constants';
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 
 function determineSaveButtonLabel(error, isEditing, isLoading) {
@@ -76,8 +77,8 @@ function ReplyFormContent({
 
 				<Flex
 					alignItems="center"
-					style={{ minHeight: '2rem' }}
 					spaceSize="s"
+					style={{ height: CARD_HEADER_HEIGHT }}
 				>
 					<Icon icon="fal fa-reply" />
 

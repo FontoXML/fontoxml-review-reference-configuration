@@ -23,6 +23,8 @@ import {
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
+import { CARD_HEADER_HEIGHT } from './../constants';
+
 import resolutions from '../feedbackResolutions';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
@@ -249,9 +251,7 @@ export default function CardHeader({
 		reviewAnnotation.busyState !== BusyState.ADDING
 	) {
 		shareButtonType = 'primary';
-	} else if (
-		reviewAnnotation.busyState === BusyState.ADDING
-	) {
+	} else if (reviewAnnotation.busyState === BusyState.ADDING) {
 		shareButtonType = 'default';
 	} else {
 		shareButtonType = 'transparent';
@@ -278,7 +278,12 @@ export default function CardHeader({
 	}, [reviewAnnotation]);
 
 	return (
-		<Flex alignItems="center" justifyContent="space-between" spaceSize="s">
+		<Flex
+			alignItems="center"
+			justifyContent="space-between"
+			spaceSize="s"
+			style={{ height: CARD_HEADER_HEIGHT }}
+		>
 			<AuthorAndTimestampLabel reviewAnnotation={reviewAnnotation} />
 
 			<Flex flex="0 0 auto" spaceSize="m">
@@ -300,12 +305,7 @@ export default function CardHeader({
 
 				{context !== ContextType.EDITOR_SHARING_SIDEBAR &&
 					context !== ContextType.REVIEW_SHARING_SIDEBAR && (
-						<Flex
-							alignItems="center"
-							spaceSize="m"
-							// Use minHeight to prevent jumpiness if buttons are mounted/unmounted
-							style={{ minHeight: '2rem' }}
-						>
+						<Flex alignItems="center" spaceSize="m">
 							{showShareButton && (
 								<Button
 									key={shareButtonType}

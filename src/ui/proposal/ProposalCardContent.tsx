@@ -19,6 +19,8 @@ import {
 import t from 'fontoxml-localization/src/t';
 
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
+
+import { CARD_HEADER_HEIGHT } from './../constants';
 import CardErrorFooter from '../shared/CardErrorFooter';
 import CardHeader from '../shared/CardHeader';
 import ErrorStateMessage from '../shared/ErrorStateMessage';
@@ -167,7 +169,7 @@ function ProposalCardContent({
 							{hasProposedChange && (
 								<Block>
 									<Flex
-										style={{ minHeight: '2rem' }}
+										style={{ height: CARD_HEADER_HEIGHT }}
 										alignItems="center"
 										flexDirection="row"
 										spaceSize="s"
