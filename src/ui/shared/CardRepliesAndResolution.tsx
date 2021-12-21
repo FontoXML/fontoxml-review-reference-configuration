@@ -102,7 +102,7 @@ function CardRepliesAndResolution({
 
 						<AuthorAndTimestampLabel
 							reviewAnnotation={reviewAnnotation}
-							forResolvedReviewAnnotation={true}
+							isReviewAnnotationResolved={true}
 						/>
 					</Flex>
 

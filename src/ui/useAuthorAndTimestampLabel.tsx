@@ -14,7 +14,7 @@ const configuredScope = configurationManager.get('scope');
  * The timestamp label will not contain any kind of dashes.
  *
  * @param  {object}   reviewAnnotationOrReply
- * @param  {boolean}  [forResolvedReviewAnnotation=false]  If set to true it uses the resolvedAuthor and
+ * @param  {boolean}  [isReviewAnnotationResolved=false]  If set to true it uses the resolvedAuthor and
  * resolvedTimestamp fields of the given reviewAnnotation, otherwise it uses the (created) author
  * and timestamp fields.
  * @param  {string}   [fallback=t('Author not available')]  A string to display when the (resolved)
@@ -25,26 +25,22 @@ const configuredScope = configurationManager.get('scope');
  */
 export default function useAuthorAndTimestampLabel(
 	reviewAnnotationOrReply,
-	forResolvedReviewAnnotation,
+	isReviewAnnotationResolved,
 	fallback = t('Author not available')
 ) {
-	return React.useMemo(() => {
+	const formattedAuthor = React.useMemo(() => {
 		let authorLabel = t('You');
-
 		if (reviewAnnotationOrReply.busyState === BusyState.ADDING) {
-			return { author: authorLabel };
+			return authorLabel;
 		}
 
-		const authorField = forResolvedReviewAnnotation
+		const authorField = isReviewAnnotationResolved
 			? 'resolvedAuthor'
 			: 'author';
-		const timestampField = forResolvedReviewAnnotation
-			? 'resolvedTimestamp'
-			: 'timestamp';
 
-		// Use fallback value if author is not present. Return author.
 		if (!reviewAnnotationOrReply[authorField]) {
-			return { author: fallback };
+			// Use fallback value if author is not present.
+			return fallback;
 		}
 
 		if (
@@ -54,24 +50,22 @@ export default function useAuthorAndTimestampLabel(
 			authorLabel = reviewAnnotationOrReply[authorField].displayName;
 		}
 
-		// Author label localization
-		authorLabel = t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
+		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
+	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
-		// If no timestamp, return localized authorname.
-		let timestamp = reviewAnnotationOrReply[timestampField];
+	const timestampField = isReviewAnnotationResolved
+		? 'resolvedTimestamp'
+		: 'timestamp';
+	const timestamp = reviewAnnotationOrReply[timestampField];
+	const formattedTimestamp = React.useMemo(() => {
 		if (!timestamp) {
-			return { author: authorLabel };
+			return null;
 		}
 
-		// Timestamp localization
-		timestamp = t('{TIMESTAMP, fonto_date}, {TIMESTAMP, time, short}', {
+		return t('{TIMESTAMP, fonto_date}, {TIMESTAMP, time, short}', {
 			TIMESTAMP: timestamp,
 		});
+	}, [timestamp, timestampField]);
 
-		// Return author and timestamp.
-		return {
-			author: authorLabel,
-			timestamp,
-		};
-	}, [fallback, forResolvedReviewAnnotation, reviewAnnotationOrReply]);
+	return { author: formattedAuthor, timestamp: formattedTimestamp };
 }

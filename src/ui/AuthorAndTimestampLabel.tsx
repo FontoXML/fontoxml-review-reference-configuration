@@ -6,16 +6,18 @@ import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
 function AuthorAndTimestampLabel({
 	reviewAnnotation,
-	forResolvedReviewAnnotation = false,
+	isReviewAnnotationResolved = false,
 }) {
 	const { author: authorLabel, timestamp: timestampLabel } =
 		useAuthorAndTimestampLabel(
 			reviewAnnotation,
-			forResolvedReviewAnnotation
+			isReviewAnnotationResolved
 		);
 
+	// Make sure the author label is not truncated too much and not too little,
+	// making it and the timestamp label visible.
 	const authorLabelRef = React.useRef(null);
-	const handleLabelRef = (domNode: HTMLElement) => {
+	const handleAuthorLabelRef = (domNode: HTMLElement) => {
 		authorLabelRef.current = domNode;
 	};
 	const [authorLabelScrollWidth, setAuthorLabelScrollWidth] =
@@ -32,7 +34,10 @@ function AuthorAndTimestampLabel({
 				flex="0 1 auto"
 				style={{ minWidth: Math.min(authorLabelScrollWidth, 32) }}
 			>
-				<Label tooltipContent={authorLabel} onRef={handleLabelRef}>
+				<Label
+					tooltipContent={authorLabel}
+					onRef={handleAuthorLabelRef}
+				>
 					{authorLabel}
 				</Label>
 			</Flex>
