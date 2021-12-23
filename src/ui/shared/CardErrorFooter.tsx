@@ -20,7 +20,7 @@ export default function CardErrorFooter({
 		<Block spaceVerticalSize="m">
 			<HorizontalSeparationLine />
 
-			<Flex justifyContent="flex-end" spaceSize="m" paddingSize="m">
+			<Flex justifyContent="flex-end" spaceSize="m">
 				<Button
 					label={t('Cancel')}
 					onClick={onReviewAnnotationFormCancel}
