@@ -139,7 +139,11 @@ function ProposalCardContent({
 	const proposalState = reviewAnnotation.proposalState;
 
 	return (
-		<Block paddingSize="m">
+		<Block 
+			paddingSize="m" 
+			data-test-id="fontoxml-review-reference-configuration-proposal-card-content" 
+			data-review-annotation-type={reviewAnnotation.type}
+		>
 			<CardHeader
 				context={context}
 				hasReplyInNonIdleBusyState={hasReplyInNonIdleBusyState}
@@ -176,7 +180,7 @@ function ProposalCardContent({
 									>
 										<Icon icon="fal fa-pencil-square-o" />
 
-										<Label isBold>
+										<Label data-test-id="comment-type-label" isBold>
 											{t('Proposed change')}
 										</Label>
 

@@ -155,7 +155,12 @@ function CommentCardContent({
 	}
 
 	return (
-		<Block paddingSize="m">
+		<Block 
+			paddingSize="m" 
+			data-test-id="fontoxml-review-reference-configuration-comment-card-content" 
+			data-review-annotation-type={reviewAnnotation.type}
+			data-review-annotation-comment-type={reviewAnnotation.metadata.commentType}
+		>
 			<CardHeader
 				context={context}
 				hasReplyInNonIdleBusyState={hasReplyInNonIdleBusyState}
@@ -196,7 +201,7 @@ function CommentCardContent({
 											isInline
 										/>
 
-										<Label isBold>
+										<Label data-test-id="comment-type-label" isBold>
 											{` ${publicationCommentType} `}
 										</Label>
 									</>
@@ -205,6 +210,7 @@ function CommentCardContent({
 										<Icon icon="fal fa-comment" />
 
 										<Label
+											data-test-id="comment-type-label"
 											isBold
 										>{` ${commentType} `}</Label>
 

@@ -48,6 +48,7 @@ function AuthorAndTimestampLabel({
 					flex="0 3 auto"
 					size="s"
 					tooltipContent={timestampLabel}
+					data-test-id="timestamp-label"
 				>
 					{timestampLabel}
 				</Label>
