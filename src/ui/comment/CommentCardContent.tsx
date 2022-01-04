@@ -24,6 +24,7 @@ import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
 import CommentCardFooter from './CommentCardFooter';
 import CardErrorFooter from '../shared/CardErrorFooter';
 import TruncatedText from '../shared/TruncatedText';
+import CardErrors from '../shared/CardErrors';
 
 function CommentCardContent({
 	context,
@@ -155,11 +156,13 @@ function CommentCardContent({
 	}
 
 	return (
-		<Block 
-			paddingSize="m" 
-			data-test-id="fontoxml-review-reference-configuration-comment-card-content" 
+		<Block
+			paddingSize="m"
+			data-test-id="fontoxml-review-reference-configuration-comment-card-content"
 			data-review-annotation-type={reviewAnnotation.type}
-			data-review-annotation-comment-type={reviewAnnotation.metadata.commentType}
+			data-review-annotation-comment-type={
+				reviewAnnotation.metadata.commentType
+			}
 		>
 			<CardHeader
 				context={context}
@@ -201,7 +204,10 @@ function CommentCardContent({
 											isInline
 										/>
 
-										<Label data-test-id="comment-type-label" isBold>
+										<Label
+											data-test-id="comment-type-label"
+											isBold
+										>
 											{` ${publicationCommentType} `}
 										</Label>
 									</>
@@ -265,6 +271,11 @@ function CommentCardContent({
 					onReplyRemove={onReplyRemove}
 					onReviewAnnotationFormCancel={onReviewAnnotationFormCancel}
 					onReviewAnnotationFormSubmit={onReviewAnnotationFormSubmit}
+					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+					reviewAnnotation={reviewAnnotation}
+				/>
+
+				<CardErrors
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onReviewAnnotationRemove={onReviewAnnotationRemove}
 					onReviewAnnotationShare={onReviewAnnotationShare}

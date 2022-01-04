@@ -1,25 +1,40 @@
 import * as React from 'react';
 
+import { Block, Flex, HorizontalSeparationLine, Icon } from 'fds/components';
+
 import {
-	Block,
-	Flex,
-	HorizontalSeparationLine,
-	Icon,
-	Label,
-} from 'fds/components';
+	AnnotationStatus,
+	BusyState,
+	ContextType,
+} from 'fontoxml-feedback/src/types';
 
-import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
-import { AnnotationStatus, BusyState } from 'fontoxml-feedback/src/types';
-
-import t from 'fontoxml-localization/src/t';
+import { $TSFixMeAny } from '../../types';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import ResolveForm from '../shared/ResolveForm';
 import Replies from '../shared/Replies';
 import resolutions from '../feedbackResolutions';
 import TruncatedText from './TruncatedText';
+import ReplyForm from './ReplyForm';
+import RepliesCount from './RepliesCount';
+import TruncatedReplies from './TruncatedReplies';
 
-function CardRepliesAndResolution({
+type Props = {
+	context: ContextType;
+	onProposalMerge: $TSFixMeAny;
+	onReplyEdit: $TSFixMeAny;
+	onReplyErrorHide: $TSFixMeAny;
+	onReplyFormCancel: $TSFixMeAny;
+	onReplyFormSubmit: $TSFixMeAny;
+	onReplyRefresh: $TSFixMeAny;
+	onReplyRemove: $TSFixMeAny;
+	onReviewAnnotationFormCancel: $TSFixMeAny;
+	onReviewAnnotationFormSubmit: $TSFixMeAny;
+	onReviewAnnotationRefresh: $TSFixMeAny;
+	reviewAnnotation: $TSFixMeAny;
+};
+
+const CardRepliesAndResolution: React.FC<Props> = ({
 	context,
 	onProposalMerge = null,
 	onReplyEdit,
@@ -31,63 +46,145 @@ function CardRepliesAndResolution({
 	onReviewAnnotationFormCancel,
 	onReviewAnnotationFormSubmit,
 	onReviewAnnotationRefresh,
-	onReviewAnnotationRemove,
-	onReviewAnnotationShare,
 	reviewAnnotation,
-}) {
-	const resolution =
-		reviewAnnotation.resolvedMetadata &&
-		resolutions.find(
-			(resolution) =>
-				resolution.value ===
-				reviewAnnotation.resolvedMetadata.resolution
+}) => {
+	const resolution = React.useMemo(() => {
+		return (
+			reviewAnnotation.resolvedMetadata &&
+			resolutions.find(
+				(resolution) =>
+					resolution.value ===
+					reviewAnnotation.resolvedMetadata.resolution
+			)
 		);
+	}, [reviewAnnotation.resolvedMetadata]);
 
 	const resolutionComment =
 		reviewAnnotation.resolvedMetadata?.resolutionComment;
 
+	const showActionsMenuButton = React.useMemo(() => {
+		if (
+			context === ContextType.CREATED_CONTEXT_MODAL ||
+			context === ContextType.EDITOR_SHARING_SIDEBAR ||
+			context === ContextType.REVIEW_SHARING_SIDEBAR ||
+			reviewAnnotation.busyState !== BusyState.IDLE ||
+			reviewAnnotation.status === AnnotationStatus.RESOLVED
+		) {
+			return false;
+		}
+
+		return reviewAnnotation.replies.reduce(
+			(showActionsMenuButton, reply) => {
+				if (!showActionsMenuButton) {
+					return showActionsMenuButton;
+				}
+
+				return (
+					reply.busyState !== BusyState.ADDING &&
+					reply.busyState !== BusyState.EDITING
+				);
+			},
+			reviewAnnotation.busyState !== BusyState.RESOLVING
+		);
+	}, [
+		context,
+		reviewAnnotation.busyState,
+		reviewAnnotation.replies,
+		reviewAnnotation.status,
+	]);
+
+	const [repliesBefore, addingOrEditingReply, repliesAfter] =
+		React.useMemo(() => {
+			const addingOrEditingReplyIndex =
+				reviewAnnotation.replies.findIndex(
+					(reply) =>
+						reply.busyState === BusyState.ADDING ||
+						reply.busyState === BusyState.EDITING
+				);
+
+			if (addingOrEditingReplyIndex !== -1) {
+				// Split the adding reply off. We need the reply form to be open
+				// even if the comment is not selected to prevent the contents
+				// from disappearing.
+				const addingReply =
+					reviewAnnotation.replies[addingOrEditingReplyIndex];
+
+				const repliesBefore = [
+					...reviewAnnotation.replies.slice(
+						0,
+						addingOrEditingReplyIndex
+					),
+				];
+
+				let repliesAfter = [
+					...reviewAnnotation.replies.slice(
+						addingOrEditingReplyIndex + 1
+					),
+				];
+
+				return [repliesBefore, addingReply, repliesAfter];
+			}
+
+			return [reviewAnnotation.replies, null, []];
+		}, [reviewAnnotation.replies]);
+
+	const repliesCount =
+		repliesBefore.length +
+		repliesAfter.length +
+		// Resolution comments are visually similar to replies. Therefore, we
+		// take them into account too.
+		(reviewAnnotation.status === AnnotationStatus.RESOLVED ? 1 : 0);
+
+	const shouldShowReplies =
+		reviewAnnotation.isSelected &&
+		reviewAnnotation.busyState !== BusyState.ADDING &&
+		reviewAnnotation.busyState !== BusyState.EDITING;
+
 	return (
 		<>
-			{!reviewAnnotation.isSelected &&
-				(reviewAnnotation.replies.length > 0 ||
-					reviewAnnotation.status === AnnotationStatus.RESOLVED) && (
-					<Block>
-						<HorizontalSeparationLine marginSizeBottom="m" />
-
-						<Flex spaceSize="s">
-							<Icon icon="fal fa-reply" />
-							<Label>
-								{t(
-									'{REPLIES_COUNT, plural, one {1 reply} other {# replies}}',
-									{
-										REPLIES_COUNT:
-											reviewAnnotation.replies.length +
-											(reviewAnnotation.status ===
-											AnnotationStatus.RESOLVED
-												? 1
-												: 0),
-									}
-								)}
-							</Label>
-						</Flex>
-					</Block>
-				)}
-			{reviewAnnotation.isSelected &&
-				reviewAnnotation.busyState !== BusyState.ADDING &&
-				reviewAnnotation.busyState !== BusyState.EDITING &&
-				reviewAnnotation.replies.length > 0 && (
-					<Replies
-						context={context}
-						hasResolution={!!resolution}
-						reviewAnnotation={reviewAnnotation}
-						onReplyEdit={onReplyEdit}
-						onReplyFormCancel={onReplyFormCancel}
-						onReplyFormSubmit={onReplyFormSubmit}
-						onReplyErrorHide={onReplyErrorHide}
-						onReplyRefresh={onReplyRefresh}
-						onReplyRemove={onReplyRemove}
+			{!reviewAnnotation.isSelected && repliesCount > 0 && (
+				<RepliesCount count={repliesCount} />
+			)}
+			{shouldShowReplies && (
+				<TruncatedReplies
+					onReplyEdit={onReplyEdit}
+					onReplyErrorHide={onReplyErrorHide}
+					onReplyFormCancel={onReplyFormCancel}
+					onReplyRefresh={onReplyRefresh}
+					onReplyRemove={onReplyRemove}
+					replies={repliesBefore}
+					reviewAnnotation={reviewAnnotation}
+					showActionsMenuButton={showActionsMenuButton}
+					isRecalculatingDisabled={!!addingOrEditingReply}
+					hasResolution={!!resolution}
+					isEditingReply={
+						addingOrEditingReply?.busyState === BusyState.EDITING
+					}
+				/>
+			)}
+			{addingOrEditingReply &&
+				context !== ContextType.CREATED_CONTEXT_MODAL && (
+					<ReplyForm
+						onCancel={onReplyFormCancel}
+						onHide={onReplyErrorHide}
+						onRefresh={onReplyRefresh}
+						onSubmit={onReplyFormSubmit}
+						reply={addingOrEditingReply}
 					/>
 				)}
+			{shouldShowReplies && repliesAfter.length > 0 && (
+				<Replies
+					onReplyEdit={onReplyEdit}
+					onReplyErrorHide={onReplyErrorHide}
+					onReplyFormCancel={onReplyFormCancel}
+					onReplyRefresh={onReplyRefresh}
+					onReplyRemove={onReplyRemove}
+					replies={repliesAfter}
+					reviewAnnotation={reviewAnnotation}
+					showActionsMenuButton={showActionsMenuButton}
+				/>
+			)}
+
 			{reviewAnnotation.isSelected && resolution && (
 				<Block spaceVerticalSize="s">
 					<HorizontalSeparationLine />
@@ -123,24 +220,8 @@ function CardRepliesAndResolution({
 						reviewAnnotation={reviewAnnotation}
 					/>
 				)}
-			{reviewAnnotation.error &&
-				reviewAnnotation.busyState === BusyState.SHARING && (
-					<ErrorToast
-						error={reviewAnnotation.error}
-						onRefreshLinkClick={onReviewAnnotationRefresh}
-						onRetryLinkClick={onReviewAnnotationShare}
-					/>
-				)}
-			{reviewAnnotation.error &&
-				reviewAnnotation.busyState === BusyState.REMOVING && (
-					<ErrorToast
-						error={reviewAnnotation.error}
-						onRefreshLinkClick={onReviewAnnotationRefresh}
-						onRetryLinkClick={onReviewAnnotationRemove}
-					/>
-				)}
 		</>
 	);
-}
+};
 
 export default CardRepliesAndResolution;

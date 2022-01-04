@@ -124,17 +124,12 @@ export default function Reply({
 				see when editing a reply.
 				And make sure to render that footer in the error state (Retry remove label on the primary button).*/}
 				{error && reply.busyState === BusyState.REMOVING && (
-					<>
+					<Flex flexDirection="column" spaceSize="m">
 						<ErrorToast
 							error={error}
 							onHideLinkClick={handleHideClick}
 							onRefreshLinkClick={handleRefreshLinkClick}
 							onRetryLinkClick={handleRemoveButtonClick}
-						/>
-
-						<HorizontalSeparationLine
-							marginSizeBottom="m"
-							marginSizeTop="m"
 						/>
 
 						<Flex justifyContent="flex-end" spaceSize="m">
@@ -150,7 +145,7 @@ export default function Reply({
 								type="primary"
 							/>
 						</Flex>
-					</>
+					</Flex>
 				)}
 
 				{error && reply.busyState !== BusyState.REMOVING && (
