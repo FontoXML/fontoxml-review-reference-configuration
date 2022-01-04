@@ -96,6 +96,7 @@ function ResolveFormContent({
 							label={t('Resolve and')}
 							hasRequiredAsterisk
 							labelColorName="text-color"
+							isLabelBold
 						></FormRow>
 					</Flex>
 
