@@ -139,9 +139,9 @@ function ProposalCardContent({
 	const proposalState = reviewAnnotation.proposalState;
 
 	return (
-		<Block 
-			paddingSize="m" 
-			data-test-id="fontoxml-review-reference-configuration-proposal-card-content" 
+		<Block
+			paddingSize="m"
+			data-test-id="fontoxml-review-reference-configuration-proposal-card-content"
 			data-review-annotation-type={reviewAnnotation.type}
 		>
 			<CardHeader
@@ -180,7 +180,10 @@ function ProposalCardContent({
 									>
 										<Icon icon="fal fa-pencil-square-o" />
 
-										<Label data-test-id="comment-type-label" isBold>
+										<Label
+											data-test-id="comment-type-label"
+											isBold
+										>
 											{t('Proposed change')}
 										</Label>
 
@@ -200,7 +203,23 @@ function ProposalCardContent({
 										)}
 									</Flex>
 
-									<TruncatedText>
+									{reviewAnnotation.isSelected && (
+										<TruncatedText>
+											<Diff
+												isSingleLine={
+													!reviewAnnotation.isSelected
+												}
+												originalValue={
+													reviewAnnotation.originalText
+												}
+												value={
+													reviewAnnotation.metadata
+														.proposedChange
+												}
+											/>
+										</TruncatedText>
+									)}
+									{!reviewAnnotation.isSelected && (
 										<Diff
 											isSingleLine={
 												!reviewAnnotation.isSelected
@@ -213,7 +232,7 @@ function ProposalCardContent({
 													.proposedChange
 											}
 										/>
-									</TruncatedText>
+									)}
 								</Block>
 							)}
 
