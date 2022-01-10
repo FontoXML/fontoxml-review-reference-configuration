@@ -239,12 +239,12 @@ function CommentCardContent({
 							</Flex>
 
 							{reviewAnnotation.isSelected && (
-								<TruncatedText>
+								<TruncatedText data-test-id="comment">
 									{reviewAnnotation.metadata.comment}
 								</TruncatedText>
 							)}
 							{!reviewAnnotation.isSelected && (
-								<Label isBlock>
+								<Label isBlock data-test-id="comment">
 									{reviewAnnotation.metadata.comment}
 								</Label>
 							)}

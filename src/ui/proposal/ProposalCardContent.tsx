@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Button,
@@ -9,7 +7,9 @@ import {
 	Icon,
 	Label,
 } from 'fds/components';
+import * as React from 'react';
 
+import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import {
 	AnnotationStatus,
 	BusyState,
@@ -18,17 +18,14 @@ import {
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
-
-import { CARD_HEADER_HEIGHT } from './../constants';
 import CardErrorFooter from '../shared/CardErrorFooter';
 import CardHeader from '../shared/CardHeader';
+import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
 import ErrorStateMessage from '../shared/ErrorStateMessage';
 import LoadingStateMessage from '../shared/LoadingStateMessage';
-
-import ProposalAddOrEditForm from './ProposalAddOrEditForm';
-import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
 import TruncatedText from '../shared/TruncatedText';
+import { CARD_HEADER_HEIGHT } from './../constants';
+import ProposalAddOrEditForm from './ProposalAddOrEditForm';
 
 function ProposalCardContent({
 	context,
@@ -111,7 +108,9 @@ function ProposalCardContent({
 				/>
 			</Block>
 		);
-	} else if (
+	}
+
+	if (
 		reviewAnnotation.isLoading &&
 		reviewAnnotation.busyState === BusyState.REFRESHING
 	) {
@@ -120,7 +119,9 @@ function ProposalCardContent({
 				<LoadingStateMessage message={t('Refreshing proposal…')} />
 			</Block>
 		);
-	} else if (
+	}
+
+	if (
 		reviewAnnotation.isLoading &&
 		reviewAnnotation.busyState === BusyState.REMOVING
 	) {
@@ -216,6 +217,7 @@ function ProposalCardContent({
 													reviewAnnotation.metadata
 														.proposedChange
 												}
+												data-test-id="comment"
 											/>
 										</TruncatedText>
 									)}
@@ -231,6 +233,7 @@ function ProposalCardContent({
 												reviewAnnotation.metadata
 													.proposedChange
 											}
+											data-test-id="comment"
 										/>
 									)}
 								</Block>
@@ -241,12 +244,15 @@ function ProposalCardContent({
 									<Label isBold>{t('Motivation')}</Label>
 
 									{reviewAnnotation.isSelected && (
-										<TruncatedText>
+										<TruncatedText data-test-id="motivation">
 											{reviewAnnotation.metadata.comment}
 										</TruncatedText>
 									)}
 									{!reviewAnnotation.isSelected && (
-										<Label isBlock>
+										<Label
+											isBlock
+											data-test-id="motivation"
+										>
 											{reviewAnnotation.metadata.comment}
 										</Label>
 									)}

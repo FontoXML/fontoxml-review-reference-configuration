@@ -1,7 +1,6 @@
-import * as React from 'react';
-
-import { Block, TextLink, Text } from 'fds/components';
+import { Block, Text, TextLink } from 'fds/components';
 import { applyCss } from 'fds/system';
+import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
 
@@ -26,7 +25,7 @@ enum TruncationState {
 }
 
 function useTruncation(): {
-	handleShowMoreClick: () => void;
+	handleShowMoreClick(this: void): void;
 	selectedCommentRef: HTMLElement;
 	state: TruncationState;
 } {
@@ -41,7 +40,7 @@ function useTruncation(): {
 		) {
 			setTruncationState(TruncationState.IS_TRUNCATED);
 		}
-	});
+	}, []);
 
 	const handleShowMoreClick = React.useCallback(() => {
 		setTruncationState(TruncationState.IS_FULLY_VISIBLE);
@@ -54,7 +53,7 @@ function useTruncation(): {
 	};
 }
 
-const TruncatedText: React.FC = ({ children }) => {
+const TruncatedText: React.FC = (props) => {
 	const {
 		state: truncationState,
 		handleShowMoreClick,
@@ -63,7 +62,7 @@ const TruncatedText: React.FC = ({ children }) => {
 
 	return (
 		<>
-			<Text>
+			<Text data-test-id={props['data-test-id']}>
 				<Block
 					{...styles}
 					style={{
@@ -73,7 +72,7 @@ const TruncatedText: React.FC = ({ children }) => {
 					}}
 					ref={selectedCommentRef}
 				>
-					{children}
+					{props.children}
 				</Block>
 			</Text>
 
