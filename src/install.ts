@@ -1,16 +1,15 @@
-import registerTextRangeReviewAnnotationType from 'fontoxml-feedback/src/registerTextRangeReviewAnnotationType';
-import registerPublicationReviewAnnotationType from 'fontoxml-feedback/src/registerPublicationReviewAnnotationType';
 import registerObjectReviewAnnotationType from 'fontoxml-feedback/src/registerObjectReviewAnnotationType';
+import registerPublicationReviewAnnotationType from 'fontoxml-feedback/src/registerPublicationReviewAnnotationType';
+import registerTextRangeReviewAnnotationType from 'fontoxml-feedback/src/registerTextRangeReviewAnnotationType';
 import setInitialFilterFormValues from 'fontoxml-feedback/src/setInitialFilterFormValues';
+import t from 'fontoxml-localization/src/t';
 import uiManager from 'fontoxml-modular-ui/src/uiManager';
 
 import CommentCardContent from './ui/comment/CommentCardContent';
-import ProposalCardContent from './ui/proposal/ProposalCardContent';
-
-import FilterFormSummaryChips from './ui/FilterFormSummaryChips';
 import FilterForm from './ui/FilterForm';
-
+import FilterFormSummaryChips from './ui/FilterFormSummaryChips';
 import MastheadForReview from './ui/MastheadForReview';
+import ProposalCardContent from './ui/proposal/ProposalCardContent';
 
 export default function install() {
 	registerTextRangeReviewAnnotationType('comment', {
@@ -18,6 +17,7 @@ export default function install() {
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
+		tooltipContent: t('Add comment to selected text.'),
 	});
 
 	registerObjectReviewAnnotationType('object-comment', {
@@ -32,6 +32,7 @@ export default function install() {
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
+		tooltipContent: t('Add comment to selected image.'),
 	});
 
 	registerTextRangeReviewAnnotationType('proposal', {
@@ -39,6 +40,7 @@ export default function install() {
 		label: 'Proposal',
 		priority: 2,
 		CardContentComponent: ProposalCardContent,
+		tooltipContent: t('Propose a change to selected text.'),
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
@@ -46,6 +48,7 @@ export default function install() {
 		label: 'Global comment',
 		priority: 1,
 		CardContentComponent: CommentCardContent,
+		tooltipContent: t('Add comment that applies to the entire document.'),
 	});
 
 	setInitialFilterFormValues(
