@@ -319,9 +319,13 @@ export default function CardHeader({
 									onClick={onReviewAnnotationShare}
 									type={shareButtonType}
 									tooltipContent={
-										reviewAnnotation.type === 'proposal' 
-											? t('Comment is private. Click to share.') 
-											: t('Proposal is private. Click to share.')
+										reviewAnnotation.type === 'proposal'
+											? t(
+													'Comment is private. Click to share.'
+											  )
+											: t(
+													'Proposal is private. Click to share.'
+											  )
 									}
 								/>
 							)}
@@ -343,9 +347,13 @@ export default function CardHeader({
 										}
 										onClick={onReviewAnnotationResolve}
 										tooltipContent={
-											reviewAnnotation.type === 'proposal' 
-												? t('Comment is shared. Click to resolve.') 
-												: t('Proposal is shared. Click to resolve.')
+											reviewAnnotation.type === 'proposal'
+												? t(
+														'Comment is shared. Click to resolve.'
+												  )
+												: t(
+														'Proposal is shared. Click to resolve.'
+												  )
 										}
 										type={
 											reviewAnnotation.isSelected

@@ -11,13 +11,13 @@ const MAX_NUMBER_OF_REPLIES_TO_SHOW = 2;
 
 type Props = RepliesProps & {
 	isEditingReply: boolean;
-	hasResolution: boolean;
+	includeResolutionInTruncatedReplies: boolean;
 };
 
 const TruncatedReplies: React.FC<Props> = ({
 	replies,
 	isEditingReply,
-	hasResolution,
+	includeResolutionInTruncatedReplies,
 	...repliesProps
 }) => {
 	const [areRepliesExpanded, setAreRepliesExpanded] = React.useState(false);
@@ -26,7 +26,9 @@ const TruncatedReplies: React.FC<Props> = ({
 		[]
 	);
 
-	const isTruncatedInitially = React.useRef(false);
+	const wasEditingReplyInitially = React.useRef(isEditingReply);
+	const hasTruncatedInitially = React.useRef(false);
+
 	const [collapsedRepliesCount, setCollapsedRepliesCount] = React.useState(0);
 	React.useLayoutEffect(() => {
 		setCollapsedRepliesCount((previousCollapsedRepliesCount: number) => {
@@ -34,26 +36,29 @@ const TruncatedReplies: React.FC<Props> = ({
 				return 0;
 			}
 
-			if (isEditingReply && isTruncatedInitially.current) {
+			if (
+				(isEditingReply || wasEditingReplyInitially.current) &&
+				hasTruncatedInitially.current
+			) {
 				// Preserve the editing reply positioning (so it won't jump
 				// around when starting to edit a reply).
 				return previousCollapsedRepliesCount;
 			}
 
-			isTruncatedInitially.current = true;
+			hasTruncatedInitially.current = true;
 
 			// We want to treat resolutions and editing replies in a similar
 			// fashion.
 			const maxNumberOfRepliesToShow =
 				MAX_NUMBER_OF_REPLIES_TO_SHOW +
-				(hasResolution ? -1 : 0) +
+				(includeResolutionInTruncatedReplies ? -1 : 0) +
 				(isEditingReply ? -MAX_NUMBER_OF_REPLIES_TO_SHOW : 0);
 
 			return Math.max(replies.length - maxNumberOfRepliesToShow, 0);
 		});
 	}, [
 		areRepliesExpanded,
-		hasResolution,
+		includeResolutionInTruncatedReplies,
 		isEditingReply,
 		replies,
 		setCollapsedRepliesCount,

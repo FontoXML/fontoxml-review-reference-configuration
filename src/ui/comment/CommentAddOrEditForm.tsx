@@ -82,7 +82,6 @@ function CommentAddOrEditFormContent({
 									? 'global-comments-stacked-icons'
 									: 'fal fa-comment'
 							}
-						
 						/>
 
 						<Block>{label}</Block>
@@ -117,7 +116,11 @@ function CommentAddOrEditFormContent({
 				error={error}
 				isDisabled={isDisabled}
 				isLoading={isLoading}
-				isSubmitDisabled={!valueByName.comment || valueByName.comment.trim() === '' || isSubmitDisabled}
+				isSubmitDisabled={
+					!valueByName.comment ||
+					valueByName.comment.trim() === '' ||
+					isSubmitDisabled
+				}
 				onCancel={onCancel}
 				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 				onSubmit={onSubmit}

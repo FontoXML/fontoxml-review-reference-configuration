@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Block, Flex, HorizontalSeparationLine, Icon } from 'fds/components';
+import { usePrevious } from 'fds/system';
 
 import {
 	AnnotationStatus,
@@ -103,10 +104,10 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 				);
 
 			if (addingOrEditingReplyIndex !== -1) {
-				// Split the adding reply off. We need the reply form to be open
-				// even if the comment is not selected to prevent the contents
-				// from disappearing.
-				const addingReply =
+				// Split the adding or editing reply off. We need the reply form
+				// to be open even if the comment is not selected to prevent the
+				// contents from disappearing.
+				const addingOrEditingReply =
 					reviewAnnotation.replies[addingOrEditingReplyIndex];
 
 				const repliesBefore = [
@@ -122,7 +123,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 					),
 				];
 
-				return [repliesBefore, addingReply, repliesAfter];
+				return [repliesBefore, addingOrEditingReply, repliesAfter];
 			}
 
 			return [reviewAnnotation.replies, null, []];
@@ -147,6 +148,10 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			)}
 			{shouldShowReplies && (
 				<TruncatedReplies
+					hasResolution={!!resolution}
+					isEditingReply={
+						addingOrEditingReply?.busyState === BusyState.EDITING
+					}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}
 					onReplyFormCancel={onReplyFormCancel}
@@ -155,11 +160,6 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 					replies={repliesBefore}
 					reviewAnnotation={reviewAnnotation}
 					showActionsMenuButton={showActionsMenuButton}
-					isRecalculatingDisabled={!!addingOrEditingReply}
-					hasResolution={!!resolution}
-					isEditingReply={
-						addingOrEditingReply?.busyState === BusyState.EDITING
-					}
 				/>
 			)}
 			{addingOrEditingReply &&
