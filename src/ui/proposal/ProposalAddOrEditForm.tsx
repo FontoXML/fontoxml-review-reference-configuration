@@ -56,7 +56,6 @@ function ProposalAddOrEditFormContent({
 				name: 'proposedChange',
 				value: originalText,
 				feedback: validate(originalText),
-				renderedFeedback: null,
 			});
 		}
 	}, [isEditing, onFieldChange, originalText, validate]);
