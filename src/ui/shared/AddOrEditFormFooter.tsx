@@ -4,6 +4,7 @@ import * as React from 'react';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import { RecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
+import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
 function determineSaveButtonLabel(error, isLoading) {
 	if (isLoading) {
@@ -34,7 +35,7 @@ function AddOrEditFormFooter({
 				/>
 			)}
 
-			<Flex justifyContent="flex-end" spaceSize="l">
+			<Flex justifyContent="flex-end">
 				<Block flex="0 1 auto">
 					<Button
 						isDisabled={isDisabled}
@@ -42,6 +43,8 @@ function AddOrEditFormFooter({
 						onClick={onCancel}
 					/>
 				</Block>
+
+				<ResponsiveButtonSpacer />
 
 				<Block flex="0 1 auto">
 					<Button

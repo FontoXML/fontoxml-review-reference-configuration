@@ -23,6 +23,7 @@ import {
 import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
+import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
 const rows = { minimum: 2, maximum: 6 };
 
@@ -165,12 +166,14 @@ function ResolveFormContent({
 					/>
 				)}
 
-				<Flex justifyContent="flex-end" spaceSize="l">
+				<Flex justifyContent="flex-end">
 					<Button
 						isDisabled={isDisabled}
 						label={t('Cancel')}
 						onClick={onCancel}
 					/>
+
+					<ResponsiveButtonSpacer />
 
 					{reviewAnnotation.type === 'proposal' &&
 						reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
@@ -183,6 +186,8 @@ function ResolveFormContent({
 								/>
 							</Block>
 						)}
+
+					<ResponsiveButtonSpacer />
 
 					<Button
 						icon={isLoading ? 'spinner' : null}

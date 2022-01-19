@@ -15,6 +15,7 @@ import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import { CARD_HEADER_HEIGHT } from './../constants';
+import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
 function determineSaveButtonLabel(error, isEditing, isLoading) {
 	if (error && error.recovery === RecoveryOption.RETRYABLE) {
@@ -102,7 +103,7 @@ function ReplyFormContent({
 				)}
 			</Flex>
 
-			<Flex justifyContent="flex-end" spaceSize="l">
+			<Flex justifyContent="flex-end">
 				<Block flex="0 1 auto">
 					<Button
 						isDisabled={isDisabled}
@@ -110,6 +111,8 @@ function ReplyFormContent({
 						onClick={onCancelButtonClick}
 					/>
 				</Block>
+
+				<ResponsiveButtonSpacer />
 
 				<Block flex="0 1 auto">
 					<Button
