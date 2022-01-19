@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Button,
@@ -8,14 +6,15 @@ import {
 	Icon,
 	TextArea,
 } from 'fds/components';
+import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import { CARD_HEADER_HEIGHT } from './../constants';
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
+import { CARD_HEADER_HEIGHT } from './../constants';
 
 function determineSaveButtonLabel(error, isEditing, isLoading) {
 	if (error && error.recovery === RecoveryOption.RETRYABLE) {
@@ -59,7 +58,6 @@ function ReplyFormContent({
 	onRefreshLinkClick,
 	onSubmit,
 	reply,
-	valueByName,
 }) {
 	const isAdding = reply.busyState === BusyState.ADDING;
 	const isEditing = reply.busyState === BusyState.EDITING;
@@ -116,16 +114,7 @@ function ReplyFormContent({
 				<Block flex="0 1 auto">
 					<Button
 						icon={isLoading ? 'spinner' : null}
-						isDisabled={
-							isDisabled ||
-							isLoading ||
-							!valueByName.reply ||
-							valueByName.reply.trim() === '' ||
-							isSubmitDisabled ||
-							(reply.error &&
-								reply.error.recovery !==
-									RecoveryOption.RETRYABLE)
-						}
+						isDisabled={isDisabled || isLoading || isSubmitDisabled}
 						label={determineSaveButtonLabel(
 							error,
 							isEditing,
@@ -165,7 +154,7 @@ function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }) {
 			initialValueByName={reply.metadata}
 			onSubmit={handleSubmit}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
+			{({ isSubmitDisabled, onFocusableRef, onSubmit }) => (
 				<ReplyFormContent
 					isSubmitDisabled={isSubmitDisabled}
 					onCancelButtonClick={handleCancelButtonClick}
@@ -174,7 +163,6 @@ function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }) {
 					onRefreshLinkClick={handleRefreshLinkClick}
 					onSubmit={onSubmit}
 					reply={reply}
-					valueByName={valueByName}
 				/>
 			)}
 		</ReviewAnnotationForm>

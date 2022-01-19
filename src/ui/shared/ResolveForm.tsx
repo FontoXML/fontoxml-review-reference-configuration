@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Button,
@@ -12,10 +10,11 @@ import {
 	TextArea,
 	Toast,
 } from 'fds/components';
+import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
-import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
+import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import {
 	AnnotationStatus,
 	ProposalState as ProposalStateTypes,
@@ -97,7 +96,7 @@ function ResolveFormContent({
 							hasRequiredAsterisk
 							labelColorName="text-color"
 							isLabelBold
-						></FormRow>
+						/>
 					</Flex>
 
 					<RadioButtonGroup
@@ -187,15 +186,7 @@ function ResolveFormContent({
 
 					<Button
 						icon={isLoading ? 'spinner' : null}
-						isDisabled={
-							isDisabled ||
-							isLoading ||
-							!valueByName.resolution ||
-							isSubmitDisabled ||
-							(reviewAnnotation.error &&
-								reviewAnnotation.error.recovery !==
-									RecoveryOption.RETRYABLE)
-						}
+						isDisabled={isDisabled || isLoading || isSubmitDisabled}
 						label={determineSaveButtonLabel(error, isLoading)}
 						onClick={onSubmit}
 						type="primary"

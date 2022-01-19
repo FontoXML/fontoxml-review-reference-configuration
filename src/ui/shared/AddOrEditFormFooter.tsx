@@ -1,9 +1,8 @@
+import { Block, Button, Flex } from 'fds/components';
 import * as React from 'react';
 
-import { Block, Button, Flex } from 'fds/components';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import { RecoveryOption } from 'fontoxml-feedback/src/types';
-
 import t from 'fontoxml-localization/src/t';
 
 function determineSaveButtonLabel(error, isLoading) {
@@ -47,7 +46,7 @@ function AddOrEditFormFooter({
 				<Block flex="0 1 auto">
 					<Button
 						icon={isLoading ? 'spinner' : null}
-						isDisabled={isDisabled || isSubmitDisabled}
+						isDisabled={isDisabled || isLoading || isSubmitDisabled}
 						label={determineSaveButtonLabel(error, isLoading)}
 						onClick={onSubmit}
 						type="primary"

@@ -1,13 +1,12 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Flex,
-	Icon,
 	FormRow,
+	Icon,
 	TextArea,
 	TextAreaWithDiff,
 } from 'fds/components';
+import * as React from 'react';
 
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
@@ -36,7 +35,6 @@ function ProposalAddOrEditFormContent({
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
-	valueByName,
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
@@ -47,21 +45,21 @@ function ProposalAddOrEditFormContent({
 
 	const originalText = reviewAnnotation.originalText;
 
-	const proposedChangeIsModified =
-		valueByName.proposedChange !== originalText;
+	const validate = React.useCallback(
+		(value) => validateProposedChangeField(value, originalText),
+		[originalText]
+	);
 
 	React.useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
 				name: 'proposedChange',
 				value: originalText,
-				feedback: validateProposedChangeField(
-					originalText,
-					originalText
-				),
+				feedback: validate(originalText),
+				renderedFeedback: null,
 			});
 		}
-	}, [isEditing, onFieldChange, originalText]);
+	}, [isEditing, onFieldChange, originalText, validate]);
 
 	return (
 		<>
@@ -87,9 +85,7 @@ function ProposalAddOrEditFormContent({
 						)}
 						ref={onFocusableRef}
 						rows={rows}
-						validate={(value) =>
-							validateProposedChangeField(value, originalText)
-						}
+						validate={validate}
 					/>
 				</FormRow>
 
@@ -111,7 +107,7 @@ function ProposalAddOrEditFormContent({
 				error={error}
 				isDisabled={isDisabled}
 				isLoading={isLoading}
-				isSubmitDisabled={!proposedChangeIsModified || isSubmitDisabled}
+				isSubmitDisabled={isSubmitDisabled}
 				onCancel={onCancel}
 				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 				onSubmit={onSubmit}
@@ -136,7 +132,6 @@ function ProposalAddOrEditForm({
 				onFieldChange,
 				onFocusableRef,
 				onSubmit,
-				valueByName,
 			}) => (
 				<ProposalAddOrEditFormContent
 					isSubmitDisabled={isSubmitDisabled}
@@ -146,7 +141,6 @@ function ProposalAddOrEditForm({
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onSubmit={onSubmit}
 					reviewAnnotation={reviewAnnotation}
-					valueByName={valueByName}
 				/>
 			)}
 		</ReviewAnnotationForm>

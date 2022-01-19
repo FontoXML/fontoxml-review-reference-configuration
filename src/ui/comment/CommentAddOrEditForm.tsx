@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Flex,
@@ -8,6 +6,8 @@ import {
 	RadioButtonGroup,
 	TextArea,
 } from 'fds/components';
+import * as React from 'react';
+
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import {
 	BusyState,
@@ -66,7 +66,7 @@ function CommentAddOrEditFormContent({
 	const isPublicationLevelComment =
 		reviewAnnotation.targets[0].type === TargetType.PUBLICATION_SELECTOR;
 	if (isPublicationLevelComment) {
-		label = 'Global ' + label[0].toLowerCase() + label.substring(1);
+		label = `Global ${label[0].toLowerCase()}${label.substring(1)}`;
 	}
 
 	return (
@@ -116,11 +116,7 @@ function CommentAddOrEditFormContent({
 				error={error}
 				isDisabled={isDisabled}
 				isLoading={isLoading}
-				isSubmitDisabled={
-					!valueByName.comment ||
-					valueByName.comment.trim() === '' ||
-					isSubmitDisabled
-				}
+				isSubmitDisabled={isSubmitDisabled}
 				onCancel={onCancel}
 				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 				onSubmit={onSubmit}
