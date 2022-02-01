@@ -179,15 +179,17 @@ function ResolveFormContent({
 						reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
 						onProposalMerge &&
 						proposalState && (
-							<Block flex="0 1 auto">
-								<ReviewAnnotationAcceptProposalButton
-									onProposalMerge={onProposalMerge}
-									proposalState={proposalState}
-								/>
-							</Block>
-						)}
+							<>
+								<Block flex="0 1 auto">
+									<ReviewAnnotationAcceptProposalButton
+										onProposalMerge={onProposalMerge}
+										proposalState={proposalState}
+									/>
+								</Block>
 
-					<ResponsiveButtonSpacer />
+								<ResponsiveButtonSpacer />
+							</>
+						)}
 
 					<Button
 						icon={isLoading ? 'spinner' : null}
