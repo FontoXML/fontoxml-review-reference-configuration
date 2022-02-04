@@ -96,6 +96,7 @@ function CommentAddOrEditFormContent({
 					ref={onFocusableRef}
 					rows={rows}
 					validate={validateCommentField}
+					data-test-id='comment'
 				/>
 			</FormRow>
 

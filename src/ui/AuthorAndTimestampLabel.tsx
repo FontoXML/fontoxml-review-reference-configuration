@@ -41,6 +41,7 @@ function AuthorAndTimestampLabel({
 			>
 				<Label
 					tooltipContent={authorLabel}
+					data-test-id="author-label"
 					onRef={handleAuthorLabelRef}
 				>
 					{authorLabel}
