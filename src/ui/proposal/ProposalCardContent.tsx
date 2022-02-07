@@ -143,6 +143,7 @@ function ProposalCardContent({
 		<Block
 			paddingSize="m"
 			data-test-id="fontoxml-review-reference-configuration-proposal-card-content"
+			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 		>
 			<CardHeader

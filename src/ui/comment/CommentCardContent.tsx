@@ -159,6 +159,7 @@ function CommentCardContent({
 		<Block
 			paddingSize="m"
 			data-test-id="fontoxml-review-reference-configuration-comment-card-content"
+			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			data-review-annotation-comment-type={
 				reviewAnnotation.metadata.commentType
