@@ -84,7 +84,7 @@ function CommentAddOrEditFormContent({
 							}
 						/>
 
-						<Block>{label}</Block>
+						<Block data-test-id='comment-type-label'>{label}</Block>
 					</Flex>
 				}
 				labelColorName="text-color"

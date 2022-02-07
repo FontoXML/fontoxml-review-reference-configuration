@@ -59,7 +59,7 @@ export default function Reply({
 		<>
 			<HorizontalSeparationLine />
 
-			<Block>
+			<Block data-test-id="reply">
 				<Flex
 					alignItems="center"
 					flexDirection="row"
@@ -110,7 +110,7 @@ export default function Reply({
 					)}
 				</Flex>
 
-				<Block>
+				<Block data-test-id="reply-text">
 					{reviewAnnotation.isSelected && (
 						<TruncatedText>{reply.metadata.reply}</TruncatedText>
 					)}

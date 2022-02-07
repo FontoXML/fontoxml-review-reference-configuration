@@ -85,7 +85,7 @@ function ResolveFormContent({
 		context === ContextType.REVIEW_SHARING_SIDEBAR;
 
 	return (
-		<Block spaceVerticalSize="m">
+		<Block spaceVerticalSize="m" data-test-id='resolve-form'>
 			<HorizontalSeparationLine />
 
 			<Block spaceVerticalSize="l">
@@ -122,6 +122,7 @@ function ResolveFormContent({
 						'Optionally describe how or why you resolved this comment'
 					)}
 					rows={rows}
+					data-test-id='resolve-form-text'
 				/>
 
 				{error && (
