@@ -211,14 +211,15 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 				</Block>
 			)}
 			{reviewAnnotation.busyState === BusyState.RESOLVING && (
-					<ResolveForm
-						onCancel={onReviewAnnotationFormCancel}
-						onProposalMerge={onProposalMerge}
-						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
-						onSubmit={onReviewAnnotationFormSubmit}
-						reviewAnnotation={reviewAnnotation}
-					/>
-				)}
+				<ResolveForm
+					context={context}
+					onCancel={onReviewAnnotationFormCancel}
+					onProposalMerge={onProposalMerge}
+					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+					onSubmit={onReviewAnnotationFormSubmit}
+					reviewAnnotation={reviewAnnotation}
+				/>
+			)}
 		</>
 	);
 };

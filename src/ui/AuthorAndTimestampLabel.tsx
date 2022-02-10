@@ -6,7 +6,7 @@ import { applyCss } from 'fds/system';
 import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
 const timestampSpanStyles = applyCss({
-	opacity: 0.8
+	opacity: 0.8,
 });
 
 function AuthorAndTimestampLabel({

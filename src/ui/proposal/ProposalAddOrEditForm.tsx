@@ -69,7 +69,7 @@ function ProposalAddOrEditFormContent({
 							<Icon icon="fal fa-pencil-square-o" isInline />
 
 							<Block data-test-id="comment-type-label" isInline>
-									{t('Proposed change')}
+								{t('Proposed change')}
 							</Block>
 						</Flex>
 					}
@@ -87,7 +87,7 @@ function ProposalAddOrEditFormContent({
 						ref={onFocusableRef}
 						rows={rows}
 						validate={validate}
-						data-test-id='comment'
+						data-test-id="comment"
 					/>
 				</FormRow>
 
@@ -101,7 +101,7 @@ function ProposalAddOrEditFormContent({
 						name="comment"
 						rows={rows}
 						placeholder={t('Motivate your proposal')}
-						data-test-id='motivation'
+						data-test-id="motivation"
 					/>
 				</FormRow>
 			</Block>

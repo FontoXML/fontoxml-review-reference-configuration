@@ -17,6 +17,7 @@ import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAn
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import {
 	AnnotationStatus,
+	ContextType,
 	ProposalState as ProposalStateTypes,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
@@ -46,6 +47,7 @@ function validateResolutionField(value) {
 }
 
 function ResolveFormContent({
+	context,
 	isSubmitDisabled,
 	onCancel,
 	onFocusableRef,
@@ -77,6 +79,10 @@ function ResolveFormContent({
 		proposalState !== ProposalStateTypes.MERGING &&
 		proposalState !== ProposalStateTypes.MERGED &&
 		valueByName.resolution === 'accepted';
+
+	const isInReview =
+		context === ContextType.REVIEW_SIDEBAR ||
+		context === ContextType.REVIEW_SHARING_SIDEBAR;
 
 	return (
 		<Block spaceVerticalSize="m">
@@ -126,7 +132,7 @@ function ResolveFormContent({
 					/>
 				)}
 
-				{isRejectingMergedProposal && (
+				{isRejectingMergedProposal && !isInReview && (
 					<Toast
 						icon="info-circle"
 						connotation="info"
@@ -139,7 +145,7 @@ function ResolveFormContent({
 						}
 					/>
 				)}
-				{isAcceptingUnmergedProposal && (
+				{isAcceptingUnmergedProposal && !isInReview && (
 					<Toast
 						icon="info-circle"
 						connotation="info"
@@ -152,7 +158,7 @@ function ResolveFormContent({
 						}
 					/>
 				)}
-				{isAcceptingChangedProposal && (
+				{isAcceptingChangedProposal && !isInReview && (
 					<Toast
 						icon="info-circle"
 						connotation="info"
@@ -175,7 +181,8 @@ function ResolveFormContent({
 
 					<ResponsiveButtonSpacer />
 
-					{reviewAnnotation.type === 'proposal' &&
+					{!isInReview &&
+						reviewAnnotation.type === 'proposal' &&
 						reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
 						onProposalMerge &&
 						proposalState && (
@@ -205,6 +212,7 @@ function ResolveFormContent({
 }
 
 export default function ResolveForm({
+	context,
 	reviewAnnotation,
 	onCancel,
 	onProposalMerge = null,
@@ -219,6 +227,7 @@ export default function ResolveForm({
 		>
 			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
 				<ResolveFormContent
+					context={context}
 					isSubmitDisabled={isSubmitDisabled}
 					onCancel={onCancel}
 					onFocusableRef={onFocusableRef}
