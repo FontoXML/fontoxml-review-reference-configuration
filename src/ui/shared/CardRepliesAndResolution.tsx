@@ -210,8 +210,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 					</TruncatedText>
 				</Block>
 			)}
-			{reviewAnnotation.isSelected &&
-				reviewAnnotation.busyState === BusyState.RESOLVING && (
+			{reviewAnnotation.busyState === BusyState.RESOLVING && (
 					<ResolveForm
 						onCancel={onReviewAnnotationFormCancel}
 						onProposalMerge={onProposalMerge}
