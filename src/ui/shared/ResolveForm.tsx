@@ -132,7 +132,7 @@ function ResolveFormContent({
 					/>
 				)}
 
-				{isRejectingMergedProposal && !isInReview && (
+				{isRejectingMergedProposal && (
 					<Toast
 						icon="info-circle"
 						connotation="info"
@@ -145,7 +145,7 @@ function ResolveFormContent({
 						}
 					/>
 				)}
-				{isAcceptingUnmergedProposal && !isInReview && (
+				{isAcceptingUnmergedProposal && (
 					<Toast
 						icon="info-circle"
 						connotation="info"
