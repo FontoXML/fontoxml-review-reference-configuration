@@ -159,7 +159,7 @@ function ResolveFormContent({
 						}
 					/>
 				)}
-				{isAcceptingChangedProposal && !isInReview && (
+				{isAcceptingChangedProposal && (
 					<Toast
 						icon="info-circle"
 						connotation="info"
