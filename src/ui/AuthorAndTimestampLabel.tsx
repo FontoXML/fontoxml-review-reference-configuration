@@ -1,13 +1,8 @@
 import * as React from 'react';
 
 import { Flex, Label } from 'fds/components';
-import { applyCss } from 'fds/system';
 
 import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
-
-const timestampSpanStyles = applyCss({
-	opacity: 0.8,
-});
 
 function AuthorAndTimestampLabel({
 	reviewAnnotation,
@@ -50,12 +45,13 @@ function AuthorAndTimestampLabel({
 
 			{timestampLabel && (
 				<Label
+					colorName="text-muted-color"
 					flex="0 3 auto"
 					size="s"
 					tooltipContent={timestampLabel}
 					data-test-id="timestamp-label"
 				>
-					<span {...timestampSpanStyles}>{timestampLabel}</span>
+					{timestampLabel}
 				</Label>
 			)}
 		</Flex>
