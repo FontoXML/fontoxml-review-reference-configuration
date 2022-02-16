@@ -73,7 +73,7 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Technical')}
-						tooltipContent={t('Only show technical comments.')}
+						tooltipContent={t('Only show technical comments')}
 						onRemove={() =>
 							onCheckboxChange('typeCommentTechnical', false)
 						}
@@ -84,7 +84,7 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('General')}
-						tooltipContent={t('Only show general comments.')}
+						tooltipContent={t('Only show general comments')}
 						onRemove={() =>
 							onCheckboxChange('typeCommentGeneral', false)
 						}
@@ -95,7 +95,7 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Editorial')}
-						tooltipContent={t('Only show editorial comments.')}
+						tooltipContent={t('Only show editorial comments')}
 						onRemove={() =>
 							onCheckboxChange('typeCommentEditorial', false)
 						}
@@ -108,7 +108,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Technical')}
 						tooltipContent={t(
-							'Only show technical publication comments.'
+							'Only show technical publication comments'
 						)}
 						onRemove={() =>
 							onCheckboxChange(
@@ -124,7 +124,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: General')}
 						tooltipContent={t(
-							'Only show general publication comments.'
+							'Only show general publication comments'
 						)}
 						onRemove={() =>
 							onCheckboxChange(
@@ -140,7 +140,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Editorial')}
 						tooltipContent={t(
-							'Only show editorial publication comments.'
+							'Only show editorial publication comments'
 						)}
 						onRemove={() =>
 							onCheckboxChange(
@@ -156,7 +156,7 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Proposal')}
-						tooltipContent={t('Only show proposals.')}
+						tooltipContent={t('Only show proposals')}
 						onRemove={() => onCheckboxChange('typeProposal', false)}
 						useHoverStyles={false}
 					/>
@@ -167,7 +167,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Accepted')}
 						tooltipContent={t(
-							'Only show resolved and accepted feedback.'
+							'Only show resolved and accepted feedback'
 						)}
 						onRemove={() =>
 							onCheckboxChange(
@@ -183,7 +183,7 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Rejected')}
 						tooltipContent={t(
-							'Only show resolved and rejected feedback.'
+							'Only show resolved and rejected feedback'
 						)}
 						onRemove={() =>
 							onCheckboxChange(
@@ -198,7 +198,7 @@ function FilterFormSummaryChips({
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
-						tooltipContent={t('Only show unresolved feedback.')}
+						tooltipContent={t('Only show unresolved feedback')}
 						onRemove={() =>
 							onCheckboxChange('resolutionUnresolved', false)
 						}
@@ -219,7 +219,7 @@ function FilterFormSummaryChips({
 						<Chip
 							isDisabled
 							label={t('Any')}
-							tooltipContent={t('Show feedback of any type.')}
+							tooltipContent={t('Show feedback of any type')}
 						/>
 					)}
 			</ChipGroup>

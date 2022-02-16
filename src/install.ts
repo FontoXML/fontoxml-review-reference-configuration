@@ -17,7 +17,7 @@ export default function install() {
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment to selected text.'),
+		tooltipContent: t('Add comment to selected text'),
 	});
 
 	registerObjectReviewAnnotationType('object-comment', {
@@ -32,7 +32,7 @@ export default function install() {
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment to selected image.'),
+		tooltipContent: t('Add comment to selected image'),
 	});
 
 	registerTextRangeReviewAnnotationType('proposal', {
@@ -40,7 +40,7 @@ export default function install() {
 		label: 'Proposal',
 		priority: 2,
 		CardContentComponent: ProposalCardContent,
-		tooltipContent: t('Propose a change to selected text.'),
+		tooltipContent: t('Propose a change to selected text'),
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
@@ -48,7 +48,7 @@ export default function install() {
 		label: 'Global comment',
 		priority: 1,
 		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment that applies to the entire document.'),
+		tooltipContent: t('Add comment that applies to the entire document'),
 	});
 
 	setInitialFilterFormValues(
