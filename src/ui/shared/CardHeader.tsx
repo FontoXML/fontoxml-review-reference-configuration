@@ -349,10 +349,10 @@ export default function CardHeader({
 										tooltipContent={
 											reviewAnnotation.type === 'proposal'
 												? t(
-														'Comment is shared. Click to resolve.'
+														'Proposal is shared. Click to resolve.'
 												  )
 												: t(
-														'Proposal is shared. Click to resolve.'
+														'Comment is shared. Click to resolve.'
 												  )
 										}
 										type={
