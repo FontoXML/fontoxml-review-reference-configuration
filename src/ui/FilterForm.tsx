@@ -47,14 +47,12 @@ function determineParentFieldValue(subFieldNames, valueByNameForUI) {
 // filterFormValueByName.
 
 function FilterForm({
-	// Not used by this implementation, the error is already visualized in the filter form header
-	// by default.
+	// Not used by this implementation, the error is already visualized.
 	error: _error,
 	// Not used by this implementation: the input can never become invalid (only checkboxes are used,
 	// all of which are optional.)
 	feedbackByName: _feedbackByName,
-	// Not used by this implementation, the loading/submitting state is already visualized in the
-	// filter form header by default.
+	// Not used by this implementation, the loading/submitting state is already visualized.
 	isSubmitting: _isSubmitting,
 	// Called whenever a field changes.
 	onFieldChange,

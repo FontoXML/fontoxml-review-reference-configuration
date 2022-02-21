@@ -5,6 +5,7 @@ import {
 	Checkbox,
 	Chip,
 	ChipGroup,
+	CompactStateMessage,
 	Flex,
 	Icon,
 	Label,
@@ -17,7 +18,6 @@ import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterO
 function FilterFormSummaryChips({
 	// This is set if the /review/state endpoint is called (whenever onChange is
 	// called while the filter form is not visible) and returned an error.
-	// If the filter form is visible, the filter form header already handles and displays the error.
 	error,
 	// The filter form cannot accept any invalid input, so it is not used by the summary either.
 	feedbackByName: _feedbackByName,
@@ -26,8 +26,6 @@ function FilterFormSummaryChips({
 	isDisabled,
 	// This is true while the /review/state endpoint is called (whenever onChange is
 	// called while the filter form is not visible).
-	// If the filter form is visible, the filter form header already handles and displays the
-	// loading/submitting state.
 	isSubmitting,
 	// Call this with a new version of the given valueByName to update the filter in any way you
 	// like from this summary. In this implementation it is called with a null value for the field
@@ -55,7 +53,7 @@ function FilterFormSummaryChips({
 							: changedField.value;
 					return changedValueByName;
 				}, {}),
-			});
+			}, valueByName)
 		},
 		[onChange, valueByName]
 	);
@@ -233,9 +231,11 @@ function FilterFormSummaryChips({
 			)}
 
 			{error && !isSubmitting && (
-				<Label colorName="text-error-color" isBold>
-					{t('Something went wrong while updating the filter.')}
-				</Label>
+				<CompactStateMessage
+					connotation="warning"
+					visual="exclamation-triangle"
+					message={t('Failed to update the filter, please retry.')}
+				/>
 			)}
 		</Block>
 	);
