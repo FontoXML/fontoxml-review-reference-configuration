@@ -321,10 +321,10 @@ export default function CardHeader({
 									tooltipContent={
 										reviewAnnotation.type === 'proposal'
 											? t(
-													'Comment is private. Click to share.'
+													'Proposal is private. Click to share.'
 											  )
 											: t(
-													'Proposal is private. Click to share.'
+													'Comment is private. Click to share.'
 											  )
 									}
 								/>
