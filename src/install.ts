@@ -8,8 +8,8 @@ import uiManager from 'fontoxml-modular-ui/src/uiManager';
 import CommentCardContent from './ui/comment/CommentCardContent';
 import FilterForm from './ui/FilterForm';
 import FilterFormSummaryChips from './ui/FilterFormSummaryChips';
-import MastheadForReview from './ui/MastheadForReview';
 import globalCommentsStackedIcons from './ui/global-comments-stacked-icons.svg';
+import MastheadForReview from './ui/MastheadForReview';
 import ProposalCardContent from './ui/proposal/ProposalCardContent';
 
 export default function install() {
@@ -49,7 +49,9 @@ export default function install() {
 		label: 'Global comment',
 		priority: 1,
 		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment that applies to the entire document.'),
+		tooltipContent: t(
+			'Add comment that applies to the entire publication.'
+		),
 	});
 
 	setInitialFilterFormValues(
