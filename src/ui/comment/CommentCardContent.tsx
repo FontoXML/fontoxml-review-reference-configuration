@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { Block, Flex, Icon, Label } from 'fds/components';
+import * as React from 'react';
 
 import {
 	AnnotationStatus,
@@ -8,23 +7,20 @@ import {
 	ContextType,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
-
 import t from 'fontoxml-localization/src/t';
-
-import CardHeader from '../shared/CardHeader';
-import ErrorStateMessage from '../shared/ErrorStateMessage';
-import LoadingStateMessage from '../shared/LoadingStateMessage';
 
 import commentTypes from '../commentTypes';
 import publicationCommentTypes from '../publicationCommentTypes';
-import { CARD_HEADER_HEIGHT } from './../constants';
-
-import CommentAddOrEditForm from './CommentAddOrEditForm';
-import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
-import CommentCardFooter from './CommentCardFooter';
 import CardErrorFooter from '../shared/CardErrorFooter';
-import TruncatedText from '../shared/TruncatedText';
 import CardErrors from '../shared/CardErrors';
+import CardHeader from '../shared/CardHeader';
+import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
+import ErrorStateMessage from '../shared/ErrorStateMessage';
+import LoadingStateMessage from '../shared/LoadingStateMessage';
+import TruncatedText from '../shared/TruncatedText';
+import { CARD_HEADER_HEIGHT } from './../constants';
+import CommentAddOrEditForm from './CommentAddOrEditForm';
+import CommentCardFooter from './CommentCardFooter';
 
 function CommentCardContent({
 	context,
@@ -103,7 +99,8 @@ function CommentCardContent({
 				/>
 			</Block>
 		);
-	} else if (
+	}
+	if (
 		reviewAnnotation.isLoading &&
 		reviewAnnotation.busyState === BusyState.REFRESHING
 	) {
@@ -112,7 +109,8 @@ function CommentCardContent({
 				<LoadingStateMessage message={t('Refreshing comment…')} />
 			</Block>
 		);
-	} else if (
+	}
+	if (
 		reviewAnnotation.isLoading &&
 		reviewAnnotation.busyState === BusyState.REMOVING
 	) {
@@ -199,9 +197,7 @@ function CommentCardContent({
 								{publicationCommentType ? (
 									<>
 										<Icon
-											icon={
-												'global-comments-stacked-icons'
-											}
+											icon="global-comments-stacked-icons"
 											isInline
 										/>
 
@@ -214,7 +210,7 @@ function CommentCardContent({
 									</>
 								) : (
 									<>
-										<Icon icon="fal fa-comment" />
+										<Icon icon="far fa-comment" />
 
 										<Label
 											data-test-id="comment-type-label"
@@ -229,7 +225,7 @@ function CommentCardContent({
 														? 'button-warning-background-selected'
 														: 'button-warning-background'
 												}
-												icon="fas fa-unlink"
+												icon="far fa-unlink"
 												tooltipContent={t(
 													'This comment lost its position in the content'
 												)}

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Button,
@@ -12,6 +10,7 @@ import {
 	MenuItem,
 	MenuItemWithDrop,
 } from 'fds/components';
+import * as React from 'react';
 
 import Badge from 'fontoxml-feedback/src/Badge';
 import {
@@ -23,11 +22,9 @@ import {
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import { CARD_HEADER_HEIGHT } from './../constants';
-
-import resolutions from '../feedbackResolutions';
-
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
+import resolutions from '../feedbackResolutions';
+import { CARD_HEADER_HEIGHT } from './../constants';
 
 function determineShareButtonLabel(reviewAnnotation, error, isLoading) {
 	if (isLoading) {
@@ -169,7 +166,7 @@ export default function CardHeader({
 					<Menu>
 						{showEditButton && (
 							<MenuItem
-								icon="fas fa-pencil"
+								icon="far fa-pencil"
 								isDisabled={reviewAnnotation.isLoading}
 								label={t('Edit')}
 								onClick={() => {
@@ -197,7 +194,7 @@ export default function CardHeader({
 								label={t('View in...')}
 								renderDrop={renderViewInDrop}
 								tooltipContent={t('View in another context')}
-							></MenuItemWithDrop>
+							/>
 						)}
 					</Menu>
 				</Drop>
@@ -245,7 +242,7 @@ export default function CardHeader({
 		reviewAnnotation.isLoading ||
 		reviewAnnotation.busyState === BusyState.ADDING;
 
-	let shareButtonType: 'primary' | 'default' | 'transparent';
+	let shareButtonType: 'default' | 'primary' | 'transparent';
 	if (
 		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState !== BusyState.ADDING
@@ -262,7 +259,7 @@ export default function CardHeader({
 			return undefined;
 		}
 
-		let resolution = resolutions
+		const resolution = resolutions
 			.find(
 				(r) => r.value === reviewAnnotation.resolvedMetadata.resolution
 			)
@@ -312,7 +309,7 @@ export default function CardHeader({
 									icon={
 										reviewAnnotation.isLoading
 											? 'spinner'
-											: 'fas fa-user-lock'
+											: 'far fa-user-lock'
 									}
 									isDisabled={shareButtonIsDisabled}
 									label={shareButtonLabel}

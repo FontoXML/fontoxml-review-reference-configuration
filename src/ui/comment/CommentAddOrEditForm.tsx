@@ -80,11 +80,11 @@ function CommentAddOrEditFormContent({
 							icon={
 								isPublicationLevelComment
 									? 'global-comments-stacked-icons'
-									: 'fal fa-comment'
+									: 'far fa-comment'
 							}
 						/>
 
-						<Block data-test-id='comment-type-label'>{label}</Block>
+						<Block data-test-id="comment-type-label">{label}</Block>
 					</Flex>
 				}
 				labelColorName="text-color"

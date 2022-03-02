@@ -14,7 +14,7 @@ import ProposalCardContent from './ui/proposal/ProposalCardContent';
 
 export default function install() {
 	registerTextRangeReviewAnnotationType('comment', {
-		icon: 'fas fa-comment',
+		icon: 'far fa-comment',
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
@@ -29,7 +29,7 @@ export default function install() {
 		// /review route both only show menu items / buttons for annotation types that are enabled.
 		// This together leads to a single "Add comment" option that works for text ranges and
 		// objects.
-		icon: 'fas fa-comment',
+		icon: 'far fa-comment',
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
@@ -37,7 +37,7 @@ export default function install() {
 	});
 
 	registerTextRangeReviewAnnotationType('proposal', {
-		icon: 'fas fa-pencil-square-o',
+		icon: 'far fa-edit',
 		label: 'Proposal',
 		priority: 2,
 		CardContentComponent: ProposalCardContent,

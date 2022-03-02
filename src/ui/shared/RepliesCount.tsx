@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Flex,
@@ -7,6 +5,7 @@ import {
 	Icon,
 	Label,
 } from 'fds/components';
+import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
 
@@ -20,7 +19,7 @@ const RepliesCount: React.FC<Props> = ({ count }) => {
 			<HorizontalSeparationLine marginSizeBottom="m" />
 
 			<Flex spaceSize="s">
-				<Icon icon="fal fa-reply" />
+				<Icon icon="far fa-reply" />
 				<Label>
 					{t(
 						'{REPLIES_COUNT, plural, one {1 reply} other {# replies}}',

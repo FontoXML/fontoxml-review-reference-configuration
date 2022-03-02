@@ -79,7 +79,7 @@ function ReplyFormContent({
 					spaceSize="s"
 					style={{ height: CARD_HEADER_HEIGHT }}
 				>
-					<Icon icon="fal fa-reply" />
+					<Icon icon="far fa-reply" />
 
 					<AuthorAndTimestampLabel reviewAnnotation={reply} />
 				</Flex>

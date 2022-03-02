@@ -66,7 +66,7 @@ function ProposalAddOrEditFormContent({
 				<FormRow
 					label={
 						<Flex alignItems="center" isInline spaceSize="s">
-							<Icon icon="fal fa-pencil-square-o" isInline />
+							<Icon icon="far fa-pencil-square-o" isInline />
 
 							<Block data-test-id="comment-type-label" isInline>
 								{t('Proposed change')}

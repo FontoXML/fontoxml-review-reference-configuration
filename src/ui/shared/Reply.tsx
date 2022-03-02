@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Button,
@@ -7,18 +5,18 @@ import {
 	Flex,
 	HorizontalSeparationLine,
 	Icon,
-	Text,
 	Label,
 } from 'fds/components';
+import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import { BusyState } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
+import { CARD_HEADER_HEIGHT } from './../constants';
 import ReplyActionsDrop from './ReplyActionsDrop';
 import TruncatedText from './TruncatedText';
-import { CARD_HEADER_HEIGHT } from './../constants';
 
 export default function Reply({
 	reviewAnnotation,
@@ -67,7 +65,7 @@ export default function Reply({
 					style={{ height: CARD_HEADER_HEIGHT }}
 				>
 					<Flex flexDirection="row" spaceSize="s">
-						<Icon icon="fal fa-reply" />
+						<Icon icon="far fa-reply" />
 
 						<AuthorAndTimestampLabel reviewAnnotation={reply} />
 					</Flex>

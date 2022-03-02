@@ -180,7 +180,7 @@ function ProposalCardContent({
 										flexDirection="row"
 										spaceSize="s"
 									>
-										<Icon icon="fal fa-pencil-square-o" />
+										<Icon icon="far fa-pencil-square-o" />
 
 										<Label
 											data-test-id="comment-type-label"
@@ -197,7 +197,7 @@ function ProposalCardContent({
 														? 'button-warning-background-selected'
 														: 'button-warning-background'
 												}
-												icon="fas fa-unlink"
+												icon="far fa-unlink"
 												tooltipContent={t(
 													'This proposed change lost its position in the content'
 												)}
@@ -306,7 +306,7 @@ function ProposalCardContent({
 							{showReplyButton && (
 								<Block flex="0 1 auto">
 									<Button
-										icon="fas fa-reply"
+										icon="far fa-reply"
 										isDisabled={
 											!!reviewAnnotation.error ||
 											reviewAnnotation.isLoading

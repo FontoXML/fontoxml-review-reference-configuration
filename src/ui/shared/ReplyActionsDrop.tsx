@@ -1,6 +1,6 @@
+import { Drop, Menu, MenuItem } from 'fds/components';
 import * as React from 'react';
 
-import { Drop, Menu, MenuItem } from 'fds/components';
 import t from 'fontoxml-localization/src/t';
 
 export default function ReplyActionsDrop({
@@ -11,18 +11,18 @@ export default function ReplyActionsDrop({
 	const handleEditButtonClick = React.useCallback(() => {
 		onEditButtonClick();
 		closeDrop();
-	}, [onEditButtonClick]);
+	}, [closeDrop, onEditButtonClick]);
 
 	const handleRemoveButtonClick = React.useCallback(() => {
 		onRemoveButtonClick();
 		closeDrop();
-	}, [onRemoveButtonClick]);
+	}, [closeDrop, onRemoveButtonClick]);
 
 	return (
 		<Drop>
 			<Menu>
 				<MenuItem
-					icon="fas fa-pencil-square-o"
+					icon="far fa-edit"
 					label={t('Edit')}
 					onClick={handleEditButtonClick}
 				/>
