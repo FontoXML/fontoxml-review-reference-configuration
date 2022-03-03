@@ -188,12 +188,10 @@ function ResolveFormContent({
 						onProposalMerge &&
 						proposalState && (
 							<>
-								<Block flex="0 1 auto">
-									<ReviewAnnotationAcceptProposalButton
-										onProposalMerge={onProposalMerge}
-										proposalState={proposalState}
-									/>
-								</Block>
+								<ReviewAnnotationAcceptProposalButton
+									onProposalMerge={onProposalMerge}
+									proposalState={proposalState}
+								/>
 
 								<ResponsiveButtonSpacer />
 							</>

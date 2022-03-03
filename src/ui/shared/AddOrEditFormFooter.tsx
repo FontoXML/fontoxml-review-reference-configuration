@@ -36,25 +36,21 @@ function AddOrEditFormFooter({
 			)}
 
 			<Flex justifyContent="flex-end">
-				<Block flex="0 1 auto">
-					<Button
-						isDisabled={isDisabled}
-						label={t('Cancel')}
-						onClick={onCancel}
-					/>
-				</Block>
+				<Button
+					isDisabled={isDisabled}
+					label={t('Cancel')}
+					onClick={onCancel}
+				/>
 
 				<ResponsiveButtonSpacer />
 
-				<Block flex="0 1 auto">
-					<Button
-						icon={isLoading ? 'spinner' : null}
-						isDisabled={isDisabled || isLoading || isSubmitDisabled}
-						label={determineSaveButtonLabel(error, isLoading)}
-						onClick={onSubmit}
-						type="primary"
-					/>
-				</Block>
+				<Button
+					icon={isLoading ? 'spinner' : null}
+					isDisabled={isDisabled || isLoading || isSubmitDisabled}
+					label={determineSaveButtonLabel(error, isLoading)}
+					onClick={onSubmit}
+					type="primary"
+				/>
 			</Flex>
 		</Flex>
 	);

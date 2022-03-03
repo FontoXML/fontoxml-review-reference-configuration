@@ -304,25 +304,21 @@ function ProposalCardContent({
 
 						<Flex justifyContent="flex-end" spaceSize="l">
 							{showReplyButton && (
-								<Block flex="0 1 auto">
-									<Button
-										icon="far fa-reply"
-										isDisabled={
-											!!reviewAnnotation.error ||
+								<Button
+									icon="far fa-reply"
+									isDisabled={
+										!!reviewAnnotation.error ||
 											reviewAnnotation.isLoading
-										}
-										onClick={onReplyAdd}
-									/>
-								</Block>
+									}
+									onClick={onReplyAdd}
+								/>
 							)}
 
 							{showAcceptProposalButton && (
-								<Block flex="0 1 auto">
-									<ReviewAnnotationAcceptProposalButton
-										onProposalMerge={onProposalMerge}
-										proposalState={proposalState}
-									/>
-								</Block>
+								<ReviewAnnotationAcceptProposalButton
+									onProposalMerge={onProposalMerge}
+									proposalState={proposalState}
+								/>
 							)}
 						</Flex>
 					</Block>

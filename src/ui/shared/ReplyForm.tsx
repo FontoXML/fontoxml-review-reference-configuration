@@ -104,29 +104,25 @@ function ReplyFormContent({
 			</Flex>
 
 			<Flex justifyContent="flex-end">
-				<Block flex="0 1 auto">
-					<Button
-						isDisabled={isDisabled}
-						label={t('Cancel')}
-						onClick={onCancelButtonClick}
-					/>
-				</Block>
+				<Button
+					isDisabled={isDisabled}
+					label={t('Cancel')}
+					onClick={onCancelButtonClick}
+				/>
 
 				<ResponsiveButtonSpacer />
 
-				<Block flex="0 1 auto">
-					<Button
-						icon={isLoading ? 'spinner' : null}
-						isDisabled={isDisabled || isLoading || isSubmitDisabled}
-						label={determineSaveButtonLabel(
-							error,
-							isEditing,
-							isLoading
-						)}
-						onClick={onSubmit}
-						type="primary"
-					/>
-				</Block>
+				<Button
+					icon={isLoading ? 'spinner' : null}
+					isDisabled={isDisabled || isLoading || isSubmitDisabled}
+					label={determineSaveButtonLabel(
+						error,
+						isEditing,
+						isLoading
+					)}
+					onClick={onSubmit}
+					type="primary"
+				/>
 			</Flex>
 		</Block>
 	);
