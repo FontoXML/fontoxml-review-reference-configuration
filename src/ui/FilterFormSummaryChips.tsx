@@ -5,6 +5,7 @@ import {
 	Checkbox,
 	Chip,
 	ChipGroup,
+	CompactStateMessage,
 	Flex,
 	Icon,
 	Label,
@@ -233,9 +234,11 @@ function FilterFormSummaryChips({
 			)}
 
 			{error && !isSubmitting && (
-				<Label colorName="text-error-color" isBold>
-					{t('Something went wrong while updating the filter.')}
-				</Label>
+				<CompactStateMessage
+					connotation="warning"
+					message={t('Something went wrong while updating the filter.')}
+					paddingSize={0}
+				/>
 			)}
 		</Block>
 	);
