@@ -1,10 +1,10 @@
 import { Block, Flex, Icon, Label } from 'fds/components';
 import * as React from 'react';
 
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import {
 	AnnotationStatus,
 	BusyState,
-	ContextType,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -71,8 +71,8 @@ function CommentCardContent({
 
 	const showFooter =
 		showReplyButton &&
-		(context === ContextType.EDITOR_SIDEBAR ||
-			context === ContextType.REVIEW_SIDEBAR) &&
+		(context === FeedbackContextType.EDITOR ||
+			context === FeedbackContextType.REVIEW) &&
 		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState !== BusyState.ADDING &&
 		reviewAnnotation.busyState !== BusyState.EDITING &&

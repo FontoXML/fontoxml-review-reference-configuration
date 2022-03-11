@@ -13,11 +13,11 @@ import {
 import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import {
 	AnnotationStatus,
-	ContextType,
 	ProposalState as ProposalStateTypes,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
@@ -81,11 +81,11 @@ function ResolveFormContent({
 		valueByName.resolution === 'accepted';
 
 	const isInReview =
-		context === ContextType.REVIEW_SIDEBAR ||
-		context === ContextType.REVIEW_SHARING_SIDEBAR;
+		context === FeedbackContextType.REVIEW ||
+		context === FeedbackContextType.REVIEW_SHARING;
 
 	return (
-		<Block spaceVerticalSize="m" data-test-id='resolve-form'>
+		<Block spaceVerticalSize="m" data-test-id="resolve-form">
 			<HorizontalSeparationLine />
 
 			<Block spaceVerticalSize="l">
@@ -122,7 +122,7 @@ function ResolveFormContent({
 						'Optionally describe how or why you resolved this comment'
 					)}
 					rows={rows}
-					data-test-id='resolve-form-text'
+					data-test-id="resolve-form-text"
 				/>
 
 				{error && (

@@ -16,7 +16,6 @@ import Badge from 'fontoxml-feedback/src/Badge';
 import {
 	AnnotationStatus,
 	BusyState,
-	ContextType,
 	RecoveryOption,
 	TargetType,
 } from 'fontoxml-feedback/src/types';
@@ -25,6 +24,7 @@ import t from 'fontoxml-localization/src/t';
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
 import { CARD_HEADER_HEIGHT } from './../constants';
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 
 function determineShareButtonLabel(reviewAnnotation, error, isLoading) {
 	if (isLoading) {
@@ -52,24 +52,24 @@ export default function CardHeader({
 	reviewAnnotation,
 }) {
 	const showEditButton =
-		context !== ContextType.CREATED_CONTEXT_MODAL &&
-		context !== ContextType.RESOLVED_CONTEXT_MODAL &&
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT &&
 		reviewAnnotation.status !== AnnotationStatus.RESOLVED;
 
 	const showRemoveButton =
-		context !== ContextType.CREATED_CONTEXT_MODAL &&
-		context !== ContextType.RESOLVED_CONTEXT_MODAL &&
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT &&
 		reviewAnnotation.status === AnnotationStatus.PRIVATE;
 
 	const showCreatedContextButton =
 		reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
-		context !== ContextType.CREATED_CONTEXT_MODAL &&
-		context !== ContextType.RESOLVED_CONTEXT_MODAL;
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT;
 
 	const showResolvedContextButton =
 		reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
-		context !== ContextType.CREATED_CONTEXT_MODAL &&
-		context !== ContextType.RESOLVED_CONTEXT_MODAL &&
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT &&
 		reviewAnnotation.status === AnnotationStatus.RESOLVED;
 
 	const showViewInMenuItem =
@@ -79,7 +79,7 @@ export default function CardHeader({
 
 	const showPopoverButton = React.useMemo(() => {
 		if (
-			context === ContextType.CREATED_CONTEXT_MODAL ||
+			context === FeedbackContextType.CREATED_CONTEXT ||
 			reviewAnnotation.busyState !== BusyState.IDLE ||
 			!reviewAnnotation.isSelected ||
 			hasReplyInNonIdleBusyState ||
@@ -216,15 +216,15 @@ export default function CardHeader({
 		reviewAnnotation.busyState !== BusyState.EDITING &&
 		reviewAnnotation.status !== AnnotationStatus.PRIVATE &&
 		reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
-		context !== ContextType.CREATED_CONTEXT_MODAL &&
-		context !== ContextType.RESOLVED_CONTEXT_MODAL;
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT;
 
 	const showShareButton =
 		!hasReplyInNonIdleBusyState &&
 		reviewAnnotation.busyState !== BusyState.EDITING &&
 		reviewAnnotation.status === AnnotationStatus.PRIVATE &&
-		(context === ContextType.EDITOR_SIDEBAR ||
-			context === ContextType.REVIEW_SIDEBAR);
+		(context === FeedbackContextType.EDITOR ||
+			context === FeedbackContextType.REVIEW);
 
 	const shareButtonLabel =
 		reviewAnnotation.isSelected &&
@@ -284,8 +284,8 @@ export default function CardHeader({
 			<AuthorAndTimestampLabel reviewAnnotation={reviewAnnotation} />
 
 			<Flex flex="0 0 auto" spaceSize="m">
-				{(context === ContextType.EDITOR_SHARING_SIDEBAR ||
-					context === ContextType.REVIEW_SHARING_SIDEBAR) &&
+				{(context === FeedbackContextType.EDITOR_SHARING ||
+					context === FeedbackContextType.REVIEW_SHARING) &&
 					(!reviewAnnotation.error ||
 						reviewAnnotation.error.recovery ===
 							RecoveryOption.RETRYABLE) && (
@@ -300,8 +300,8 @@ export default function CardHeader({
 						</Block>
 					)}
 
-				{context !== ContextType.EDITOR_SHARING_SIDEBAR &&
-					context !== ContextType.REVIEW_SHARING_SIDEBAR && (
+				{context !== FeedbackContextType.EDITOR_SHARING &&
+					context !== FeedbackContextType.REVIEW_SHARING && (
 						<Flex alignItems="center" spaceSize="m">
 							{showShareButton && (
 								<Button

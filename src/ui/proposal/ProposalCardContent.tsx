@@ -9,11 +9,11 @@ import {
 } from 'fds/components';
 import * as React from 'react';
 
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import {
 	AnnotationStatus,
 	BusyState,
-	ContextType,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -70,7 +70,7 @@ function ProposalCardContent({
 	}, [reviewAnnotation.replies]);
 
 	const showAcceptProposalButton =
-		context === ContextType.EDITOR_SIDEBAR &&
+		context === FeedbackContextType.EDITOR &&
 		reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
 		onProposalMerge &&
 		!!reviewAnnotation.proposalState;
@@ -82,8 +82,8 @@ function ProposalCardContent({
 
 	const showFooter =
 		showAnyFooterButton &&
-		(context === ContextType.EDITOR_SIDEBAR ||
-			context === ContextType.REVIEW_SIDEBAR) &&
+		(context === FeedbackContextType.EDITOR ||
+			context === FeedbackContextType.REVIEW) &&
 		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState !== BusyState.ADDING &&
 		reviewAnnotation.busyState !== BusyState.EDITING &&
@@ -308,7 +308,7 @@ function ProposalCardContent({
 									icon="far fa-reply"
 									isDisabled={
 										!!reviewAnnotation.error ||
-											reviewAnnotation.isLoading
+										reviewAnnotation.isLoading
 									}
 									onClick={onReplyAdd}
 								/>

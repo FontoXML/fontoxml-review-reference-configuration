@@ -1,27 +1,21 @@
+import { Block, Flex, HorizontalSeparationLine, Icon } from 'fds/components';
 import * as React from 'react';
 
-import { Block, Flex, HorizontalSeparationLine, Icon } from 'fds/components';
-import { usePrevious } from 'fds/system';
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
+import { AnnotationStatus, BusyState } from 'fontoxml-feedback/src/types';
 
-import {
-	AnnotationStatus,
-	BusyState,
-	ContextType,
-} from 'fontoxml-feedback/src/types';
-
-import { $TSFixMeAny } from '../../types';
-
+import type { $TSFixMeAny } from '../../types';
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
-import ResolveForm from '../shared/ResolveForm';
-import Replies from '../shared/Replies';
 import resolutions from '../feedbackResolutions';
-import TruncatedText from './TruncatedText';
-import ReplyForm from './ReplyForm';
+import Replies from '../shared/Replies';
+import ResolveForm from '../shared/ResolveForm';
 import RepliesCount from './RepliesCount';
+import ReplyForm from './ReplyForm';
 import TruncatedReplies from './TruncatedReplies';
+import TruncatedText from './TruncatedText';
 
 type Props = {
-	context: ContextType;
+	context: FeedbackContextType;
 	onProposalMerge: $TSFixMeAny;
 	onReplyEdit: $TSFixMeAny;
 	onReplyErrorHide: $TSFixMeAny;
@@ -65,9 +59,9 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 
 	const showActionsMenuButton = React.useMemo(() => {
 		if (
-			context === ContextType.CREATED_CONTEXT_MODAL ||
-			context === ContextType.EDITOR_SHARING_SIDEBAR ||
-			context === ContextType.REVIEW_SHARING_SIDEBAR ||
+			context === FeedbackContextType.CREATED_CONTEXT ||
+			context === FeedbackContextType.EDITOR_SHARING ||
+			context === FeedbackContextType.REVIEW_SHARING ||
 			reviewAnnotation.busyState !== BusyState.IDLE ||
 			reviewAnnotation.status === AnnotationStatus.RESOLVED
 		) {
@@ -117,7 +111,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 					),
 				];
 
-				let repliesAfter = [
+				const repliesAfter = [
 					...reviewAnnotation.replies.slice(
 						addingOrEditingReplyIndex + 1
 					),
@@ -163,7 +157,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 				/>
 			)}
 			{addingOrEditingReply &&
-				context !== ContextType.CREATED_CONTEXT_MODAL && (
+				context !== FeedbackContextType.CREATED_CONTEXT && (
 					<ReplyForm
 						onCancel={onReplyFormCancel}
 						onHide={onReplyErrorHide}
