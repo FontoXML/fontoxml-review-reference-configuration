@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
 	Block,
 	Checkbox,
@@ -10,6 +8,7 @@ import {
 	Icon,
 	Label,
 } from 'fds/components';
+import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
 
@@ -75,9 +74,9 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Technical')}
 						tooltipContent={t('Only show technical comments.')}
-						onRemove={() =>
-							onCheckboxChange('typeCommentTechnical', false)
-						}
+						onRemove={() => {
+							onCheckboxChange('typeCommentTechnical', false);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -86,9 +85,9 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('General')}
 						tooltipContent={t('Only show general comments.')}
-						onRemove={() =>
-							onCheckboxChange('typeCommentGeneral', false)
-						}
+						onRemove={() => {
+							onCheckboxChange('typeCommentGeneral', false);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -97,9 +96,9 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Editorial')}
 						tooltipContent={t('Only show editorial comments.')}
-						onRemove={() =>
-							onCheckboxChange('typeCommentEditorial', false)
-						}
+						onRemove={() => {
+							onCheckboxChange('typeCommentEditorial', false);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -111,12 +110,12 @@ function FilterFormSummaryChips({
 						tooltipContent={t(
 							'Only show technical publication comments.'
 						)}
-						onRemove={() =>
+						onRemove={() => {
 							onCheckboxChange(
 								'typePublicationCommentTechnical',
 								false
-							)
-						}
+							);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -127,12 +126,12 @@ function FilterFormSummaryChips({
 						tooltipContent={t(
 							'Only show general publication comments.'
 						)}
-						onRemove={() =>
+						onRemove={() => {
 							onCheckboxChange(
 								'typePublicationCommentGeneral',
 								false
-							)
-						}
+							);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -143,12 +142,12 @@ function FilterFormSummaryChips({
 						tooltipContent={t(
 							'Only show editorial publication comments.'
 						)}
-						onRemove={() =>
+						onRemove={() => {
 							onCheckboxChange(
 								'typePublicationCommentEditorial',
 								false
-							)
-						}
+							);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -158,7 +157,9 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Proposal')}
 						tooltipContent={t('Only show proposals.')}
-						onRemove={() => onCheckboxChange('typeProposal', false)}
+						onRemove={() => {
+							onCheckboxChange('typeProposal', false);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -170,12 +171,12 @@ function FilterFormSummaryChips({
 						tooltipContent={t(
 							'Only show resolved and accepted feedback.'
 						)}
-						onRemove={() =>
+						onRemove={() => {
 							onCheckboxChange(
 								'resolutionResolvedAccepted',
 								false
-							)
-						}
+							);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -186,12 +187,12 @@ function FilterFormSummaryChips({
 						tooltipContent={t(
 							'Only show resolved and rejected feedback.'
 						)}
-						onRemove={() =>
+						onRemove={() => {
 							onCheckboxChange(
 								'resolutionResolvedRejected',
 								false
-							)
-						}
+							);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -200,9 +201,9 @@ function FilterFormSummaryChips({
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
 						tooltipContent={t('Only show unresolved feedback.')}
-						onRemove={() =>
-							onCheckboxChange('resolutionUnresolved', false)
-						}
+						onRemove={() => {
+							onCheckboxChange('resolutionUnresolved', false);
+						}}
 						useHoverStyles={false}
 					/>
 				)}
@@ -236,7 +237,9 @@ function FilterFormSummaryChips({
 			{error && !isSubmitting && (
 				<CompactStateMessage
 					connotation="warning"
-					message={t('Something went wrong while updating the filter.')}
+					message={t(
+						'Something went wrong while updating the filter.'
+					)}
 					paddingSize={0}
 				/>
 			)}

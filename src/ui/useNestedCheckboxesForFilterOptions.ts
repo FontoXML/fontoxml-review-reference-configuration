@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { Checkbox } from 'fds/components';
+import * as React from 'react';
 
 function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 	// This hook automatically updates parent/child checkboxes, including the
@@ -154,13 +153,15 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 					}
 				} else if (Array.isArray(node.children)) {
 					// recurse until we find a node.name that matches the name were looking for
-					node.children.forEach((childNode) =>
-						walkTree(childNode, node)
-					);
+					node.children.forEach((childNode) => {
+						walkTree(childNode, node);
+					});
 				}
 			};
 			// start by looping through each tree in the forest and walking each tree
-			checkboxForest.forEach((childNode) => walkTree(childNode, null));
+			checkboxForest.forEach((childNode) => {
+				walkTree(childNode, null);
+			});
 
 			if (changedCheckboxes.length > 0) {
 				onFieldsChange(changedCheckboxes);

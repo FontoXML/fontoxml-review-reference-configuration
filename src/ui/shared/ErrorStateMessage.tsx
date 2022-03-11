@@ -1,9 +1,7 @@
+import { Button, CompactStateMessage, Flex } from 'fds/components';
 import * as React from 'react';
 
-import { Button, CompactStateMessage, Flex } from 'fds/components';
-
 import { RecoveryOption } from 'fontoxml-feedback/src/types';
-
 import t from 'fontoxml-localization/src/t';
 
 const iconByConnotation = {

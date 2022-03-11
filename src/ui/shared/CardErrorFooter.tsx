@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { Block, Button, Flex, HorizontalSeparationLine } from 'fds/components';
+import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
 

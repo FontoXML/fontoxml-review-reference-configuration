@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { CompactStateMessage } from 'fds/components';
+import * as React from 'react';
 
 function LoadingStateMessage({ message }) {
 	return (

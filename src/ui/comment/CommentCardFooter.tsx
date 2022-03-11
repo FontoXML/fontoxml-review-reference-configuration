@@ -1,6 +1,6 @@
+import { Block, HorizontalSeparationLine, TextInput } from 'fds/components';
 import * as React from 'react';
 
-import { Block, HorizontalSeparationLine, TextInput } from 'fds/components';
 import t from 'fontoxml-localization/src/t';
 
 function CommentCardFooter({ onReplyAdd, reviewAnnotation }) {

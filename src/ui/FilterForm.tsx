@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { Block, Checkbox, Flex, Label } from 'fds/components';
+import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
 
@@ -12,23 +11,23 @@ function determineParentFieldValue(subFieldNames, valueByNameForUI) {
 			return value;
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		if (value === true && valueByNameForUI[subFieldName] === true) {
 			return true;
 		}
-		// @ts-ignore
+		// @ts-expect-error
 		if (value === false && valueByNameForUI[subFieldName] === false) {
 			return false;
 		}
-		// @ts-ignore
+		// @ts-expect-error
 		if (value === false && valueByNameForUI[subFieldName] === true) {
 			return Checkbox.VALUE_INDETERMINATE;
 		}
-		// @ts-ignore
+		// @ts-expect-error
 		if (value === true && valueByNameForUI[subFieldName] === false) {
 			return Checkbox.VALUE_INDETERMINATE;
 		}
-		// @ts-ignore
+		// @ts-expect-error
 		if (value === undefined && valueByNameForUI[subFieldName] === true) {
 			return Checkbox.VALUE_INDETERMINATE;
 		}
@@ -139,9 +138,9 @@ function FilterForm({
 					<Block spaceVerticalSize="s">
 						<Checkbox
 							label={t('Comment')}
-							onChange={(value) =>
-								onCheckboxChange('typeComment', value)
-							}
+							onChange={(value) => {
+								onCheckboxChange('typeComment', value);
+							}}
 							value={valueByNameForUI.typeComment}
 						/>
 
@@ -151,32 +150,32 @@ function FilterForm({
 						>
 							<Checkbox
 								label={t('Technical')}
-								onChange={(value) =>
+								onChange={(value) => {
 									onCheckboxChange(
 										'typeCommentTechnical',
 										value
-									)
-								}
+									);
+								}}
 								value={valueByNameForUI.typeCommentTechnical}
 							/>
 							<Checkbox
 								label={t('General')}
-								onChange={(value) =>
+								onChange={(value) => {
 									onCheckboxChange(
 										'typeCommentGeneral',
 										value
-									)
-								}
+									);
+								}}
 								value={valueByNameForUI.typeCommentGeneral}
 							/>
 							<Checkbox
 								label={t('Editorial')}
-								onChange={(value) =>
+								onChange={(value) => {
 									onCheckboxChange(
 										'typeCommentEditorial',
 										value
-									)
-								}
+									);
+								}}
 								value={valueByNameForUI.typeCommentEditorial}
 							/>
 						</Block>
@@ -185,12 +184,12 @@ function FilterForm({
 					<Block spaceVerticalSize="s">
 						<Checkbox
 							label={t('Global Comment')}
-							onChange={(value) =>
+							onChange={(value) => {
 								onCheckboxChange(
 									'typePublicationComment',
 									value
-								)
-							}
+								);
+							}}
 							value={valueByNameForUI.typePublicationComment}
 						/>
 
@@ -200,36 +199,36 @@ function FilterForm({
 						>
 							<Checkbox
 								label={t('Technical')}
-								onChange={(value) =>
+								onChange={(value) => {
 									onCheckboxChange(
 										'typePublicationCommentTechnical',
 										value
-									)
-								}
+									);
+								}}
 								value={
 									valueByNameForUI.typePublicationCommentTechnical
 								}
 							/>
 							<Checkbox
 								label={t('General')}
-								onChange={(value) =>
+								onChange={(value) => {
 									onCheckboxChange(
 										'typePublicationCommentGeneral',
 										value
-									)
-								}
+									);
+								}}
 								value={
 									valueByNameForUI.typePublicationCommentGeneral
 								}
 							/>
 							<Checkbox
 								label={t('Editorial')}
-								onChange={(value) =>
+								onChange={(value) => {
 									onCheckboxChange(
 										'typePublicationCommentEditorial',
 										value
-									)
-								}
+									);
+								}}
 								value={
 									valueByNameForUI.typePublicationCommentEditorial
 								}
@@ -239,9 +238,9 @@ function FilterForm({
 
 					<Checkbox
 						label={t('Proposal')}
-						onChange={(value) =>
-							onCheckboxChange('typeProposal', value)
-						}
+						onChange={(value) => {
+							onCheckboxChange('typeProposal', value);
+						}}
 						value={valueByNameForUI.typeProposal}
 					/>
 				</Block>
@@ -253,9 +252,9 @@ function FilterForm({
 				<Block spaceVerticalSize="s">
 					<Checkbox
 						label={t('Resolved')}
-						onChange={(value) =>
-							onCheckboxChange('resolutionResolved', value)
-						}
+						onChange={(value) => {
+							onCheckboxChange('resolutionResolved', value);
+						}}
 						value={valueByNameForUI.resolutionResolved}
 					/>
 
@@ -265,32 +264,32 @@ function FilterForm({
 					>
 						<Checkbox
 							label={t('Accepted')}
-							onChange={(value) =>
+							onChange={(value) => {
 								onCheckboxChange(
 									'resolutionResolvedAccepted',
 									value
-								)
-							}
+								);
+							}}
 							value={valueByNameForUI.resolutionResolvedAccepted}
 						/>
 
 						<Checkbox
 							label={t('Rejected')}
-							onChange={(value) =>
+							onChange={(value) => {
 								onCheckboxChange(
 									'resolutionResolvedRejected',
 									value
-								)
-							}
+								);
+							}}
 							value={valueByNameForUI.resolutionResolvedRejected}
 						/>
 					</Block>
 
 					<Checkbox
 						label={t('Unresolved')}
-						onChange={(value) =>
-							onCheckboxChange('resolutionUnresolved', value)
-						}
+						onChange={(value) => {
+							onCheckboxChange('resolutionUnresolved', value);
+						}}
 						value={valueByNameForUI.resolutionUnresolved}
 					/>
 				</Block>

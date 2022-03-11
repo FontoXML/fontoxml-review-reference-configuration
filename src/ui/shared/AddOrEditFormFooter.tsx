@@ -1,9 +1,10 @@
-import { Block, Button, Flex } from 'fds/components';
+import { Button, Flex } from 'fds/components';
 import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import { RecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
+
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
 function determineSaveButtonLabel(error, isLoading) {

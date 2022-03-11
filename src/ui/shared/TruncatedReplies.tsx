@@ -1,11 +1,10 @@
-import * as React from 'react';
-
 import { HorizontalSeparationLine, TextLink } from 'fds/components';
+import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
 
-import Replies from '../shared/Replies';
 import type { Props as RepliesProps } from '../shared/Replies';
+import Replies from '../shared/Replies';
 
 const MAX_NUMBER_OF_REPLIES_TO_SHOW = 2;
 
@@ -21,10 +20,9 @@ const TruncatedReplies: React.FC<Props> = ({
 	...repliesProps
 }) => {
 	const [areRepliesExpanded, setAreRepliesExpanded] = React.useState(false);
-	const handleExpandRepliesTextLinkClick = React.useCallback(
-		() => setAreRepliesExpanded(true),
-		[]
-	);
+	const handleExpandRepliesTextLinkClick = React.useCallback(() => {
+		setAreRepliesExpanded(true);
+	}, []);
 
 	const wasEditingReplyInitially = React.useRef(isEditingReply);
 	const hasTruncatedInitially = React.useRef(false);

@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { Flex, Label } from 'fds/components';
+import * as React from 'react';
 
 import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 

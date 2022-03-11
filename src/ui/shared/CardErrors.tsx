@@ -1,8 +1,7 @@
 import * as React from 'react';
 
-import { BusyState } from 'fontoxml-feedback/src/types';
-
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import { BusyState } from 'fontoxml-feedback/src/types';
 
 const CardErrors = ({
 	onReviewAnnotationRefresh,

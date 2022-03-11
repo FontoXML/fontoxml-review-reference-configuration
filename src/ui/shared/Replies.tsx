@@ -1,16 +1,14 @@
-import * as React from 'react';
-
 import {
 	Block,
 	CompactStateMessage,
 	HorizontalSeparationLine,
 } from 'fds/components';
+import * as React from 'react';
 
 import { BusyState } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import { $TSFixMeAny } from '../../types';
-
+import type { $TSFixMeAny } from '../../types';
 import Reply from './Reply';
 
 export type Props = {
@@ -55,10 +53,8 @@ const Replies: React.FC<Props> = ({
 							/>
 						</Block>
 					);
-				} else if (
-					reply.isLoading &&
-					reply.busyState === BusyState.REMOVING
-				) {
+				}
+				if (reply.isLoading && reply.busyState === BusyState.REMOVING) {
 					return (
 						<Block
 							key={reply.id}
