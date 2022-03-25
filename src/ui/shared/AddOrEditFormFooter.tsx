@@ -38,7 +38,7 @@ function AddOrEditFormFooter({
 
 			<Flex justifyContent="flex-end">
 				<Button
-					isDisabled={isDisabled}
+					isDisabled={isDisabled && !isLoading}
 					label={t('Cancel')}
 					onClick={onCancel}
 				/>
