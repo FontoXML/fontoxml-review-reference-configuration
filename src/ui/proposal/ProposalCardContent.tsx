@@ -1,14 +1,13 @@
+import React, { useMemo } from 'react';
+
 import {
 	Block,
-	Button,
 	Diff,
 	Flex,
-	HorizontalSeparationLine,
+	HorizontalSeparationLine, 
 	Icon,
 	Label,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import {
@@ -26,6 +25,7 @@ import LoadingStateMessage from '../shared/LoadingStateMessage';
 import TruncatedText from '../shared/TruncatedText';
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ProposalAddOrEditForm from './ProposalAddOrEditForm';
+import ProposalReplyComponent from './ProposalReplyComponent';
 
 function ProposalCardContent({
 	context,
@@ -51,7 +51,7 @@ function ProposalCardContent({
 	onReplyRemove,
 	onProposalMerge,
 }) {
-	const hasReplyInNonIdleBusyState = React.useMemo(() => {
+	const hasReplyInNonIdleBusyState = useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;
 		}
@@ -304,13 +304,9 @@ function ProposalCardContent({
 
 						<Flex justifyContent="flex-end" spaceSize="l">
 							{showReplyButton && (
-								<Button
-									icon="far fa-reply"
-									isDisabled={
-										!!reviewAnnotation.error ||
-										reviewAnnotation.isLoading
-									}
-									onClick={onReplyAdd}
+								<ProposalReplyComponent
+									onReplyAdd={onReplyAdd}
+									reviewAnnotation={reviewAnnotation}
 								/>
 							)}
 
