@@ -4,7 +4,7 @@ import {
 	Block,
 	Diff,
 	Flex,
-	HorizontalSeparationLine, 
+	HorizontalSeparationLine,
 	Icon,
 	Label,
 } from 'fontoxml-design-system/src/components';

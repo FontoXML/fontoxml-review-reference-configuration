@@ -9,7 +9,7 @@ function ProposalCardFooter({ onReplyAdd, reviewAnnotation }) {
 		(domNode: HTMLElement) => (textInputRef.current = domNode)
 	);
 
-    useEffect(() => {
+	useEffect(() => {
 		if (!textInputRef.current) {
 			return;
 		}
@@ -25,13 +25,13 @@ function ProposalCardFooter({ onReplyAdd, reviewAnnotation }) {
 	});
 
 	return (
-        <TextInput
-            onRef={handleTextInputRef}
-            isDisabled={
-                !!reviewAnnotation.error || reviewAnnotation.isLoading
-            }
-            placeholder={t('Type your reply')}
-        />
+		<TextInput
+			onRef={handleTextInputRef}
+			isDisabled={
+				!!reviewAnnotation.error || reviewAnnotation.isLoading
+			}
+			placeholder={t('Type your reply')}
+		/>
 	);
 }
 
