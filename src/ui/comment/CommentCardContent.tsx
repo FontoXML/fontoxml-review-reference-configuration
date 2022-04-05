@@ -45,6 +45,7 @@ function CommentCardContent({
 	onReplyErrorHide,
 	onReplyRefresh,
 	onReplyRemove,
+	rangeVisibility,
 }: CardContentComponentProps) {
 	const hasReplyInNonIdleBusyState = React.useMemo(() => {
 		if (!reviewAnnotation.replies) {
@@ -156,6 +157,7 @@ function CommentCardContent({
 		<Block
 			paddingSize="m"
 			data-test-id="fontoxml-review-reference-configuration-comment-card-content"
+			data-review-annotation-range-visibility={rangeVisibility.toLowerCase()}
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			data-review-annotation-comment-type={
