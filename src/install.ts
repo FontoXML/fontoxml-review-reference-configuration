@@ -12,13 +12,16 @@ import globalCommentsStackedIcons from './ui/global-comments-stacked-icons.svg';
 import MastheadForReview from './ui/MastheadForReview';
 import ProposalCardContent from './ui/proposal/ProposalCardContent';
 
+// Depending on the OS set the key to Cmd or Ctrl.
+const OS_KEY = navigator.userAgent.includes('Mac') ? 'Cmd' : 'Ctrl';
+
 export default function install() {
 	registerTextRangeReviewAnnotationType('comment', {
 		icon: 'far fa-comment',
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment to selected text.'),
+		tooltipContent: t('Add comment to selected text. ({KEY} + Alt + M)', { KEY: OS_KEY }),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
 	});
@@ -35,7 +38,7 @@ export default function install() {
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment to selected image.'),
+		tooltipContent: t('Add comment to selected image. ({KEY} + Alt + M)', { KEY: OS_KEY }),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
 	});
@@ -45,7 +48,7 @@ export default function install() {
 		label: 'Proposal',
 		priority: 2,
 		CardContentComponent: ProposalCardContent,
-		tooltipContent: t('Propose a change to selected text.'),
+		tooltipContent: t('Propose a change to selected text. ({KEY} + Alt + E)', { KEY: OS_KEY }),
 		keyBinding: 'ctrl+alt+e',
 		osxKeyBinding: 'cmd+alt+e',
 	});
@@ -56,7 +59,7 @@ export default function install() {
 		priority: 1,
 		CardContentComponent: CommentCardContent,
 		tooltipContent: t(
-			'Add comment that applies to the entire publication.'
+			'Add comment that applies to the entire publication. ({KEY} + Alt + G)', { KEY: OS_KEY }
 		),
 		keyBinding: 'ctrl+alt+g',
 		osxKeyBinding: 'cmd+alt+g',
