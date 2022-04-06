@@ -1,3 +1,5 @@
+import React, { useCallback, useEffect } from 'react';
+
 import {
 	Block,
 	Flex,
@@ -5,9 +7,7 @@ import {
 	Icon,
 	TextArea,
 	TextAreaWithDiff,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -45,12 +45,12 @@ function ProposalAddOrEditFormContent({
 
 	const originalText = reviewAnnotation.originalText;
 
-	const validate = React.useCallback(
+	const validate = useCallback(
 		(value) => validateProposedChangeField(value, originalText),
 		[originalText]
 	);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
 				name: 'proposedChange',
