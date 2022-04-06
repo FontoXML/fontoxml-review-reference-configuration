@@ -19,6 +19,8 @@ export default function install() {
 		priority: 3,
 		CardContentComponent: CommentCardContent,
 		tooltipContent: t('Add comment to selected text.'),
+		keyBinding: 'ctrl+alt+m',
+		osxKeyBinding: 'cmd+alt+m',
 	});
 
 	registerObjectReviewAnnotationType('object-comment', {
@@ -34,6 +36,8 @@ export default function install() {
 		priority: 3,
 		CardContentComponent: CommentCardContent,
 		tooltipContent: t('Add comment to selected image.'),
+		keyBinding: 'ctrl+alt+m',
+		osxKeyBinding: 'cmd+alt+m',
 	});
 
 	registerTextRangeReviewAnnotationType('proposal', {
@@ -42,6 +46,8 @@ export default function install() {
 		priority: 2,
 		CardContentComponent: ProposalCardContent,
 		tooltipContent: t('Propose a change to selected text.'),
+		keyBinding: 'ctrl+alt+e',
+		osxKeyBinding: 'cmd+alt+e',
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
@@ -52,6 +58,8 @@ export default function install() {
 		tooltipContent: t(
 			'Add comment that applies to the entire publication.'
 		),
+		keyBinding: 'ctrl+alt+g',
+		osxKeyBinding: 'cmd+alt+g',
 	});
 
 	setInitialFilterFormValues(
