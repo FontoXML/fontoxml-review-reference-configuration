@@ -21,7 +21,7 @@ export default function install() {
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment to selected text. ({KEY} + Alt + M)', { KEY: OS_KEY }),
+		tooltipContent: t('Add comment to selected text.'),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
 	});
@@ -38,7 +38,7 @@ export default function install() {
 		label: 'Comment',
 		priority: 3,
 		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment to selected image. ({KEY} + Alt + M)', { KEY: OS_KEY }),
+		tooltipContent: t('Add comment to selected image.'),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
 	});
@@ -48,7 +48,7 @@ export default function install() {
 		label: 'Proposal',
 		priority: 2,
 		CardContentComponent: ProposalCardContent,
-		tooltipContent: t('Propose a change to selected text. ({KEY} + Alt + E)', { KEY: OS_KEY }),
+		tooltipContent: t('Propose a change to selected text.'),
 		keyBinding: 'ctrl+alt+e',
 		osxKeyBinding: 'cmd+alt+e',
 	});
@@ -59,7 +59,7 @@ export default function install() {
 		priority: 1,
 		CardContentComponent: CommentCardContent,
 		tooltipContent: t(
-			'Add comment that applies to the entire publication. ({KEY} + Alt + G)', { KEY: OS_KEY }
+			'Add comment that applies to the entire publication.'
 		),
 		keyBinding: 'ctrl+alt+g',
 		osxKeyBinding: 'cmd+alt+g',
