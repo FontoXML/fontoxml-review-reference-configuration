@@ -12,9 +12,6 @@ import globalCommentsStackedIcons from './ui/global-comments-stacked-icons.svg';
 import MastheadForReview from './ui/MastheadForReview';
 import ProposalCardContent from './ui/proposal/ProposalCardContent';
 
-// Depending on the OS set the key to Cmd or Ctrl.
-const OS_KEY = navigator.userAgent.includes('Mac') ? 'Cmd' : 'Ctrl';
-
 export default function install() {
 	registerTextRangeReviewAnnotationType('comment', {
 		icon: 'far fa-comment',
