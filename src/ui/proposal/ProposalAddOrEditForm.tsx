@@ -10,6 +10,7 @@ import {
 } from 'fontoxml-design-system/src/components';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
+import useReviewAnnotationFormData from 'fontoxml-feedback/src/useReviewAnnotationFormData';
 import t from 'fontoxml-localization/src/t';
 
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
@@ -125,27 +126,34 @@ function ProposalAddOrEditForm({
 	onReviewAnnotationRefresh,
 	onSubmit,
 }) {
+	const {
+		feedbackByName,
+		isSubmitDisabled,
+		onFieldChange,
+		onFocusableRef,
+		onFormInitialize,
+		submit,
+		valueByName,
+	} = useReviewAnnotationFormData(reviewAnnotation.metadata, onSubmit);
+
 	return (
 		<ReviewAnnotationForm
-			initialValueByName={reviewAnnotation.metadata}
-			onSubmit={onSubmit}
+			feedbackByName={feedbackByName}
+			focusableRef={onFocusableRef}
+			onFieldChange={onFieldChange}
+			onFormInitialize={onFormInitialize}
+			onSubmit={submit}
+			valueByName={valueByName}
 		>
-			{({
-				isSubmitDisabled,
-				onFieldChange,
-				onFocusableRef,
-				onSubmit,
-			}) => (
-				<ProposalAddOrEditFormContent
-					isSubmitDisabled={isSubmitDisabled}
-					onFieldChange={onFieldChange}
-					onFocusableRef={onFocusableRef}
-					onCancel={onCancel}
-					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
-					onSubmit={onSubmit}
-					reviewAnnotation={reviewAnnotation}
-				/>
-			)}
+			<ProposalAddOrEditFormContent
+				isSubmitDisabled={isSubmitDisabled}
+				onFieldChange={onFieldChange}
+				onFocusableRef={onFocusableRef}
+				onCancel={onCancel}
+				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+				onSubmit={onSubmit}
+				reviewAnnotation={reviewAnnotation}
+			/>
 		</ReviewAnnotationForm>
 	);
 }

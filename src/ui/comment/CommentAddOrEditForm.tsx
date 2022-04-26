@@ -14,10 +14,12 @@ import {
 	RecoveryOption,
 	TargetType,
 } from 'fontoxml-feedback/src/types';
+import useReviewAnnotationFormData from 'fontoxml-feedback/src/useReviewAnnotationFormData';
 import t from 'fontoxml-localization/src/t';
 
 import commentTypes from '../commentTypes';
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
+import { sum } from 'cypress/types/lodash';
 
 function validateCommentField(value) {
 	if (!value || value.trim() === '') {
@@ -132,29 +134,35 @@ function CommentAddOrEditForm({
 	onReviewAnnotationRefresh,
 	onSubmit,
 }) {
+	const {
+		feedbackByName,
+		isSubmitDisabled,
+		onFieldChange,
+		onFocusableRef,
+		onFormInitialize,
+		submit,
+		valueByName,
+	} = useReviewAnnotationFormData(reviewAnnotation.metadata, onSubmit);
+
 	return (
 		<ReviewAnnotationForm
-			initialValueByName={reviewAnnotation.metadata}
-			onSubmit={onSubmit}
+			feedbackByName={feedbackByName}
+			focusableRef={onFocusableRef}
+			onFieldChange={onFieldChange}
+			onFormInitialize={onFormInitialize}
+			onSubmit={submit}
+			valueByName={valueByName}
 		>
-			{({
-				isSubmitDisabled,
-				onFieldChange,
-				onFocusableRef,
-				onSubmit,
-				valueByName,
-			}) => (
-				<CommentAddOrEditFormContent
-					isSubmitDisabled={isSubmitDisabled}
-					onFieldChange={onFieldChange}
-					onFocusableRef={onFocusableRef}
-					onCancel={onCancel}
-					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
-					onSubmit={onSubmit}
-					reviewAnnotation={reviewAnnotation}
-					valueByName={valueByName}
-				/>
-			)}
+			<CommentAddOrEditFormContent
+				isSubmitDisabled={isSubmitDisabled}
+				onFieldChange={onFieldChange}
+				onFocusableRef={onFocusableRef}
+				onCancel={onCancel}
+				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+				onSubmit={submit}
+				reviewAnnotation={reviewAnnotation}
+				valueByName={valueByName}
+			/>
 		</ReviewAnnotationForm>
 	);
 }

@@ -21,6 +21,7 @@ import {
 	ProposalState as ProposalStateTypes,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
+import useReviewAnnotationFormData from 'fontoxml-feedback/src/useReviewAnnotationFormData';
 import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
@@ -218,25 +219,37 @@ export default function ResolveForm({
 	onReviewAnnotationRefresh,
 	onSubmit,
 }) {
+	const {
+		feedbackByName,
+		isSubmitDisabled,
+		onFieldChange,
+		onFocusableRef,
+		onFormInitialize,
+		submit,
+		valueByName,
+	} = useReviewAnnotationFormData(reviewAnnotation.metadata, onSubmit);
+
 	return (
 		<ReviewAnnotationForm
-			initialValueByName={reviewAnnotation.resolvedMetadata}
 			key={reviewAnnotation.id}
-			onSubmit={onSubmit}
-		>
-			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
-				<ResolveFormContent
-					context={context}
-					isSubmitDisabled={isSubmitDisabled}
-					onCancel={onCancel}
-					onFocusableRef={onFocusableRef}
-					onProposalMerge={onProposalMerge}
-					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
-					onSubmit={onSubmit}
-					reviewAnnotation={reviewAnnotation}
-					valueByName={valueByName}
-				/>
-			)}
+			feedbackByName={feedbackByName}
+			focusableRef={onFocusableRef}
+			onFieldChange={onFieldChange}
+			onFormInitialize={onFormInitialize}
+			onSubmit={submit}
+			valueByName={valueByName}
+		>	
+			<ResolveFormContent
+				context={context}
+				isSubmitDisabled={isSubmitDisabled}
+				onCancel={onCancel}
+				onFocusableRef={onFocusableRef}
+				onProposalMerge={onProposalMerge}
+				onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+				onSubmit={onSubmit}
+				reviewAnnotation={reviewAnnotation}
+				valueByName={valueByName}
+			/>
 		</ReviewAnnotationForm>
 	);
 }

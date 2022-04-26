@@ -11,6 +11,7 @@ import * as React from 'react';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
+import useReviewAnnotationFormData from 'fontoxml-feedback/src/useReviewAnnotationFormData';
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
@@ -147,23 +148,35 @@ function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }) {
 		[onSubmit, reply.id]
 	);
 
+	const {
+		feedbackByName,
+		isSubmitDisabled,
+		onFieldChange,
+		onFocusableRef,
+		onFormInitialize,
+		submit,
+		valueByName,
+	} = useReviewAnnotationFormData(reply.metadata, onSubmit);
+
 	return (
 		<ReviewAnnotationForm
+			feedbackByName={feedbackByName}
+			focusableRef={onFocusableRef}
 			key={reply.id}
-			initialValueByName={reply.metadata}
-			onSubmit={handleSubmit}
+			onFieldChange={onFieldChange}
+			onFormInitialize={onFormInitialize}
+			onSubmit={submit}
+			valueByName={valueByName}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onSubmit }) => (
-				<ReplyFormContent
-					isSubmitDisabled={isSubmitDisabled}
-					onCancelButtonClick={handleCancelButtonClick}
-					onFocusableRef={onFocusableRef}
-					onHideLinkClick={handleHideLinkClick}
-					onRefreshLinkClick={handleRefreshLinkClick}
-					onSubmit={onSubmit}
-					reply={reply}
-				/>
-			)}
+			<ReplyFormContent
+				isSubmitDisabled={isSubmitDisabled}
+				onCancelButtonClick={handleCancelButtonClick}
+				onFocusableRef={onFocusableRef}
+				onHideLinkClick={handleHideLinkClick}
+				onRefreshLinkClick={handleRefreshLinkClick}
+				onSubmit={onSubmit}
+				reply={reply}
+			/>
 		</ReviewAnnotationForm>
 	);
 }
