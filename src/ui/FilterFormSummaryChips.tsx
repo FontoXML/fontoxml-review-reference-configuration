@@ -13,6 +13,20 @@ import * as React from 'react';
 import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
+import { FormValueByName } from 'fontoxml-design-system/src/types';
+
+import { FormFeedbackByName } from 'fontoxml-design-system/src/types';
+import { AnnotationErrorType } from '../types';
+
+type Props = {
+	error: AnnotationErrorType;
+	feedbackByName: FormFeedbackByName;
+	isDisabled: boolean;
+	isSubmitting: boolean;
+	onChange(valueByName: FormValueByName): Promise<void>;
+	productContext: string;
+	valueByName: FormValueByName;
+};
 
 function FilterFormSummaryChips({
 	// This is set if the /review/state endpoint is called (whenever onChange is
@@ -39,7 +53,7 @@ function FilterFormSummaryChips({
 	productContext: _productContext,
 	// This contains the exact value by name mapping used by the filter form for the current context.
 	valueByName,
-}) {
+}: Props) {
 	// This processes the list of changed fields into a changedValueByName mapping which is then
 	// combined with the existing data (valueByName) to provide a new (complete) version of the data
 	// for the onChange prop.

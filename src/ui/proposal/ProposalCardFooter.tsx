@@ -2,12 +2,17 @@ import React, { useCallback, useRef, useEffect } from 'react';
 
 import { TextInput } from 'fontoxml-design-system/src/components';
 import t from 'fontoxml-localization/src/t';
+import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
 
-function ProposalCardFooter({ onReplyAdd, reviewAnnotation }) {
+type Props = {
+	onReplyAdd: CardContentComponentProps['onReplyAdd'];
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+};
+
+function ProposalCardFooter({ onReplyAdd, reviewAnnotation }: Props) {
 	const textInputRef = useRef<HTMLElement>(null);
 	const handleTextInputRef = useCallback(
-		(domNode: HTMLElement) => (textInputRef.current = domNode)
-	);
+		(domNode: HTMLElement) => {(textInputRef.current = domNode)}, []);
 
 	useEffect(() => {
 		if (!textInputRef.current) {

@@ -5,8 +5,14 @@ import { Button } from 'fontoxml-design-system/src/components';
 import t from 'fontoxml-localization/src/t';
 
 import ProposalCardFooter from "./ProposalCardFooter";
+import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
 
-function ProposalReplyComponent({ onReplyAdd, reviewAnnotation }) {
+type Props = {
+	onReplyAdd: CardContentComponentProps['onReplyAdd'];
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+};
+
+function ProposalReplyComponent({ onReplyAdd, reviewAnnotation }: Props) {
 	// Check if we are on the "/review" route.
 	const { path } = useRouteMatch();
 	const isOnReviewRoute = path === '/review';

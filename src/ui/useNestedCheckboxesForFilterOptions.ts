@@ -1,7 +1,11 @@
 import { Checkbox } from 'fds/components';
+import { FormValueByName } from 'fontoxml-design-system/src/types';
 import * as React from 'react';
 
-function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
+function useNestedCheckboxesForFilterOptions(
+	valueByName: FormValueByName,
+	onFieldsChange: (...args: unknown[]) => void
+) {
 	// This hook automatically updates parent/child checkboxes, including the
 	// indeterminate state based on the configured nesting (1st parameter).
 	//
@@ -95,7 +99,7 @@ function useNestedCheckboxesForFilterOptions(valueByName, onFieldsChange) {
 	// callback provided by FilterForm and FilterFormSummaryChips.
 	// onFieldsChange is called at the end of this callback with the list of changed fields.
 	const onCheckboxChange = React.useCallback(
-		(name, value) => {
+		(name: string, value: boolean) => {
 			const changedCheckboxes = [];
 
 			const walkTree = (node, parentNode) => {

@@ -1,7 +1,12 @@
 import { CompactStateMessage } from 'fds/components';
+import { Message } from 'fontoxml-design-system/src/types';
 import * as React from 'react';
 
-function LoadingStateMessage({ message }) {
+type Props = {
+	message: Message;
+};
+
+function LoadingStateMessage({ message }: Props) {
 	return (
 		<CompactStateMessage
 			isSingleLine={false}

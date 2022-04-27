@@ -2,9 +2,8 @@ import { Block, Flex, HorizontalSeparationLine, Icon } from 'fds/components';
 import * as React from 'react';
 
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
-import { AnnotationStatus, BusyState } from 'fontoxml-feedback/src/types';
+import { AnnotationStatus, BusyState, CardContentComponentProps } from 'fontoxml-feedback/src/types';
 
-import type { $TSFixMeAny } from '../../types';
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
 import Replies from '../shared/Replies';
@@ -15,18 +14,18 @@ import TruncatedReplies from './TruncatedReplies';
 import TruncatedText from './TruncatedText';
 
 type Props = {
-	context: FeedbackContextType;
-	onProposalMerge: $TSFixMeAny;
-	onReplyEdit: $TSFixMeAny;
-	onReplyErrorHide: $TSFixMeAny;
-	onReplyFormCancel: $TSFixMeAny;
-	onReplyFormSubmit: $TSFixMeAny;
-	onReplyRefresh: $TSFixMeAny;
-	onReplyRemove: $TSFixMeAny;
-	onReviewAnnotationFormCancel: $TSFixMeAny;
-	onReviewAnnotationFormSubmit: $TSFixMeAny;
-	onReviewAnnotationRefresh: $TSFixMeAny;
-	reviewAnnotation: $TSFixMeAny;
+	context: CardContentComponentProps['context'];
+	onProposalMerge?: CardContentComponentProps['onProposalMerge'];
+	onReplyEdit: CardContentComponentProps['onReplyEdit'];
+	onReplyErrorHide: CardContentComponentProps['onReplyErrorHide'];
+	onReplyFormCancel: CardContentComponentProps['onReplyFormCancel'];
+	onReplyFormSubmit: CardContentComponentProps['onReplyFormSubmit'];
+	onReplyRefresh: CardContentComponentProps['onReplyRefresh'];
+	onReplyRemove: CardContentComponentProps['onReplyRemove'];
+	onReviewAnnotationFormCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationFormSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];
+	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
 };
 
 const CardRepliesAndResolution: React.FC<Props> = ({
@@ -42,7 +41,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 	onReviewAnnotationFormSubmit,
 	onReviewAnnotationRefresh,
 	reviewAnnotation,
-}) => {
+}: Props) => {
 	const resolution = React.useMemo(() => {
 		return (
 			reviewAnnotation.resolvedMetadata &&
@@ -53,6 +52,11 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			)
 		);
 	}, [reviewAnnotation.resolvedMetadata]);
+
+	const handleOnSubmit = React.useCallback(
+		() => onReviewAnnotationFormSubmit({}),
+		[onReviewAnnotationFormSubmit]
+	);
 
 	const resolutionComment =
 		reviewAnnotation.resolvedMetadata?.resolutionComment;
@@ -68,19 +72,13 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			return false;
 		}
 
-		return reviewAnnotation.replies.reduce(
-			(showActionsMenuButton, reply) => {
-				if (!showActionsMenuButton) {
-					return showActionsMenuButton;
-				}
-
-				return (
-					reply.busyState !== BusyState.ADDING &&
-					reply.busyState !== BusyState.EDITING
-				);
-			},
-			reviewAnnotation.busyState !== BusyState.RESOLVING
+		// When no reply is being added or edited, display the button.
+		return reviewAnnotation.replies.every(
+			(reply) => 
+				!(reply.busyState === BusyState.ADDING ||
+				reply.busyState === BusyState.EDITING)
 		);
+	
 	}, [
 		context,
 		reviewAnnotation.busyState,
@@ -210,7 +208,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 					onCancel={onReviewAnnotationFormCancel}
 					onProposalMerge={onProposalMerge}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
-					onSubmit={onReviewAnnotationFormSubmit}
+					onSubmit={handleOnSubmit}
 					reviewAnnotation={reviewAnnotation}
 				/>
 			)}

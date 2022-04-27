@@ -10,15 +10,25 @@ import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
-import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
+import { BusyState,
+	CardContentComponentProps,
+	RecoveryOption,
+	Reply as ReplyType
+} from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
+import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src/types';
+import { FormFeedback } from 'fontoxml-design-system/src/types';
 
-function determineSaveButtonLabel(error, isEditing, isLoading) {
-	if (error && error.recovery === RecoveryOption.RETRYABLE) {
+function determineSaveButtonLabel(
+	error: AnnotationErrorType,
+	isEditing: boolean,
+	isLoading: boolean
+) {
+	if (typeof error !== 'number' && error && error.recovery === RecoveryOption.RETRYABLE) {
 		if (!isEditing && !isLoading) {
 			return t('Retry reply');
 		}
@@ -43,7 +53,7 @@ function determineSaveButtonLabel(error, isEditing, isLoading) {
 
 const rows = { minimum: 2, maximum: 6 };
 
-function validateReplyField(value) {
+function validateReplyField(value: string): FormFeedback {
 	if (!value || value.trim() === '') {
 		return { connotation: 'error', message: 'Reply is required.' };
 	}
@@ -53,17 +63,30 @@ function validateReplyField(value) {
 
 function ReplyFormContent({
 	isSubmitDisabled,
-	onCancelButtonClick,
+	onCancelButtonClick, 
 	onFocusableRef,
-	onHideLinkClick,
-	onRefreshLinkClick,
-	onSubmit,
-	reply,
+	onHideLinkClick, 
+	onRefreshLinkClick, 
+	onSubmit, 
+	reply, 
+}: {
+	isSubmitDisabled: boolean;
+	onCancelButtonClick: () => void;
+	onFocusableRef(): void;
+	onHideLinkClick: CardContentComponentProps['onReplyErrorHide'];
+	onRefreshLinkClick: CardContentComponentProps['onReplyRefresh'];
+	onSubmit(): void;
+	reply: ReplyType;
 }) {
 	const isAdding = reply.busyState === BusyState.ADDING;
 	const isEditing = reply.busyState === BusyState.EDITING;
 
-	const error = reply.error && (isAdding || isEditing) ? reply.error : null;
+	const error = typeof reply.error !== 'number' &&
+		reply.error &&
+		(isAdding || isEditing)
+		? reply.error
+		: null;
+
 	const isDisabled =
 		reply.isLoading ||
 		(error && error.recovery !== RecoveryOption.RETRYABLE);
@@ -128,7 +151,15 @@ function ReplyFormContent({
 	);
 }
 
-function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }) {
+type Props = {
+	onCancel: CardContentComponentProps['onReplyFormCancel'];
+	onHide: CardContentComponentProps['onReplyErrorHide'];
+	onRefresh: CardContentComponentProps['onReplyRefresh'];
+	onSubmit: CardContentComponentProps['onReplyFormSubmit'];
+	reply: ReplyType;
+};
+
+function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }: Props) {
 	const handleHideLinkClick = React.useCallback(
 		() => onHide(reply.id),
 		[onHide, reply.id]

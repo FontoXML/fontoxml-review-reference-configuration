@@ -5,12 +5,15 @@ import t from 'fontoxml-localization/src/t';
 
 import type { Props as RepliesProps } from '../shared/Replies';
 import Replies from '../shared/Replies';
+import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
 
 const MAX_NUMBER_OF_REPLIES_TO_SHOW = 2;
 
 type Props = RepliesProps & {
+	replies: CardContentComponentProps['reviewAnnotation']['replies'];
+	hasResolution: boolean;
+	includeResolutionInTruncatedReplies?: boolean;
 	isEditingReply: boolean;
-	includeResolutionInTruncatedReplies: boolean;
 };
 
 const TruncatedReplies: React.FC<Props> = ({
@@ -19,15 +22,20 @@ const TruncatedReplies: React.FC<Props> = ({
 	includeResolutionInTruncatedReplies,
 	...repliesProps
 }) => {
-	const [areRepliesExpanded, setAreRepliesExpanded] = React.useState(false);
+	const [areRepliesExpanded, setAreRepliesExpanded] =
+		React.useState<boolean>(false);
+
 	const handleExpandRepliesTextLinkClick = React.useCallback(() => {
 		setAreRepliesExpanded(true);
 	}, []);
 
-	const wasEditingReplyInitially = React.useRef(isEditingReply);
-	const hasTruncatedInitially = React.useRef(false);
+	const wasEditingReplyInitially = React.useRef<boolean>(isEditingReply);
 
-	const [collapsedRepliesCount, setCollapsedRepliesCount] = React.useState(0);
+	const hasTruncatedInitially = React.useRef<boolean>(false);
+
+	const [collapsedRepliesCount, setCollapsedRepliesCount] =
+		React.useState<number>(0);
+
 	React.useLayoutEffect(() => {
 		setCollapsedRepliesCount((previousCollapsedRepliesCount: number) => {
 			if (areRepliesExpanded) {
@@ -67,7 +75,7 @@ const TruncatedReplies: React.FC<Props> = ({
 			return replies;
 		}
 
-		return replies.filter((reply, i) => i >= collapsedRepliesCount);
+		return replies.filter((_reply, i) => i >= collapsedRepliesCount);
 	}, [areRepliesExpanded, collapsedRepliesCount, replies]);
 
 	return (

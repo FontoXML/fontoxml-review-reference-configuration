@@ -11,15 +11,21 @@ import * as React from 'react';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import {
 	BusyState,
+	CardContentComponentProps,
 	RecoveryOption,
+	Target,
 	TargetType,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import commentTypes from '../commentTypes';
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
+import {
+	FormFeedback,
+	FormValueByName
+} from 'fontoxml-design-system/src/types';
 
-function validateCommentField(value) {
+function validateCommentField(value: string): FormFeedback {
 	if (!value || value.trim() === '') {
 		return { connotation: 'error', message: 'Comment is required.' };
 	}
@@ -38,11 +44,16 @@ function CommentAddOrEditFormContent({
 	onSubmit,
 	reviewAnnotation,
 	valueByName,
-}) {
-	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
+}: Props & {
+	isSubmitDisabled: boolean;
+	onFieldChange(...args: unknown[]): void;
+	onFocusableRef(): void;
+	valueByName: FormValueByName;
+}){
+	const error = reviewAnnotation.error || null;
 	const isDisabled =
 		reviewAnnotation.isLoading ||
-		(error && error.recovery !== RecoveryOption.RETRYABLE);
+		(error && typeof error !== 'number' && error.recovery !== RecoveryOption.RETRYABLE);
 	const isEditing = reviewAnnotation.busyState === BusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
 
@@ -126,12 +137,19 @@ function CommentAddOrEditFormContent({
 	);
 }
 
+type Props = {
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'] & { targets?: Target[]};
+	onCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
+	onSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];
+};
+
 function CommentAddOrEditForm({
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
 	onSubmit,
-}) {
+}: Props) {
 	return (
 		<ReviewAnnotationForm
 			initialValueByName={reviewAnnotation.metadata}

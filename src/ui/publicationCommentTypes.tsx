@@ -3,4 +3,5 @@ const publicationCommentTypes = [
 	{ value: 'general', label: 'Global general comment' },
 	{ value: 'editorial', label: 'Global editorial comment' },
 ];
+
 export default publicationCommentTypes;

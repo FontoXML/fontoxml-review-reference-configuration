@@ -5,20 +5,19 @@ import {
 } from 'fds/components';
 import * as React from 'react';
 
-import { BusyState } from 'fontoxml-feedback/src/types';
+import { BusyState, CardContentComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import type { $TSFixMeAny } from '../../types';
 import Reply from './Reply';
 
 export type Props = {
-	onReplyEdit: $TSFixMeAny;
-	onReplyErrorHide: $TSFixMeAny;
-	onReplyFormCancel: $TSFixMeAny;
-	onReplyRefresh: $TSFixMeAny;
-	onReplyRemove: $TSFixMeAny;
-	replies: $TSFixMeAny[];
-	reviewAnnotation: $TSFixMeAny;
+	onReplyEdit: CardContentComponentProps['onReplyEdit'];
+	onReplyErrorHide: CardContentComponentProps['onReplyErrorHide'];
+	onReplyFormCancel: CardContentComponentProps['onReplyFormCancel'];
+	onReplyRefresh: CardContentComponentProps['onReplyRefresh'];
+	onReplyRemove: CardContentComponentProps['onReplyRemove'];
+	replies: CardContentComponentProps['reviewAnnotation']['replies'];
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
 	showActionsMenuButton: boolean;
 };
 
@@ -30,7 +29,7 @@ const Replies: React.FC<Props> = ({
 	onReplyRemove,
 	replies,
 	reviewAnnotation,
-	showActionsMenuButton,
+	showActionsMenuButton
 }) => {
 	return (
 		<Block spaceVerticalSize="m">
@@ -74,7 +73,6 @@ const Replies: React.FC<Props> = ({
 
 				return (
 					<Reply
-						key={reply.id}
 						reviewAnnotation={reviewAnnotation}
 						onCancelRetryRemove={onReplyFormCancel}
 						onHide={onReplyErrorHide}

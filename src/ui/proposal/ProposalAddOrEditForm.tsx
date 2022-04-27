@@ -9,12 +9,17 @@ import {
 	TextAreaWithDiff,
 } from 'fontoxml-design-system/src/components';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
-import { BusyState, RecoveryOption } from 'fontoxml-feedback/src/types';
+import {
+	BusyState,
+	CardContentComponentProps,
+	RecoveryOption
+} from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
+import { FormFeedback } from 'fontoxml-design-system/src/types';
 
-function validateProposedChangeField(value, originalText) {
+function validateProposedChangeField(value: string, originalText: string): FormFeedback {
 	if (value === originalText) {
 		return {
 			connotation: 'error',
@@ -31,15 +36,19 @@ function ProposalAddOrEditFormContent({
 	isSubmitDisabled,
 	onFieldChange,
 	onFocusableRef,
-	onCancel,
-	onReviewAnnotationRefresh,
-	onSubmit,
-	reviewAnnotation,
+	onCancel, 
+	onReviewAnnotationRefresh, 
+	onSubmit, 
+	reviewAnnotation, 
+}: Props & {
+	isSubmitDisabled: boolean;
+	onFieldChange(...args: unknown[]): void;
+	onFocusableRef(): void;
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
 		reviewAnnotation.isLoading ||
-		(error && error.recovery !== RecoveryOption.RETRYABLE);
+		(typeof error !== 'number' && error && error.recovery !== RecoveryOption.RETRYABLE);
 	const isEditing = reviewAnnotation.busyState === BusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
 
@@ -119,12 +128,19 @@ function ProposalAddOrEditFormContent({
 	);
 }
 
+type Props = {
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+	onCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
+	onSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];
+};
+
 function ProposalAddOrEditForm({
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
 	onSubmit,
-}) {
+}: Props) {
 	return (
 		<ReviewAnnotationForm
 			initialValueByName={reviewAnnotation.metadata}

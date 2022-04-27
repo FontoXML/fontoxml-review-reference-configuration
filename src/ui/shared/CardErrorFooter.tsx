@@ -2,6 +2,12 @@ import { Block, Button, Flex, HorizontalSeparationLine } from 'fds/components';
 import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
+import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
+
+type Props = {
+	onReviewAnnotationFormCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationRemove: CardContentComponentProps['onReviewAnnotationRemove'];
+};
 
 /**
  * If there was an error while removing the annotation, we show that error in an ErrorToast,
@@ -14,7 +20,7 @@ import t from 'fontoxml-localization/src/t';
 export default function CardErrorFooter({
 	onReviewAnnotationFormCancel,
 	onReviewAnnotationRemove,
-}) {
+}: Props) {
 	return (
 		<Block spaceVerticalSize="m">
 			<HorizontalSeparationLine />

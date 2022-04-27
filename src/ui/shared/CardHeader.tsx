@@ -16,7 +16,9 @@ import Badge from 'fontoxml-feedback/src/Badge';
 import {
 	AnnotationStatus,
 	BusyState,
+	CardContentComponentProps,
 	RecoveryOption,
+	Target,
 	TargetType,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -25,18 +27,38 @@ import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
 import { CARD_HEADER_HEIGHT } from './../constants';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
+import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src/types';
 
-function determineShareButtonLabel(reviewAnnotation, error, isLoading) {
+function determineShareButtonLabel(
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'],
+	error: AnnotationErrorType,
+	isLoading: boolean)
+{
 	if (isLoading) {
 		return t('Sharing…');
 	}
 
 	return reviewAnnotation.busyState === BusyState.SHARING &&
+		typeof error !== 'number' &&
 		error &&
 		error.recovery === RecoveryOption.RETRYABLE
 		? t('Retry share')
 		: t('Share');
 }
+
+type Props = {
+	context: CardContentComponentProps['context'];
+	hasReplyInNonIdleBusyState: boolean;
+	isSelectedToShare: CardContentComponentProps['isSelectedToShare'];
+	onReviewAnnotationEdit: CardContentComponentProps['onReviewAnnotationEdit'];
+	onReviewAnnotationRemove: CardContentComponentProps['onReviewAnnotationRemove'];
+	onReviewAnnotationResolve: CardContentComponentProps['onReviewAnnotationResolve'];
+	onReviewAnnotationShare: CardContentComponentProps['onReviewAnnotationShare'];
+	onReviewAnnotationShareAddRemoveToggle: CardContentComponentProps['onReviewAnnotationShareAddRemoveToggle'];
+	onReviewAnnotationShowInCreatedContext: CardContentComponentProps['onReviewAnnotationShowInCreatedContext'];
+	onReviewAnnotationShowInResolvedContext: CardContentComponentProps['onReviewAnnotationShowInResolvedContext'];
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'] & { targets?: Target };
+};
 
 export default function CardHeader({
 	context,
@@ -50,7 +72,7 @@ export default function CardHeader({
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	reviewAnnotation,
-}) {
+}: Props) {
 	const showEditButton =
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT &&
@@ -236,7 +258,8 @@ export default function CardHeader({
 		);
 
 	const shareButtonIsDisabled =
-		(reviewAnnotation.error &&
+		(typeof reviewAnnotation.error !== 'number' &&
+			reviewAnnotation.error &&
 			reviewAnnotation.error.recovery !== RecoveryOption.RETRYABLE) ||
 		reviewAnnotation.busyState === BusyState.REMOVING ||
 		reviewAnnotation.isLoading ||
@@ -287,6 +310,7 @@ export default function CardHeader({
 				{(context === FeedbackContextType.EDITOR_SHARING ||
 					context === FeedbackContextType.REVIEW_SHARING) &&
 					(!reviewAnnotation.error ||
+						typeof reviewAnnotation.error !== 'number' &&
 						reviewAnnotation.error.recovery ===
 							RecoveryOption.RETRYABLE) && (
 						<Block>
@@ -376,7 +400,7 @@ export default function CardHeader({
 													.resolution ===
 													'accepted' && (
 													<Icon
-														color="inherit"
+														colorName="inherit"
 														icon="check"
 														isInline
 													/>
@@ -386,7 +410,7 @@ export default function CardHeader({
 													.resolution ===
 													'rejected' && (
 													<Icon
-														color="inherit"
+														colorName="inherit"
 														icon="times"
 														isInline
 													/>
