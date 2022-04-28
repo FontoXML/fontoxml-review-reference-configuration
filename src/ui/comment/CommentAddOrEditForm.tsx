@@ -19,7 +19,6 @@ import t from 'fontoxml-localization/src/t';
 
 import commentTypes from '../commentTypes';
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
-import { sum } from 'cypress/types/lodash';
 
 function validateCommentField(value) {
 	if (!value || value.trim() === '') {
