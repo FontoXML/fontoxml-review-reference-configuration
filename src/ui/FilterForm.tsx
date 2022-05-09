@@ -5,9 +5,9 @@ import { FormFeedbackByName, FormValueByName } from 'fontoxml-design-system/src/
 import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
-import { $TSFixMeAny, AnnotationErrorType } from '../types';
+import { AnnotationErrorType } from '../types';
 
-function determineParentFieldValue(subFieldNames: string[], valueByNameForUI: $TSFixMeAny) {
+function determineParentFieldValue(subFieldNames: string[], valueByNameForUI: FormValueByName): boolean {
 	return subFieldNames.reduce<boolean>((value, subFieldName) => {
 		if (value === Checkbox.VALUE_INDETERMINATE) {
 			return value;

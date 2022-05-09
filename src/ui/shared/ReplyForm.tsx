@@ -27,7 +27,7 @@ function determineSaveButtonLabel(
 	error: AnnotationErrorType,
 	isEditing: boolean,
 	isLoading: boolean
-) {
+): string {
 	if (typeof error !== 'number' && error && error.recovery === RecoveryOption.RETRYABLE) {
 		if (!isEditing && !isLoading) {
 			return t('Retry reply');

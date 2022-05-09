@@ -73,6 +73,7 @@ const Replies: React.FC<Props> = ({
 
 				return (
 					<Reply
+						key={reply.id}
 						reviewAnnotation={reviewAnnotation}
 						onCancelRetryRemove={onReplyFormCancel}
 						onHide={onReplyErrorHide}

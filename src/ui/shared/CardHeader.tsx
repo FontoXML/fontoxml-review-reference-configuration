@@ -32,8 +32,8 @@ import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src
 function determineShareButtonLabel(
 	reviewAnnotation: CardContentComponentProps['reviewAnnotation'],
 	error: AnnotationErrorType,
-	isLoading: boolean)
-{
+	isLoading: boolean
+): string {
 	if (isLoading) {
 		return t('Sharing…');
 	}

@@ -32,7 +32,7 @@ import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src
 
 const rows = { minimum: 2, maximum: 6 };
 
-function determineSaveButtonLabel(error: AnnotationErrorType, isLoading: boolean) {
+function determineSaveButtonLabel(error: AnnotationErrorType, isLoading: boolean): string {
 	if (isLoading) {
 		return t('Resolving…');
 	}

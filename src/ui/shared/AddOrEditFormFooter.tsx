@@ -8,11 +8,12 @@ import t from 'fontoxml-localization/src/t';
 
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src/types';
+import { PaddingSize } from 'fontoxml-design-system/src/types';
 
 function determineSaveButtonLabel(
 	error: AnnotationErrorType,
 	isLoading: boolean
-) {
+): string {
 	if (isLoading) {
 		return t('Saving…');
 	}
@@ -34,7 +35,7 @@ type Props = {
 	onSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];
 };
 
-const paddingSize = { top: 'l' };
+const paddingSize: PaddingSize = { top: 'l' };
 
 function AddOrEditFormFooter({
 	error,
