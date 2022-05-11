@@ -18,6 +18,7 @@ import {
 import t from 'fontoxml-localization/src/t';
 
 import CardErrorFooter from '../shared/CardErrorFooter';
+import CardErrors from '../shared/CardErrors';
 import CardHeader from '../shared/CardHeader';
 import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
 import ErrorStateMessage from '../shared/ErrorStateMessage';
@@ -283,6 +284,13 @@ function ProposalCardContent({
 					onReplyRemove={onReplyRemove}
 					onReviewAnnotationFormCancel={onReviewAnnotationFormCancel}
 					onReviewAnnotationFormSubmit={onReviewAnnotationFormSubmit}
+					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+					onReviewAnnotationRemove={onReviewAnnotationRemove}
+					onReviewAnnotationShare={onReviewAnnotationShare}
+					reviewAnnotation={reviewAnnotation}
+				/>
+
+				<CardErrors
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onReviewAnnotationRemove={onReviewAnnotationRemove}
 					onReviewAnnotationShare={onReviewAnnotationShare}
