@@ -13,7 +13,6 @@ import {
 	BusyState,
 	CardContentComponentProps,
 	RecoveryOption,
-	Target,
 	TargetType,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -138,7 +137,7 @@ function CommentAddOrEditFormContent({
 }
 
 type Props = {
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'] & { targets?: Target[]};
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
 	onCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
 	onSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];

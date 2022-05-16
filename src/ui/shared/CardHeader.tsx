@@ -18,7 +18,6 @@ import {
 	BusyState,
 	CardContentComponentProps,
 	RecoveryOption,
-	Target,
 	TargetType,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -57,7 +56,7 @@ type Props = {
 	onReviewAnnotationShareAddRemoveToggle: CardContentComponentProps['onReviewAnnotationShareAddRemoveToggle'];
 	onReviewAnnotationShowInCreatedContext: CardContentComponentProps['onReviewAnnotationShowInCreatedContext'];
 	onReviewAnnotationShowInResolvedContext: CardContentComponentProps['onReviewAnnotationShowInResolvedContext'];
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'] & { targets?: Target };
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
 };
 
 export default function CardHeader({
