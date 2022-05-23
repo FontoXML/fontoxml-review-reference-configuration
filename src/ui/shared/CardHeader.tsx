@@ -14,6 +14,7 @@ import * as React from 'react';
 
 import Badge from 'fontoxml-feedback/src/Badge';
 import {
+	AnnotationError,
 	AnnotationStatus,
 	BusyState,
 	CardContentComponentProps,
@@ -26,11 +27,10 @@ import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
 import { CARD_HEADER_HEIGHT } from './../constants';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
-import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src/types';
 
 function determineShareButtonLabel(
 	reviewAnnotation: CardContentComponentProps['reviewAnnotation'],
-	error: AnnotationErrorType,
+	error: AnnotationError,
 	isLoading: boolean
 ): string {
 	if (isLoading) {

@@ -10,7 +10,7 @@ import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
-import { BusyState,
+import { AnnotationError, BusyState,
 	CardContentComponentProps,
 	RecoveryOption,
 	Reply as ReplyType
@@ -20,11 +20,10 @@ import t from 'fontoxml-localization/src/t';
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
-import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src/types';
 import { FormFeedback } from 'fontoxml-design-system/src/types';
 
 function determineSaveButtonLabel(
-	error: AnnotationErrorType,
+	error: AnnotationError,
 	isEditing: boolean,
 	isLoading: boolean
 ): string {

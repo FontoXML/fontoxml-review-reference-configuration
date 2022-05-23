@@ -1,9 +1,8 @@
 import { Button, CompactStateMessage, Flex } from 'fds/components';
 import * as React from 'react';
 
-import { CardContentComponentProps, RecoveryOption } from 'fontoxml-feedback/src/types';
+import { AnnotationError, CardContentComponentProps, RecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
-import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src/types';
 
 const iconByConnotation = {
 	error: 'times-circle',
@@ -11,7 +10,7 @@ const iconByConnotation = {
 };
 
 type Props = {
-	error: AnnotationErrorType;
+	error: AnnotationError;
 	onAcknowledge: CardContentComponentProps['onReviewAnnotationErrorAcknowledge'];
 	onRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
 };

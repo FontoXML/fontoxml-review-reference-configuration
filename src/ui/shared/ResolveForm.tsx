@@ -17,6 +17,7 @@ import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import {
+	AnnotationError,
 	AnnotationStatus,
 	CardContentComponentProps,
 	ProposalState as ProposalStateTypes,
@@ -28,11 +29,10 @@ import resolutions from '../feedbackResolutions';
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
 import { FormFeedback, FormValueByName } from 'fontoxml-design-system/src/types';
-import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src/types';
 
 const rows = { minimum: 2, maximum: 6 };
 
-function determineSaveButtonLabel(error: AnnotationErrorType, isLoading: boolean): string {
+function determineSaveButtonLabel(error: AnnotationError, isLoading: boolean): string {
 	if (isLoading) {
 		return t('Resolving…');
 	}

@@ -13,20 +13,6 @@ import * as React from 'react';
 import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
-import { FormValueByName } from 'fontoxml-design-system/src/types';
-
-import { FormFeedbackByName } from 'fontoxml-design-system/src/types';
-import { AnnotationErrorType } from '../types';
-
-type Props = {
-	error: AnnotationErrorType;
-	feedbackByName: FormFeedbackByName;
-	isDisabled: boolean;
-	isSubmitting: boolean;
-	onChange(valueByName: FormValueByName): Promise<void>;
-	productContext: string;
-	valueByName: FormValueByName;
-};
 
 function FilterFormSummaryChips({
 	// This is set if the /review/state endpoint is called (whenever onChange is

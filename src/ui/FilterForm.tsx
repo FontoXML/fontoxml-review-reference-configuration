@@ -1,11 +1,11 @@
 import { Block, Checkbox, Flex, Label } from 'fds/components';
 import * as React from 'react';
 
-import { FormFeedbackByName, FormValueByName } from 'fontoxml-design-system/src/types';
+import { FormValueByName } from 'fontoxml-design-system/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
-import { AnnotationErrorType } from '../types';
+import { ReviewFilterFormProps } from 'fontoxml-feedback/src/types';
 
 function determineParentFieldValue(subFieldNames: string[], valueByNameForUI: FormValueByName): boolean {
 	return subFieldNames.reduce<boolean>((value, subFieldName) => {
@@ -37,17 +37,6 @@ function determineParentFieldValue(subFieldNames: string[], valueByNameForUI: Fo
 	}, null);
 }
 
-type Props = {
-	error: AnnotationErrorType;
-	feedbackByName: FormFeedbackByName;
-	isSubmitting: boolean;
-	onFieldChange(...args: unknown[]): void;
-	onInitialize(): void;
-	productContent: string;
-	showFeedback: boolean;
-	valueByName: { [key: string]: boolean };
-};
-
 // This file describes a form to filter on all the different conceptual 'properties' of the feedback
 // items. These properties are stored in different places of the item. You can filter on whatever
 // information you like. See this package's README.md for a detailed list of all the information
@@ -78,7 +67,7 @@ function FilterForm({
 	showFeedback: _showFeedback,
 	// The current values of the filter form fields.
 	valueByName,
-}: Props) {
+}: ReviewFilterFormProps) {
 	// If you use your own Form (field) components, make sure to call onFieldChange whenever a field
 	// changes. This makes sure the filter form fields update whenever the user edits the form.
 	// Submitting the form through "Set filters" submits the filter form values to the CMS via

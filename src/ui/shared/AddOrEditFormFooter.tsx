@@ -2,16 +2,15 @@ import { Button, Flex } from 'fds/components';
 import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
-import { CardContentComponentProps, RecoveryOption } from 'fontoxml-feedback/src/types';
+import { AnnotationError, CardContentComponentProps, RecoveryOption } from 'fontoxml-feedback/src/types';
 
 import t from 'fontoxml-localization/src/t';
 
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
-import { AnnotationErrorType } from 'fontoxml-review-reference-configuration/src/types';
 import { PaddingSize } from 'fontoxml-design-system/src/types';
 
 function determineSaveButtonLabel(
-	error: AnnotationErrorType,
+	error: AnnotationError,
 	isLoading: boolean
 ): string {
 	if (isLoading) {
@@ -26,7 +25,7 @@ function determineSaveButtonLabel(
 }
 
 type Props = {
-	error:  AnnotationErrorType;
+	error: AnnotationError;
 	isDisabled: boolean;
 	isLoading: boolean;
 	isSubmitDisabled: boolean;
