@@ -13,6 +13,7 @@ import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAn
 import {
 	AnnotationStatus,
 	BusyState,
+	CardContentComponentProps,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -51,7 +52,7 @@ function ProposalCardContent({
 	onReplyRefresh,
 	onReplyRemove,
 	onProposalMerge,
-}) {
+}: CardContentComponentProps) {
 	const hasReplyInNonIdleBusyState = useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;
@@ -97,6 +98,7 @@ function ProposalCardContent({
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
+		typeof reviewAnnotation.error !== 'number' &&
 		reviewAnnotation.error &&
 		reviewAnnotation.error.recovery === RecoveryOption.ACKNOWLEDGEABLE
 	) {
@@ -217,7 +219,7 @@ function ProposalCardContent({
 												}
 												value={
 													reviewAnnotation.metadata
-														.proposedChange
+														.proposedChange as string
 												}
 												data-test-id="comment"
 											/>
@@ -233,7 +235,7 @@ function ProposalCardContent({
 											}
 											value={
 												reviewAnnotation.metadata
-													.proposedChange
+													.proposedChange as string
 											}
 											data-test-id="comment"
 										/>
@@ -285,8 +287,6 @@ function ProposalCardContent({
 					onReviewAnnotationFormCancel={onReviewAnnotationFormCancel}
 					onReviewAnnotationFormSubmit={onReviewAnnotationFormSubmit}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
-					onReviewAnnotationRemove={onReviewAnnotationRemove}
-					onReviewAnnotationShare={onReviewAnnotationShare}
 					reviewAnnotation={reviewAnnotation}
 				/>
 

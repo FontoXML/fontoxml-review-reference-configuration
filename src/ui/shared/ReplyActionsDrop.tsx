@@ -3,11 +3,17 @@ import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
 
+type Props = {
+	onEditButtonClick(): void;
+	onRemoveButtonClick(): void;
+	closeDrop(): void;
+};
+
 export default function ReplyActionsDrop({
 	onEditButtonClick,
 	onRemoveButtonClick,
 	closeDrop,
-}) {
+}: Props) {
 	const handleEditButtonClick = React.useCallback(() => {
 		onEditButtonClick();
 		closeDrop();

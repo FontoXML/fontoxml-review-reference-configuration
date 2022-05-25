@@ -5,6 +5,7 @@ import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import {
 	AnnotationStatus,
 	BusyState,
+	CardContentComponentProps,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -44,10 +45,7 @@ function CommentCardContent({
 	onReplyErrorHide,
 	onReplyRefresh,
 	onReplyRemove,
-	// These are only used by ProposalCardContent, so alias them to a arg beginning with _ to make eslint happy
-	proposalState: _proposalState,
-	onProposalMerge: _onProposalMerge,
-}) {
+}: CardContentComponentProps) {
 	const hasReplyInNonIdleBusyState = React.useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;
@@ -85,6 +83,7 @@ function CommentCardContent({
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
+		typeof reviewAnnotation.error !== 'number' &&
 		reviewAnnotation.error &&
 		(reviewAnnotation.error.recovery === RecoveryOption.ACKNOWLEDGEABLE ||
 			(reviewAnnotation.busyState === BusyState.IDLE &&

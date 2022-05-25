@@ -39,7 +39,7 @@ function FilterFormSummaryChips({
 	productContext: _productContext,
 	// This contains the exact value by name mapping used by the filter form for the current context.
 	valueByName,
-}) {
+}: Props) {
 	// This processes the list of changed fields into a changedValueByName mapping which is then
 	// combined with the existing data (valueByName) to provide a new (complete) version of the data
 	// for the onChange prop.

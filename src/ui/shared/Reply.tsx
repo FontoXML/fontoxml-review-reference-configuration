@@ -10,13 +10,28 @@ import {
 import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
-import { BusyState } from 'fontoxml-feedback/src/types';
+import {
+	BusyState,
+	CardContentComponentProps,
+	Reply as ReplyType
+} from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ReplyActionsDrop from './ReplyActionsDrop';
 import TruncatedText from './TruncatedText';
+
+type Props = {
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation']; 
+	onCancelRetryRemove: CardContentComponentProps['onReplyFormCancel'];
+	onHide: CardContentComponentProps['onReplyErrorHide'];
+	onRefresh: CardContentComponentProps['onReplyRefresh'];
+	onRemove: CardContentComponentProps['onReplyRemove'];
+	onShowEditForm: CardContentComponentProps['onReplyEdit'];
+	reply: ReplyType;
+	showActionsMenuButton: boolean;
+};
 
 export default function Reply({
 	reviewAnnotation,
@@ -27,7 +42,7 @@ export default function Reply({
 	onShowEditForm,
 	reply,
 	showActionsMenuButton,
-}) {
+}: Props) {
 	const error = reply.error;
 	const isDisabled = reply.isLoading;
 
@@ -124,7 +139,7 @@ export default function Reply({
 				{error && reply.busyState === BusyState.REMOVING && (
 					<Flex flexDirection="column" spaceSize="m">
 						<ErrorToast
-							error={error}
+							error={error && typeof error !== 'number' ? error : null}
 							onHideLinkClick={handleHideClick}
 							onRefreshLinkClick={handleRefreshLinkClick}
 							onRetryLinkClick={handleRemoveButtonClick}
@@ -148,7 +163,7 @@ export default function Reply({
 
 				{error && reply.busyState !== BusyState.REMOVING && (
 					<ErrorToast
-						error={error}
+						error={error && typeof error !== 'number' ? error : null}
 						onHideLinkClick={handleHideClick}
 						onRefreshLinkClick={handleRefreshLinkClick}
 					/>

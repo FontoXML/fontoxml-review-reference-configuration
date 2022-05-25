@@ -17,7 +17,9 @@ import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import {
+	AnnotationError,
 	AnnotationStatus,
+	CardContentComponentProps,
 	ProposalState as ProposalStateTypes,
 	RecoveryOption,
 } from 'fontoxml-feedback/src/types';
@@ -26,25 +28,30 @@ import t from 'fontoxml-localization/src/t';
 import resolutions from '../feedbackResolutions';
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
+import { FormFeedback, FormValueByName } from 'fontoxml-design-system/src/types';
+
 const rows = { minimum: 2, maximum: 6 };
 
-function determineSaveButtonLabel(error, isLoading) {
+function determineSaveButtonLabel(error: AnnotationError, isLoading: boolean): string {
 	if (isLoading) {
 		return t('Resolving…');
 	}
 
-	return error && error.recovery === RecoveryOption.RETRYABLE
+	return typeof error !== 'number' &&
+		error &&
+		error.recovery === RecoveryOption.RETRYABLE
 		? t('Retry resolve')
 		: t('Resolve');
 }
 
-function validateResolutionField(value) {
+function validateResolutionField(value: unknown): FormFeedback {
 	if (!value) {
 		return { connotation: 'error', message: 'Resolution is required.' };
 	}
 
 	return null;
 }
+
 
 function ResolveFormContent({
 	context,
@@ -56,11 +63,15 @@ function ResolveFormContent({
 	onSubmit,
 	reviewAnnotation,
 	valueByName,
+}: Props & {
+	isSubmitDisabled: boolean;
+	onFocusableRef(): void;
+	valueByName: FormValueByName;
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
 		reviewAnnotation.isLoading ||
-		(error && error.recovery !== RecoveryOption.RETRYABLE);
+		(typeof error !== 'number' && error && error.recovery !== RecoveryOption.RETRYABLE);
 	const isLoading = reviewAnnotation.isLoading;
 
 	const proposalState = reviewAnnotation.proposalState;
@@ -127,7 +138,7 @@ function ResolveFormContent({
 
 				{error && (
 					<ErrorToast
-						error={error}
+						error={typeof error !== 'number' ? error : null}
 						onRefreshLinkClick={onReviewAnnotationRefresh}
 						onRetryLinkClick={onSubmit}
 					/>
@@ -210,6 +221,15 @@ function ResolveFormContent({
 	);
 }
 
+type Props = {
+	context: CardContentComponentProps['context'];
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+	onCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
+	onProposalMerge: CardContentComponentProps['onProposalMerge'];
+	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
+	onSubmit(): void;
+};
+
 export default function ResolveForm({
 	context,
 	reviewAnnotation,
@@ -217,7 +237,7 @@ export default function ResolveForm({
 	onProposalMerge = null,
 	onReviewAnnotationRefresh,
 	onSubmit,
-}) {
+}: Props) {
 	return (
 		<ReviewAnnotationForm
 			initialValueByName={reviewAnnotation.resolvedMetadata}

@@ -1,12 +1,22 @@
 import { Flex, Label } from 'fds/components';
+import {
+	CardContentComponentProps,
+	Reply as ReplyType 
+} from 'fontoxml-feedback/src/types';
+
 import * as React from 'react';
 
 import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
+type Props = {
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'] | ReplyType;
+	isReviewAnnotationResolved?: boolean;
+};
+
 function AuthorAndTimestampLabel({
 	reviewAnnotation,
 	isReviewAnnotationResolved = false,
-}) {
+}: Props) {
 	const { author: authorLabel, timestamp: timestampLabel } =
 		useAuthorAndTimestampLabel(
 			reviewAnnotation,
@@ -15,12 +25,15 @@ function AuthorAndTimestampLabel({
 
 	// Make sure the author label is not truncated too much and not too little,
 	// making it and the timestamp label visible.
-	const authorLabelRef = React.useRef(null);
+	const authorLabelRef = React.useRef<HTMLElement>(null);
+
 	const handleAuthorLabelRef = (domNode: HTMLElement) => {
 		authorLabelRef.current = domNode;
 	};
+
 	const [authorLabelScrollWidth, setAuthorLabelScrollWidth] =
-		React.useState(false);
+		React.useState<number>(0);
+
 	React.useEffect(() => {
 		if (authorLabelRef.current) {
 			setAuthorLabelScrollWidth(authorLabelRef.current.scrollWidth);

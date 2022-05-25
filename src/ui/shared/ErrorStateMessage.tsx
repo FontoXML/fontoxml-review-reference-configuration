@@ -1,7 +1,7 @@
 import { Button, CompactStateMessage, Flex } from 'fds/components';
 import * as React from 'react';
 
-import { RecoveryOption } from 'fontoxml-feedback/src/types';
+import { AnnotationError, CardContentComponentProps, RecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 const iconByConnotation = {
@@ -9,8 +9,17 @@ const iconByConnotation = {
 	warning: 'exclamation-triangle',
 };
 
-function ErrorStateMessage({ error, onAcknowledge, onRefresh }) {
+type Props = {
+	error: AnnotationError;
+	onAcknowledge: CardContentComponentProps['onReviewAnnotationErrorAcknowledge'];
+	onRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
+};
+
+function ErrorStateMessage({ error, onAcknowledge, onRefresh }: Props) {
+	const isAnnotationError = typeof error !== 'number';
+
 	const connotation =
+		isAnnotationError &&
 		error.recovery === RecoveryOption.ACKNOWLEDGEABLE ? 'error' : 'warning';
 
 	return (
@@ -18,11 +27,14 @@ function ErrorStateMessage({ error, onAcknowledge, onRefresh }) {
 			<CompactStateMessage
 				connotation={connotation}
 				isSingleLine={false}
-				message={error.message}
+				message={isAnnotationError ? error.message : ''}
 				visual={iconByConnotation[connotation]}
 			/>
 
-			{error.recovery === RecoveryOption.ACKNOWLEDGEABLE && (
+			{isAnnotationError &&
+				typeof error !== 'number' &&
+				error &&
+				error.recovery === RecoveryOption.ACKNOWLEDGEABLE && (
 				<Button
 					label={t('Hide message')}
 					onClick={onAcknowledge}
@@ -30,7 +42,7 @@ function ErrorStateMessage({ error, onAcknowledge, onRefresh }) {
 				/>
 			)}
 
-			{error.recovery === RecoveryOption.REFRESHABLE && (
+			{isAnnotationError && error.recovery === RecoveryOption.REFRESHABLE && (
 				<Button
 					label={t('Refresh')}
 					onClick={onRefresh}

@@ -2,12 +2,19 @@ import { Block, HorizontalSeparationLine, TextInput } from 'fds/components';
 import * as React from 'react';
 
 import t from 'fontoxml-localization/src/t';
+import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
 
-function CommentCardFooter({ onReplyAdd, reviewAnnotation }) {
+type Props = {
+	onReplyAdd: CardContentComponentProps['onReplyAdd'];
+	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+};
+
+function CommentCardFooter({ onReplyAdd, reviewAnnotation }: Props) {
 	const textInputRef = React.useRef<HTMLElement>(null);
+
 	const handleTextInputRef = React.useCallback(
-		(domNode: HTMLElement) => (textInputRef.current = domNode)
-	);
+		(domNode: HTMLElement) => (textInputRef.current = domNode), []);
+
 	React.useEffect(() => {
 		if (!textInputRef.current) {
 			return;

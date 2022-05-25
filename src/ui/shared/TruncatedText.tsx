@@ -31,6 +31,7 @@ function useTruncation(): {
 } {
 	const [truncationState, setTruncationState] =
 		React.useState<TruncationState>(TruncationState.CAN_TRUNCATE);
+
 	const selectedCommentRef = React.useRef<HTMLElement>(null);
 
 	React.useLayoutEffect(() => {
