@@ -31,6 +31,7 @@ import ProposalReplyComponent from './ProposalReplyComponent';
 
 function ProposalCardContent({
 	context,
+	focusableRef,
 	isSelectedToShare,
 	reviewAnnotation,
 	onReviewAnnotationEdit,
@@ -142,6 +143,12 @@ function ProposalCardContent({
 		reviewAnnotation.metadata['proposedChange'] !== null;
 
 	const proposalState = reviewAnnotation.proposalState;
+
+	React.useEffect(() => {
+		if (!showFooter && focusableRef.current !== null) {
+			focusableRef.current.focus();
+		}
+	}, [showFooter]);
 
 	return (
 		<Block
@@ -280,6 +287,7 @@ function ProposalCardContent({
 				{(reviewAnnotation.busyState === ReviewBusyState.ADDING ||
 					reviewAnnotation.busyState === ReviewBusyState.EDITING) && (
 					<ProposalAddOrEditForm
+						focusableRef={focusableRef}
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}
 						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
@@ -289,6 +297,7 @@ function ProposalCardContent({
 
 				<CardRepliesAndResolution
 					context={context}
+					focusableRef={focusableRef}
 					onProposalMerge={onProposalMerge}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}

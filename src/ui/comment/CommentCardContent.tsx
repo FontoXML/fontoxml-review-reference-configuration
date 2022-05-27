@@ -30,6 +30,7 @@ import CommentCardFooter from './CommentCardFooter';
 
 function CommentCardContent({
 	context,
+	focusableRef,
 	isSelectedToShare,
 	reviewAnnotation,
 	onReviewAnnotationEdit,
@@ -159,6 +160,12 @@ function CommentCardContent({
 			: reviewAnnotation.metadata['commentType'];
 	}
 
+	React.useEffect(() => {
+		if (!showFooter && focusableRef.current !== null) {
+			focusableRef.current.focus();
+		}
+	}, [showFooter]);
+
 	return (
 		<Block
 			paddingSize="m"
@@ -258,6 +265,7 @@ function CommentCardContent({
 				{(reviewAnnotation.busyState === ReviewBusyState.ADDING ||
 					reviewAnnotation.busyState === ReviewBusyState.EDITING) && (
 					<CommentAddOrEditForm
+						focusableRef={focusableRef}
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}
 						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
@@ -267,6 +275,7 @@ function CommentCardContent({
 
 				<CardRepliesAndResolution
 					context={context}
+					focusableRef={focusableRef}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}
 					onReplyFormCancel={onReplyFormCancel}

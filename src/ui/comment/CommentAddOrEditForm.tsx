@@ -35,18 +35,18 @@ function validateCommentField(value: string): FormFeedback {
 const rows = { minimum: 2, maximum: 6 };
 
 function CommentAddOrEditFormContent({
+	focusableRef,
 	isSubmitDisabled,
 	onFieldChange,
-	onFocusableRef,
 	onCancel,
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
 	valueByName,
 }: Props & {
+	focusableRef: HTMLElement;
 	isSubmitDisabled: boolean;
 	onFieldChange(...args: unknown[]): void;
-	onFocusableRef(): void;
 	valueByName: FormValueByName;
 }) {
 	const error = reviewAnnotation.error || null;
@@ -106,7 +106,7 @@ function CommentAddOrEditFormContent({
 					isDisabled={isDisabled}
 					name="comment"
 					placeholder={t('Comment on the selected content')}
-					ref={onFocusableRef}
+					ref={focusableRef}
 					rows={rows}
 					validate={validateCommentField}
 					data-test-id="comment"
@@ -140,6 +140,7 @@ function CommentAddOrEditFormContent({
 }
 
 type Props = {
+	focusableRef: HTMLElement;
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
@@ -147,6 +148,7 @@ type Props = {
 };
 
 function CommentAddOrEditForm({
+	focusableRef,
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
@@ -160,14 +162,13 @@ function CommentAddOrEditForm({
 			{({
 				isSubmitDisabled,
 				onFieldChange,
-				onFocusableRef,
 				onSubmit,
 				valueByName,
 			}) => (
 				<CommentAddOrEditFormContent
+					focusableRef={focusableRef}
 					isSubmitDisabled={isSubmitDisabled}
 					onFieldChange={onFieldChange}
-					onFocusableRef={onFocusableRef}
 					onCancel={onCancel}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onSubmit={onSubmit}

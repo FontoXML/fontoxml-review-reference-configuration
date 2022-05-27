@@ -36,17 +36,17 @@ function validateProposedChangeField(
 const rows = { minimum: 2, maximum: 6 };
 
 function ProposalAddOrEditFormContent({
+	focusableRef,
 	isSubmitDisabled,
 	onFieldChange,
-	onFocusableRef,
-	onCancel,
-	onReviewAnnotationRefresh,
-	onSubmit,
-	reviewAnnotation,
+	onCancel, 
+	onReviewAnnotationRefresh, 
+	onSubmit, 
+	reviewAnnotation, 
 }: Props & {
+	focusableRef: HTMLElement;
 	isSubmitDisabled: boolean;
 	onFieldChange(...args: unknown[]): void;
-	onFocusableRef(): void;
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
@@ -98,7 +98,7 @@ function ProposalAddOrEditFormContent({
 						placeholder={t(
 							'Leave empty to propose removing the selected content'
 						)}
-						ref={onFocusableRef}
+						ref={focusableRef}
 						rows={rows}
 						validate={validate}
 						data-test-id="comment"
@@ -134,6 +134,7 @@ function ProposalAddOrEditFormContent({
 }
 
 type Props = {
+	focusableRef: HTMLElement;
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
@@ -141,6 +142,7 @@ type Props = {
 };
 
 function ProposalAddOrEditForm({
+	focusableRef,
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
@@ -154,13 +156,12 @@ function ProposalAddOrEditForm({
 			{({
 				isSubmitDisabled,
 				onFieldChange,
-				onFocusableRef,
 				onSubmit,
 			}) => (
 				<ProposalAddOrEditFormContent
+					focusableRef={focusableRef}
 					isSubmitDisabled={isSubmitDisabled}
 					onFieldChange={onFieldChange}
-					onFocusableRef={onFocusableRef}
 					onCancel={onCancel}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onSubmit={onSubmit}

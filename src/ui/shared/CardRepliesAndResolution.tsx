@@ -24,6 +24,7 @@ import TruncatedText from './TruncatedText';
 
 type Props = {
 	context: ReviewCardContentComponentProps['context'];
+	focusableRef: HTMLElement;
 	onProposalMerge?: ReviewCardContentComponentProps['onProposalMerge'];
 	onReplyEdit: ReviewCardContentComponentProps['onReplyEdit'];
 	onReplyErrorHide: ReviewCardContentComponentProps['onReplyErrorHide'];
@@ -39,6 +40,7 @@ type Props = {
 
 const CardRepliesAndResolution: React.FC<Props> = ({
 	context,
+	focusableRef,
 	onProposalMerge = null,
 	onReplyEdit,
 	onReplyErrorHide,
@@ -167,6 +169,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			{addingOrEditingReply &&
 				context !== FeedbackContextType.CREATED_CONTEXT && (
 					<ReplyForm
+						focusableRef={focusableRef}
 						onCancel={onReplyFormCancel}
 						onHide={onReplyErrorHide}
 						onRefresh={onReplyRefresh}

@@ -71,17 +71,17 @@ function validateReplyField(value: string): FormFeedback {
 }
 
 function ReplyFormContent({
+	focusableRef,
 	isSubmitDisabled,
-	onCancelButtonClick,
-	onFocusableRef,
-	onHideLinkClick,
-	onRefreshLinkClick,
-	onSubmit,
-	reply,
+	onCancelButtonClick, 
+	onHideLinkClick, 
+	onRefreshLinkClick, 
+	onSubmit, 
+	reply, 
 }: {
+	focusableRef: HTMLElement;
 	isSubmitDisabled: boolean;
 	onCancelButtonClick(): void;
-	onFocusableRef(): void;
 	onHideLinkClick: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefreshLinkClick: ReviewCardContentComponentProps['onReplyRefresh'];
 	onSubmit(): void;
@@ -120,7 +120,7 @@ function ReplyFormContent({
 				<TextArea
 					isDisabled={isDisabled}
 					name="reply"
-					ref={onFocusableRef}
+					ref={focusableRef}
 					rows={rows}
 					validate={validateReplyField}
 					placeholder={t('Type your reply')}
@@ -162,6 +162,7 @@ function ReplyFormContent({
 }
 
 type Props = {
+	focusableRef: HTMLElement;
 	onCancel: ReviewCardContentComponentProps['onReplyFormCancel'];
 	onHide: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
@@ -169,7 +170,14 @@ type Props = {
 	reply: ReviewReply;
 };
 
-function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }: Props) {
+function ReplyForm({
+	focusableRef,
+	onCancel,
+	onHide,
+	onRefresh,
+	onSubmit,
+	reply
+}: Props) {
 	const handleHideLinkClick = React.useCallback(() => {
 		onHide(reply.id);
 	}, [onHide, reply.id]);
@@ -193,11 +201,11 @@ function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }: Props) {
 			initialValueByName={reply.metadata}
 			onSubmit={handleSubmit}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onSubmit }) => (
+			{({ isSubmitDisabled, onSubmit }) => (
 				<ReplyFormContent
+					focusableRef={focusableRef}
 					isSubmitDisabled={isSubmitDisabled}
 					onCancelButtonClick={handleCancelButtonClick}
-					onFocusableRef={onFocusableRef}
 					onHideLinkClick={handleHideLinkClick}
 					onRefreshLinkClick={handleRefreshLinkClick}
 					onSubmit={onSubmit}
