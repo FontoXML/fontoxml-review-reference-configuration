@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import {
 	Block,
 	Button,
@@ -9,54 +11,54 @@ import {
 	Menu,
 	MenuItem,
 	MenuItemWithDrop,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
 import Badge from 'fontoxml-feedback/src/Badge';
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
+import type {
+	ReviewAnnotationError,
+	ReviewCardContentComponentProps,
+} from 'fontoxml-feedback/src/types';
 import {
-	AnnotationError,
-	AnnotationStatus,
-	BusyState,
-	CardContentComponentProps,
-	RecoveryOption,
-	TargetType,
+	ReviewAnnotationStatus,
+	ReviewBusyState,
+	ReviewRecoveryOption,
+	ReviewTargetType,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
 import { CARD_HEADER_HEIGHT } from './../constants';
-import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 
 function determineShareButtonLabel(
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'],
-	error: AnnotationError,
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'],
+	error: ReviewAnnotationError,
 	isLoading: boolean
 ): string {
 	if (isLoading) {
 		return t('Sharing…');
 	}
 
-	return reviewAnnotation.busyState === BusyState.SHARING &&
+	return reviewAnnotation.busyState === ReviewBusyState.SHARING &&
 		typeof error !== 'number' &&
 		error &&
-		error.recovery === RecoveryOption.RETRYABLE
+		error.recovery === ReviewRecoveryOption.RETRYABLE
 		? t('Retry share')
 		: t('Share');
 }
 
 type Props = {
-	context: CardContentComponentProps['context'];
+	context: ReviewCardContentComponentProps['context'];
 	hasReplyInNonIdleBusyState: boolean;
-	isSelectedToShare: CardContentComponentProps['isSelectedToShare'];
-	onReviewAnnotationEdit: CardContentComponentProps['onReviewAnnotationEdit'];
-	onReviewAnnotationRemove: CardContentComponentProps['onReviewAnnotationRemove'];
-	onReviewAnnotationResolve: CardContentComponentProps['onReviewAnnotationResolve'];
-	onReviewAnnotationShare: CardContentComponentProps['onReviewAnnotationShare'];
-	onReviewAnnotationShareAddRemoveToggle: CardContentComponentProps['onReviewAnnotationShareAddRemoveToggle'];
-	onReviewAnnotationShowInCreatedContext: CardContentComponentProps['onReviewAnnotationShowInCreatedContext'];
-	onReviewAnnotationShowInResolvedContext: CardContentComponentProps['onReviewAnnotationShowInResolvedContext'];
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+	isSelectedToShare: ReviewCardContentComponentProps['isSelectedToShare'];
+	onReviewAnnotationEdit: ReviewCardContentComponentProps['onReviewAnnotationEdit'];
+	onReviewAnnotationRemove: ReviewCardContentComponentProps['onReviewAnnotationRemove'];
+	onReviewAnnotationResolve: ReviewCardContentComponentProps['onReviewAnnotationResolve'];
+	onReviewAnnotationShare: ReviewCardContentComponentProps['onReviewAnnotationShare'];
+	onReviewAnnotationShareAddRemoveToggle: ReviewCardContentComponentProps['onReviewAnnotationShareAddRemoveToggle'];
+	onReviewAnnotationShowInCreatedContext: ReviewCardContentComponentProps['onReviewAnnotationShowInCreatedContext'];
+	onReviewAnnotationShowInResolvedContext: ReviewCardContentComponentProps['onReviewAnnotationShowInResolvedContext'];
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
 export default function CardHeader({
@@ -75,23 +77,25 @@ export default function CardHeader({
 	const showEditButton =
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT &&
-		reviewAnnotation.status !== AnnotationStatus.RESOLVED;
+		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED;
 
 	const showRemoveButton =
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT &&
-		reviewAnnotation.status === AnnotationStatus.PRIVATE;
+		reviewAnnotation.status === ReviewAnnotationStatus.PRIVATE;
 
 	const showCreatedContextButton =
-		reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
+		reviewAnnotation.targets[0].type !==
+			ReviewTargetType.PUBLICATION_SELECTOR &&
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT;
 
 	const showResolvedContextButton =
-		reviewAnnotation.targets[0].type !== TargetType.PUBLICATION_SELECTOR &&
+		reviewAnnotation.targets[0].type !==
+			ReviewTargetType.PUBLICATION_SELECTOR &&
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT &&
-		reviewAnnotation.status === AnnotationStatus.RESOLVED;
+		reviewAnnotation.status === ReviewAnnotationStatus.RESOLVED;
 
 	const showViewInMenuItem =
 		(showCreatedContextButton || showResolvedContextButton) &&
@@ -101,7 +105,7 @@ export default function CardHeader({
 	const showPopoverButton = React.useMemo(() => {
 		if (
 			context === FeedbackContextType.CREATED_CONTEXT ||
-			reviewAnnotation.busyState !== BusyState.IDLE ||
+			reviewAnnotation.busyState !== ReviewBusyState.IDLE ||
 			!reviewAnnotation.isSelected ||
 			hasReplyInNonIdleBusyState ||
 			(!showEditButton && !showRemoveButton && !showViewInMenuItem)
@@ -115,9 +119,9 @@ export default function CardHeader({
 		hasReplyInNonIdleBusyState,
 		reviewAnnotation.busyState,
 		reviewAnnotation.isSelected,
-		reviewAnnotation.status,
 		showEditButton,
 		showRemoveButton,
+		showViewInMenuItem,
 	]);
 
 	const renderAnchor = React.useCallback(
@@ -137,7 +141,7 @@ export default function CardHeader({
 				/>
 			);
 		},
-		[]
+		[reviewAnnotation.isLoading]
 	);
 
 	const renderViewInDrop = React.useCallback(
@@ -234,22 +238,22 @@ export default function CardHeader({
 
 	const showResolveButton =
 		!hasReplyInNonIdleBusyState &&
-		reviewAnnotation.busyState !== BusyState.EDITING &&
-		reviewAnnotation.status !== AnnotationStatus.PRIVATE &&
-		reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
+		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
+		reviewAnnotation.status !== ReviewAnnotationStatus.PRIVATE &&
+		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT;
 
 	const showShareButton =
 		!hasReplyInNonIdleBusyState &&
-		reviewAnnotation.busyState !== BusyState.EDITING &&
-		reviewAnnotation.status === AnnotationStatus.PRIVATE &&
+		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
+		reviewAnnotation.status === ReviewAnnotationStatus.PRIVATE &&
 		(context === FeedbackContextType.EDITOR ||
 			context === FeedbackContextType.REVIEW);
 
 	const shareButtonLabel =
 		reviewAnnotation.isSelected &&
-		reviewAnnotation.busyState !== BusyState.ADDING &&
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
 		determineShareButtonLabel(
 			reviewAnnotation,
 			reviewAnnotation.error,
@@ -259,31 +263,33 @@ export default function CardHeader({
 	const shareButtonIsDisabled =
 		(typeof reviewAnnotation.error !== 'number' &&
 			reviewAnnotation.error &&
-			reviewAnnotation.error.recovery !== RecoveryOption.RETRYABLE) ||
-		reviewAnnotation.busyState === BusyState.REMOVING ||
+			reviewAnnotation.error.recovery !==
+				ReviewRecoveryOption.RETRYABLE) ||
+		reviewAnnotation.busyState === ReviewBusyState.REMOVING ||
 		reviewAnnotation.isLoading ||
-		reviewAnnotation.busyState === BusyState.ADDING;
+		reviewAnnotation.busyState === ReviewBusyState.ADDING;
 
 	let shareButtonType: 'default' | 'primary' | 'transparent';
 	if (
 		reviewAnnotation.isSelected &&
-		reviewAnnotation.busyState !== BusyState.ADDING
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING
 	) {
 		shareButtonType = 'primary';
-	} else if (reviewAnnotation.busyState === BusyState.ADDING) {
+	} else if (reviewAnnotation.busyState === ReviewBusyState.ADDING) {
 		shareButtonType = 'default';
 	} else {
 		shareButtonType = 'transparent';
 	}
 
 	const resolutionBadgeTooltipContent = React.useMemo(() => {
-		if (!reviewAnnotation.resolvedMetadata?.resolution) {
+		if (!reviewAnnotation.resolvedMetadata?.['resolution']) {
 			return undefined;
 		}
 
 		const resolution = resolutions
 			.find(
-				(r) => r.value === reviewAnnotation.resolvedMetadata.resolution
+				(r) =>
+					r.value === reviewAnnotation.resolvedMetadata['resolution']
 			)
 			.displayLabel.toLowerCase();
 
@@ -309,9 +315,9 @@ export default function CardHeader({
 				{(context === FeedbackContextType.EDITOR_SHARING ||
 					context === FeedbackContextType.REVIEW_SHARING) &&
 					(!reviewAnnotation.error ||
-						typeof reviewAnnotation.error !== 'number' &&
-						reviewAnnotation.error.recovery ===
-							RecoveryOption.RETRYABLE) && (
+						(typeof reviewAnnotation.error !== 'number' &&
+							reviewAnnotation.error.recovery ===
+								ReviewRecoveryOption.RETRYABLE)) && (
 						<Block>
 							<Checkbox
 								isDisabled={reviewAnnotation.isLoading}
@@ -352,7 +358,7 @@ export default function CardHeader({
 
 							{showResolveButton &&
 								reviewAnnotation.busyState !==
-									BusyState.RESOLVING && (
+									ReviewBusyState.RESOLVING && (
 									<Button
 										key={
 											reviewAnnotation.isSelected
@@ -384,9 +390,10 @@ export default function CardHeader({
 								)}
 
 							{reviewAnnotation.status ===
-								AnnotationStatus.RESOLVED &&
-								reviewAnnotation.resolvedMetadata
-									?.resolution && (
+								ReviewAnnotationStatus.RESOLVED &&
+								reviewAnnotation.resolvedMetadata?.[
+									'resolution'
+								] && (
 									<Badge
 										label={
 											<Flex
@@ -395,9 +402,9 @@ export default function CardHeader({
 												isInline
 											>
 												{reviewAnnotation
-													.resolvedMetadata
-													.resolution ===
-													'accepted' && (
+													.resolvedMetadata[
+													'resolution'
+												] === 'accepted' && (
 													<Icon
 														colorName="inherit"
 														icon="check"
@@ -405,9 +412,9 @@ export default function CardHeader({
 													/>
 												)}
 												{reviewAnnotation
-													.resolvedMetadata
-													.resolution ===
-													'rejected' && (
+													.resolvedMetadata[
+													'resolution'
+												] === 'rejected' && (
 													<Icon
 														colorName="inherit"
 														icon="times"
@@ -417,8 +424,9 @@ export default function CardHeader({
 
 												{!reviewAnnotation.isSelected &&
 													reviewAnnotation
-														.resolvedMetadata
-														.resolution}
+														.resolvedMetadata[
+														'resolution'
+													]}
 											</Flex>
 										}
 										tooltipContent={

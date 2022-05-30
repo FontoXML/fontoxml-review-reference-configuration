@@ -1,12 +1,17 @@
-import { Block, Flex, Icon, Label } from 'fds/components';
 import * as React from 'react';
 
-import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import {
-	AnnotationStatus,
-	BusyState,
-	CardContentComponentProps,
-	RecoveryOption,
+	Block,
+	Flex,
+	Icon,
+	Label,
+} from 'fontoxml-design-system/src/components';
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
+import {
+	ReviewAnnotationStatus,
+	ReviewBusyState,
+	ReviewRecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
@@ -46,7 +51,7 @@ function CommentCardContent({
 	onReplyRefresh,
 	onReplyRemove,
 	rangeVisibility,
-}: CardContentComponentProps) {
+}: ReviewCardContentComponentProps) {
 	const hasReplyInNonIdleBusyState = React.useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;
@@ -55,7 +60,7 @@ function CommentCardContent({
 			(hasReplyInNonIdleBusyState, reply) => {
 				if (
 					!hasReplyInNonIdleBusyState &&
-					reply.busyState !== BusyState.IDLE
+					reply.busyState !== ReviewBusyState.IDLE
 				) {
 					hasReplyInNonIdleBusyState = true;
 				}
@@ -66,28 +71,29 @@ function CommentCardContent({
 	}, [reviewAnnotation.replies]);
 
 	const showReplyButton =
-		reviewAnnotation.status !== AnnotationStatus.RESOLVED;
+		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED;
 
 	const showFooter =
 		showReplyButton &&
 		(context === FeedbackContextType.EDITOR ||
 			context === FeedbackContextType.REVIEW) &&
 		reviewAnnotation.isSelected &&
-		reviewAnnotation.busyState !== BusyState.ADDING &&
-		reviewAnnotation.busyState !== BusyState.EDITING &&
-		reviewAnnotation.busyState !== BusyState.RESOLVING &&
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
+		reviewAnnotation.busyState !== ReviewBusyState.RESOLVING &&
 		!hasReplyInNonIdleBusyState;
 
 	const showErrorFooter =
 		reviewAnnotation.error &&
-		reviewAnnotation.busyState === BusyState.REMOVING;
+		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
 		typeof reviewAnnotation.error !== 'number' &&
 		reviewAnnotation.error &&
-		(reviewAnnotation.error.recovery === RecoveryOption.ACKNOWLEDGEABLE ||
-			(reviewAnnotation.busyState === BusyState.IDLE &&
+		(reviewAnnotation.error.recovery ===
+			ReviewRecoveryOption.ACKNOWLEDGEABLE ||
+			(reviewAnnotation.busyState === ReviewBusyState.IDLE &&
 				!hasReplyInNonIdleBusyState))
 	) {
 		return (
@@ -102,7 +108,7 @@ function CommentCardContent({
 	}
 	if (
 		reviewAnnotation.isLoading &&
-		reviewAnnotation.busyState === BusyState.REFRESHING
+		reviewAnnotation.busyState === ReviewBusyState.REFRESHING
 	) {
 		return (
 			<Block paddingSize="m">
@@ -112,7 +118,7 @@ function CommentCardContent({
 	}
 	if (
 		reviewAnnotation.isLoading &&
-		reviewAnnotation.busyState === BusyState.REMOVING
+		reviewAnnotation.busyState === ReviewBusyState.REMOVING
 	) {
 		return (
 			<Block paddingSize="m">
@@ -123,34 +129,34 @@ function CommentCardContent({
 
 	let commentType = null;
 	if (
-		(reviewAnnotation.busyState !== BusyState.ADDING &&
-			reviewAnnotation.busyState !== BusyState.EDITING &&
+		(reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+			reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
 			reviewAnnotation.type === 'comment') ||
 		reviewAnnotation.type === 'object-comment'
 	) {
 		commentType = commentTypes.find(
 			(commentType) =>
-				commentType.value === reviewAnnotation.metadata.commentType
+				commentType.value === reviewAnnotation.metadata['commentType']
 		);
 		commentType = commentType
 			? commentType.label
-			: reviewAnnotation.metadata.commentType;
+			: reviewAnnotation.metadata['commentType'];
 	}
 
 	let publicationCommentType = null;
 	if (
-		reviewAnnotation.busyState !== BusyState.ADDING &&
-		reviewAnnotation.busyState !== BusyState.EDITING &&
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
 		reviewAnnotation.type === 'publication-comment'
 	) {
 		publicationCommentType = publicationCommentTypes.find(
 			(publicationCommentType) =>
 				publicationCommentType.value ===
-				reviewAnnotation.metadata.commentType
+				reviewAnnotation.metadata['commentType']
 		);
 		publicationCommentType = publicationCommentType
 			? publicationCommentType.label
-			: reviewAnnotation.metadata.commentType;
+			: reviewAnnotation.metadata['commentType'];
 	}
 
 	return (
@@ -161,7 +167,7 @@ function CommentCardContent({
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			data-review-annotation-comment-type={
-				reviewAnnotation.metadata.commentType
+				reviewAnnotation.metadata['commentType']
 			}
 		>
 			<CardHeader
@@ -185,9 +191,9 @@ function CommentCardContent({
 			/>
 
 			<Block spaceVerticalSize="m">
-				{reviewAnnotation.busyState !== BusyState.ADDING &&
-					reviewAnnotation.busyState !== BusyState.EDITING &&
-					reviewAnnotation.metadata.comment && (
+				{reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+					reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
+					reviewAnnotation.metadata['comment'] && (
 						<Block>
 							<Flex
 								style={{ height: CARD_HEADER_HEIGHT }}
@@ -238,19 +244,19 @@ function CommentCardContent({
 
 							{reviewAnnotation.isSelected && (
 								<TruncatedText data-test-id="comment">
-									{reviewAnnotation.metadata.comment}
+									{reviewAnnotation.metadata['comment']}
 								</TruncatedText>
 							)}
 							{!reviewAnnotation.isSelected && (
 								<Label isBlock data-test-id="comment">
-									{reviewAnnotation.metadata.comment}
+									{reviewAnnotation.metadata['comment']}
 								</Label>
 							)}
 						</Block>
 					)}
 
-				{(reviewAnnotation.busyState === BusyState.ADDING ||
-					reviewAnnotation.busyState === BusyState.EDITING) && (
+				{(reviewAnnotation.busyState === ReviewBusyState.ADDING ||
+					reviewAnnotation.busyState === ReviewBusyState.EDITING) && (
 					<CommentAddOrEditForm
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}

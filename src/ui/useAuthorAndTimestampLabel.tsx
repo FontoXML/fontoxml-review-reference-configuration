@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import configurationManager from 'fontoxml-configuration/src/configurationManager';
-import {
-	BusyState,
-	CardContentComponentProps,
-	Reply as ReplyType
+import type {
+	ReviewCardContentComponentProps,
+	ReviewReply,
 } from 'fontoxml-feedback/src/types';
+import { ReviewBusyState } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 const configuredScope = configurationManager.get('scope');
@@ -28,7 +28,9 @@ const configuredScope = configurationManager.get('scope');
  * @react
  */
 export default function useAuthorAndTimestampLabel(
-	reviewAnnotationOrReply: CardContentComponentProps['reviewAnnotation'] | ReplyType,
+	reviewAnnotationOrReply:
+		| ReviewCardContentComponentProps['reviewAnnotation']
+		| ReviewReply,
 	isReviewAnnotationResolved: boolean,
 	fallback = t('Author not available')
 ): {
@@ -37,7 +39,7 @@ export default function useAuthorAndTimestampLabel(
 } {
 	const formattedAuthor = React.useMemo(() => {
 		let authorLabel = t('You');
-		if (reviewAnnotationOrReply.busyState === BusyState.ADDING) {
+		if (reviewAnnotationOrReply.busyState === ReviewBusyState.ADDING) {
 			return authorLabel;
 		}
 
@@ -72,7 +74,7 @@ export default function useAuthorAndTimestampLabel(
 		return t('{TIMESTAMP, fonto_date}, {TIMESTAMP, time, short}', {
 			TIMESTAMP: timestamp,
 		});
-	}, [timestamp, timestampField]);
+	}, [timestamp]);
 
 	return { author: formattedAuthor, timestamp: formattedTimestamp };
 }

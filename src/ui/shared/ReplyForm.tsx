@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import {
 	Block,
 	Button,
@@ -5,29 +7,35 @@ import {
 	HorizontalSeparationLine,
 	Icon,
 	TextArea,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
+import type { FormFeedback } from 'fontoxml-design-system/src/types';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
-import { AnnotationError, BusyState,
-	CardContentComponentProps,
-	RecoveryOption,
-	Reply as ReplyType
+import type {
+	ReviewAnnotationError,
+	ReviewCardContentComponentProps,
+	ReviewReply,
+} from 'fontoxml-feedback/src/types';
+import {
+	ReviewBusyState,
+	ReviewRecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
-import { FormFeedback } from 'fontoxml-design-system/src/types';
 
 function determineSaveButtonLabel(
-	error: AnnotationError,
+	error: ReviewAnnotationError,
 	isEditing: boolean,
 	isLoading: boolean
 ): string {
-	if (typeof error !== 'number' && error && error.recovery === RecoveryOption.RETRYABLE) {
+	if (
+		typeof error !== 'number' &&
+		error &&
+		error.recovery === ReviewRecoveryOption.RETRYABLE
+	) {
 		if (!isEditing && !isLoading) {
 			return t('Retry reply');
 		}
@@ -48,6 +56,8 @@ function determineSaveButtonLabel(
 	if (isEditing && isLoading) {
 		return t('Saving…');
 	}
+
+	return t('Save');
 }
 
 const rows = { minimum: 2, maximum: 6 };
@@ -62,33 +72,34 @@ function validateReplyField(value: string): FormFeedback {
 
 function ReplyFormContent({
 	isSubmitDisabled,
-	onCancelButtonClick, 
+	onCancelButtonClick,
 	onFocusableRef,
-	onHideLinkClick, 
-	onRefreshLinkClick, 
-	onSubmit, 
-	reply, 
+	onHideLinkClick,
+	onRefreshLinkClick,
+	onSubmit,
+	reply,
 }: {
 	isSubmitDisabled: boolean;
-	onCancelButtonClick: () => void;
+	onCancelButtonClick(): void;
 	onFocusableRef(): void;
-	onHideLinkClick: CardContentComponentProps['onReplyErrorHide'];
-	onRefreshLinkClick: CardContentComponentProps['onReplyRefresh'];
+	onHideLinkClick: ReviewCardContentComponentProps['onReplyErrorHide'];
+	onRefreshLinkClick: ReviewCardContentComponentProps['onReplyRefresh'];
 	onSubmit(): void;
-	reply: ReplyType;
+	reply: ReviewReply;
 }) {
-	const isAdding = reply.busyState === BusyState.ADDING;
-	const isEditing = reply.busyState === BusyState.EDITING;
+	const isAdding = reply.busyState === ReviewBusyState.ADDING;
+	const isEditing = reply.busyState === ReviewBusyState.EDITING;
 
-	const error = typeof reply.error !== 'number' &&
+	const error =
+		typeof reply.error !== 'number' &&
 		reply.error &&
 		(isAdding || isEditing)
-		? reply.error
-		: null;
+			? reply.error
+			: null;
 
 	const isDisabled =
 		reply.isLoading ||
-		(error && error.recovery !== RecoveryOption.RETRYABLE);
+		(error && error.recovery !== ReviewRecoveryOption.RETRYABLE);
 	const isLoading = reply.isLoading && (isAdding || isEditing);
 
 	return (
@@ -151,29 +162,28 @@ function ReplyFormContent({
 }
 
 type Props = {
-	onCancel: CardContentComponentProps['onReplyFormCancel'];
-	onHide: CardContentComponentProps['onReplyErrorHide'];
-	onRefresh: CardContentComponentProps['onReplyRefresh'];
-	onSubmit: CardContentComponentProps['onReplyFormSubmit'];
-	reply: ReplyType;
+	onCancel: ReviewCardContentComponentProps['onReplyFormCancel'];
+	onHide: ReviewCardContentComponentProps['onReplyErrorHide'];
+	onRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
+	onSubmit: ReviewCardContentComponentProps['onReplyFormSubmit'];
+	reply: ReviewReply;
 };
 
 function ReplyForm({ onCancel, onHide, onRefresh, onSubmit, reply }: Props) {
-	const handleHideLinkClick = React.useCallback(
-		() => onHide(reply.id),
-		[onHide, reply.id]
-	);
-	const handleRefreshLinkClick = React.useCallback(
-		() => onRefresh(reply.id),
-		[onRefresh, reply.id]
-	);
+	const handleHideLinkClick = React.useCallback(() => {
+		onHide(reply.id);
+	}, [onHide, reply.id]);
+	const handleRefreshLinkClick = React.useCallback(() => {
+		onRefresh(reply.id);
+	}, [onRefresh, reply.id]);
 
-	const handleCancelButtonClick = React.useCallback(
-		() => onCancel(reply.id),
-		[onCancel, reply.id]
-	);
+	const handleCancelButtonClick = React.useCallback(() => {
+		onCancel(reply.id);
+	}, [onCancel, reply.id]);
 	const handleSubmit = React.useCallback(
-		(valueByName) => onSubmit(reply.id, valueByName),
+		(valueByName) => {
+			onSubmit(reply.id, valueByName);
+		},
 		[onSubmit, reply.id]
 	);
 

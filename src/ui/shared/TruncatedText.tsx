@@ -1,7 +1,7 @@
-import { Block, Text, TextLink } from 'fds/components';
-import { applyCss } from 'fds/system';
 import * as React from 'react';
 
+import { Block, Text, TextLink } from 'fontoxml-design-system/src/components';
+import { applyCss } from 'fontoxml-design-system/src/system';
 import t from 'fontoxml-localization/src/t';
 
 const styles = applyCss([

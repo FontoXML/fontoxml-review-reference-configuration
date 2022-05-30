@@ -1,7 +1,15 @@
-import { Button, CompactStateMessage, Flex } from 'fds/components';
 import * as React from 'react';
 
-import { AnnotationError, CardContentComponentProps, RecoveryOption } from 'fontoxml-feedback/src/types';
+import {
+	Button,
+	CompactStateMessage,
+	Flex,
+} from 'fontoxml-design-system/src/components';
+import type {
+	ReviewAnnotationError,
+	ReviewCardContentComponentProps,
+} from 'fontoxml-feedback/src/types';
+import { ReviewRecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 const iconByConnotation = {
@@ -10,9 +18,9 @@ const iconByConnotation = {
 };
 
 type Props = {
-	error: AnnotationError;
-	onAcknowledge: CardContentComponentProps['onReviewAnnotationErrorAcknowledge'];
-	onRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
+	error: ReviewAnnotationError;
+	onAcknowledge: ReviewCardContentComponentProps['onReviewAnnotationErrorAcknowledge'];
+	onRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
 };
 
 function ErrorStateMessage({ error, onAcknowledge, onRefresh }: Props) {
@@ -20,7 +28,9 @@ function ErrorStateMessage({ error, onAcknowledge, onRefresh }: Props) {
 
 	const connotation =
 		isAnnotationError &&
-		error.recovery === RecoveryOption.ACKNOWLEDGEABLE ? 'error' : 'warning';
+		error.recovery === ReviewRecoveryOption.ACKNOWLEDGEABLE
+			? 'error'
+			: 'warning';
 
 	return (
 		<Flex alignItems="center" flexDirection="column">
@@ -34,21 +44,22 @@ function ErrorStateMessage({ error, onAcknowledge, onRefresh }: Props) {
 			{isAnnotationError &&
 				typeof error !== 'number' &&
 				error &&
-				error.recovery === RecoveryOption.ACKNOWLEDGEABLE && (
-				<Button
-					label={t('Hide message')}
-					onClick={onAcknowledge}
-					type="primary"
-				/>
-			)}
+				error.recovery === ReviewRecoveryOption.ACKNOWLEDGEABLE && (
+					<Button
+						label={t('Hide message')}
+						onClick={onAcknowledge}
+						type="primary"
+					/>
+				)}
 
-			{isAnnotationError && error.recovery === RecoveryOption.REFRESHABLE && (
-				<Button
-					label={t('Refresh')}
-					onClick={onRefresh}
-					type="primary"
-				/>
-			)}
+			{isAnnotationError &&
+				error.recovery === ReviewRecoveryOption.REFRESHABLE && (
+					<Button
+						label={t('Refresh')}
+						onClick={onRefresh}
+						type="primary"
+					/>
+				)}
 		</Flex>
 	);
 }

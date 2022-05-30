@@ -1,15 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
 import { Button } from 'fontoxml-design-system/src/components';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import ProposalCardFooter from "./ProposalCardFooter";
-import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
+import ProposalCardFooter from './ProposalCardFooter';
 
 type Props = {
-	onReplyAdd: CardContentComponentProps['onReplyAdd'];
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+	onReplyAdd: ReviewCardContentComponentProps['onReplyAdd'];
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
 function ProposalReplyComponent({ onReplyAdd, reviewAnnotation }: Props) {
@@ -17,11 +17,14 @@ function ProposalReplyComponent({ onReplyAdd, reviewAnnotation }: Props) {
 	const { path } = useRouteMatch();
 	const isOnReviewRoute = path === '/review';
 
-	// If we are on the review route, we need to show the text input 
+	// If we are on the review route, we need to show the text input
 	// to add the reply.
 	if (isOnReviewRoute) {
 		return (
-			<ProposalCardFooter onReplyAdd={onReplyAdd} reviewAnnotation={reviewAnnotation} />
+			<ProposalCardFooter
+				onReplyAdd={onReplyAdd}
+				reviewAnnotation={reviewAnnotation}
+			/>
 		);
 	}
 

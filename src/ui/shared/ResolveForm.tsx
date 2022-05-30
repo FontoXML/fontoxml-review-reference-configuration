@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import {
 	Block,
 	Button,
@@ -9,37 +11,42 @@ import {
 	Text,
 	TextArea,
 	Toast,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
+import type {
+	FormFeedback,
+	FormValueByName,
+} from 'fontoxml-design-system/src/types';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import type {
+	ReviewAnnotationError,
+	ReviewCardContentComponentProps,
+} from 'fontoxml-feedback/src/types';
 import {
-	AnnotationError,
-	AnnotationStatus,
-	CardContentComponentProps,
-	ProposalState as ProposalStateTypes,
-	RecoveryOption,
+	ReviewAnnotationStatus,
+	ReviewProposalState,
+	ReviewRecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
-import { FormFeedback, FormValueByName } from 'fontoxml-design-system/src/types';
-
 const rows = { minimum: 2, maximum: 6 };
 
-function determineSaveButtonLabel(error: AnnotationError, isLoading: boolean): string {
+function determineSaveButtonLabel(
+	error: ReviewAnnotationError,
+	isLoading: boolean
+): string {
 	if (isLoading) {
 		return t('Resolving…');
 	}
 
 	return typeof error !== 'number' &&
 		error &&
-		error.recovery === RecoveryOption.RETRYABLE
+		error.recovery === ReviewRecoveryOption.RETRYABLE
 		? t('Retry resolve')
 		: t('Resolve');
 }
@@ -51,7 +58,6 @@ function validateResolutionField(value: unknown): FormFeedback {
 
 	return null;
 }
-
 
 function ResolveFormContent({
 	context,
@@ -71,25 +77,27 @@ function ResolveFormContent({
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
 		reviewAnnotation.isLoading ||
-		(typeof error !== 'number' && error && error.recovery !== RecoveryOption.RETRYABLE);
+		(typeof error !== 'number' &&
+			error &&
+			error.recovery !== ReviewRecoveryOption.RETRYABLE);
 	const isLoading = reviewAnnotation.isLoading;
 
 	const proposalState = reviewAnnotation.proposalState;
 
 	const isRejectingMergedProposal =
 		reviewAnnotation.type === 'proposal' &&
-		proposalState === ProposalStateTypes.MERGED &&
-		valueByName.resolution === 'rejected';
+		proposalState === ReviewProposalState.MERGED &&
+		valueByName['resolution'] === 'rejected';
 	const isAcceptingUnmergedProposal =
 		reviewAnnotation.type === 'proposal' &&
-		proposalState === ProposalStateTypes.ENABLED &&
-		valueByName.resolution === 'accepted';
+		proposalState === ReviewProposalState.ENABLED &&
+		valueByName['resolution'] === 'accepted';
 	const isAcceptingChangedProposal =
 		reviewAnnotation.type === 'proposal' &&
-		proposalState !== ProposalStateTypes.ENABLED &&
-		proposalState !== ProposalStateTypes.MERGING &&
-		proposalState !== ProposalStateTypes.MERGED &&
-		valueByName.resolution === 'accepted';
+		proposalState !== ReviewProposalState.ENABLED &&
+		proposalState !== ReviewProposalState.MERGING &&
+		proposalState !== ReviewProposalState.MERGED &&
+		valueByName['resolution'] === 'accepted';
 
 	const isInReview =
 		context === FeedbackContextType.REVIEW ||
@@ -195,7 +203,8 @@ function ResolveFormContent({
 
 					{!isInReview &&
 						reviewAnnotation.type === 'proposal' &&
-						reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
+						reviewAnnotation.status !==
+							ReviewAnnotationStatus.RESOLVED &&
 						onProposalMerge &&
 						proposalState && (
 							<>
@@ -222,11 +231,11 @@ function ResolveFormContent({
 }
 
 type Props = {
-	context: CardContentComponentProps['context'];
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
-	onCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
-	onProposalMerge: CardContentComponentProps['onProposalMerge'];
-	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
+	context: ReviewCardContentComponentProps['context'];
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
+	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
+	onProposalMerge: ReviewCardContentComponentProps['onProposalMerge'];
+	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
 	onSubmit(): void;
 };
 

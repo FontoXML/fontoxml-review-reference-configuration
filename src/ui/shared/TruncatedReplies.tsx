@@ -1,16 +1,19 @@
-import { HorizontalSeparationLine, TextLink } from 'fds/components';
 import * as React from 'react';
 
+import {
+	HorizontalSeparationLine,
+	TextLink,
+} from 'fontoxml-design-system/src/components';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import type { Props as RepliesProps } from '../shared/Replies';
 import Replies from '../shared/Replies';
-import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
 
 const MAX_NUMBER_OF_REPLIES_TO_SHOW = 2;
 
 type Props = RepliesProps & {
-	replies: CardContentComponentProps['reviewAnnotation']['replies'];
+	replies: ReviewCardContentComponentProps['reviewAnnotation']['replies'];
 	hasResolution: boolean;
 	includeResolutionInTruncatedReplies?: boolean;
 	isEditingReply: boolean;

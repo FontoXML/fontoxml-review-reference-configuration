@@ -1,13 +1,21 @@
-import { Block, Checkbox, Flex, Label } from 'fds/components';
 import * as React from 'react';
 
-import { FormValueByName } from 'fontoxml-design-system/src/types';
+import {
+	Block,
+	Checkbox,
+	Flex,
+	Label,
+} from 'fontoxml-design-system/src/components';
+import type { FormValueByName } from 'fontoxml-design-system/src/types';
+import type { ReviewFilterFormProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
-import { ReviewFilterFormProps } from 'fontoxml-feedback/src/types';
 
-function determineParentFieldValue(subFieldNames: string[], valueByNameForUI: FormValueByName): boolean {
+function determineParentFieldValue(
+	subFieldNames: string[],
+	valueByNameForUI: FormValueByName
+): boolean {
 	return subFieldNames.reduce<boolean>((value, subFieldName) => {
 		if (value === Checkbox.VALUE_INDETERMINATE) {
 			return value;
@@ -61,7 +69,7 @@ function FilterForm({
 	// Not used by this implementation; each field is tracked separately.
 	onInitialize: _onInitialize,
 	// Not used by this implementation: the fields can be the same for each product context.
-	productContent: _productContext,
+	// productContent: _productContext,
 	// Not used by this implementation; the input can never become invalid (only checkboxes are used,
 	// all of which are optional.)
 	showFeedback: _showFeedback,
@@ -82,7 +90,7 @@ function FilterForm({
 	// with a value of null for feedback, as explained before.
 	const handleFieldsChange = React.useCallback(
 		(changedFields) =>
-			changedFields.forEach((changedField) =>
+			changedFields.forEach((changedField) => {
 				onFieldChange({
 					...changedField,
 					// Do not send Checkbox.VALUE_INDETERMINATE to the backend.
@@ -91,14 +99,14 @@ function FilterForm({
 							? false
 							: changedField.value,
 					feedback: null,
-				})
-			),
+				});
+			}),
 		[onFieldChange]
 	);
 
 	// Determine Checkbox.VALUE_INDETERMINATE for the UI based on the valuesByName (from the backend).
 	const valueByNameForUI = { ...valueByName };
-	valueByNameForUI.typeComment = determineParentFieldValue(
+	valueByNameForUI['typeComment'] = determineParentFieldValue(
 		[
 			'typeComment',
 			'typeCommentTechnical',
@@ -107,7 +115,7 @@ function FilterForm({
 		],
 		valueByNameForUI
 	);
-	valueByNameForUI.typePublicationComment = determineParentFieldValue(
+	valueByNameForUI['typePublicationComment'] = determineParentFieldValue(
 		[
 			'typePublicationComment',
 			'typePublicationCommentTechnical',
@@ -116,7 +124,7 @@ function FilterForm({
 		],
 		valueByNameForUI
 	);
-	valueByNameForUI.resolutionResolved = determineParentFieldValue(
+	valueByNameForUI['resolutionResolved'] = determineParentFieldValue(
 		[
 			'resolutionResolved',
 			'resolutionResolvedAccepted',
@@ -142,7 +150,7 @@ function FilterForm({
 							onChange={(value: boolean) => {
 								onCheckboxChange('typeComment', value);
 							}}
-							value={valueByNameForUI.typeComment}
+							value={valueByNameForUI['typeComment']}
 						/>
 
 						<Block
@@ -157,7 +165,7 @@ function FilterForm({
 										value
 									);
 								}}
-								value={valueByNameForUI.typeCommentTechnical}
+								value={valueByNameForUI['typeCommentTechnical']}
 							/>
 							<Checkbox
 								label={t('General')}
@@ -167,7 +175,7 @@ function FilterForm({
 										value
 									);
 								}}
-								value={valueByNameForUI.typeCommentGeneral}
+								value={valueByNameForUI['typeCommentGeneral']}
 							/>
 							<Checkbox
 								label={t('Editorial')}
@@ -177,7 +185,7 @@ function FilterForm({
 										value
 									);
 								}}
-								value={valueByNameForUI.typeCommentEditorial}
+								value={valueByNameForUI['typeCommentEditorial']}
 							/>
 						</Block>
 					</Block>
@@ -191,7 +199,7 @@ function FilterForm({
 									value
 								);
 							}}
-							value={valueByNameForUI.typePublicationComment}
+							value={valueByNameForUI['typePublicationComment']}
 						/>
 
 						<Block
@@ -207,7 +215,9 @@ function FilterForm({
 									);
 								}}
 								value={
-									valueByNameForUI.typePublicationCommentTechnical
+									valueByNameForUI[
+										'typePublicationCommentTechnical'
+									]
 								}
 							/>
 							<Checkbox
@@ -219,7 +229,9 @@ function FilterForm({
 									);
 								}}
 								value={
-									valueByNameForUI.typePublicationCommentGeneral
+									valueByNameForUI[
+										'typePublicationCommentGeneral'
+									]
 								}
 							/>
 							<Checkbox
@@ -231,7 +243,9 @@ function FilterForm({
 									);
 								}}
 								value={
-									valueByNameForUI.typePublicationCommentEditorial
+									valueByNameForUI[
+										'typePublicationCommentEditorial'
+									]
 								}
 							/>
 						</Block>
@@ -242,7 +256,7 @@ function FilterForm({
 						onChange={(value: boolean) => {
 							onCheckboxChange('typeProposal', value);
 						}}
-						value={valueByNameForUI.typeProposal}
+						value={valueByNameForUI['typeProposal']}
 					/>
 				</Block>
 			</Block>
@@ -256,7 +270,7 @@ function FilterForm({
 						onChange={(value: boolean) => {
 							onCheckboxChange('resolutionResolved', value);
 						}}
-						value={valueByNameForUI.resolutionResolved}
+						value={valueByNameForUI['resolutionResolved']}
 					/>
 
 					<Block
@@ -271,7 +285,9 @@ function FilterForm({
 									value
 								);
 							}}
-							value={valueByNameForUI.resolutionResolvedAccepted}
+							value={
+								valueByNameForUI['resolutionResolvedAccepted']
+							}
 						/>
 
 						<Checkbox
@@ -282,7 +298,9 @@ function FilterForm({
 									value
 								);
 							}}
-							value={valueByNameForUI.resolutionResolvedRejected}
+							value={
+								valueByNameForUI['resolutionResolvedRejected']
+							}
 						/>
 					</Block>
 
@@ -291,7 +309,7 @@ function FilterForm({
 						onChange={(value: boolean) => {
 							onCheckboxChange('resolutionUnresolved', value);
 						}}
-						value={valueByNameForUI.resolutionUnresolved}
+						value={valueByNameForUI['resolutionUnresolved']}
 					/>
 				</Block>
 			</Block>

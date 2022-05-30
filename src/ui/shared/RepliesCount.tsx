@@ -1,12 +1,12 @@
+import * as React from 'react';
+
 import {
 	Block,
 	Flex,
 	HorizontalSeparationLine,
 	Icon,
 	Label,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
 import t from 'fontoxml-localization/src/t';
 
 type Props = {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -8,18 +8,21 @@ import {
 	TextArea,
 	TextAreaWithDiff,
 } from 'fontoxml-design-system/src/components';
+import type { FormFeedback } from 'fontoxml-design-system/src/types';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import {
-	BusyState,
-	CardContentComponentProps,
-	RecoveryOption
+	ReviewBusyState,
+	ReviewRecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
-import { FormFeedback } from 'fontoxml-design-system/src/types';
 
-function validateProposedChangeField(value: string, originalText: string): FormFeedback {
+function validateProposedChangeField(
+	value: string,
+	originalText: string
+): FormFeedback {
 	if (value === originalText) {
 		return {
 			connotation: 'error',
@@ -36,10 +39,10 @@ function ProposalAddOrEditFormContent({
 	isSubmitDisabled,
 	onFieldChange,
 	onFocusableRef,
-	onCancel, 
-	onReviewAnnotationRefresh, 
-	onSubmit, 
-	reviewAnnotation, 
+	onCancel,
+	onReviewAnnotationRefresh,
+	onSubmit,
+	reviewAnnotation,
 }: Props & {
 	isSubmitDisabled: boolean;
 	onFieldChange(...args: unknown[]): void;
@@ -48,18 +51,20 @@ function ProposalAddOrEditFormContent({
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
 		reviewAnnotation.isLoading ||
-		(typeof error !== 'number' && error && error.recovery !== RecoveryOption.RETRYABLE);
-	const isEditing = reviewAnnotation.busyState === BusyState.EDITING;
+		(typeof error !== 'number' &&
+			error &&
+			error.recovery !== ReviewRecoveryOption.RETRYABLE);
+	const isEditing = reviewAnnotation.busyState === ReviewBusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
 
 	const originalText = reviewAnnotation.originalText;
 
-	const validate = useCallback(
+	const validate = React.useCallback(
 		(value) => validateProposedChangeField(value, originalText),
 		[originalText]
 	);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (!isEditing) {
 			onFieldChange({
 				name: 'proposedChange',
@@ -129,10 +134,10 @@ function ProposalAddOrEditFormContent({
 }
 
 type Props = {
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
-	onCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
-	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
-	onSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
+	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
+	onSubmit: ReviewCardContentComponentProps['onReviewAnnotationFormSubmit'];
 };
 
 function ProposalAddOrEditForm({

@@ -1,8 +1,17 @@
-import { Block, Flex, HorizontalSeparationLine, Icon } from 'fds/components';
 import * as React from 'react';
 
+import {
+	Block,
+	Flex,
+	HorizontalSeparationLine,
+	Icon,
+} from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
-import { AnnotationStatus, BusyState, CardContentComponentProps } from 'fontoxml-feedback/src/types';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
+import {
+	ReviewAnnotationStatus,
+	ReviewBusyState,
+} from 'fontoxml-feedback/src/types';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
@@ -14,18 +23,18 @@ import TruncatedReplies from './TruncatedReplies';
 import TruncatedText from './TruncatedText';
 
 type Props = {
-	context: CardContentComponentProps['context'];
-	onProposalMerge?: CardContentComponentProps['onProposalMerge'];
-	onReplyEdit: CardContentComponentProps['onReplyEdit'];
-	onReplyErrorHide: CardContentComponentProps['onReplyErrorHide'];
-	onReplyFormCancel: CardContentComponentProps['onReplyFormCancel'];
-	onReplyFormSubmit: CardContentComponentProps['onReplyFormSubmit'];
-	onReplyRefresh: CardContentComponentProps['onReplyRefresh'];
-	onReplyRemove: CardContentComponentProps['onReplyRemove'];
-	onReviewAnnotationFormCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
-	onReviewAnnotationFormSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];
-	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+	context: ReviewCardContentComponentProps['context'];
+	onProposalMerge?: ReviewCardContentComponentProps['onProposalMerge'];
+	onReplyEdit: ReviewCardContentComponentProps['onReplyEdit'];
+	onReplyErrorHide: ReviewCardContentComponentProps['onReplyErrorHide'];
+	onReplyFormCancel: ReviewCardContentComponentProps['onReplyFormCancel'];
+	onReplyFormSubmit: ReviewCardContentComponentProps['onReplyFormSubmit'];
+	onReplyRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
+	onReplyRemove: ReviewCardContentComponentProps['onReplyRemove'];
+	onReviewAnnotationFormCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationFormSubmit: ReviewCardContentComponentProps['onReviewAnnotationFormSubmit'];
+	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
 const CardRepliesAndResolution: React.FC<Props> = ({
@@ -48,37 +57,37 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			resolutions.find(
 				(resolution) =>
 					resolution.value ===
-					reviewAnnotation.resolvedMetadata.resolution
+					reviewAnnotation.resolvedMetadata['resolution']
 			)
 		);
 	}, [reviewAnnotation.resolvedMetadata]);
 
-	const handleOnSubmit = React.useCallback(
-		() => onReviewAnnotationFormSubmit({}),
-		[onReviewAnnotationFormSubmit]
-	);
+	const handleOnSubmit = React.useCallback(() => {
+		onReviewAnnotationFormSubmit({});
+	}, [onReviewAnnotationFormSubmit]);
 
 	const resolutionComment =
-		reviewAnnotation.resolvedMetadata?.resolutionComment;
+		reviewAnnotation.resolvedMetadata?.['resolutionComment'];
 
 	const showActionsMenuButton = React.useMemo(() => {
 		if (
 			context === FeedbackContextType.CREATED_CONTEXT ||
 			context === FeedbackContextType.EDITOR_SHARING ||
 			context === FeedbackContextType.REVIEW_SHARING ||
-			reviewAnnotation.busyState !== BusyState.IDLE ||
-			reviewAnnotation.status === AnnotationStatus.RESOLVED
+			reviewAnnotation.busyState !== ReviewBusyState.IDLE ||
+			reviewAnnotation.status === ReviewAnnotationStatus.RESOLVED
 		) {
 			return false;
 		}
 
 		// When no reply is being added or edited, display the button.
 		return reviewAnnotation.replies.every(
-			(reply) => 
-				!(reply.busyState === BusyState.ADDING ||
-				reply.busyState === BusyState.EDITING)
+			(reply) =>
+				!(
+					reply.busyState === ReviewBusyState.ADDING ||
+					reply.busyState === ReviewBusyState.EDITING
+				)
 		);
-	
 	}, [
 		context,
 		reviewAnnotation.busyState,
@@ -91,8 +100,8 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			const addingOrEditingReplyIndex =
 				reviewAnnotation.replies.findIndex(
 					(reply) =>
-						reply.busyState === BusyState.ADDING ||
-						reply.busyState === BusyState.EDITING
+						reply.busyState === ReviewBusyState.ADDING ||
+						reply.busyState === ReviewBusyState.EDITING
 				);
 
 			if (addingOrEditingReplyIndex !== -1) {
@@ -126,12 +135,12 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 		repliesAfter.length +
 		// Resolution comments are visually similar to replies. Therefore, we
 		// take them into account too.
-		(reviewAnnotation.status === AnnotationStatus.RESOLVED ? 1 : 0);
+		(reviewAnnotation.status === ReviewAnnotationStatus.RESOLVED ? 1 : 0);
 
 	const shouldShowReplies =
 		reviewAnnotation.isSelected &&
-		reviewAnnotation.busyState !== BusyState.ADDING &&
-		reviewAnnotation.busyState !== BusyState.EDITING;
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+		reviewAnnotation.busyState !== ReviewBusyState.EDITING;
 
 	return (
 		<>
@@ -142,7 +151,8 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 				<TruncatedReplies
 					hasResolution={!!resolution}
 					isEditingReply={
-						addingOrEditingReply?.busyState === BusyState.EDITING
+						addingOrEditingReply?.busyState ===
+						ReviewBusyState.EDITING
 					}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}
@@ -202,7 +212,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 					</TruncatedText>
 				</Block>
 			)}
-			{reviewAnnotation.busyState === BusyState.RESOLVING && (
+			{reviewAnnotation.busyState === ReviewBusyState.RESOLVING && (
 				<ResolveForm
 					context={context}
 					onCancel={onReviewAnnotationFormCancel}

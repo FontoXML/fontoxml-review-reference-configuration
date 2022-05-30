@@ -1,37 +1,40 @@
-import { Button, Flex } from 'fds/components';
 import * as React from 'react';
 
+import { Button, Flex } from 'fontoxml-design-system/src/components';
+import type { PaddingSize } from 'fontoxml-design-system/src/types';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
-import { AnnotationError, CardContentComponentProps, RecoveryOption } from 'fontoxml-feedback/src/types';
-
+import type {
+	ReviewAnnotationError,
+	ReviewCardContentComponentProps,
+} from 'fontoxml-feedback/src/types';
+import { ReviewRecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
-import { PaddingSize } from 'fontoxml-design-system/src/types';
 
 function determineSaveButtonLabel(
-	error: AnnotationError,
+	error: ReviewAnnotationError,
 	isLoading: boolean
 ): string {
 	if (isLoading) {
 		return t('Saving…');
 	}
 
-	return typeof error !== 'number' && 
+	return typeof error !== 'number' &&
 		error &&
-		error.recovery === RecoveryOption.RETRYABLE
+		error.recovery === ReviewRecoveryOption.RETRYABLE
 		? t('Retry save')
 		: t('Save');
 }
 
 type Props = {
-	error: AnnotationError;
+	error: ReviewAnnotationError;
 	isDisabled: boolean;
 	isLoading: boolean;
 	isSubmitDisabled: boolean;
-	onCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
-	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
-	onSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];
+	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
+	onSubmit: ReviewCardContentComponentProps['onReviewAnnotationFormSubmit'];
 };
 
 const paddingSize: PaddingSize = { top: 'l' };

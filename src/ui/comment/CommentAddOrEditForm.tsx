@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import {
 	Block,
 	Flex,
@@ -5,24 +7,22 @@ import {
 	Icon,
 	RadioButtonGroup,
 	TextArea,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
+import type {
+	FormFeedback,
+	FormValueByName,
+} from 'fontoxml-design-system/src/types';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import {
-	BusyState,
-	CardContentComponentProps,
-	RecoveryOption,
-	TargetType,
+	ReviewBusyState,
+	ReviewRecoveryOption,
+	ReviewTargetType,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import commentTypes from '../commentTypes';
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
-import {
-	FormFeedback,
-	FormValueByName
-} from 'fontoxml-design-system/src/types';
 
 function validateCommentField(value: string): FormFeedback {
 	if (!value || value.trim() === '') {
@@ -48,12 +48,14 @@ function CommentAddOrEditFormContent({
 	onFieldChange(...args: unknown[]): void;
 	onFocusableRef(): void;
 	valueByName: FormValueByName;
-}){
+}) {
 	const error = reviewAnnotation.error || null;
 	const isDisabled =
 		reviewAnnotation.isLoading ||
-		(error && typeof error !== 'number' && error.recovery !== RecoveryOption.RETRYABLE);
-	const isEditing = reviewAnnotation.busyState === BusyState.EDITING;
+		(error &&
+			typeof error !== 'number' &&
+			error.recovery !== ReviewRecoveryOption.RETRYABLE);
+	const isEditing = reviewAnnotation.busyState === ReviewBusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
 
 	React.useEffect(() => {
@@ -68,13 +70,14 @@ function CommentAddOrEditFormContent({
 
 	const currentCommentType =
 		commentTypes.find(
-			(commentType) => commentType.value === valueByName.commentType
+			(commentType) => commentType.value === valueByName['commentType']
 		) || commentTypes[0];
 
 	let label = currentCommentType.label;
 
 	const isPublicationLevelComment =
-		reviewAnnotation.targets[0].type === TargetType.PUBLICATION_SELECTOR;
+		reviewAnnotation.targets[0].type ===
+		ReviewTargetType.PUBLICATION_SELECTOR;
 	if (isPublicationLevelComment) {
 		label = `Global ${label[0].toLowerCase()}${label.substring(1)}`;
 	}
@@ -137,10 +140,10 @@ function CommentAddOrEditFormContent({
 }
 
 type Props = {
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
-	onCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
-	onReviewAnnotationRefresh: CardContentComponentProps['onReviewAnnotationRefresh'];
-	onSubmit: CardContentComponentProps['onReviewAnnotationFormSubmit'];
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
+	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
+	onSubmit: ReviewCardContentComponentProps['onReviewAnnotationFormSubmit'];
 };
 
 function CommentAddOrEditForm({

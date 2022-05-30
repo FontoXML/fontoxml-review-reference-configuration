@@ -1,12 +1,17 @@
-import { Block, Button, Flex, HorizontalSeparationLine } from 'fds/components';
 import * as React from 'react';
 
+import {
+	Block,
+	Button,
+	Flex,
+	HorizontalSeparationLine,
+} from 'fontoxml-design-system/src/components';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
-import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
 
 type Props = {
-	onReviewAnnotationFormCancel: CardContentComponentProps['onReviewAnnotationFormCancel'];
-	onReviewAnnotationRemove: CardContentComponentProps['onReviewAnnotationRemove'];
+	onReviewAnnotationFormCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
+	onReviewAnnotationRemove: ReviewCardContentComponentProps['onReviewAnnotationRemove'];
 };
 
 /**

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import * as React from 'react';
 
 import {
 	Block,
@@ -10,11 +10,11 @@ import {
 } from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import {
-	AnnotationStatus,
-	BusyState,
-	CardContentComponentProps,
-	RecoveryOption,
+	ReviewAnnotationStatus,
+	ReviewBusyState,
+	ReviewRecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
@@ -53,8 +53,8 @@ function ProposalCardContent({
 	onReplyRemove,
 	onProposalMerge,
 	rangeVisibility,
-}: CardContentComponentProps) {
-	const hasReplyInNonIdleBusyState = useMemo(() => {
+}: ReviewCardContentComponentProps) {
+	const hasReplyInNonIdleBusyState = React.useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;
 		}
@@ -62,7 +62,7 @@ function ProposalCardContent({
 			(hasReplyInNonIdleBusyState, reply) => {
 				if (
 					!hasReplyInNonIdleBusyState &&
-					reply.busyState !== BusyState.IDLE
+					reply.busyState !== ReviewBusyState.IDLE
 				) {
 					hasReplyInNonIdleBusyState = true;
 				}
@@ -74,12 +74,12 @@ function ProposalCardContent({
 
 	const showAcceptProposalButton =
 		context === FeedbackContextType.EDITOR &&
-		reviewAnnotation.status !== AnnotationStatus.RESOLVED &&
+		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
 		onProposalMerge &&
 		!!reviewAnnotation.proposalState;
 
 	const showReplyButton =
-		reviewAnnotation.status !== AnnotationStatus.RESOLVED;
+		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED;
 
 	const showAnyFooterButton = showAcceptProposalButton || showReplyButton;
 
@@ -88,20 +88,20 @@ function ProposalCardContent({
 		(context === FeedbackContextType.EDITOR ||
 			context === FeedbackContextType.REVIEW) &&
 		reviewAnnotation.isSelected &&
-		reviewAnnotation.busyState !== BusyState.ADDING &&
-		reviewAnnotation.busyState !== BusyState.EDITING &&
-		reviewAnnotation.busyState !== BusyState.RESOLVING &&
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
+		reviewAnnotation.busyState !== ReviewBusyState.RESOLVING &&
 		!hasReplyInNonIdleBusyState;
 
 	const showErrorFooter =
 		reviewAnnotation.error &&
-		reviewAnnotation.busyState === BusyState.REMOVING;
+		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
 		typeof reviewAnnotation.error !== 'number' &&
 		reviewAnnotation.error &&
-		reviewAnnotation.error.recovery === RecoveryOption.ACKNOWLEDGEABLE
+		reviewAnnotation.error.recovery === ReviewRecoveryOption.ACKNOWLEDGEABLE
 	) {
 		return (
 			<Block paddingSize="m">
@@ -116,7 +116,7 @@ function ProposalCardContent({
 
 	if (
 		reviewAnnotation.isLoading &&
-		reviewAnnotation.busyState === BusyState.REFRESHING
+		reviewAnnotation.busyState === ReviewBusyState.REFRESHING
 	) {
 		return (
 			<Block paddingSize="m">
@@ -127,7 +127,7 @@ function ProposalCardContent({
 
 	if (
 		reviewAnnotation.isLoading &&
-		reviewAnnotation.busyState === BusyState.REMOVING
+		reviewAnnotation.busyState === ReviewBusyState.REMOVING
 	) {
 		return (
 			<Block paddingSize="m">
@@ -138,8 +138,8 @@ function ProposalCardContent({
 
 	const hasProposedChange =
 		reviewAnnotation.metadata &&
-		reviewAnnotation.metadata.proposedChange !== undefined &&
-		reviewAnnotation.metadata.proposedChange !== null;
+		reviewAnnotation.metadata['proposedChange'] !== undefined &&
+		reviewAnnotation.metadata['proposedChange'] !== null;
 
 	const proposalState = reviewAnnotation.proposalState;
 
@@ -172,10 +172,10 @@ function ProposalCardContent({
 			/>
 
 			<Block spaceVerticalSize="m">
-				{reviewAnnotation.busyState !== BusyState.ADDING &&
-					reviewAnnotation.busyState !== BusyState.EDITING &&
+				{reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+					reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
 					(hasProposedChange ||
-						reviewAnnotation.metadata.comment) && (
+						reviewAnnotation.metadata['comment']) && (
 						<Block spaceVerticalSize="m">
 							{hasProposedChange && (
 								<Block>
@@ -220,8 +220,9 @@ function ProposalCardContent({
 													reviewAnnotation.originalText
 												}
 												value={
-													reviewAnnotation.metadata
-														.proposedChange as string
+													reviewAnnotation.metadata[
+														'proposedChange'
+													] as string
 												}
 												data-test-id="comment"
 											/>
@@ -236,8 +237,9 @@ function ProposalCardContent({
 												reviewAnnotation.originalText
 											}
 											value={
-												reviewAnnotation.metadata
-													.proposedChange as string
+												reviewAnnotation.metadata[
+													'proposedChange'
+												] as string
 											}
 											data-test-id="comment"
 										/>
@@ -245,13 +247,17 @@ function ProposalCardContent({
 								</Block>
 							)}
 
-							{reviewAnnotation.metadata.comment && (
+							{reviewAnnotation.metadata['comment'] && (
 								<Block spaceVerticalSize="s">
 									<Label isBold>{t('Motivation')}</Label>
 
 									{reviewAnnotation.isSelected && (
 										<TruncatedText data-test-id="motivation">
-											{reviewAnnotation.metadata.comment}
+											{
+												reviewAnnotation.metadata[
+													'comment'
+												]
+											}
 										</TruncatedText>
 									)}
 									{!reviewAnnotation.isSelected && (
@@ -259,7 +265,11 @@ function ProposalCardContent({
 											isBlock
 											data-test-id="motivation"
 										>
-											{reviewAnnotation.metadata.comment}
+											{
+												reviewAnnotation.metadata[
+													'comment'
+												]
+											}
 										</Label>
 									)}
 								</Block>
@@ -267,8 +277,8 @@ function ProposalCardContent({
 						</Block>
 					)}
 
-				{(reviewAnnotation.busyState === BusyState.ADDING ||
-					reviewAnnotation.busyState === BusyState.EDITING) && (
+				{(reviewAnnotation.busyState === ReviewBusyState.ADDING ||
+					reviewAnnotation.busyState === ReviewBusyState.EDITING) && (
 					<ProposalAddOrEditForm
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}

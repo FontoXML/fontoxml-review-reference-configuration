@@ -1,15 +1,17 @@
-import { Flex, Label } from 'fds/components';
-import {
-	CardContentComponentProps,
-	Reply as ReplyType 
-} from 'fontoxml-feedback/src/types';
-
 import * as React from 'react';
+
+import { Flex, Label } from 'fontoxml-design-system/src/components';
+import type {
+	ReviewCardContentComponentProps,
+	ReviewReply,
+} from 'fontoxml-feedback/src/types';
 
 import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
 type Props = {
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'] | ReplyType;
+	reviewAnnotation:
+		| ReviewCardContentComponentProps['reviewAnnotation']
+		| ReviewReply;
 	isReviewAnnotationResolved?: boolean;
 };
 

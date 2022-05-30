@@ -1,32 +1,44 @@
-import { Block, HorizontalSeparationLine, TextInput } from 'fds/components';
 import * as React from 'react';
 
+import {
+	Block,
+	HorizontalSeparationLine,
+	TextInput,
+} from 'fontoxml-design-system/src/components';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
-import { CardContentComponentProps } from 'fontoxml-feedback/src/types';
 
 type Props = {
-	onReplyAdd: CardContentComponentProps['onReplyAdd'];
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+	onReplyAdd: ReviewCardContentComponentProps['onReplyAdd'];
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
 function CommentCardFooter({ onReplyAdd, reviewAnnotation }: Props) {
 	const textInputRef = React.useRef<HTMLElement>(null);
 
-	const handleTextInputRef = React.useCallback(
-		(domNode: HTMLElement) => (textInputRef.current = domNode), []);
+	const handleTextInputRef = React.useCallback((domNode: HTMLElement) => {
+		textInputRef.current = domNode;
+	}, []);
+
+	const handleTextInputFocus = React.useCallback(() => {
+		onReplyAdd();
+	}, [onReplyAdd]);
 
 	React.useEffect(() => {
-		if (!textInputRef.current) {
-			return;
+		if (textInputRef.current) {
+			textInputRef.current.addEventListener(
+				'focus',
+				handleTextInputFocus
+			);
 		}
 
-		const handleFocus = () => {
-			onReplyAdd();
-		};
-
-		textInputRef.current.addEventListener('focus', handleFocus);
 		return () => {
-			textInputRef.current.removeEventListener('focus', handleFocus);
+			if (textInputRef.current) {
+				textInputRef.current.removeEventListener(
+					'focus',
+					handleTextInputFocus
+				);
+			}
 		};
 	});
 

@@ -1,6 +1,7 @@
-import { CompactStateMessage } from 'fds/components';
-import { Message } from 'fontoxml-design-system/src/types';
 import * as React from 'react';
+
+import { CompactStateMessage } from 'fontoxml-design-system/src/components';
+import type { Message } from 'fontoxml-design-system/src/types';
 
 type Props = {
 	message: Message;

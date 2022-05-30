@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import {
 	Block,
 	Checkbox,
@@ -7,9 +9,8 @@ import {
 	Flex,
 	Icon,
 	Label,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
+import type { ReviewFilterFormSummaryComponent } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
@@ -39,23 +40,30 @@ function FilterFormSummaryChips({
 	productContext: _productContext,
 	// This contains the exact value by name mapping used by the filter form for the current context.
 	valueByName,
-}: Props) {
+}: ReviewFilterFormSummaryComponent) {
 	// This processes the list of changed fields into a changedValueByName mapping which is then
 	// combined with the existing data (valueByName) to provide a new (complete) version of the data
 	// for the onChange prop.
 
 	const handleFieldsChange = React.useCallback(
 		(changedFields) => {
-			onChange({
-				...valueByName,
-				...changedFields.reduce((changedValueByName, changedField) => {
-					changedValueByName[changedField.name] =
-						changedField.value === Checkbox.VALUE_INDETERMINATE
-							? false
-							: changedField.value;
-					return changedValueByName;
-				}, {}),
-			});
+			onChange(
+				{
+					...valueByName,
+					...changedFields.reduce(
+						(changedValueByName, changedField) => {
+							changedValueByName[changedField.name] =
+								changedField.value ===
+								Checkbox.VALUE_INDETERMINATE
+									? false
+									: changedField.value;
+							return changedValueByName;
+						},
+						{}
+					),
+				},
+				undefined
+			);
 		},
 		[onChange, valueByName]
 	);
@@ -69,7 +77,7 @@ function FilterFormSummaryChips({
 			<ChipGroup>
 				<Label isBold>{t('Filtered by:')}</Label>
 
-				{valueByName.typeCommentTechnical && (
+				{valueByName['typeCommentTechnical'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Technical')}
@@ -80,7 +88,7 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
-				{valueByName.typeCommentGeneral && (
+				{valueByName['typeCommentGeneral'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('General')}
@@ -91,7 +99,7 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
-				{valueByName.typeCommentEditorial && (
+				{valueByName['typeCommentEditorial'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Editorial')}
@@ -103,7 +111,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 
-				{valueByName.typePublicationCommentTechnical && (
+				{valueByName['typePublicationCommentTechnical'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Technical')}
@@ -119,7 +127,7 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
-				{valueByName.typePublicationCommentGeneral && (
+				{valueByName['typePublicationCommentGeneral'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: General')}
@@ -135,7 +143,7 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
-				{valueByName.typePublicationCommentEditorial && (
+				{valueByName['typePublicationCommentEditorial'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Editorial')}
@@ -152,7 +160,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 
-				{valueByName.typeProposal && (
+				{valueByName['typeProposal'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Proposal')}
@@ -164,7 +172,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 
-				{valueByName.resolutionResolvedAccepted && (
+				{valueByName['resolutionResolvedAccepted'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Accepted')}
@@ -180,7 +188,7 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
-				{valueByName.resolutionResolvedRejected && (
+				{valueByName['resolutionResolvedRejected'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Rejected')}
@@ -196,7 +204,7 @@ function FilterFormSummaryChips({
 						useHoverStyles={false}
 					/>
 				)}
-				{valueByName.resolutionUnresolved && (
+				{valueByName['resolutionUnresolved'] && (
 					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
@@ -208,16 +216,16 @@ function FilterFormSummaryChips({
 					/>
 				)}
 
-				{!valueByName.resolutionResolvedAccepted &&
-					!valueByName.resolutionResolvedRejected &&
-					!valueByName.resolutionUnresolved &&
-					!valueByName.typeCommentTechnical &&
-					!valueByName.typeCommentGeneral &&
-					!valueByName.typeCommentEditorial &&
-					!valueByName.typePublicationCommentTechnical &&
-					!valueByName.typePublicationCommentGeneral &&
-					!valueByName.typePublicationCommentEditorial &&
-					!valueByName.typeProposal && (
+				{!valueByName['resolutionResolvedAccepted'] &&
+					!valueByName['resolutionResolvedRejected'] &&
+					!valueByName['resolutionUnresolved'] &&
+					!valueByName['typeCommentTechnical'] &&
+					!valueByName['typeCommentGeneral'] &&
+					!valueByName['typeCommentEditorial'] &&
+					!valueByName['typePublicationCommentTechnical'] &&
+					!valueByName['typePublicationCommentGeneral'] &&
+					!valueByName['typePublicationCommentEditorial'] &&
+					!valueByName['typeProposal'] && (
 						<Chip
 							isDisabled
 							label={t('Any')}

@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import {
 	Block,
 	Button,
@@ -6,15 +8,13 @@ import {
 	HorizontalSeparationLine,
 	Icon,
 	Label,
-} from 'fds/components';
-import * as React from 'react';
-
+} from 'fontoxml-design-system/src/components';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
-import {
-	BusyState,
-	CardContentComponentProps,
-	Reply as ReplyType
+import type {
+	ReviewCardContentComponentProps,
+	ReviewReply,
 } from 'fontoxml-feedback/src/types';
+import { ReviewBusyState } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
@@ -23,13 +23,13 @@ import ReplyActionsDrop from './ReplyActionsDrop';
 import TruncatedText from './TruncatedText';
 
 type Props = {
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation']; 
-	onCancelRetryRemove: CardContentComponentProps['onReplyFormCancel'];
-	onHide: CardContentComponentProps['onReplyErrorHide'];
-	onRefresh: CardContentComponentProps['onReplyRefresh'];
-	onRemove: CardContentComponentProps['onReplyRemove'];
-	onShowEditForm: CardContentComponentProps['onReplyEdit'];
-	reply: ReplyType;
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
+	onCancelRetryRemove: ReviewCardContentComponentProps['onReplyFormCancel'];
+	onHide: ReviewCardContentComponentProps['onReplyErrorHide'];
+	onRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
+	onRemove: ReviewCardContentComponentProps['onReplyRemove'];
+	onShowEditForm: ReviewCardContentComponentProps['onReplyEdit'];
+	reply: ReviewReply;
 	showActionsMenuButton: boolean;
 };
 
@@ -46,27 +46,22 @@ export default function Reply({
 	const error = reply.error;
 	const isDisabled = reply.isLoading;
 
-	const handleEditButtonClick = React.useCallback(
-		() => onShowEditForm(reply.id),
-		[onShowEditForm, reply.id]
-	);
-	const handleCancelRemoveButtonClick = React.useCallback(
-		() => onCancelRetryRemove(reply.id),
-		[onCancelRetryRemove, reply.id]
-	);
-	const handleRemoveButtonClick = React.useCallback(
-		() => onRemove(reply.id),
-		[onRemove, reply.id]
-	);
+	const handleEditButtonClick = React.useCallback(() => {
+		onShowEditForm(reply.id);
+	}, [onShowEditForm, reply.id]);
+	const handleCancelRemoveButtonClick = React.useCallback(() => {
+		onCancelRetryRemove(reply.id);
+	}, [onCancelRetryRemove, reply.id]);
+	const handleRemoveButtonClick = React.useCallback(() => {
+		onRemove(reply.id);
+	}, [onRemove, reply.id]);
 
-	const handleHideClick = React.useCallback(
-		() => onHide(reply.id),
-		[onHide, reply.id]
-	);
-	const handleRefreshLinkClick = React.useCallback(
-		() => onRefresh(reply.id),
-		[onRefresh, reply.id]
-	);
+	const handleHideClick = React.useCallback(() => {
+		onHide(reply.id);
+	}, [onHide, reply.id]);
+	const handleRefreshLinkClick = React.useCallback(() => {
+		onRefresh(reply.id);
+	}, [onRefresh, reply.id]);
 
 	return (
 		<>
@@ -125,10 +120,10 @@ export default function Reply({
 
 				<Block data-test-id="reply-text">
 					{reviewAnnotation.isSelected && (
-						<TruncatedText>{reply.metadata.reply}</TruncatedText>
+						<TruncatedText>{reply.metadata['reply']}</TruncatedText>
 					)}
 					{!reviewAnnotation.isSelected && (
-						<Label isBlock>{reply.metadata.reply}</Label>
+						<Label isBlock>{reply.metadata['reply']}</Label>
 					)}
 				</Block>
 
@@ -136,10 +131,14 @@ export default function Reply({
 				Instead of showing the regular footer, show something that looks similar to the footer you
 				see when editing a reply.
 				And make sure to render that footer in the error state (Retry remove label on the primary button).*/}
-				{error && reply.busyState === BusyState.REMOVING && (
+				{error && reply.busyState === ReviewBusyState.REMOVING && (
 					<Flex flexDirection="column" spaceSize="m">
 						<ErrorToast
-							error={error && typeof error !== 'number' ? error : null}
+							error={
+								error && typeof error !== 'number'
+									? error
+									: null
+							}
 							onHideLinkClick={handleHideClick}
 							onRefreshLinkClick={handleRefreshLinkClick}
 							onRetryLinkClick={handleRemoveButtonClick}
@@ -161,9 +160,11 @@ export default function Reply({
 					</Flex>
 				)}
 
-				{error && reply.busyState !== BusyState.REMOVING && (
+				{error && reply.busyState !== ReviewBusyState.REMOVING && (
 					<ErrorToast
-						error={error && typeof error !== 'number' ? error : null}
+						error={
+							error && typeof error !== 'number' ? error : null
+						}
 						onHideLinkClick={handleHideClick}
 						onRefreshLinkClick={handleRefreshLinkClick}
 					/>

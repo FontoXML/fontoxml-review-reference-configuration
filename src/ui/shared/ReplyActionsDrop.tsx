@@ -1,6 +1,6 @@
-import { Drop, Menu, MenuItem } from 'fds/components';
 import * as React from 'react';
 
+import { Drop, Menu, MenuItem } from 'fontoxml-design-system/src/components';
 import t from 'fontoxml-localization/src/t';
 
 type Props = {

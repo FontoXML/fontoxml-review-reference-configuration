@@ -1,23 +1,24 @@
+import * as React from 'react';
+
 import {
 	Block,
 	CompactStateMessage,
 	HorizontalSeparationLine,
-} from 'fds/components';
-import * as React from 'react';
-
-import { BusyState, CardContentComponentProps } from 'fontoxml-feedback/src/types';
+} from 'fontoxml-design-system/src/components';
+import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
+import { ReviewBusyState } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import Reply from './Reply';
 
 export type Props = {
-	onReplyEdit: CardContentComponentProps['onReplyEdit'];
-	onReplyErrorHide: CardContentComponentProps['onReplyErrorHide'];
-	onReplyFormCancel: CardContentComponentProps['onReplyFormCancel'];
-	onReplyRefresh: CardContentComponentProps['onReplyRefresh'];
-	onReplyRemove: CardContentComponentProps['onReplyRemove'];
-	replies: CardContentComponentProps['reviewAnnotation']['replies'];
-	reviewAnnotation: CardContentComponentProps['reviewAnnotation'];
+	onReplyEdit: ReviewCardContentComponentProps['onReplyEdit'];
+	onReplyErrorHide: ReviewCardContentComponentProps['onReplyErrorHide'];
+	onReplyFormCancel: ReviewCardContentComponentProps['onReplyFormCancel'];
+	onReplyRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
+	onReplyRemove: ReviewCardContentComponentProps['onReplyRemove'];
+	replies: ReviewCardContentComponentProps['reviewAnnotation']['replies'];
+	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	showActionsMenuButton: boolean;
 };
 
@@ -29,14 +30,17 @@ const Replies: React.FC<Props> = ({
 	onReplyRemove,
 	replies,
 	reviewAnnotation,
-	showActionsMenuButton
+	showActionsMenuButton,
 }) => {
 	return (
 		<Block spaceVerticalSize="m">
 			{replies.map((reply, index) => {
 				const isLast = index === replies.length - 1;
 
-				if (reply.isLoading && reply.busyState === BusyState.IDLE) {
+				if (
+					reply.isLoading &&
+					reply.busyState === ReviewBusyState.IDLE
+				) {
 					return (
 						<Block
 							key={reply.id}
@@ -53,7 +57,10 @@ const Replies: React.FC<Props> = ({
 						</Block>
 					);
 				}
-				if (reply.isLoading && reply.busyState === BusyState.REMOVING) {
+				if (
+					reply.isLoading &&
+					reply.busyState === ReviewBusyState.REMOVING
+				) {
 					return (
 						<Block
 							key={reply.id}
