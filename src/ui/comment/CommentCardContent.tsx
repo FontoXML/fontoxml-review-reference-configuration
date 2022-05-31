@@ -89,10 +89,10 @@ function CommentCardContent({
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
 
 	React.useEffect(() => {
-		if (!showFooter && focusableRef.current !== null) {
+		if (!showFooter && focusableRef && focusableRef.current !== null) {
 			focusableRef.current.focus();
 		}
-	}, [showFooter]);
+	}, [focusableRef, showFooter]);
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
