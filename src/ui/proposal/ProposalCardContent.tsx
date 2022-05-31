@@ -97,6 +97,12 @@ function ProposalCardContent({
 	const showErrorFooter =
 		reviewAnnotation.error &&
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
+	
+	React.useEffect(() => {
+		if (!showFooter && focusableRef.current !== null) {
+			focusableRef.current.focus();
+		}
+	}, [showFooter]);
 
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
@@ -143,12 +149,6 @@ function ProposalCardContent({
 		reviewAnnotation.metadata['proposedChange'] !== null;
 
 	const proposalState = reviewAnnotation.proposalState;
-
-	React.useEffect(() => {
-		if (!showFooter && focusableRef.current !== null) {
-			focusableRef.current.focus();
-		}
-	}, [showFooter]);
 
 	return (
 		<Block

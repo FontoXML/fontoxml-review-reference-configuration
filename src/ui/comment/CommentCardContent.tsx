@@ -88,6 +88,12 @@ function CommentCardContent({
 		reviewAnnotation.error &&
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
 
+	React.useEffect(() => {
+		if (!showFooter && focusableRef.current !== null) {
+			focusableRef.current.focus();
+		}
+	}, [showFooter]);
+
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
 		typeof reviewAnnotation.error !== 'number' &&
@@ -159,12 +165,6 @@ function CommentCardContent({
 			? publicationCommentType.label
 			: reviewAnnotation.metadata['commentType'];
 	}
-
-	React.useEffect(() => {
-		if (!showFooter && focusableRef.current !== null) {
-			focusableRef.current.focus();
-		}
-	}, [showFooter]);
 
 	return (
 		<Block
