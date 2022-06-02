@@ -64,10 +64,6 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 		);
 	}, [reviewAnnotation.resolvedMetadata]);
 
-	const handleOnSubmit = React.useCallback(() => {
-		onReviewAnnotationFormSubmit({});
-	}, [onReviewAnnotationFormSubmit]);
-
 	const resolutionComment =
 		reviewAnnotation.resolvedMetadata?.['resolutionComment'];
 
@@ -221,7 +217,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 					onCancel={onReviewAnnotationFormCancel}
 					onProposalMerge={onProposalMerge}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
-					onSubmit={handleOnSubmit}
+					onSubmit={onReviewAnnotationFormSubmit}
 					reviewAnnotation={reviewAnnotation}
 				/>
 			)}

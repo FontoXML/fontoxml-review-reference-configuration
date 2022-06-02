@@ -87,17 +87,17 @@ function ResolveFormContent({
 	const isRejectingMergedProposal =
 		reviewAnnotation.type === 'proposal' &&
 		proposalState === ReviewProposalState.MERGED &&
-		valueByName['resolution'] === 'rejected';
+		valueByName.resolution === 'rejected';
 	const isAcceptingUnmergedProposal =
 		reviewAnnotation.type === 'proposal' &&
 		proposalState === ReviewProposalState.ENABLED &&
-		valueByName['resolution'] === 'accepted';
+		valueByName.resolution === 'accepted';
 	const isAcceptingChangedProposal =
 		reviewAnnotation.type === 'proposal' &&
 		proposalState !== ReviewProposalState.ENABLED &&
 		proposalState !== ReviewProposalState.MERGING &&
 		proposalState !== ReviewProposalState.MERGED &&
-		valueByName['resolution'] === 'accepted';
+		valueByName.resolution === 'accepted';
 
 	const isInReview =
 		context === FeedbackContextType.REVIEW ||
@@ -236,17 +236,17 @@ type Props = {
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onProposalMerge: ReviewCardContentComponentProps['onProposalMerge'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
-	onSubmit(): void;
+	onSubmit(valueByName: FormValueByName): void;
 };
 
-export default function ResolveForm({
+const ResolveForm: React.FC<Props> = ({
 	context,
 	reviewAnnotation,
 	onCancel,
 	onProposalMerge = null,
 	onReviewAnnotationRefresh,
 	onSubmit,
-}: Props) {
+}) => {
 	return (
 		<ReviewAnnotationForm
 			initialValueByName={reviewAnnotation.resolvedMetadata}
@@ -268,4 +268,6 @@ export default function ResolveForm({
 			)}
 		</ReviewAnnotationForm>
 	);
-}
+};
+
+export default ResolveForm;
