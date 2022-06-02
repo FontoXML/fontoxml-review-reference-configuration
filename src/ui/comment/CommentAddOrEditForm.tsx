@@ -9,22 +9,20 @@ import {
 	TextArea,
 } from 'fontoxml-design-system/src/components';
 import type {
-	FormFeedback,
-	FormValueByName,
+	FdsFormFeedback,
+	FdsFormValueByName,
 } from 'fontoxml-design-system/src/types';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
+import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
+import ReviewTargetType from 'fontoxml-feedback/src/ReviewTargetType';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
-import {
-	ReviewBusyState,
-	ReviewRecoveryOption,
-	ReviewTargetType,
-} from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import commentTypes from '../commentTypes';
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
 
-function validateCommentField(value: string): FormFeedback {
+function validateCommentField(value: string): FdsFormFeedback | null {
 	if (!value || value.trim() === '') {
 		return { connotation: 'error', message: 'Comment is required.' };
 	}
@@ -47,7 +45,7 @@ function CommentAddOrEditFormContent({
 	focusableRef: HTMLElement;
 	isSubmitDisabled: boolean;
 	onFieldChange(...args: unknown[]): void;
-	valueByName: FormValueByName;
+	valueByName: FdsFormValueByName;
 }) {
 	const error = reviewAnnotation.error || null;
 	const isDisabled =
@@ -70,7 +68,7 @@ function CommentAddOrEditFormContent({
 
 	const currentCommentType =
 		commentTypes.find(
-			(commentType) => commentType.value === valueByName['commentType']
+			(commentType) => commentType.value === valueByName.commentType
 		) || commentTypes[0];
 
 	let label = currentCommentType.label;
@@ -159,12 +157,7 @@ function CommentAddOrEditForm({
 			initialValueByName={reviewAnnotation.metadata}
 			onSubmit={onSubmit}
 		>
-			{({
-				isSubmitDisabled,
-				onFieldChange,
-				onSubmit,
-				valueByName,
-			}) => (
+			{({ isSubmitDisabled, onFieldChange, onSubmit, valueByName }) => (
 				<CommentAddOrEditFormContent
 					focusableRef={focusableRef}
 					isSubmitDisabled={isSubmitDisabled}

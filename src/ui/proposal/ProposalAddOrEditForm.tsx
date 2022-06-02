@@ -8,13 +8,11 @@ import {
 	TextArea,
 	TextAreaWithDiff,
 } from 'fontoxml-design-system/src/components';
-import type { FormFeedback } from 'fontoxml-design-system/src/types';
+import type { FdsFormFeedback } from 'fontoxml-design-system/src/types';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
+import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
-import {
-	ReviewBusyState,
-	ReviewRecoveryOption,
-} from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
@@ -22,7 +20,7 @@ import AddOrEditFormFooter from '../shared/AddOrEditFormFooter';
 function validateProposedChangeField(
 	value: string,
 	originalText: string
-): FormFeedback {
+): FdsFormFeedback {
 	if (value === originalText) {
 		return {
 			connotation: 'error',
@@ -39,10 +37,10 @@ function ProposalAddOrEditFormContent({
 	focusableRef,
 	isSubmitDisabled,
 	onFieldChange,
-	onCancel, 
-	onReviewAnnotationRefresh, 
-	onSubmit, 
-	reviewAnnotation, 
+	onCancel,
+	onReviewAnnotationRefresh,
+	onSubmit,
+	reviewAnnotation,
 }: Props & {
 	focusableRef: HTMLElement;
 	isSubmitDisabled: boolean;
@@ -153,11 +151,7 @@ function ProposalAddOrEditForm({
 			initialValueByName={reviewAnnotation.metadata}
 			onSubmit={onSubmit}
 		>
-			{({
-				isSubmitDisabled,
-				onFieldChange,
-				onSubmit,
-			}) => (
+			{({ isSubmitDisabled, onFieldChange, onSubmit }) => (
 				<ProposalAddOrEditFormContent
 					focusableRef={focusableRef}
 					isSubmitDisabled={isSubmitDisabled}

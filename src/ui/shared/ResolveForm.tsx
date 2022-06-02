@@ -13,21 +13,19 @@ import {
 	Toast,
 } from 'fontoxml-design-system/src/components';
 import type {
-	FormFeedback,
-	FormValueByName,
+	FdsFormFeedback,
+	FdsFormValueByName,
 } from 'fontoxml-design-system/src/types';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import ReviewProposalState from 'fontoxml-feedback/src/ReviewProposalState';
+import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type {
 	ReviewAnnotationError,
 	ReviewCardContentComponentProps,
-} from 'fontoxml-feedback/src/types';
-import {
-	ReviewAnnotationStatus,
-	ReviewProposalState,
-	ReviewRecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
@@ -51,7 +49,7 @@ function determineSaveButtonLabel(
 		: t('Resolve');
 }
 
-function validateResolutionField(value: unknown): FormFeedback {
+function validateResolutionField(value: unknown): FdsFormFeedback | null {
 	if (!value) {
 		return { connotation: 'error', message: 'Resolution is required.' };
 	}
@@ -72,7 +70,7 @@ function ResolveFormContent({
 }: Props & {
 	isSubmitDisabled: boolean;
 	onFocusableRef(): void;
-	valueByName: FormValueByName;
+	valueByName: FdsFormValueByName;
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
@@ -236,7 +234,7 @@ type Props = {
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onProposalMerge: ReviewCardContentComponentProps['onProposalMerge'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
-	onSubmit(valueByName: FormValueByName): void;
+	onSubmit(valueByName: FdsFormValueByName): void;
 };
 
 const ResolveForm: React.FC<Props> = ({

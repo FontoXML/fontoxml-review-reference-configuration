@@ -7,12 +7,10 @@ import {
 	Label,
 } from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
+import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
+import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
-import {
-	ReviewAnnotationStatus,
-	ReviewBusyState,
-	ReviewRecoveryOption,
-} from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import commentTypes from '../commentTypes';

@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import configurationManager from 'fontoxml-configuration/src/configurationManager';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type {
 	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
-import { ReviewBusyState } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 const configuredScope = configurationManager.get('scope');

@@ -8,17 +8,15 @@ import {
 	Icon,
 	TextArea,
 } from 'fontoxml-design-system/src/components';
-import type { FormFeedback } from 'fontoxml-design-system/src/types';
+import type { FdsFormFeedback } from 'fontoxml-design-system/src/types';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
+import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type {
 	ReviewAnnotationError,
 	ReviewCardContentComponentProps,
 	ReviewReply,
-} from 'fontoxml-feedback/src/types';
-import {
-	ReviewBusyState,
-	ReviewRecoveryOption,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
@@ -62,7 +60,7 @@ function determineSaveButtonLabel(
 
 const rows = { minimum: 2, maximum: 6 };
 
-function validateReplyField(value: string): FormFeedback {
+function validateReplyField(value: string): FdsFormFeedback | null {
 	if (!value || value.trim() === '') {
 		return { connotation: 'error', message: 'Reply is required.' };
 	}
@@ -73,11 +71,11 @@ function validateReplyField(value: string): FormFeedback {
 function ReplyFormContent({
 	focusableRef,
 	isSubmitDisabled,
-	onCancelButtonClick, 
-	onHideLinkClick, 
-	onRefreshLinkClick, 
-	onSubmit, 
-	reply, 
+	onCancelButtonClick,
+	onHideLinkClick,
+	onRefreshLinkClick,
+	onSubmit,
+	reply,
 }: {
 	focusableRef: HTMLElement;
 	isSubmitDisabled: boolean;
@@ -176,7 +174,7 @@ function ReplyForm({
 	onHide,
 	onRefresh,
 	onSubmit,
-	reply
+	reply,
 }: Props) {
 	const handleHideLinkClick = React.useCallback(() => {
 		onHide(reply.id);

@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { Checkbox } from 'fontoxml-design-system/src/components';
-import type { FormValueByName } from 'fontoxml-design-system/src/types';
+import type { FdsFormValueByName } from 'fontoxml-design-system/src/types';
 
 function useNestedCheckboxesForFilterOptions(
-	valueByName: FormValueByName,
+	valueByName: FdsFormValueByName,
 	onFieldsChange: (...args: unknown[]) => void
 ) {
 	// This hook automatically updates parent/child checkboxes, including the

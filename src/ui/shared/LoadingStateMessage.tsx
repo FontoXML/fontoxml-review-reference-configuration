@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { CompactStateMessage } from 'fontoxml-design-system/src/components';
-import type { Message } from 'fontoxml-design-system/src/types';
+import type { FdsMessage } from 'fontoxml-design-system/src/types';
 
 type Props = {
-	message: Message;
+	message: FdsMessage;
 };
 
 function LoadingStateMessage({ message }: Props) {

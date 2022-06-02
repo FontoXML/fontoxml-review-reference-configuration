@@ -7,11 +7,9 @@ import {
 	Icon,
 } from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
+import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
-import {
-	ReviewAnnotationStatus,
-	ReviewBusyState,
-} from 'fontoxml-feedback/src/types';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';

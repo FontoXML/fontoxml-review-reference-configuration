@@ -10,11 +10,11 @@ import {
 	Label,
 } from 'fontoxml-design-system/src/components';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type {
 	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
-import { ReviewBusyState } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';

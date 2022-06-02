@@ -6,7 +6,7 @@ import {
 	Flex,
 	Label,
 } from 'fontoxml-design-system/src/components';
-import type { FormValueByName } from 'fontoxml-design-system/src/types';
+import type { FdsFormValueByName } from 'fontoxml-design-system/src/types';
 import type { ReviewFilterFormProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
@@ -14,7 +14,7 @@ import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterO
 
 function determineParentFieldValue(
 	subFieldNames: string[],
-	valueByNameForUI: FormValueByName
+	valueByNameForUI: FdsFormValueByName
 ): boolean {
 	return subFieldNames.reduce<boolean>((value, subFieldName) => {
 		if (value === Checkbox.VALUE_INDETERMINATE) {

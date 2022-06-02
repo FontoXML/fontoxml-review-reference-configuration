@@ -12,7 +12,7 @@ import globalCommentsStackedIcons from './ui/global-comments-stacked-icons.svg';
 import MastheadForReview from './ui/MastheadForReview';
 import ProposalCardContent from './ui/proposal/ProposalCardContent';
 
-export default function install() {
+export default function install(): void {
 	registerTextRangeReviewAnnotationType('comment', {
 		icon: 'far fa-comment',
 		label: 'Comment',

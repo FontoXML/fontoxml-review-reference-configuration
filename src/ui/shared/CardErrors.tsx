@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
-import { ReviewBusyState } from 'fontoxml-feedback/src/types';
 
 type Props = {
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];

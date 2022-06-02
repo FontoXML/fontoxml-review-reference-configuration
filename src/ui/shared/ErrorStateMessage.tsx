@@ -5,11 +5,11 @@ import {
 	CompactStateMessage,
 	Flex,
 } from 'fontoxml-design-system/src/components';
+import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type {
 	ReviewAnnotationError,
 	ReviewCardContentComponentProps,
 } from 'fontoxml-feedback/src/types';
-import { ReviewRecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 const iconByConnotation = {

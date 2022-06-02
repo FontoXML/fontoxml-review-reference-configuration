@@ -5,8 +5,8 @@ import {
 	CompactStateMessage,
 	HorizontalSeparationLine,
 } from 'fontoxml-design-system/src/components';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
-import { ReviewBusyState } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import Reply from './Reply';

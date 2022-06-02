@@ -14,15 +14,13 @@ import {
 } from 'fontoxml-design-system/src/components';
 import Badge from 'fontoxml-feedback/src/Badge';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
+import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
+import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
+import ReviewTargetType from 'fontoxml-feedback/src/ReviewTargetType';
 import type {
 	ReviewAnnotationError,
 	ReviewCardContentComponentProps,
-} from 'fontoxml-feedback/src/types';
-import {
-	ReviewAnnotationStatus,
-	ReviewBusyState,
-	ReviewRecoveryOption,
-	ReviewTargetType,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 

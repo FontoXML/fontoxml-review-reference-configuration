@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import { Button, Flex } from 'fontoxml-design-system/src/components';
-import type { PaddingSize } from 'fontoxml-design-system/src/types';
+import type { FdsPaddingSize } from 'fontoxml-design-system/src/types';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type {
 	ReviewAnnotationError,
 	ReviewCardContentComponentProps,
 } from 'fontoxml-feedback/src/types';
-import { ReviewRecoveryOption } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
@@ -37,7 +37,7 @@ type Props = {
 	onSubmit: ReviewCardContentComponentProps['onReviewAnnotationFormSubmit'];
 };
 
-const paddingSize: PaddingSize = { top: 'l' };
+const paddingSize: FdsPaddingSize = { top: 'l' };
 
 function AddOrEditFormFooter({
 	error,
