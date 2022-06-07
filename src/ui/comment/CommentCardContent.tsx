@@ -112,6 +112,7 @@ function CommentCardContent({
 			</Block>
 		);
 	}
+
 	if (reviewAnnotation.isFiltered) {
 		return (
 			<Block paddingSize="m">
@@ -127,6 +128,7 @@ function CommentCardContent({
 			</Block>
 		);
 	}
+
 	if (
 		reviewAnnotation.isLoading &&
 		reviewAnnotation.busyState === ReviewBusyState.REFRESHING
