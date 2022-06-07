@@ -292,10 +292,10 @@ export default function CardHeader({
 			.displayLabel.toLowerCase();
 
 		return reviewAnnotation.type === 'proposal'
-			? t(`This proposal is {RESOLUTION}`, {
+			? t('This proposal is {RESOLUTION}', {
 					RESOLUTION: resolution,
 			  })
-			: t(`This comment is {RESOLUTION}`, {
+			: t('This comment is {RESOLUTION}', {
 					RESOLUTION: resolution,
 			  });
 	}, [reviewAnnotation]);
