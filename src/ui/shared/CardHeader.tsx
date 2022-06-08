@@ -75,8 +75,7 @@ export default function CardHeader({
 	const showEditButton =
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT &&
-		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
-		reviewAnnotation.status !== ReviewAnnotationStatus.ARCHIVED;
+		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED;
 
 	const showRemoveButton =
 		context !== FeedbackContextType.CREATED_CONTEXT &&
@@ -240,7 +239,6 @@ export default function CardHeader({
 		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
 		reviewAnnotation.status !== ReviewAnnotationStatus.PRIVATE &&
 		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
-		reviewAnnotation.status !== ReviewAnnotationStatus.ARCHIVED &&
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT;
 
