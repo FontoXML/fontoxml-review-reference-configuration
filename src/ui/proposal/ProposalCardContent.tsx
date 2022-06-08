@@ -27,6 +27,8 @@ import { CARD_HEADER_HEIGHT } from './../constants';
 import ProposalAddOrEditForm from './ProposalAddOrEditForm';
 import ProposalReplyComponent from './ProposalReplyComponent';
 
+const footerButtonContainerStyles = { height: '32px' };
+
 function ProposalCardContent({
 	context,
 	focusableRef,
@@ -329,7 +331,12 @@ function ProposalCardContent({
 					<Block spaceVerticalSize="m">
 						<HorizontalSeparationLine />
 
-						<Flex justifyContent="flex-end" spaceSize="l">
+						<Flex
+							alignItems="center"
+							applyCss={footerButtonContainerStyles}
+							justifyContent="flex-end"
+							spaceSize="l"
+						>
 							{showReplyButton && (
 								<ProposalReplyComponent
 									onReplyAdd={onReplyAdd}
