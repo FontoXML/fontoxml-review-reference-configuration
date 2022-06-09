@@ -32,6 +32,8 @@ import t from 'fontoxml-localization/src/t';
 import resolutions from '../feedbackResolutions';
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
+const footerButtonContainerStyles = { height: '32px' };
+
 const rows = { minimum: 2, maximum: 6 };
 
 function determineSaveButtonLabel(
@@ -190,7 +192,11 @@ function ResolveFormContent({
 					/>
 				)}
 
-				<Flex justifyContent="flex-end">
+				<Flex 
+					alignItems="center" 
+					applyCss={footerButtonContainerStyles} 
+					justifyContent="flex-end"
+				>
 					<Button
 						isDisabled={isDisabled}
 						label={t('Cancel')}
