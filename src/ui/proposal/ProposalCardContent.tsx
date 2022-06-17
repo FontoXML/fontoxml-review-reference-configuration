@@ -107,7 +107,10 @@ function ProposalCardContent({
 	if (
 		typeof reviewAnnotation.error !== 'number' &&
 		reviewAnnotation.error &&
-		reviewAnnotation.error.recovery === ReviewRecoveryOption.ACKNOWLEDGEABLE
+		(reviewAnnotation.error.recovery ===
+			ReviewRecoveryOption.ACKNOWLEDGEABLE ||
+			(reviewAnnotation.busyState === ReviewBusyState.IDLE &&
+				!hasReplyInNonIdleBusyState))
 	) {
 		return (
 			<Block paddingSize="m">
