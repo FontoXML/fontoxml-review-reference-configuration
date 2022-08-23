@@ -229,21 +229,17 @@ function CommentCardContent({
 
 										{reviewAnnotation.targetFoundForRevision ===
 											false && (
-											<Flex
-												applyCss={{
-													color: reviewAnnotation.isSelected
-														? '#4D1155'
-														: '#831D90',
-												}}
-											>
-												<Icon
-													colorName="inherit"
-													icon="far fa-unlink"
-													tooltipContent={t(
-														'This comment lost its position in the content'
-													)}
-												/>
-											</Flex>
+											<Icon
+												colorName={
+													reviewAnnotation.isSelected
+														? 'tombstone-icon-selected-color'
+														: 'tombstone-icon-color'
+												}
+												icon="far fa-unlink"
+												tooltipContent={t(
+													'This comment lost its position in the content'
+												)}
+											/>
 										)}
 									</>
 								)}
