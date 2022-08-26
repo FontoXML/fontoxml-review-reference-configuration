@@ -49,7 +49,7 @@ function CommentCardContent({
 	onReplyErrorHide,
 	onReplyRefresh,
 	onReplyRemove,
-}: ReviewCardContentComponentProps) {
+}: ReviewCardContentComponentProps): JSX.Element {
 	const hasReplyInNonIdleBusyState = React.useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;
@@ -140,11 +140,11 @@ function CommentCardContent({
 	) {
 		commentType = commentTypes.find(
 			(commentType) =>
-				commentType.value === reviewAnnotation.metadata['commentType']
+				commentType.value === reviewAnnotation.metadata.commentType
 		);
 		commentType = commentType
 			? commentType.label
-			: reviewAnnotation.metadata['commentType'];
+			: reviewAnnotation.metadata.commentType;
 	}
 
 	let publicationCommentType = null;
@@ -156,11 +156,11 @@ function CommentCardContent({
 		publicationCommentType = publicationCommentTypes.find(
 			(publicationCommentType) =>
 				publicationCommentType.value ===
-				reviewAnnotation.metadata['commentType']
+				reviewAnnotation.metadata.commentType
 		);
 		publicationCommentType = publicationCommentType
 			? publicationCommentType.label
-			: reviewAnnotation.metadata['commentType'];
+			: reviewAnnotation.metadata.commentType;
 	}
 
 	return (
@@ -170,7 +170,7 @@ function CommentCardContent({
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			data-review-annotation-comment-type={
-				reviewAnnotation.metadata['commentType']
+				reviewAnnotation.metadata.commentType
 			}
 		>
 			<CardHeader
@@ -196,7 +196,7 @@ function CommentCardContent({
 			<Block spaceVerticalSize="m">
 				{reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
 					reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
-					reviewAnnotation.metadata['comment'] && (
+					reviewAnnotation.metadata.comment && (
 						<Block>
 							<Flex
 								style={{ height: CARD_HEADER_HEIGHT }}
@@ -232,8 +232,8 @@ function CommentCardContent({
 											<Icon
 												colorName={
 													reviewAnnotation.isSelected
-														? 'button-warning-background-selected'
-														: 'button-warning-background'
+														? 'tombstone-icon-selected-color'
+														: 'tombstone-icon-color'
 												}
 												icon="far fa-unlink"
 												tooltipContent={t(
@@ -247,12 +247,12 @@ function CommentCardContent({
 
 							{reviewAnnotation.isSelected && (
 								<TruncatedText data-test-id="comment">
-									{reviewAnnotation.metadata['comment']}
+									{reviewAnnotation.metadata.comment}
 								</TruncatedText>
 							)}
 							{!reviewAnnotation.isSelected && (
 								<Label isBlock data-test-id="comment">
-									{reviewAnnotation.metadata['comment']}
+									{reviewAnnotation.metadata.comment}
 								</Label>
 							)}
 						</Block>
