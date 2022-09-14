@@ -147,8 +147,8 @@ function ProposalCardContent({
 
 	const hasProposedChange =
 		reviewAnnotation.metadata &&
-		reviewAnnotation.metadata['proposedChange'] !== undefined &&
-		reviewAnnotation.metadata['proposedChange'] !== null;
+		reviewAnnotation.metadata.proposedChange !== undefined &&
+		reviewAnnotation.metadata.proposedChange !== null;
 
 	const proposalState = reviewAnnotation.proposalState;
 
@@ -183,7 +183,7 @@ function ProposalCardContent({
 				{reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
 					reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
 					(hasProposedChange ||
-						reviewAnnotation.metadata['comment']) && (
+						reviewAnnotation.metadata.comment) && (
 						<Block spaceVerticalSize="m">
 							{hasProposedChange && (
 								<Block>
@@ -207,8 +207,8 @@ function ProposalCardContent({
 											<Icon
 												colorName={
 													reviewAnnotation.isSelected
-														? 'button-warning-background-selected'
-														: 'button-warning-background'
+														? 'tombstone-icon-selected-color'
+														: 'tombstone-icon-color'
 												}
 												icon="far fa-unlink"
 												tooltipContent={t(
@@ -228,9 +228,8 @@ function ProposalCardContent({
 													reviewAnnotation.originalText
 												}
 												value={
-													reviewAnnotation.metadata[
-														'proposedChange'
-													] as string
+													reviewAnnotation.metadata
+														.proposedChange as string
 												}
 												data-test-id="comment"
 											/>
@@ -245,9 +244,8 @@ function ProposalCardContent({
 												reviewAnnotation.originalText
 											}
 											value={
-												reviewAnnotation.metadata[
-													'proposedChange'
-												] as string
+												reviewAnnotation.metadata
+													.proposedChange as string
 											}
 											data-test-id="comment"
 										/>
@@ -255,17 +253,13 @@ function ProposalCardContent({
 								</Block>
 							)}
 
-							{reviewAnnotation.metadata['comment'] && (
+							{reviewAnnotation.metadata.comment && (
 								<Block spaceVerticalSize="s">
 									<Label isBold>{t('Motivation')}</Label>
 
 									{reviewAnnotation.isSelected && (
 										<TruncatedText data-test-id="motivation">
-											{
-												reviewAnnotation.metadata[
-													'comment'
-												]
-											}
+											{reviewAnnotation.metadata.comment}
 										</TruncatedText>
 									)}
 									{!reviewAnnotation.isSelected && (
@@ -273,11 +267,7 @@ function ProposalCardContent({
 											isBlock
 											data-test-id="motivation"
 										>
-											{
-												reviewAnnotation.metadata[
-													'comment'
-												]
-											}
+											{reviewAnnotation.metadata.comment}
 										</Label>
 									)}
 								</Block>
