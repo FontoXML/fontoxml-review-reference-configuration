@@ -35,6 +35,7 @@ function ProposalReplyComponent({ onReplyAdd, reviewAnnotation }: Props) {
 			isDisabled={!!reviewAnnotation.error || reviewAnnotation.isLoading}
 			label={t('Reply')}
 			onClick={onReplyAdd}
+			tooltipContent={t('Reply to the proposed change.')}
 		/>
 	);
 }
