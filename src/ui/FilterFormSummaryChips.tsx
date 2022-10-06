@@ -3,12 +3,12 @@ import * as React from 'react';
 import {
 	Block,
 	Checkbox,
-	Chip,
 	ChipGroup,
 	CompactStateMessage,
 	Flex,
 	Icon,
 	Label,
+	NewChip,
 } from 'fontoxml-design-system/src/components';
 import type { ReviewFilterFormSummaryComponent } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -75,144 +75,151 @@ function FilterFormSummaryChips({
 	return (
 		<Block>
 			<ChipGroup>
-				<Label isBold>{t('Filtered by:')}</Label>
+				<Flex
+					alignItems="center"
+					applyCss={{ height: '2.5rem' }}
+					flex="none"
+					isInline
+				>
+					<Label isBold>{t('Filtered by:')}</Label>
+				</Flex>
 
 				{valueByName['typeCommentTechnical'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Technical')}
 						tooltipContent={t('Only show technical comments.')}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange('typeCommentTechnical', false);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 				{valueByName['typeCommentGeneral'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('General')}
 						tooltipContent={t('Only show general comments.')}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange('typeCommentGeneral', false);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 				{valueByName['typeCommentEditorial'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Editorial')}
 						tooltipContent={t('Only show editorial comments.')}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange('typeCommentEditorial', false);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 
 				{valueByName['typePublicationCommentTechnical'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Technical')}
 						tooltipContent={t(
 							'Only show technical publication comments.'
 						)}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange(
 								'typePublicationCommentTechnical',
 								false
 							);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 				{valueByName['typePublicationCommentGeneral'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: General')}
 						tooltipContent={t(
 							'Only show general publication comments.'
 						)}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange(
 								'typePublicationCommentGeneral',
 								false
 							);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 				{valueByName['typePublicationCommentEditorial'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Editorial')}
 						tooltipContent={t(
 							'Only show editorial publication comments.'
 						)}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange(
 								'typePublicationCommentEditorial',
 								false
 							);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 
 				{valueByName['typeProposal'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Proposal')}
 						tooltipContent={t('Only show proposals.')}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange('typeProposal', false);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 
 				{valueByName['resolutionResolvedAccepted'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Accepted')}
 						tooltipContent={t(
 							'Only show resolved and accepted feedback.'
 						)}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange(
 								'resolutionResolvedAccepted',
 								false
 							);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 				{valueByName['resolutionResolvedRejected'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Rejected')}
 						tooltipContent={t(
 							'Only show resolved and rejected feedback.'
 						)}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange(
 								'resolutionResolvedRejected',
 								false
 							);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 				{valueByName['resolutionUnresolved'] && (
-					<Chip
+					<NewChip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
 						tooltipContent={t('Only show unresolved feedback.')}
-						onRemove={() => {
+						iconAfter="far fa-remove"
+						onIconAfterClick={() => {
 							onCheckboxChange('resolutionUnresolved', false);
 						}}
-						useHoverStyles={false}
 					/>
 				)}
 
@@ -226,8 +233,7 @@ function FilterFormSummaryChips({
 					!valueByName['typePublicationCommentGeneral'] &&
 					!valueByName['typePublicationCommentEditorial'] &&
 					!valueByName['typeProposal'] && (
-						<Chip
-							isDisabled
+						<NewChip
 							label={t('Any')}
 							tooltipContent={t('Show feedback of any type.')}
 						/>
