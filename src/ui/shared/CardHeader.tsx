@@ -7,12 +7,11 @@ import {
 	Drop,
 	DropAnchor,
 	Flex,
-	Icon,
 	Menu,
 	MenuItem,
 	MenuItemWithDrop,
+	NewChip,
 } from 'fontoxml-design-system/src/components';
-import Badge from 'fontoxml-feedback/src/Badge';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
@@ -392,40 +391,27 @@ export default function CardHeader({
 								reviewAnnotation.resolvedMetadata?.[
 									'resolution'
 								] && (
-									<Badge
-										label={
-											<Flex
-												alignItems="center"
-												flexDirection="row"
-												isInline
-											>
-												{reviewAnnotation
-													.resolvedMetadata[
-													'resolution'
-												] === 'accepted' && (
-													<Icon
-														colorName="inherit"
-														icon="check"
-														isInline
-													/>
-												)}
-												{reviewAnnotation
-													.resolvedMetadata[
-													'resolution'
-												] === 'rejected' && (
-													<Icon
-														colorName="inherit"
-														icon="times"
-														isInline
-													/>
-												)}
-
-												{!reviewAnnotation.isSelected &&
-													reviewAnnotation
+									<NewChip
+										iconBefore={
+											reviewAnnotation.resolvedMetadata[
+												'resolution'
+											] === 'accepted'
+												? 'far fa-check'
+												: reviewAnnotation
 														.resolvedMetadata[
 														'resolution'
-													]}
-											</Flex>
+												  ] === 'rejected'
+												? 'far fa-times'
+												: null
+										}
+										isCondensed={
+											reviewAnnotation.isSelected
+										}
+										label={
+											!reviewAnnotation.isSelected &&
+											reviewAnnotation.resolvedMetadata[
+												'resolution'
+											]
 										}
 										tooltipContent={
 											resolutionBadgeTooltipContent
