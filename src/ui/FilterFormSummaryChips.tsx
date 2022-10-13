@@ -3,12 +3,12 @@ import * as React from 'react';
 import {
 	Block,
 	Checkbox,
+	Chip,
 	ChipGroup,
 	CompactStateMessage,
 	Flex,
 	Icon,
 	Label,
-	NewChip,
 } from 'fontoxml-design-system/src/components';
 import type { ReviewFilterFormSummaryComponent } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -85,7 +85,7 @@ function FilterFormSummaryChips({
 				</Flex>
 
 				{valueByName['typeCommentTechnical'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Technical')}
 						tooltipContent={t('Only show technical comments.')}
@@ -96,7 +96,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 				{valueByName['typeCommentGeneral'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('General')}
 						tooltipContent={t('Only show general comments.')}
@@ -107,7 +107,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 				{valueByName['typeCommentEditorial'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Editorial')}
 						tooltipContent={t('Only show editorial comments.')}
@@ -119,7 +119,7 @@ function FilterFormSummaryChips({
 				)}
 
 				{valueByName['typePublicationCommentTechnical'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Technical')}
 						tooltipContent={t(
@@ -135,7 +135,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 				{valueByName['typePublicationCommentGeneral'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: General')}
 						tooltipContent={t(
@@ -151,7 +151,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 				{valueByName['typePublicationCommentEditorial'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Editorial')}
 						tooltipContent={t(
@@ -168,7 +168,7 @@ function FilterFormSummaryChips({
 				)}
 
 				{valueByName['typeProposal'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Proposal')}
 						tooltipContent={t('Only show proposals.')}
@@ -180,7 +180,7 @@ function FilterFormSummaryChips({
 				)}
 
 				{valueByName['resolutionResolvedAccepted'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Accepted')}
 						tooltipContent={t(
@@ -196,7 +196,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 				{valueByName['resolutionResolvedRejected'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Rejected')}
 						tooltipContent={t(
@@ -212,7 +212,7 @@ function FilterFormSummaryChips({
 					/>
 				)}
 				{valueByName['resolutionUnresolved'] && (
-					<NewChip
+					<Chip
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
 						tooltipContent={t('Only show unresolved feedback.')}
@@ -233,7 +233,7 @@ function FilterFormSummaryChips({
 					!valueByName['typePublicationCommentGeneral'] &&
 					!valueByName['typePublicationCommentEditorial'] &&
 					!valueByName['typeProposal'] && (
-						<NewChip
+						<Chip
 							label={t('Any')}
 							tooltipContent={t('Show feedback of any type.')}
 						/>

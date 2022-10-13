@@ -4,13 +4,13 @@ import {
 	Block,
 	Button,
 	Checkbox,
+	Chip,
 	Drop,
 	DropAnchor,
 	Flex,
 	Menu,
 	MenuItem,
 	MenuItemWithDrop,
-	NewChip,
 } from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
@@ -391,7 +391,7 @@ export default function CardHeader({
 								reviewAnnotation.resolvedMetadata?.[
 									'resolution'
 								] && (
-									<NewChip
+									<Chip
 										iconBefore={
 											reviewAnnotation.resolvedMetadata[
 												'resolution'
@@ -409,9 +409,9 @@ export default function CardHeader({
 										}
 										label={
 											!reviewAnnotation.isSelected &&
-											reviewAnnotation.resolvedMetadata[
+											(reviewAnnotation.resolvedMetadata[
 												'resolution'
-											]
+											] as string)
 										}
 										tooltipContent={
 											resolutionBadgeTooltipContent
