@@ -2,7 +2,6 @@ import configureFilters from 'fontoxml-feedback/src/configureFilters';
 import registerObjectReviewAnnotationType from 'fontoxml-feedback/src/registerObjectReviewAnnotationType';
 import registerPublicationReviewAnnotationType from 'fontoxml-feedback/src/registerPublicationReviewAnnotationType';
 import registerTextRangeReviewAnnotationType from 'fontoxml-feedback/src/registerTextRangeReviewAnnotationType';
-import setInitialFilterFormValues from 'fontoxml-feedback/src/setInitialFilterFormValues';
 import t from 'fontoxml-localization/src/t';
 import uiManager from 'fontoxml-modular-ui/src/uiManager';
 
