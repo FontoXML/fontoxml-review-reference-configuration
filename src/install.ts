@@ -1,3 +1,4 @@
+import configureFilters from 'fontoxml-feedback/src/configureFilters';
 import registerObjectReviewAnnotationType from 'fontoxml-feedback/src/registerObjectReviewAnnotationType';
 import registerPublicationReviewAnnotationType from 'fontoxml-feedback/src/registerPublicationReviewAnnotationType';
 import registerTextRangeReviewAnnotationType from 'fontoxml-feedback/src/registerTextRangeReviewAnnotationType';
@@ -62,16 +63,17 @@ export default function install(): void {
 		osxKeyBinding: 'cmd+alt+g',
 	});
 
-	setInitialFilterFormValues(
-		{ resolutionUnresolved: true },
-		{ resolutionUnresolved: true }
-	);
-
-	uiManager.registerReactComponent('FilterFormComponent', FilterForm);
-	uiManager.registerReactComponent(
-		'FilterFormSummaryComponent',
-		FilterFormSummaryChips
-	);
+	configureFilters({
+		FormComponent: FilterForm,
+		FormSummaryComponent: FilterFormSummaryChips,
+		initialFiltersStateOnEditor: { resolutionUnresolved: true },
+		initialFiltersStateOnReview: { resolutionUnresolved: true },
+		isAnyFilterActivated: (currentFilterFormValues) => {
+			// Take all filter values and check if at least one filter is actived.
+			const filterFormValues = Object.values(currentFilterFormValues);
+			return filterFormValues.some(filterFormValue => filterFormValue);
+		}
+	});
 
 	uiManager.registerReactComponent('MastheadForReview', MastheadForReview);
 
