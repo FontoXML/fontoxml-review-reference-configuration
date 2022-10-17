@@ -1,4 +1,4 @@
-import configureFilters from 'fontoxml-feedback/src/configureFilters';
+import configureReviewFilters from 'fontoxml-feedback/src/configureReviewFilters';
 import registerObjectReviewAnnotationType from 'fontoxml-feedback/src/registerObjectReviewAnnotationType';
 import registerPublicationReviewAnnotationType from 'fontoxml-feedback/src/registerPublicationReviewAnnotationType';
 import registerTextRangeReviewAnnotationType from 'fontoxml-feedback/src/registerTextRangeReviewAnnotationType';
@@ -62,13 +62,13 @@ export default function install(): void {
 		osxKeyBinding: 'cmd+alt+g',
 	});
 
-	configureFilters({
+	configureReviewFilters({
 		FormComponent: FilterForm,
 		FormSummaryComponent: FilterFormSummaryChips,
-		initialFiltersStateOnEditor: { resolutionUnresolved: true },
-		initialFiltersStateOnReview: { resolutionUnresolved: true },
-		isAnyFilterActivated: (currentFilterFormValues) => {
-			// Take all filter values and check if at least one filter is actived.
+		initialFiltersStateForEditor: { resolutionUnresolved: true },
+		initialFiltersStateForReview: { resolutionUnresolved: true },
+		isAnyFilterActive: (currentFilterFormValues) => {
+			// Take all filter values and check if at least one filter is active.
 			const filterFormValues = Object.values(currentFilterFormValues);
 			return filterFormValues.some(filterFormValue => filterFormValue);
 		}
