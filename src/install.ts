@@ -65,13 +65,8 @@ export default function install(): void {
 	configureReviewFilters({
 		FormComponent: FilterForm,
 		FormSummaryComponent: FilterFormSummaryChips,
-		initialFiltersStateForEditor: { resolutionUnresolved: true },
-		initialFiltersStateForReview: { resolutionUnresolved: true },
-		isAnyFilterActive: (currentFilterFormValues) => {
-			// Take all filter values and check if at least one filter is active.
-			const filterFormValues = Object.values(currentFilterFormValues);
-			return filterFormValues.some(filterFormValue => filterFormValue);
-		}
+		initialFilterStateForEditor: { resolutionUnresolved: true },
+		initialFilterStateForReview: { resolutionUnresolved: true }
 	});
 
 	uiManager.registerReactComponent('MastheadForReview', MastheadForReview);
