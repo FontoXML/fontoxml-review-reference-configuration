@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import profileStore from 'fontoxml-authors/src/api/profileStore';
 import configurationManager from 'fontoxml-configuration/src/configurationManager';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type {
@@ -9,6 +10,8 @@ import type {
 import t from 'fontoxml-localization/src/t';
 
 const configuredScope = configurationManager.get('scope');
+
+const profilesEnabled = configurationManager.get('enable-profiles');
 
 /**
  * A custom React hook that formats the author and timestamp of the given
@@ -39,10 +42,13 @@ export default function useAuthorAndTimestampLabel(
 	author: string;
 	timestamp: string;
 } {
-	const formattedAuthor = React.useMemo(() => {
+	const [formattedAuthor, setFormattedAuthor] = React.useState<string>('');
+
+	React.useEffect(() => {
 		let authorLabel = t('You');
 		if (reviewAnnotationOrReply.busyState === ReviewBusyState.ADDING) {
-			return authorLabel;
+			setFormattedAuthor(authorLabel);
+			return;
 		}
 
 		const authorField = isReviewAnnotationResolved
@@ -51,17 +57,27 @@ export default function useAuthorAndTimestampLabel(
 
 		if (!reviewAnnotationOrReply[authorField]) {
 			// Use fallback value if author is not present.
-			return fallback;
+			setFormattedAuthor(fallback);
+			return;
 		}
 
 		if (
 			configuredScope.user &&
 			reviewAnnotationOrReply[authorField].id !== configuredScope.user.id
 		) {
-			authorLabel = reviewAnnotationOrReply[authorField].displayName;
-		}
+			const annotationAuthorId = reviewAnnotationOrReply[authorField].id;
 
-		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
+			if (profilesEnabled) {
+				profileStore.getProfileById(annotationAuthorId)
+					.then((authorData) => {
+						setFormattedAuthor(t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorData.name || t('Anonymous') }));
+					});
+			} else {
+				setFormattedAuthor(t('{AUTHOR_LABEL}', { AUTHOR_LABEL: reviewAnnotationOrReply[authorField].displayName }));
+			}
+		} else {
+			setFormattedAuthor(authorLabel);
+		}
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
 	const timestampField = isReviewAnnotationResolved
