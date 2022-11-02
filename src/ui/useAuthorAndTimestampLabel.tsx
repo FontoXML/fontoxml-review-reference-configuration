@@ -11,8 +11,6 @@ import t from 'fontoxml-localization/src/t';
 
 const configuredScope = configurationManager.get('scope');
 
-const profilesEnabled = configurationManager.get('enable-profiles');
-
 /**
  * A custom React hook that formats the author and timestamp of the given
  * reviewAnnotation or reply.
@@ -67,15 +65,16 @@ export default function useAuthorAndTimestampLabel(
 		) {
 			const annotationAuthorId = reviewAnnotationOrReply[authorField].id;
 
-			if (profilesEnabled) {
-				profileStore.getProfileById(annotationAuthorId)
-					.then((authorData) => {
-						setFormattedAuthor(t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorData.name || t('Anonymous') }));
-					});
-			} else {
-				setFormattedAuthor(t('{AUTHOR_LABEL}', { AUTHOR_LABEL: reviewAnnotationOrReply[authorField].displayName }));
-			}
+			profileStore.getProfileById(annotationAuthorId)
+				.then((authorData) => {
+					const profileStoreAuthorName = authorData && authorData.name;
+					const annotationAuthorName = reviewAnnotationOrReply[authorField].displayName
+					const authorName = profileStoreAuthorName || annotationAuthorName || t('Anonymous');
+					setFormattedAuthor(t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorName }));
+				});
 		} else {
+			// The annotation author is the same as the current user, so we reflect it
+			// on the display name.
 			setFormattedAuthor(authorLabel);
 		}
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
