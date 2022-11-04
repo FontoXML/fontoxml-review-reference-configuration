@@ -40,13 +40,10 @@ export default function useAuthorAndTimestampLabel(
 	author: string;
 	timestamp: string;
 } {
-	const [formattedAuthor, setFormattedAuthor] = React.useState<string>('');
-
-	React.useEffect(() => {
+	const formattedAuthor = React.useMemo(() => {
 		let authorLabel = t('You');
 		if (reviewAnnotationOrReply.busyState === ReviewBusyState.ADDING) {
-			setFormattedAuthor(authorLabel);
-			return;
+			return authorLabel;
 		}
 
 		const authorField = isReviewAnnotationResolved
@@ -55,8 +52,7 @@ export default function useAuthorAndTimestampLabel(
 
 		if (!reviewAnnotationOrReply[authorField]) {
 			// Use fallback value if author is not present.
-			setFormattedAuthor(fallback);
-			return;
+			return fallback;
 		}
 
 		if (
@@ -64,19 +60,16 @@ export default function useAuthorAndTimestampLabel(
 			reviewAnnotationOrReply[authorField].id !== configuredScope.user.id
 		) {
 			const annotationAuthorId = reviewAnnotationOrReply[authorField].id;
-
-			profileStore.getProfileById(annotationAuthorId)
-				.then((authorData) => {
-					const profileStoreAuthorName = authorData && authorData.name;
-					const annotationAuthorName = reviewAnnotationOrReply[authorField].displayName
-					const authorName = profileStoreAuthorName || annotationAuthorName || t('Anonymous');
-					setFormattedAuthor(t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorName }));
-				});
-		} else {
-			// The annotation author is the same as the current user, so we reflect it
-			// on the display name.
-			setFormattedAuthor(authorLabel);
+			const profile = profileStore.getProfileById(annotationAuthorId);
+			
+			if (profile) {
+				authorLabel = profile.getDisplayName();
+			} else {
+				authorLabel = reviewAnnotationOrReply[authorField].displayName;
+			}
 		}
+
+		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
 	const timestampField = isReviewAnnotationResolved
