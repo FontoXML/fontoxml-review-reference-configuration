@@ -29,23 +29,23 @@ import t from 'fontoxml-localization/src/t';
  */
 export default function useAuthorAndTimestampLabel(
 	reviewAnnotationOrReply:
+		| ReviewAnnotation
 		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply
-		| ReviewAnnotation,
+		| ReviewReply,
 	isReviewAnnotationResolved: boolean,
 	fallback = t('Author not available')
 ): {
 	author: {
-		id?: string,
-		displayName?: string
+		id?: string;
+		displayName?: string;
 	};
 	timestamp: string;
 } {
 	const authorData = React.useMemo(() => {
-		let authorLabel = t('You');
+		const authorLabel = t('You');
 		if (reviewAnnotationOrReply.busyState === ReviewBusyState.ADDING) {
 			return {
-				displayName: authorLabel
+				displayName: authorLabel,
 			};
 		}
 
@@ -55,13 +55,13 @@ export default function useAuthorAndTimestampLabel(
 
 		if (reviewAnnotationOrReply[authorField]) {
 			return {
-				id: reviewAnnotationOrReply[authorField].id
+				id: reviewAnnotationOrReply[authorField].id,
 			};
 		}
 
 		// Use fallback value if author is not present.
 		return {
-			displayName: fallback
+			displayName: fallback,
 		};
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
