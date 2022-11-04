@@ -61,12 +61,7 @@ export default function useAuthorAndTimestampLabel(
 		) {
 			const annotationAuthorId = reviewAnnotationOrReply[authorField].id;
 			const profile = profileStore.getProfileById(annotationAuthorId);
-			
-			if (profile) {
-				authorLabel = profile.getDisplayName();
-			} else {
-				authorLabel = reviewAnnotationOrReply[authorField].displayName;
-			}
+			authorLabel = profile.getDisplayName();
 		}
 
 		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
