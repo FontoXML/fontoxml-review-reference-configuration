@@ -59,10 +59,21 @@ export default function useAuthorAndTimestampLabel(
 			};
 		}
 
-		// Use fallback value if author is not present.
-		return {
-			displayName: fallback,
-		};
+		if (
+			configuredScope.user &&
+			reviewAnnotationOrReply[authorField].id !== configuredScope.user.id
+		) {
+			const annotationAuthorId = reviewAnnotationOrReply[authorField].id;
+			const profile = profileStore.getProfileById(annotationAuthorId);
+
+			if (profile) {
+				authorLabel = profile.getDisplayName();
+			} else {
+				authorLabel = reviewAnnotationOrReply[authorField].displayName;
+			}
+		}
+
+		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
 	const timestampField = isReviewAnnotationResolved
