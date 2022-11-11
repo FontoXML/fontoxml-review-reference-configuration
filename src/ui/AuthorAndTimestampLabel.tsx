@@ -2,16 +2,19 @@ import * as React from 'react';
 
 import { Flex, Label } from 'fontoxml-design-system/src/components';
 import type {
+	ReviewAnnotation,
 	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
+import FxPersonChip from 'fontoxml-fx/src/FxPersonChip';
 
-import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
+import useTimestamp from './useTimestamp';
 
 type Props = {
 	reviewAnnotation:
 		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply;
+		| ReviewReply
+		| ReviewAnnotation;
 	isReviewAnnotationResolved?: boolean;
 };
 
@@ -19,42 +22,25 @@ function AuthorAndTimestampLabel({
 	reviewAnnotation,
 	isReviewAnnotationResolved = false,
 }: Props) {
-	const { author: authorLabel, timestamp: timestampLabel } =
-		useAuthorAndTimestampLabel(
+	const timestampLabel =
+		useTimestamp(
 			reviewAnnotation,
 			isReviewAnnotationResolved
 		);
 
-	// Make sure the author label is not truncated too much and not too little,
-	// making it and the timestamp label visible.
-	const authorLabelRef = React.useRef<HTMLElement>(null);
+	const authorId = React.useMemo<string>(() => {
+		const authorField = isReviewAnnotationResolved
+			? 'resolvedAuthor'
+			: 'author';
 
-	const handleAuthorLabelRef = (domNode: HTMLElement) => {
-		authorLabelRef.current = domNode;
-	};
-
-	const [authorLabelScrollWidth, setAuthorLabelScrollWidth] =
-		React.useState<number>(0);
-
-	React.useEffect(() => {
-		if (authorLabelRef.current) {
-			setAuthorLabelScrollWidth(authorLabelRef.current.scrollWidth);
-		}
-	}, []);
+		const authorData = reviewAnnotation[authorField];
+		return authorData?.id || "";
+	}, [reviewAnnotation.resolvedAuthor, reviewAnnotation.author, isReviewAnnotationResolved]);
 
 	return (
 		<Flex alignItems="baseline" spaceSize="s">
-			<Flex
-				flex="0 1 auto"
-				style={{ minWidth: Math.min(authorLabelScrollWidth, 32) }}
-			>
-				<Label
-					tooltipContent={authorLabel}
-					data-test-id="author-label"
-					onRef={handleAuthorLabelRef}
-				>
-					{authorLabel}
-				</Label>
+			<Flex flex="0 1 auto">
+				<FxPersonChip profileId={authorId} />
 			</Flex>
 
 			{timestampLabel && (

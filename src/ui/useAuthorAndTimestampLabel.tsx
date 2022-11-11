@@ -4,10 +4,12 @@ import profileStore from 'fontoxml-authors/src/api/profileStore';
 import configurationManager from 'fontoxml-configuration/src/configurationManager';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type {
+	ReviewAnnotation,
 	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
+import useTimestamp from './useTimestamp';
 
 const configuredScope = configurationManager.get('scope');
 
@@ -33,7 +35,8 @@ const configuredScope = configurationManager.get('scope');
 export default function useAuthorAndTimestampLabel(
 	reviewAnnotationOrReply:
 		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply,
+		| ReviewReply
+		| ReviewAnnotation,
 	isReviewAnnotationResolved: boolean,
 	fallback = t('Author not available')
 ): {
@@ -67,19 +70,7 @@ export default function useAuthorAndTimestampLabel(
 		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
-	const timestampField = isReviewAnnotationResolved
-		? 'resolvedTimestamp'
-		: 'timestamp';
-	const timestamp = reviewAnnotationOrReply[timestampField];
-	const formattedTimestamp = React.useMemo(() => {
-		if (!timestamp) {
-			return null;
-		}
-
-		return t('{TIMESTAMP, fonto_date}, {TIMESTAMP, time, short}', {
-			TIMESTAMP: timestamp,
-		});
-	}, [timestamp]);
+	const formattedTimestamp = useTimestamp(reviewAnnotationOrReply, isReviewAnnotationResolved);
 
 	return { author: formattedAuthor, timestamp: formattedTimestamp };
 }
