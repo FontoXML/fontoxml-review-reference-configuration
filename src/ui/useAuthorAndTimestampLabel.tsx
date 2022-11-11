@@ -7,6 +7,7 @@ import type {
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
+import useTimestamp from './useTimestamp';
 
 /**
  * A custom React hook that formats the author and timestamp of the given
@@ -31,7 +32,8 @@ export default function useAuthorAndTimestampLabel(
 	reviewAnnotationOrReply:
 		| ReviewAnnotation
 		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply,
+		| ReviewReply
+		| ReviewAnnotation,
 	isReviewAnnotationResolved: boolean,
 	fallback = t('Author not available')
 ): {
@@ -76,19 +78,7 @@ export default function useAuthorAndTimestampLabel(
 		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
-	const timestampField = isReviewAnnotationResolved
-		? 'resolvedTimestamp'
-		: 'timestamp';
-	const timestamp = reviewAnnotationOrReply[timestampField];
-	const formattedTimestamp = React.useMemo(() => {
-		if (!timestamp) {
-			return null;
-		}
-
-		return t('{TIMESTAMP, fonto_date}, {TIMESTAMP, time, short}', {
-			TIMESTAMP: timestamp,
-		});
-	}, [timestamp]);
+	const formattedTimestamp = useTimestamp(reviewAnnotationOrReply, isReviewAnnotationResolved);
 
 	return { author: authorData, timestamp: formattedTimestamp };
 }

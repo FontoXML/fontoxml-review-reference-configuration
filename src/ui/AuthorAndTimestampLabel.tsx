@@ -8,13 +8,13 @@ import type {
 } from 'fontoxml-feedback/src/types';
 import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
 
-import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
+import useTimestamp from './useTimestamp';
 
 type Props = {
 	reviewAnnotation:
+		| ReviewAnnotation
 		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply
-		| ReviewAnnotation;
+		| ReviewReply;
 	isReviewAnnotationResolved?: boolean;
 };
 
@@ -28,28 +28,22 @@ function AuthorAndTimestampLabel({
 			isReviewAnnotationResolved
 		);
 
-	// Make sure the author label is not truncated too much and not too little,
-	// making it and the timestamp label visible.
-	const authorLabelRef = React.useRef<HTMLElement>(null);
+	const authorId = React.useMemo<string>(() => {
+		const authorField = isReviewAnnotationResolved
+			? 'resolvedAuthor'
+			: 'author';
 
-	const handleAuthorLabelRef = (domNode: HTMLElement) => {
-		authorLabelRef.current = domNode;
-	};
-
-	const [authorLabelScrollWidth, setAuthorLabelScrollWidth] =
-		React.useState<number>(0);
-
-	React.useEffect(() => {
-		if (authorLabelRef.current) {
-			setAuthorLabelScrollWidth(authorLabelRef.current.scrollWidth);
-		}
-	}, []);
+		const authorData = reviewAnnotation[authorField];
+		return authorData?.id || '';
+	}, [
+		reviewAnnotation.resolvedAuthor,
+		reviewAnnotation.author,
+		isReviewAnnotationResolved,
+	]);
 
 	return (
 		<Flex alignItems="center" spaceSize="s">
-			{authorData.id && (
-				<FxProfileChip profileId={authorData.id} />
-			)}
+			{authorData.id && <FxProfileChip profileId={authorData.id} />}
 
 			{authorData.displayName && (
 				<Flex
