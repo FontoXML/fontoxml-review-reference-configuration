@@ -28,7 +28,7 @@ function AuthorAndTimestampLabel({
 			isReviewAnnotationResolved
 		);
 
-	const authorId = React.useMemo<string>(() => {
+	const authorId = React.useMemo<string | null>(() => {
 		const authorField = isReviewAnnotationResolved
 			? 'resolvedAuthor'
 			: 'author';
