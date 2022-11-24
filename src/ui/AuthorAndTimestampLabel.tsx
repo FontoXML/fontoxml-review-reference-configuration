@@ -8,7 +8,7 @@ import type {
 } from 'fontoxml-feedback/src/types';
 import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
 
-import useTimestamp from './useTimestamp';
+import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
 type Props = {
 	reviewAnnotation:
@@ -22,24 +22,49 @@ function AuthorAndTimestampLabel({
 	reviewAnnotation,
 	isReviewAnnotationResolved = false,
 }: Props) {
-	const timestampLabel =
-		useTimestamp(
+	const { author: authorData, timestamp: timestampLabel } =
+		useAuthorAndTimestampLabel(
 			reviewAnnotation,
 			isReviewAnnotationResolved
 		);
 
-	const authorId = React.useMemo<string | null>(() => {
-		const authorField = isReviewAnnotationResolved
-			? 'resolvedAuthor'
-			: 'author';
+	// Make sure the author label is not truncated too much and not too little,
+	// making it and the timestamp label visible.
+	const authorLabelRef = React.useRef<HTMLElement>(null);
 
-		const authorData = reviewAnnotation[authorField];
-		return authorData?.id;
-	}, [reviewAnnotation.resolvedAuthor, reviewAnnotation.author, isReviewAnnotationResolved]);
+	const handleAuthorLabelRef = (domNode: HTMLElement) => {
+		authorLabelRef.current = domNode;
+	};
+
+	const [authorLabelScrollWidth, setAuthorLabelScrollWidth] =
+		React.useState<number>(0);
+
+	React.useEffect(() => {
+		if (authorLabelRef.current) {
+			setAuthorLabelScrollWidth(authorLabelRef.current.scrollWidth);
+		}
+	}, []);
 
 	return (
 		<Flex alignItems="center" spaceSize="s">
-			<FxProfileChip profileId={authorId} />
+			{authorData.id && (
+				<FxProfileChip profileId={authorData.id} />
+			)}
+
+			{authorData.displayName && (
+				<Flex
+					flex="0 1 auto"
+					style={{ minWidth: Math.min(authorLabelScrollWidth, 32) }}
+				>
+					<Label
+						tooltipContent={authorLabel}
+						data-test-id="author-label"
+						onRef={handleAuthorLabelRef}
+					>
+						{authorData.displayName}
+					</Label>
+				</Flex>
+			)}
 
 			{timestampLabel && (
 				<Label
