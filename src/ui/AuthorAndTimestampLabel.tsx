@@ -57,7 +57,7 @@ function AuthorAndTimestampLabel({
 					style={{ minWidth: Math.min(authorLabelScrollWidth, 32) }}
 				>
 					<Label
-						tooltipContent={authorLabel}
+						tooltipContent={authorData.displayName}
 						data-test-id="author-label"
 						onRef={handleAuthorLabelRef}
 					>
