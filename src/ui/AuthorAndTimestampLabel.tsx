@@ -8,7 +8,7 @@ import type {
 } from 'fontoxml-feedback/src/types';
 import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
 
-import useTimestamp from './useTimestamp';
+import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
 type Props = {
 	reviewAnnotation:
@@ -28,10 +28,16 @@ function AuthorAndTimestampLabel({
 			isReviewAnnotationResolved
 		);
 
-	const authorId = React.useMemo<string | null>(() => {
-		const authorField = isReviewAnnotationResolved
-			? 'resolvedAuthor'
-			: 'author';
+	// Make sure the author label is not truncated too much and not too little,
+	// making it and the timestamp label visible.
+	const authorLabelRef = React.useRef<HTMLElement>(null);
+
+	const handleAuthorLabelRef = (domNode: HTMLElement) => {
+		authorLabelRef.current = domNode;
+	};
+
+	const [authorLabelScrollWidth, setAuthorLabelScrollWidth] =
+		React.useState<number>(0);
 
 		const authorData = reviewAnnotation[authorField];
 		return authorData?.id || '';
