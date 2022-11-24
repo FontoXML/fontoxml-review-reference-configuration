@@ -6,7 +6,7 @@ import type {
 	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
-import FxPersonChip from 'fontoxml-fx/src/FxPersonChip';
+import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
 
 import useTimestamp from './useTimestamp';
 
@@ -28,20 +28,18 @@ function AuthorAndTimestampLabel({
 			isReviewAnnotationResolved
 		);
 
-	const authorId = React.useMemo<string>(() => {
+	const authorId = React.useMemo<string | null>(() => {
 		const authorField = isReviewAnnotationResolved
 			? 'resolvedAuthor'
 			: 'author';
 
 		const authorData = reviewAnnotation[authorField];
-		return authorData?.id || "";
+		return authorData?.id;
 	}, [reviewAnnotation.resolvedAuthor, reviewAnnotation.author, isReviewAnnotationResolved]);
 
 	return (
-		<Flex alignItems="baseline" spaceSize="s">
-			<Flex flex="0 1 auto">
-				<FxPersonChip profileId={authorId} />
-			</Flex>
+		<Flex alignItems="center" spaceSize="s">
+			<FxProfileChip profileId={authorId} />
 
 			{timestampLabel && (
 				<Label
