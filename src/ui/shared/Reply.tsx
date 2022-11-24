@@ -74,7 +74,7 @@ export default function Reply({
 					justifyContent="space-between"
 					style={{ height: CARD_HEADER_HEIGHT }}
 				>
-					<Flex flexDirection="row" spaceSize="s">
+					<Flex flexDirection="row" spaceSize="s" alignItems="center">
 						<Icon icon="far fa-reply" />
 
 						<AuthorAndTimestampLabel reviewAnnotation={reply} />
