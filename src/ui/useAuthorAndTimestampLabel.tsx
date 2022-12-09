@@ -1,14 +1,12 @@
 import * as React from 'react';
 
-import configurationManager from 'fontoxml-configuration/src/configurationManager';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type {
+	ReviewAnnotation,
 	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
-
-const configuredScope = configurationManager.get('scope');
 
 /**
  * A custom React hook that formats the author and timestamp of the given
@@ -32,36 +30,39 @@ const configuredScope = configurationManager.get('scope');
 export default function useAuthorAndTimestampLabel(
 	reviewAnnotationOrReply:
 		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply,
+		| ReviewReply
+		| ReviewAnnotation,
 	isReviewAnnotationResolved: boolean,
 	fallback = t('Author not available')
 ): {
-	author: string;
+	author: {
+		id?: string,
+		displayName?: string
+	};
 	timestamp: string;
 } {
-	const formattedAuthor = React.useMemo(() => {
+	const authorData = React.useMemo(() => {
 		let authorLabel = t('You');
 		if (reviewAnnotationOrReply.busyState === ReviewBusyState.ADDING) {
-			return authorLabel;
+			return {
+				displayName: authorLabel
+			};
 		}
 
 		const authorField = isReviewAnnotationResolved
 			? 'resolvedAuthor'
 			: 'author';
 
-		if (!reviewAnnotationOrReply[authorField]) {
-			// Use fallback value if author is not present.
-			return fallback;
+		if (reviewAnnotationOrReply[authorField]) {
+			return {
+				id: reviewAnnotationOrReply[authorField].id
+			};
 		}
 
-		if (
-			configuredScope.user &&
-			reviewAnnotationOrReply[authorField].id !== configuredScope.user.id
-		) {
-			authorLabel = reviewAnnotationOrReply[authorField].displayName;
-		}
-
-		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
+		// Use fallback value if author is not present.
+		return {
+			displayName: fallback
+		};
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
 	const timestampField = isReviewAnnotationResolved
@@ -78,5 +79,5 @@ export default function useAuthorAndTimestampLabel(
 		});
 	}, [timestamp]);
 
-	return { author: formattedAuthor, timestamp: formattedTimestamp };
+	return { author: authorData, timestamp: formattedTimestamp };
 }

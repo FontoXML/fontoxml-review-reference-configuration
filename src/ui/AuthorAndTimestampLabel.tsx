@@ -2,16 +2,19 @@ import * as React from 'react';
 
 import { Flex, Label } from 'fontoxml-design-system/src/components';
 import type {
+	ReviewAnnotation,
 	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
+import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
 
 import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
 type Props = {
 	reviewAnnotation:
 		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply;
+		| ReviewReply
+		| ReviewAnnotation;
 	isReviewAnnotationResolved?: boolean;
 };
 
@@ -19,7 +22,7 @@ function AuthorAndTimestampLabel({
 	reviewAnnotation,
 	isReviewAnnotationResolved = false,
 }: Props) {
-	const { author: authorLabel, timestamp: timestampLabel } =
+	const { author: authorData, timestamp: timestampLabel } =
 		useAuthorAndTimestampLabel(
 			reviewAnnotation,
 			isReviewAnnotationResolved
@@ -43,19 +46,25 @@ function AuthorAndTimestampLabel({
 	}, []);
 
 	return (
-		<Flex alignItems="baseline" spaceSize="s">
-			<Flex
-				flex="0 1 auto"
-				style={{ minWidth: Math.min(authorLabelScrollWidth, 32) }}
-			>
-				<Label
-					tooltipContent={authorLabel}
-					data-test-id="author-label"
-					onRef={handleAuthorLabelRef}
+		<Flex alignItems="center" spaceSize="s">
+			{authorData.id && (
+				<FxProfileChip profileId={authorData.id} />
+			)}
+
+			{authorData.displayName && (
+				<Flex
+					flex="0 1 auto"
+					style={{ minWidth: Math.min(authorLabelScrollWidth, 32) }}
 				>
-					{authorLabel}
-				</Label>
-			</Flex>
+					<Label
+						tooltipContent={authorData.displayName}
+						data-test-id="author-label"
+						onRef={handleAuthorLabelRef}
+					>
+						{authorData.displayName}
+					</Label>
+				</Flex>
+			)}
 
 			{timestampLabel && (
 				<Label
