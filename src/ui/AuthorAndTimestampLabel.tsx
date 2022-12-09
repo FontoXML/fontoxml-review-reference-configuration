@@ -12,9 +12,9 @@ import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
 type Props = {
 	reviewAnnotation:
+		| ReviewAnnotation
 		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply
-		| ReviewAnnotation;
+		| ReviewReply;
 	isReviewAnnotationResolved?: boolean;
 };
 
@@ -47,9 +47,7 @@ const AuthorAndTimestampLabel: React.FC<Props> = ({
 
 	return (
 		<Flex alignItems="center" spaceSize="s">
-			{authorData.id && (
-				<FxProfileChip profileId={authorData.id} />
-			)}
+			{authorData.id && <FxProfileChip profileId={authorData.id} />}
 
 			{authorData.displayName && (
 				<Flex
