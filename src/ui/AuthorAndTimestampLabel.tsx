@@ -39,13 +39,11 @@ function AuthorAndTimestampLabel({
 	const [authorLabelScrollWidth, setAuthorLabelScrollWidth] =
 		React.useState<number>(0);
 
-		const authorData = reviewAnnotation[authorField];
-		return authorData?.id || '';
-	}, [
-		reviewAnnotation.resolvedAuthor,
-		reviewAnnotation.author,
-		isReviewAnnotationResolved,
-	]);
+	React.useEffect(() => {
+		if (authorLabelRef.current) {
+			setAuthorLabelScrollWidth(authorLabelRef.current.scrollWidth);
+		}
+	}, []);
 
 	return (
 		<Flex alignItems="center" spaceSize="s">

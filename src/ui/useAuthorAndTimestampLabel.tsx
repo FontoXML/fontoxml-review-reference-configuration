@@ -8,8 +8,6 @@ import type {
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import useTimestamp from './useTimestamp';
-
 /**
  * A custom React hook that formats the author and timestamp of the given
  * reviewAnnotation or reply.
@@ -62,21 +60,9 @@ export default function useAuthorAndTimestampLabel(
 			};
 		}
 
-		if (
-			configuredScope.user &&
-			reviewAnnotationOrReply[authorField].id !== configuredScope.user.id
-		) {
-			const annotationAuthorId = reviewAnnotationOrReply[authorField].id;
-			const profile = profileStore.getProfileById(annotationAuthorId);
-
-			if (profile) {
-				authorLabel = profile.getDisplayName();
-			} else {
-				authorLabel = reviewAnnotationOrReply[authorField].displayName;
-			}
-		}
-
-		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
+		return {
+			displayName: fallback,
+		};
 	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
 	const timestampField = isReviewAnnotationResolved
