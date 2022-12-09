@@ -63,6 +63,18 @@ function AuthorAndTimestampLabel({
 					</Label>
 				</Flex>
 			)}
+
+			{timestampLabel && (
+				<Label
+					colorName="text-muted-color"
+					flex="0 3 auto"
+					size="s"
+					tooltipContent={timestampLabel}
+					data-test-id="timestamp-label"
+				>
+					{timestampLabel}
+				</Label>
+			)}
 		</Flex>
 	);
 }
