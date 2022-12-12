@@ -47,7 +47,15 @@ const AuthorAndTimestampLabel: React.FC<Props> = ({
 
 	return (
 		<Flex alignItems="center" spaceSize="s">
-			{authorData.id && <FxProfileChip profileId={authorData.id} />}
+			{authorData.id && (
+				<FxProfileChip
+					profileId={authorData.id}
+					secondaryLabel={{
+						value: timestampLabel,
+						position: 'below',
+					}}
+				/>
+			)}
 
 			{authorData.displayName && (
 				<Flex
@@ -62,18 +70,6 @@ const AuthorAndTimestampLabel: React.FC<Props> = ({
 						{authorData.displayName}
 					</Label>
 				</Flex>
-			)}
-
-			{timestampLabel && (
-				<Label
-					colorName="text-muted-color"
-					flex="0 3 auto"
-					size="s"
-					tooltipContent={timestampLabel}
-					data-test-id="timestamp-label"
-				>
-					{timestampLabel}
-				</Label>
 			)}
 		</Flex>
 	);
