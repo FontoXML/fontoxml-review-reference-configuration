@@ -84,7 +84,6 @@ export default function Reply({
 						<DropAnchor
 							renderAnchor={({
 								isDropOpened,
-								isFocused,
 								onRef,
 								setIsDropOpened,
 							}) => (
@@ -92,7 +91,6 @@ export default function Reply({
 									icon="ellipsis-h"
 									isDisabled={isDisabled}
 									isSelected={isDropOpened}
-									isFocused={isFocused}
 									onClick={() => {
 										setIsDropOpened(
 											(isDropOpened) => !isDropOpened
@@ -120,10 +118,10 @@ export default function Reply({
 
 				<Block data-test-id="reply-text">
 					{reviewAnnotation.isSelected && (
-						<TruncatedText>{reply.metadata['reply']}</TruncatedText>
+						<TruncatedText>{reply.metadata.reply}</TruncatedText>
 					)}
 					{!reviewAnnotation.isSelected && (
-						<Label isBlock>{reply.metadata['reply']}</Label>
+						<Label isBlock>{reply.metadata.reply}</Label>
 					)}
 				</Block>
 

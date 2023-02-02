@@ -122,12 +122,11 @@ export default function CardHeader({
 	]);
 
 	const renderAnchor = React.useCallback(
-		({ isDropOpened, isFocused, onRef, setIsDropOpened }) => {
+		({ isDropOpened, onRef, setIsDropOpened }) => {
 			return (
 				<Button
 					icon="ellipsis-h"
 					isDisabled={reviewAnnotation.isLoading}
-					isFocused={isFocused}
 					isSelected={isDropOpened}
 					onClick={() =>
 						setIsDropOpened((isDropOpened) => !isDropOpened)
@@ -279,14 +278,13 @@ export default function CardHeader({
 	}
 
 	const resolutionBadgeTooltipContent = React.useMemo(() => {
-		if (!reviewAnnotation.resolvedMetadata?.['resolution']) {
+		if (!reviewAnnotation.resolvedMetadata?.resolution) {
 			return undefined;
 		}
 
 		const resolution = resolutions
 			.find(
-				(r) =>
-					r.value === reviewAnnotation.resolvedMetadata['resolution']
+				(r) => r.value === reviewAnnotation.resolvedMetadata.resolution
 			)
 			.displayLabel.toLowerCase();
 
@@ -388,19 +386,17 @@ export default function CardHeader({
 
 							{reviewAnnotation.status ===
 								ReviewAnnotationStatus.RESOLVED &&
-								reviewAnnotation.resolvedMetadata?.[
-									'resolution'
-								] && (
+								reviewAnnotation.resolvedMetadata
+									?.resolution && (
 									<Chip
 										iconBefore={
-											reviewAnnotation.resolvedMetadata[
-												'resolution'
-											] === 'accepted'
+											reviewAnnotation.resolvedMetadata
+												.resolution === 'accepted'
 												? 'far fa-check'
 												: reviewAnnotation
-														.resolvedMetadata[
-														'resolution'
-												  ] === 'rejected'
+														.resolvedMetadata
+														.resolution ===
+												  'rejected'
 												? 'far fa-times'
 												: null
 										}
@@ -409,9 +405,8 @@ export default function CardHeader({
 										}
 										label={
 											!reviewAnnotation.isSelected &&
-											(reviewAnnotation.resolvedMetadata[
-												'resolution'
-											] as string)
+											(reviewAnnotation.resolvedMetadata
+												.resolution as string)
 										}
 										tooltipContent={
 											resolutionBadgeTooltipContent
