@@ -9,8 +9,10 @@ import {
 	MastheadAlignRight,
 	MastheadContent,
 	Menu,
+	MenuGroup,
 } from 'fontoxml-design-system/src/components';
 import ReviewLogo from 'fontoxml-feedback/src/ReviewLogo';
+import FxMultiOperationsMenuItem from 'fontoxml-fx/src/FxMultiOperationsMenuItem';
 import FxOperationMenuItem from 'fontoxml-fx/src/FxOperationMenuItem';
 import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
 
@@ -31,10 +33,11 @@ const MastheadForReview = (): JSX.Element => {
 				<MastheadAlignRight>
 					<Flex spaceSize="m">
 						<ButtonWithDrop
-								icon="search-plus"
-								label="Zoom"
-								renderDrop={() => (
-									<Drop>
+							icon="search-plus"
+							label="Zoom"
+							renderDrop={() => (
+								<Drop>
+									<MenuGroup>
 										<Menu>
 											<FxOperationMenuItem operationName="zoom-content-view-to-75%-75%" />
 											<FxOperationMenuItem operationName="zoom-content-view-to-100%-100%" />
@@ -42,10 +45,25 @@ const MastheadForReview = (): JSX.Element => {
 											<FxOperationMenuItem operationName="zoom-content-view-to-150%-150%" />
 											<FxOperationMenuItem operationName="zoom-content-view-to-200%-200%" />
 										</Menu>
-									</Drop>
-								)}
-							/>
-						
+									</MenuGroup>
+
+									<MenuGroup>
+										<FxMultiOperationsMenuItem
+											operations={[
+												{
+													operationName:
+														'wide-canvas-content-view-to-150%-text-size-not-150%',
+												},
+												{
+													operationName:
+														'untoggle-wide-canvas-content-view-to-150%-text-size-not-150%',
+												},
+											]}
+										/>
+									</MenuGroup>
+								</Drop>
+							)} />
+
 							{!!id && <FxProfileChip profileId={id} />}
 						</Flex>
 					</MastheadAlignRight>
