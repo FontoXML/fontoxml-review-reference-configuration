@@ -23,6 +23,18 @@ export default function install(): void {
 		osxKeyBinding: 'cmd+alt+m',
 	});
 
+	// This is a test annotation type that is only enabled for a specific document.
+	registerTextRangeReviewAnnotationType('enabled-selector-comment', {
+		enabledSelector: 'fonto:document(fonto:remote-document-id(fonto:selection-common-ancestor()))/*[1]/@id = "topic_915c9f1b-ee2a-4853-d8f2-5fffaa9ab116"',
+		icon: 'far fa-comment',
+		label: 'EnabledSelector comment',
+		priority: -1,
+		CardContentComponent: CommentCardContent,
+		tooltipContent: t('Add test comment to selected text.'),
+		keyBinding: 'ctrl+alt+m',
+		osxKeyBinding: 'cmd+alt+m',
+	});
+
 	registerObjectReviewAnnotationType('object-comment', {
 		// Use a fancier selector here and/or register multiple different object annotation types.
 		enabledSelector: 'self::image',
