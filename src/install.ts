@@ -25,7 +25,7 @@ export default function install(): void {
 
 	// This is a test annotation type that is only enabled for a specific document.
 	registerTextRangeReviewAnnotationType('enabled-selector-comment', {
-		enabledSelector: 'fonto:document(fonto:remote-document-id(fonto:selection-common-ancestor()))/*[1]/@id = "topic_915c9f1b-ee2a-4853-d8f2-5fffaa9ab116"',
+		enabledSelector: 'fonto:remote-document-id(fonto:selection-common-ancestor())/*[1]/@id = "clogs/sample.xml"',
 		icon: 'far fa-comment',
 		label: 'EnabledSelector comment',
 		priority: -1,
@@ -76,7 +76,7 @@ export default function install(): void {
 
 	// Review annotation type for testing the enabledSelector option.
 	registerPublicationReviewAnnotationType('enabled-selector-publication-comment', {
-		enabledSelector: 'fonto:document(fonto:remote-document-id(fonto:selection-common-ancestor()))/*[1]/@id = "topic_915c9f1b-ee2a-4853-d8f2-5fffaa9ab116"',
+		enabledSelector: 'fonto:remote-document-id(fonto:selection-common-ancestor())/*[1]/@id = "clogs/sample.xml"',
 		icon: 'global-comments-stacked-icons',
 		label: 'EnabledSelector Global comment',
 		priority: -2,
