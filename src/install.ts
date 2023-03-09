@@ -21,6 +21,19 @@ export default function install(): void {
 		tooltipContent: t('Add comment to selected text.'),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
+		enabledSelector: 'not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
+	});
+
+	// This is a test annotation type that is only enabled for a specific document.
+	registerTextRangeReviewAnnotationType('enabled-selector-comment', {
+		enabledSelector: 'fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/sample.xml"',
+		icon: 'far fa-comment',
+		label: 'EnabledSelector comment',
+		priority: -1,
+		CardContentComponent: CommentCardContent,
+		tooltipContent: t('Add test comment to selected text.'),
+		keyBinding: 'ctrl+alt+shift+m',
+		osxKeyBinding: 'cmd+alt+shift+m',
 	});
 
 	registerObjectReviewAnnotationType('object-comment', {
@@ -48,6 +61,7 @@ export default function install(): void {
 		tooltipContent: t('Propose a change to selected text.'),
 		keyBinding: 'ctrl+alt+e',
 		osxKeyBinding: 'cmd+alt+e',
+		enabledSelector: 'not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
@@ -60,6 +74,21 @@ export default function install(): void {
 		),
 		keyBinding: 'ctrl+alt+g',
 		osxKeyBinding: 'cmd+alt+g',
+		enabledSelector: 'not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
+	});
+
+	// Review annotation type for testing the enabledSelector option.
+	registerPublicationReviewAnnotationType('enabled-selector-publication-comment', {
+		enabledSelector: 'fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/sample.xml"',
+		icon: 'global-comments-stacked-icons',
+		label: 'EnabledSelector Global comment',
+		priority: -2,
+		CardContentComponent: CommentCardContent,
+		tooltipContent: t(
+			'Add a test comment that applies to the entire publication.'
+		),
+		keyBinding: 'ctrl+alt+shift+g',
+		osxKeyBinding: 'cmd+alt+shift+g',
 	});
 
 	configureReviewFilters({
