@@ -77,7 +77,7 @@ function CommentAddOrEditFormContent({
 		reviewAnnotation.targets[0].type ===
 		ReviewTargetType.PUBLICATION_SELECTOR;
 	if (isPublicationLevelComment) {
-		label = `Global ${label[0].toLowerCase()}${label.substring(1)}`;
+		label = t(`Global ${label[0].toLowerCase()}${label.substring(1)}`);
 	}
 
 	return (
