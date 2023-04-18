@@ -174,6 +174,6 @@ const Reply: React.FC<Props> = ({
 			</Block>
 		</>
 	);
-}
+};
 
 export default Reply

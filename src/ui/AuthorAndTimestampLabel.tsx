@@ -22,7 +22,7 @@ const AuthorAndTimestampLabel: React.FC<Props> = ({
 	reviewAnnotation,
 	isReviewAnnotationResolved = false,
 }) => {
-	const { author: authorLabel, timestamp: timestampLabel } =
+	const { author: authorData, timestamp: timestampLabel } =
 		useAuthorAndTimestampLabel(
 			reviewAnnotation,
 			isReviewAnnotationResolved
@@ -73,6 +73,6 @@ const AuthorAndTimestampLabel: React.FC<Props> = ({
 			)}
 		</Flex>
 	);
-}
+};
 
 export default AuthorAndTimestampLabel;
