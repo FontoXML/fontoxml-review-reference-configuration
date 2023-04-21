@@ -9,6 +9,7 @@ import {
 	TextArea,
 } from 'fontoxml-design-system/src/components';
 import type {
+	FdsDir,
 	FdsFormFeedback,
 	FdsFormValueByName,
 } from 'fontoxml-design-system/src/types';
@@ -55,6 +56,7 @@ function CommentAddOrEditFormContent({
 			error.recovery !== ReviewRecoveryOption.RETRYABLE);
 	const isEditing = reviewAnnotation.busyState === ReviewBusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
+	const textAreaRef = React.useRef(null);
 
 	React.useEffect(() => {
 		if (!isEditing) {
@@ -80,6 +82,13 @@ function CommentAddOrEditFormContent({
 		label = t('Global {LABEL}', {LABEL: `${label[0].toLowerCase()}${label.substring(1)}`});
 	}
 
+	const handleCommentDirChange = React.useCallback(
+		(dir) => {
+			onFieldChange({ name: 'comment.dir', value: dir, feedback: null });
+		},
+		[onFieldChange]
+	);
+
 	return (
 		<>
 			<FormRow
@@ -101,10 +110,12 @@ function CommentAddOrEditFormContent({
 				labelColorName="text-color"
 			>
 				<TextArea
+					dir={valueByName['comment.dir']}
 					isDisabled={isDisabled}
 					name="comment"
+					onDirChange={handleCommentDirChange}
 					placeholder={t('Comment on the selected content')}
-					ref={focusableRef}
+					ref={textAreaRef}
 					rows={rows}
 					validate={validateCommentField}
 					data-test-id="comment"

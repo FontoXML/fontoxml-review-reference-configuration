@@ -8,7 +8,10 @@ import {
 	Icon,
 	TextArea,
 } from 'fontoxml-design-system/src/components';
-import type { FdsFormFeedback } from 'fontoxml-design-system/src/types';
+import type {
+	FdsFormFeedback,
+	FdsFormValueByName,
+} from 'fontoxml-design-system/src/types';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
@@ -72,18 +75,22 @@ function ReplyFormContent({
 	focusableRef,
 	isSubmitDisabled,
 	onCancelButtonClick,
+	onFieldChange,
 	onHideLinkClick,
 	onRefreshLinkClick,
 	onSubmit,
 	reply,
+	valueByName,
 }: {
 	focusableRef: HTMLElement;
 	isSubmitDisabled: boolean;
+	onFieldChange(...args: unknown[]): void;
 	onCancelButtonClick(): void;
 	onHideLinkClick: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefreshLinkClick: ReviewCardContentComponentProps['onReplyRefresh'];
 	onSubmit(): void;
 	reply: ReviewReply;
+	valueByName: FdsFormValueByName;
 }) {
 	const isAdding = reply.busyState === ReviewBusyState.ADDING;
 	const isEditing = reply.busyState === ReviewBusyState.EDITING;
@@ -99,6 +106,13 @@ function ReplyFormContent({
 		reply.isLoading ||
 		(error && error.recovery !== ReviewRecoveryOption.RETRYABLE);
 	const isLoading = reply.isLoading && (isAdding || isEditing);
+
+	const handleReplyDirChange = React.useCallback(
+		(dir) => {
+			onFieldChange({ name: 'reply.dir', value: dir, feedback: null });
+		},
+		[onFieldChange]
+	);
 
 	return (
 		<Block spaceVerticalSize="l">
@@ -116,8 +130,10 @@ function ReplyFormContent({
 				</Flex>
 
 				<TextArea
+					dir={valueByName['reply.dir']}
 					isDisabled={isDisabled}
 					name="reply"
+					onDirChange={handleReplyDirChange}
 					ref={focusableRef}
 					rows={rows}
 					validate={validateReplyField}
@@ -199,15 +215,17 @@ function ReplyForm({
 			initialValueByName={reply.metadata}
 			onSubmit={handleSubmit}
 		>
-			{({ isSubmitDisabled, onSubmit }) => (
+			{({ isSubmitDisabled, onFieldChange, onSubmit, valueByName }) => (
 				<ReplyFormContent
 					focusableRef={focusableRef}
 					isSubmitDisabled={isSubmitDisabled}
 					onCancelButtonClick={handleCancelButtonClick}
+					onFieldChange={onFieldChange}
 					onHideLinkClick={handleHideLinkClick}
 					onRefreshLinkClick={handleRefreshLinkClick}
 					onSubmit={onSubmit}
 					reply={reply}
+					valueByName={valueByName}
 				/>
 			)}
 		</ReviewAnnotationForm>

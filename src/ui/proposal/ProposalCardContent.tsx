@@ -7,6 +7,7 @@ import {
 	HorizontalSeparationLine,
 	Icon,
 	Label,
+	Text,
 } from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
@@ -219,7 +220,13 @@ function ProposalCardContent({
 									</Flex>
 
 									{reviewAnnotation.isSelected && (
-										<TruncatedText>
+										<TruncatedText
+											dir={
+												reviewAnnotation.metadata[
+													'proposedChange.dir'
+												]
+											}
+										>
 											<Diff
 												isSingleLine={
 													!reviewAnnotation.isSelected
@@ -237,6 +244,11 @@ function ProposalCardContent({
 									)}
 									{!reviewAnnotation.isSelected && (
 										<Diff
+											dir={
+												reviewAnnotation.metadata[
+													'proposedChange.dir'
+												]
+											}
 											isSingleLine={
 												!reviewAnnotation.isSelected
 											}
@@ -258,7 +270,14 @@ function ProposalCardContent({
 									<Label isBold>{t('Motivation')}</Label>
 
 									{reviewAnnotation.isSelected && (
-										<TruncatedText data-test-id="motivation">
+										<TruncatedText
+											data-test-id="motivation"
+											dir={
+												reviewAnnotation.metadata[
+													'comment.dir'
+												]
+											}
+										>
 											{reviewAnnotation.metadata.comment}
 										</TruncatedText>
 									)}
@@ -266,6 +285,11 @@ function ProposalCardContent({
 										<Label
 											isBlock
 											data-test-id="motivation"
+											dir={
+												reviewAnnotation.metadata[
+													'comment.dir'
+												]
+											}
 										>
 											{reviewAnnotation.metadata.comment}
 										</Label>

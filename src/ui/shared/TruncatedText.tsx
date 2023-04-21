@@ -63,7 +63,7 @@ const TruncatedText: React.FC = (props) => {
 
 	return (
 		<>
-			<Text data-test-id={props['data-test-id']}>
+			<Text data-test-id={props['data-test-id']} dir={props.dir}>
 				<Block
 					{...styles}
 					style={{

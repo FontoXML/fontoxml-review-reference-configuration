@@ -54,6 +54,8 @@ function ProposalAddOrEditFormContent({
 			error.recovery !== ReviewRecoveryOption.RETRYABLE);
 	const isEditing = reviewAnnotation.busyState === ReviewBusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
+	const proposalRef = React.useRef(null);
+	const commentRef = React.useRef(null);
 
 	const originalText = reviewAnnotation.originalText;
 
@@ -71,6 +73,24 @@ function ProposalAddOrEditFormContent({
 			});
 		}
 	}, [isEditing, onFieldChange, originalText, validate]);
+
+	const handleProposalDirChange = React.useCallback(
+		(dir) => {
+			onFieldChange({
+				name: 'proposedChange.dir',
+				value: dir,
+				feedback: null,
+			});
+		},
+		[onFieldChange]
+	);
+
+	const handleCommentDirChange = React.useCallback(
+		(dir) => {
+			onFieldChange({ name: 'comment.dir', value: dir, feedback: null });
+		},
+		[onFieldChange]
+	);
 
 	return (
 		<>
@@ -90,13 +110,15 @@ function ProposalAddOrEditFormContent({
 					labelColorName="text-color"
 				>
 					<TextAreaWithDiff
+						dir={reviewAnnotation.metadata['proposedChange.dir']}
 						isDisabled={isDisabled}
 						name="proposedChange"
+						onDirChange={handleProposalDirChange}
 						originalValue={originalText}
 						placeholder={t(
 							'Leave empty to propose removing the selected content'
 						)}
-						ref={focusableRef}
+						ref={proposalRef}
 						rows={rows}
 						validate={validate}
 						data-test-id="comment"
@@ -109,8 +131,11 @@ function ProposalAddOrEditFormContent({
 					labelColorName="text-color"
 				>
 					<TextArea
+						dir={reviewAnnotation.metadata['comment.dir']}
 						isDisabled={isDisabled}
 						name="comment"
+						onDirChange={handleCommentDirChange}
+						ref={commentRef}
 						rows={rows}
 						placeholder={t('Motivate your proposal')}
 						data-test-id="motivation"

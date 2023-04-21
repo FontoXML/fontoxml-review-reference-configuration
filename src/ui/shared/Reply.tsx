@@ -118,10 +118,14 @@ export default function Reply({
 
 				<Block data-test-id="reply-text">
 					{reviewAnnotation.isSelected && (
-						<TruncatedText>{reply.metadata.reply}</TruncatedText>
+						<TruncatedText dir={reply.metadata['reply.dir']}>
+							{reply.metadata.reply}
+						</TruncatedText>
 					)}
 					{!reviewAnnotation.isSelected && (
-						<Label isBlock>{reply.metadata.reply}</Label>
+						<Label dir={reply.metadata['reply.dir']} isBlock>
+							{reply.metadata.reply}
+						</Label>
 					)}
 				</Block>
 
