@@ -10,6 +10,7 @@ import {
 	MastheadContent,
 } from 'fontoxml-design-system/src/components';
 import ReviewLogo from 'fontoxml-feedback/src/ReviewLogo';
+import DocumentHistoryShowChangesButton from 'fontoxml-document-history/src/DocumentHistoryShowChangesButton';
 
 const configuredScope = configurationManager.get('scope');
 
@@ -21,6 +22,14 @@ export default function MastheadForReview() {
 
 				{configuredScope.user && configuredScope.user.displayName && (
 					<MastheadAlignRight>
+						<DocumentHistoryShowChangesButton
+							label="Show document changes"
+							mode="single"
+						/>
+						<DocumentHistoryShowChangesButton
+							label="Show changes"
+							mode="publication"
+						/>
 						<Flex flex="none">
 							<Icon icon="user" />
 
