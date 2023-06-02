@@ -199,7 +199,7 @@ export default function CardHeader({
 
 						{showRemoveButton && (
 							<MenuItem
-								icon="times"
+								icon="trash-can"
 								isDisabled={reviewAnnotation.isLoading}
 								label={t('Remove')}
 								onClick={() => {

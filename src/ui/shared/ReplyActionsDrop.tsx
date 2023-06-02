@@ -34,7 +34,7 @@ export default function ReplyActionsDrop({
 				/>
 
 				<MenuItem
-					icon="times"
+					icon="trash-can"
 					label={t('Remove')}
 					onClick={handleRemoveButtonClick}
 				/>
