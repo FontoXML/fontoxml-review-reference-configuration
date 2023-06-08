@@ -56,7 +56,6 @@ function CommentAddOrEditFormContent({
 			error.recovery !== ReviewRecoveryOption.RETRYABLE);
 	const isEditing = reviewAnnotation.busyState === ReviewBusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
-	const textAreaRef = React.useRef(null);
 
 	React.useEffect(() => {
 		if (!isEditing) {
@@ -115,7 +114,7 @@ function CommentAddOrEditFormContent({
 					name="comment"
 					onDirChange={handleCommentDirChange}
 					placeholder={t('Comment on the selected content')}
-					ref={textAreaRef}
+					ref={focusableRef}
 					rows={rows}
 					validate={validateCommentField}
 					data-test-id="comment"

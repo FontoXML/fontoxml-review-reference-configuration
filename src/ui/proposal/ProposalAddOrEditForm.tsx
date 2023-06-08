@@ -54,8 +54,6 @@ function ProposalAddOrEditFormContent({
 			error.recovery !== ReviewRecoveryOption.RETRYABLE);
 	const isEditing = reviewAnnotation.busyState === ReviewBusyState.EDITING;
 	const isLoading = reviewAnnotation.isLoading;
-	const proposalRef = React.useRef(null);
-	const commentRef = React.useRef(null);
 
 	const originalText = reviewAnnotation.originalText;
 
@@ -118,7 +116,7 @@ function ProposalAddOrEditFormContent({
 						placeholder={t(
 							'Leave empty to propose removing the selected content'
 						)}
-						ref={proposalRef}
+						ref={focusableRef}
 						rows={rows}
 						validate={validate}
 						data-test-id="comment"
@@ -135,7 +133,6 @@ function ProposalAddOrEditFormContent({
 						isDisabled={isDisabled}
 						name="comment"
 						onDirChange={handleCommentDirChange}
-						ref={commentRef}
 						rows={rows}
 						placeholder={t('Motivate your proposal')}
 						data-test-id="motivation"
