@@ -7,7 +7,6 @@ import {
 	HorizontalSeparationLine,
 	Icon,
 	Label,
-	Text,
 } from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
@@ -30,7 +29,7 @@ import ProposalReplyComponent from './ProposalReplyComponent';
 
 const footerButtonContainerStyles = { height: '32px' };
 
-function ProposalCardContent({
+const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	context,
 	focusableRef,
 	isSelectedToShare,
@@ -54,7 +53,7 @@ function ProposalCardContent({
 	onReplyRefresh,
 	onReplyRemove,
 	onProposalMerge,
-}: ReviewCardContentComponentProps) {
+}) => {
 	const hasReplyInNonIdleBusyState = React.useMemo(() => {
 		if (!reviewAnnotation.replies) {
 			return false;

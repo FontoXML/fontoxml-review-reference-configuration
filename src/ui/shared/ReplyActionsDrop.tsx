@@ -9,11 +9,11 @@ type Props = {
 	closeDrop(): void;
 };
 
-export default function ReplyActionsDrop({
+const ReplyActionsDrop: React.FC<Props> = ({
 	onEditButtonClick,
 	onRemoveButtonClick,
 	closeDrop,
-}: Props) {
+}) => {
 	const handleEditButtonClick = React.useCallback(() => {
 		onEditButtonClick();
 		closeDrop();
@@ -42,3 +42,6 @@ export default function ReplyActionsDrop({
 		</Drop>
 	);
 }
+
+
+export default ReplyActionsDrop

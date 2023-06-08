@@ -1,12 +1,13 @@
 import * as React from 'react';
 
-import { Checkbox } from 'fontoxml-design-system/src/components';
 import type { FdsFormValueByName } from 'fontoxml-design-system/src/types';
 
-function useNestedCheckboxesForFilterOptions(
+type OnCheckboxChangecallback = (name: string, value: boolean) => void
+
+const useNestedCheckboxesForFilterOptions = (
 	valueByName: FdsFormValueByName,
 	onFieldsChange: (...args: unknown[]) => void
-) {
+): OnCheckboxChangecallback => {
 	// This hook automatically updates parent/child checkboxes, including the
 	// indeterminate state based on the configured nesting (1st parameter).
 	//
@@ -21,76 +22,76 @@ function useNestedCheckboxesForFilterOptions(
 		() => [
 			{
 				name: 'typeComment',
-				value: valueByName['typeComment'],
+				value: valueByName.typeComment,
 				children: [
 					{
 						name: 'typeCommentTechnical',
-						value: valueByName['typeCommentTechnical'],
+						value: valueByName.typeCommentTechnical,
 					},
 					{
 						name: 'typeCommentGeneral',
-						value: valueByName['typeCommentGeneral'],
+						value: valueByName.typeCommentGeneral,
 					},
 					{
 						name: 'typeCommentEditorial',
-						value: valueByName['typeCommentEditorial'],
+						value: valueByName.typeCommentEditorial,
 					},
 				],
 			},
 			{
 				name: 'typePublicationComment',
-				value: valueByName['typePublicationComment'],
+				value: valueByName.typePublicationComment,
 				children: [
 					{
 						name: 'typePublicationCommentTechnical',
-						value: valueByName['typePublicationCommentTechnical'],
+						value: valueByName.typePublicationCommentTechnical,
 					},
 					{
 						name: 'typePublicationCommentGeneral',
-						value: valueByName['typePublicationCommentGeneral'],
+						value: valueByName.typePublicationCommentGeneral,
 					},
 					{
 						name: 'typePublicationCommentEditorial',
-						value: valueByName['typePublicationCommentEditorial'],
+						value: valueByName.typePublicationCommentEditorial,
 					},
 				],
 			},
-			{ name: 'typeProposal', value: valueByName['typeProposal'] },
+			{ name: 'typeProposal', value: valueByName.typeProposal },
 			{
 				name: 'resolutionResolved',
-				value: valueByName['resolutionResolved'],
+				value: valueByName.resolutionResolved,
 				children: [
 					{
 						name: 'resolutionResolvedAccepted',
-						value: valueByName['resolutionResolvedAccepted'],
+						value: valueByName.resolutionResolvedAccepted,
 					},
 					{
 						name: 'resolutionResolvedRejected',
-						value: valueByName['resolutionResolvedRejected'],
+						value: valueByName.resolutionResolvedRejected,
 					},
 				],
 			},
 			{
 				name: 'resolutionUnresolved',
-				value: valueByName['resolutionUnresolved'],
+				value: valueByName.resolutionUnresolved,
 			},
 		],
 		// This is just a derivative of valueByName (which is not nested in this case).
 		// So it will also change whenever one of the referenced properties in valueByName changes.
 		[
-			valueByName['resolutionResolved'],
-			valueByName['resolutionResolvedAccepted'],
-			valueByName['resolutionResolvedRejected'],
-			valueByName['resolutionUnresolved'],
-			valueByName['typeComment'],
-			valueByName['typeCommentEditorial'],
-			valueByName['typeCommentGeneral'],
-			valueByName['typeCommentTechnical'],
-			valueByName['typeProposal'],
-			valueByName['typePublicationComment'],
-			valueByName['typePublicationCommentEditorial'],
-			valueByName['typePublicationCommentGeneral'],
-			valueByName['typePublicationCommentTechnical'],
+			valueByName.resolutionResolved,
+			valueByName.resolutionResolvedAccepted,
+			valueByName.resolutionResolvedRejected,
+			valueByName.resolutionUnresolved,
+			valueByName.typeComment,
+			valueByName.typeCommentEditorial,
+			valueByName.typeCommentGeneral,
+			valueByName.typeCommentTechnical,
+			valueByName.typeProposal,
+			valueByName.typePublicationComment,
+			valueByName.typePublicationCommentEditorial,
+			valueByName.typePublicationCommentGeneral,
+			valueByName.typePublicationCommentTechnical,
 		]
 	);
 
@@ -135,7 +136,7 @@ function useNestedCheckboxesForFilterOptions(
 							});
 						const newValueForParent =
 							someSiblingWillHaveDifferentValue
-								? Checkbox.VALUE_INDETERMINATE
+								? 'indeterminate'
 								: value;
 						if (newValueForParent !== parentNode.value) {
 							changedCheckboxes.push({

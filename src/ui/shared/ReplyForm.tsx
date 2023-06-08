@@ -71,7 +71,19 @@ function validateReplyField(value: string): FdsFormFeedback | null {
 	return null;
 }
 
-function ReplyFormContent({
+type ReplyFormContentProps = {
+	focusableRef: React.MutableRefObject<HTMLElement>;
+	isSubmitDisabled: boolean;
+	onFieldChange(...args: unknown[]): void;
+	onCancelButtonClick(): void;
+	onHideLinkClick: ReviewCardContentComponentProps['onReplyErrorHide'];
+	onRefreshLinkClick: ReviewCardContentComponentProps['onReplyRefresh'];
+	onSubmit(valueByName?: FdsFormValueByName): void
+	reply: ReviewReply;
+	valueByName: FdsFormValueByName;
+}
+
+const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 	focusableRef,
 	isSubmitDisabled,
 	onCancelButtonClick,
@@ -81,17 +93,7 @@ function ReplyFormContent({
 	onSubmit,
 	reply,
 	valueByName,
-}: {
-	focusableRef: HTMLElement;
-	isSubmitDisabled: boolean;
-	onFieldChange(...args: unknown[]): void;
-	onCancelButtonClick(): void;
-	onHideLinkClick: ReviewCardContentComponentProps['onReplyErrorHide'];
-	onRefreshLinkClick: ReviewCardContentComponentProps['onReplyRefresh'];
-	onSubmit(): void;
-	reply: ReviewReply;
-	valueByName: FdsFormValueByName;
-}) {
+}) => {
 	const isAdding = reply.busyState === ReviewBusyState.ADDING;
 	const isEditing = reply.busyState === ReviewBusyState.EDITING;
 
@@ -113,6 +115,10 @@ function ReplyFormContent({
 		},
 		[onFieldChange]
 	);
+
+	const handleReplyButtonClick = React.useCallback((_event: MouseEvent)  => {
+		onSubmit(valueByName)
+	}, [onSubmit, valueByName])
 
 	return (
 		<Block spaceVerticalSize="l">
@@ -167,7 +173,7 @@ function ReplyFormContent({
 						isEditing,
 						isLoading
 					)}
-					onClick={onSubmit}
+					onClick={handleReplyButtonClick}
 					type="primary"
 				/>
 			</Flex>
@@ -175,8 +181,8 @@ function ReplyFormContent({
 	);
 }
 
-type Props = {
-	focusableRef: HTMLElement;
+type ReplyFormProps = {
+	focusableRef: React.MutableRefObject<HTMLElement>;
 	onCancel: ReviewCardContentComponentProps['onReplyFormCancel'];
 	onHide: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
@@ -184,14 +190,14 @@ type Props = {
 	reply: ReviewReply;
 };
 
-function ReplyForm({
+const ReplyForm: React.FC<ReplyFormProps> = ({
 	focusableRef,
 	onCancel,
 	onHide,
 	onRefresh,
 	onSubmit,
 	reply,
-}: Props) {
+}) => {
 	const handleHideLinkClick = React.useCallback(() => {
 		onHide(reply.id);
 	}, [onHide, reply.id]);

@@ -11,20 +11,26 @@ import {
 } from 'fontoxml-design-system/src/components';
 import ReviewLogo from 'fontoxml-feedback/src/ReviewLogo';
 
-const configuredScope = configurationManager.get('scope');
+const configuredScope = configurationManager.get('scope') as {
+	user: {
+		displayName: string,
+		id: string
+	}
+}
 
-export default function MastheadForReview() {
+const MastheadForReview = (): JSX.Element => {
+	const { displayName } = configuredScope.user;
 	return (
 		<Masthead>
 			<MastheadContent>
 				<ReviewLogo />
 
-				{configuredScope.user && configuredScope.user.displayName && (
+				{displayName && (
 					<MastheadAlignRight>
 						<Flex flex="none">
 							<Icon icon="user" />
 
-							<Label>{configuredScope.user.displayName}</Label>
+							<Label>{displayName}</Label>
 						</Flex>
 					</MastheadAlignRight>
 				)}
@@ -32,3 +38,5 @@ export default function MastheadForReview() {
 		</Masthead>
 	);
 }
+
+export default MastheadForReview

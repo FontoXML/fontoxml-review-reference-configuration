@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Block, Text, TextLink } from 'fontoxml-design-system/src/components';
 import { applyCss } from 'fontoxml-design-system/src/system';
+import type { FdsDir } from 'fontoxml-design-system/src/types';
 import t from 'fontoxml-localization/src/t';
 
 const styles = applyCss([
@@ -26,7 +27,7 @@ enum TruncationState {
 
 function useTruncation(): {
 	handleShowMoreClick(this: void): void;
-	selectedCommentRef: HTMLElement;
+	selectedCommentRef: React.RefObject<HTMLElement>;
 	state: TruncationState;
 } {
 	const [truncationState, setTruncationState] =
@@ -54,7 +55,13 @@ function useTruncation(): {
 	};
 }
 
-const TruncatedText: React.FC = (props) => {
+type Props = {
+	dir?: FdsDir,
+	children: React.ReactNode,
+	'data-test-id'?: string
+}
+
+const TruncatedText: React.FC<Props> = (props) => {
 	const {
 		state: truncationState,
 		handleShowMoreClick,

@@ -7,7 +7,7 @@ type Props = {
 	message: FdsMessage;
 };
 
-function LoadingStateMessage({ message }: Props) {
+const LoadingStateMessage: React.FC<Props> = ({ message }) => {
 	return (
 		<CompactStateMessage
 			isSingleLine={false}

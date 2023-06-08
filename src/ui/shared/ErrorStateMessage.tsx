@@ -23,7 +23,7 @@ type Props = {
 	onRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
 };
 
-function ErrorStateMessage({ error, onAcknowledge, onRefresh }: Props) {
+const ErrorStateMessage: React.FC<Props> = ({ error, onAcknowledge, onRefresh }) =>{
 	const isAnnotationError = typeof error !== 'number';
 
 	const connotation =

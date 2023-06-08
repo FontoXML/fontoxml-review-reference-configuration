@@ -63,7 +63,6 @@ function ResolveFormContent({
 	context,
 	isSubmitDisabled,
 	onCancel,
-	onFocusableRef,
 	onProposalMerge,
 	onReviewAnnotationRefresh,
 	onSubmit,
@@ -71,7 +70,6 @@ function ResolveFormContent({
 	valueByName,
 }: Props & {
 	isSubmitDisabled: boolean;
-	onFocusableRef(): void;
 	valueByName: FdsFormValueByName;
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
@@ -103,6 +101,10 @@ function ResolveFormContent({
 		context === FeedbackContextType.REVIEW ||
 		context === FeedbackContextType.REVIEW_SHARING;
 
+	const handleResolveButtonClick = React.useCallback((_event: MouseEvent)  => {
+		onSubmit(valueByName)
+	}, [onSubmit, valueByName])
+
 	return (
 		<Block spaceVerticalSize="m" data-test-id="resolve-form">
 			<HorizontalSeparationLine />
@@ -129,7 +131,6 @@ function ResolveFormContent({
 						isDisabled={isDisabled}
 						items={resolutions}
 						name="resolution"
-						ref={onFocusableRef}
 						validate={validateResolutionField}
 					/>
 				</Flex>
@@ -192,9 +193,9 @@ function ResolveFormContent({
 					/>
 				)}
 
-				<Flex 
-					alignItems="center" 
-					applyCss={footerButtonContainerStyles} 
+				<Flex
+					alignItems="center"
+					applyCss={footerButtonContainerStyles}
 					justifyContent="flex-end"
 				>
 					<Button
@@ -225,7 +226,7 @@ function ResolveFormContent({
 						icon={isLoading ? 'spinner' : null}
 						isDisabled={isDisabled || isLoading || isSubmitDisabled}
 						label={determineSaveButtonLabel(error, isLoading)}
-						onClick={onSubmit}
+						onClick={handleResolveButtonClick}
 						type="primary"
 					/>
 				</Flex>
@@ -257,12 +258,11 @@ const ResolveForm: React.FC<Props> = ({
 			key={reviewAnnotation.id}
 			onSubmit={onSubmit}
 		>
-			{({ isSubmitDisabled, onFocusableRef, onSubmit, valueByName }) => (
+			{({ isSubmitDisabled, onSubmit, valueByName }) => (
 				<ResolveFormContent
 					context={context}
 					isSubmitDisabled={isSubmitDisabled}
 					onCancel={onCancel}
-					onFocusableRef={onFocusableRef}
 					onProposalMerge={onProposalMerge}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onSubmit={onSubmit}

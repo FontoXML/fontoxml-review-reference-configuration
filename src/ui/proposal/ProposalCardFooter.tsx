@@ -9,7 +9,7 @@ type Props = {
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
-function ProposalCardFooter({ onReplyAdd, reviewAnnotation }: Props) {
+const ProposalCardFooter: React.FC<Props> = ({ onReplyAdd, reviewAnnotation }) => {
 	const textInputRef = React.useRef<HTMLElement>(null);
 
 	const handleTextInputRef = React.useCallback((domNode: HTMLElement) => {

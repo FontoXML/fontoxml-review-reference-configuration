@@ -9,7 +9,6 @@ import {
 	TextArea,
 } from 'fontoxml-design-system/src/components';
 import type {
-	FdsDir,
 	FdsFormFeedback,
 	FdsFormValueByName,
 } from 'fontoxml-design-system/src/types';
@@ -33,21 +32,21 @@ function validateCommentField(value: string): FdsFormFeedback | null {
 
 const rows = { minimum: 2, maximum: 6 };
 
-function CommentAddOrEditFormContent({
+const CommentAddOrEditFormContent: React.FC<Props & {
+	focusableRef: React.MutableRefObject<HTMLElement>;
+	isSubmitDisabled: boolean;
+	onFieldChange(...args: unknown[]): void;
+	valueByName: FdsFormValueByName;
+}> = ({
 	focusableRef,
 	isSubmitDisabled,
-	onFieldChange,
 	onCancel,
+	onFieldChange,
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
 	valueByName,
-}: Props & {
-	focusableRef: HTMLElement;
-	isSubmitDisabled: boolean;
-	onFieldChange(...args: unknown[]): void;
-	valueByName: FdsFormValueByName;
-}) {
+}) => {
 	const error = reviewAnnotation.error || null;
 	const isDisabled =
 		reviewAnnotation.isLoading ||
@@ -78,7 +77,7 @@ function CommentAddOrEditFormContent({
 		reviewAnnotation.targets[0].type ===
 		ReviewTargetType.PUBLICATION_SELECTOR;
 	if (isPublicationLevelComment) {
-		label = t('Global {LABEL}', {LABEL: `${label[0].toLowerCase()}${label.substring(1)}`});
+		label =  t('Global {LABEL}', {LABEL: `${label[0].toLowerCase()}${label.substring(1)}`});
 	}
 
 	const handleCommentDirChange = React.useCallback(
@@ -148,20 +147,20 @@ function CommentAddOrEditFormContent({
 }
 
 type Props = {
-	focusableRef: HTMLElement;
+	focusableRef: React.MutableRefObject<HTMLElement>;
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
 	onSubmit: ReviewCardContentComponentProps['onReviewAnnotationFormSubmit'];
 };
 
-function CommentAddOrEditForm({
+const CommentAddOrEditForm: React.FC<Props> = ({
 	focusableRef,
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
 	onSubmit,
-}: Props) {
+}) => {
 	return (
 		<ReviewAnnotationForm
 			initialValueByName={reviewAnnotation.metadata}

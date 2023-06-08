@@ -22,10 +22,10 @@ type Props = {
  * see when editing/replying to a comment.
  * And make sure to render that footer in the error state (Retry remove label on the primary button).
  */
-export default function CardErrorFooter({
+const CardErrorFooter: React.FC<Props> = ({
 	onReviewAnnotationFormCancel,
 	onReviewAnnotationRemove,
-}: Props) {
+}) => {
 	return (
 		<Block spaceVerticalSize="m">
 			<HorizontalSeparationLine />
@@ -45,3 +45,5 @@ export default function CardErrorFooter({
 		</Block>
 	);
 }
+
+export default CardErrorFooter

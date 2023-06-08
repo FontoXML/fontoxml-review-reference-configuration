@@ -58,7 +58,7 @@ type Props = {
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
-export default function CardHeader({
+const CardHeader: React.FC<Props> = ({
 	context,
 	hasReplyInNonIdleBusyState,
 	isSelectedToShare,
@@ -70,7 +70,7 @@ export default function CardHeader({
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	reviewAnnotation,
-}: Props) {
+}) => {
 	const showEditButton =
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT &&
@@ -426,3 +426,5 @@ export default function CardHeader({
 		</Flex>
 	);
 }
+
+export default CardHeader

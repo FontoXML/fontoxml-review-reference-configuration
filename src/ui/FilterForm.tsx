@@ -12,12 +12,16 @@ import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
 
+const INDETERMINATE = "indeterminate";
+
+type CheckboxValue = boolean | "indeterminate";
+
 function determineParentFieldValue(
 	subFieldNames: string[],
 	valueByNameForUI: FdsFormValueByName
-): boolean {
-	return subFieldNames.reduce<boolean>((value, subFieldName) => {
-		if (value === Checkbox.VALUE_INDETERMINATE) {
+): CheckboxValue {
+	return subFieldNames.reduce<CheckboxValue>((value, subFieldName): CheckboxValue => {
+		if (value === INDETERMINATE) {
 			return value;
 		}
 
@@ -30,18 +34,18 @@ function determineParentFieldValue(
 		}
 
 		if (value === false && valueByNameForUI[subFieldName] === true) {
-			return Checkbox.VALUE_INDETERMINATE;
+			return INDETERMINATE;
 		}
 
 		if (value === true && valueByNameForUI[subFieldName] === false) {
-			return Checkbox.VALUE_INDETERMINATE;
+			return INDETERMINATE;
 		}
 
 		if (value === undefined && valueByNameForUI[subFieldName] === true) {
-			return Checkbox.VALUE_INDETERMINATE;
+			return INDETERMINATE;
 		}
 
-		return valueByNameForUI[subFieldName];
+		return !!valueByNameForUI[subFieldName];
 	}, null);
 }
 
@@ -54,16 +58,13 @@ function determineParentFieldValue(
 // This input is aggregated in valueByName, and passed to the /review/state endpoint as
 // filterFormValueByName.
 
-function FilterForm({
+const FilterForm: React.FC<ReviewFilterFormProps> = ({
 	// Not used by this implementation, the error is already visualized in the filter form header
 	// by default.
 	error: _error,
 	// Not used by this implementation: the input can never become invalid (only checkboxes are used,
 	// all of which are optional.)
 	feedbackByName: _feedbackByName,
-	// Not used by this implementation, the loading/submitting state is already visualized in the
-	// filter form header by default.
-	isSubmitting: _isSubmitting,
 	// Called whenever a field changes.
 	onFieldChange,
 	// Not used by this implementation; each field is tracked separately.
@@ -75,7 +76,7 @@ function FilterForm({
 	showFeedback: _showFeedback,
 	// The current values of the filter form fields.
 	valueByName,
-}: ReviewFilterFormProps) {
+}) => {
 	// If you use your own Form (field) components, make sure to call onFieldChange whenever a field
 	// changes. This makes sure the filter form fields update whenever the user edits the form.
 	// Submitting the form through "Set filters" submits the filter form values to the CMS via
@@ -93,9 +94,9 @@ function FilterForm({
 			changedFields.forEach((changedField) => {
 				onFieldChange({
 					...changedField,
-					// Do not send Checkbox.VALUE_INDETERMINATE to the backend.
+					// Do not send "indeterminate" to the backend.
 					value:
-						changedField.value === Checkbox.VALUE_INDETERMINATE
+						changedField.value === INDETERMINATE
 							? false
 							: changedField.value,
 					feedback: null,
@@ -104,9 +105,9 @@ function FilterForm({
 		[onFieldChange]
 	);
 
-	// Determine Checkbox.VALUE_INDETERMINATE for the UI based on the valuesByName (from the backend).
+	// Determine "indeterminate" for the UI based on the valuesByName (from the backend).
 	const valueByNameForUI = { ...valueByName };
-	valueByNameForUI['typeComment'] = determineParentFieldValue(
+	valueByNameForUI.typeComment = determineParentFieldValue(
 		[
 			'typeComment',
 			'typeCommentTechnical',
@@ -115,7 +116,7 @@ function FilterForm({
 		],
 		valueByNameForUI
 	);
-	valueByNameForUI['typePublicationComment'] = determineParentFieldValue(
+	valueByNameForUI.typePublicationComment = determineParentFieldValue(
 		[
 			'typePublicationComment',
 			'typePublicationCommentTechnical',
@@ -124,7 +125,7 @@ function FilterForm({
 		],
 		valueByNameForUI
 	);
-	valueByNameForUI['resolutionResolved'] = determineParentFieldValue(
+	valueByNameForUI.resolutionResolved = determineParentFieldValue(
 		[
 			'resolutionResolved',
 			'resolutionResolvedAccepted',
@@ -150,7 +151,7 @@ function FilterForm({
 							onChange={(value: boolean) => {
 								onCheckboxChange('typeComment', value);
 							}}
-							value={valueByNameForUI['typeComment']}
+							value={valueByNameForUI.typeComment as CheckboxValue}
 						/>
 
 						<Block
@@ -165,7 +166,7 @@ function FilterForm({
 										value
 									);
 								}}
-								value={valueByNameForUI['typeCommentTechnical']}
+								value={valueByNameForUI.typeCommentTechnical as CheckboxValue}
 							/>
 							<Checkbox
 								label={t('General')}
@@ -175,7 +176,7 @@ function FilterForm({
 										value
 									);
 								}}
-								value={valueByNameForUI['typeCommentGeneral']}
+								value={valueByNameForUI.typeCommentGeneral as CheckboxValue}
 							/>
 							<Checkbox
 								label={t('Editorial')}
@@ -185,7 +186,7 @@ function FilterForm({
 										value
 									);
 								}}
-								value={valueByNameForUI['typeCommentEditorial']}
+								value={valueByNameForUI.typeCommentEditorial as CheckboxValue}
 							/>
 						</Block>
 					</Block>
@@ -199,7 +200,7 @@ function FilterForm({
 									value
 								);
 							}}
-							value={valueByNameForUI['typePublicationComment']}
+							value={valueByNameForUI.typePublicationComment as CheckboxValue}
 						/>
 
 						<Block
@@ -215,9 +216,7 @@ function FilterForm({
 									);
 								}}
 								value={
-									valueByNameForUI[
-										'typePublicationCommentTechnical'
-									]
+									valueByNameForUI.typePublicationCommentTechnical as CheckboxValue
 								}
 							/>
 							<Checkbox
@@ -229,9 +228,7 @@ function FilterForm({
 									);
 								}}
 								value={
-									valueByNameForUI[
-										'typePublicationCommentGeneral'
-									]
+									valueByNameForUI.typePublicationCommentGeneral as CheckboxValue
 								}
 							/>
 							<Checkbox
@@ -243,9 +240,7 @@ function FilterForm({
 									);
 								}}
 								value={
-									valueByNameForUI[
-										'typePublicationCommentEditorial'
-									]
+									valueByNameForUI.typePublicationCommentEditorial as CheckboxValue
 								}
 							/>
 						</Block>
@@ -256,7 +251,7 @@ function FilterForm({
 						onChange={(value: boolean) => {
 							onCheckboxChange('typeProposal', value);
 						}}
-						value={valueByNameForUI['typeProposal']}
+						value={valueByNameForUI.typeProposal as CheckboxValue}
 					/>
 				</Block>
 			</Block>
@@ -270,7 +265,7 @@ function FilterForm({
 						onChange={(value: boolean) => {
 							onCheckboxChange('resolutionResolved', value);
 						}}
-						value={valueByNameForUI['resolutionResolved']}
+						value={valueByNameForUI.resolutionResolved as CheckboxValue}
 					/>
 
 					<Block
@@ -286,7 +281,7 @@ function FilterForm({
 								);
 							}}
 							value={
-								valueByNameForUI['resolutionResolvedAccepted']
+								valueByNameForUI.resolutionResolvedAccepted as CheckboxValue
 							}
 						/>
 
@@ -299,7 +294,7 @@ function FilterForm({
 								);
 							}}
 							value={
-								valueByNameForUI['resolutionResolvedRejected']
+								valueByNameForUI.resolutionResolvedRejected as CheckboxValue
 							}
 						/>
 					</Block>
@@ -309,7 +304,7 @@ function FilterForm({
 						onChange={(value: boolean) => {
 							onCheckboxChange('resolutionUnresolved', value);
 						}}
-						value={valueByNameForUI['resolutionUnresolved']}
+						value={valueByNameForUI.resolutionUnresolved as CheckboxValue}
 					/>
 				</Block>
 			</Block>

@@ -12,7 +12,7 @@ type Props = {
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
-function ProposalReplyComponent({ onReplyAdd, reviewAnnotation }: Props) {
+const ProposalReplyComponent: React.FC<Props> = ({ onReplyAdd, reviewAnnotation }) => {
 	// Check if we are on the "/review" route.
 	const { path } = useRouteMatch();
 	const isOnReviewRoute = path === '/review';

@@ -22,7 +22,7 @@ import TruncatedText from './TruncatedText';
 
 type Props = {
 	context: ReviewCardContentComponentProps['context'];
-	focusableRef: HTMLElement;
+	focusableRef: React.MutableRefObject<HTMLElement>;
 	onProposalMerge?: ReviewCardContentComponentProps['onProposalMerge'];
 	onReplyEdit: ReviewCardContentComponentProps['onReplyEdit'];
 	onReplyErrorHide: ReviewCardContentComponentProps['onReplyErrorHide'];
@@ -57,13 +57,13 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			resolutions.find(
 				(resolution) =>
 					resolution.value ===
-					reviewAnnotation.resolvedMetadata['resolution']
+					reviewAnnotation.resolvedMetadata.resolution
 			)
 		);
 	}, [reviewAnnotation.resolvedMetadata]);
 
 	const resolutionComment =
-		reviewAnnotation.resolvedMetadata?.['resolutionComment'];
+		reviewAnnotation.resolvedMetadata?.resolutionComment;
 
 	const showActionsMenuButton = React.useMemo(() => {
 		if (

@@ -8,7 +8,12 @@ import type {
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-const configuredScope = configurationManager.get('scope');
+const configuredScope = configurationManager.get('scope') as {
+	user: {
+		displayName: string,
+		id: string
+	}
+}
 
 /**
  * A custom React hook that formats the author and timestamp of the given

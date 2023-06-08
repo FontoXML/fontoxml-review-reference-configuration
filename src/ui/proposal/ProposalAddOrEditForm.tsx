@@ -33,19 +33,19 @@ function validateProposedChangeField(
 
 const rows = { minimum: 2, maximum: 6 };
 
-function ProposalAddOrEditFormContent({
+const ProposalAddOrEditFormContent: React.FC<Props & {
+	focusableRef: React.MutableRefObject<HTMLElement>;
+	isSubmitDisabled: boolean;
+	onFieldChange(...args: unknown[]): void;
+}> = ({
 	focusableRef,
 	isSubmitDisabled,
-	onFieldChange,
 	onCancel,
+	onFieldChange,
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
-}: Props & {
-	focusableRef: HTMLElement;
-	isSubmitDisabled: boolean;
-	onFieldChange(...args: unknown[]): void;
-}) {
+}) => {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
 	const isDisabled =
 		reviewAnnotation.isLoading ||
@@ -154,20 +154,20 @@ function ProposalAddOrEditFormContent({
 }
 
 type Props = {
-	focusableRef: HTMLElement;
+	focusableRef: React.MutableRefObject<HTMLElement>;
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
 	onSubmit: ReviewCardContentComponentProps['onReviewAnnotationFormSubmit'];
 };
 
-function ProposalAddOrEditForm({
+const ProposalAddOrEditForm: React.FC<Props> = ({
 	focusableRef,
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
 	onSubmit,
-}: Props) {
+}) => {
 	return (
 		<ReviewAnnotationForm
 			initialValueByName={reviewAnnotation.metadata}

@@ -39,7 +39,7 @@ type Props = {
 
 const paddingSize: FdsPaddingSize = { top: 'l' };
 
-function AddOrEditFormFooter({
+const AddOrEditFormFooter: React.FC<Props> = ({
 	error,
 	isDisabled,
 	isLoading,
@@ -47,7 +47,7 @@ function AddOrEditFormFooter({
 	onCancel,
 	onReviewAnnotationRefresh,
 	onSubmit,
-}: Props) {
+}) => {
 	const handleSubmit = React.useCallback(() => {
 		onSubmit({});
 	}, [onSubmit]);

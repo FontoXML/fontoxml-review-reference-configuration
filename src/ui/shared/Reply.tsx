@@ -33,7 +33,7 @@ type Props = {
 	showActionsMenuButton: boolean;
 };
 
-export default function Reply({
+const Reply: React.FC<Props> = ({
 	reviewAnnotation,
 	onCancelRetryRemove,
 	onHide,
@@ -42,7 +42,7 @@ export default function Reply({
 	onShowEditForm,
 	reply,
 	showActionsMenuButton,
-}: Props) {
+}) => {
 	const error = reply.error;
 	const isDisabled = reply.isLoading;
 
@@ -175,3 +175,5 @@ export default function Reply({
 		</>
 	);
 }
+
+export default Reply

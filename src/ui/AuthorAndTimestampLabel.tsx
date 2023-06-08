@@ -15,10 +15,10 @@ type Props = {
 	isReviewAnnotationResolved?: boolean;
 };
 
-function AuthorAndTimestampLabel({
+const AuthorAndTimestampLabel: React.FC<Props> = ({
 	reviewAnnotation,
 	isReviewAnnotationResolved = false,
-}: Props) {
+}) => {
 	const { author: authorLabel, timestamp: timestampLabel } =
 		useAuthorAndTimestampLabel(
 			reviewAnnotation,
