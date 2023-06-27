@@ -150,6 +150,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 						addingOrEditingReply?.busyState ===
 						ReviewBusyState.EDITING
 					}
+					focusableRef={focusableRef}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}
 					onReplyFormCancel={onReplyFormCancel}
