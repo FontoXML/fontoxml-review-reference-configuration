@@ -21,12 +21,12 @@ export default function install(): void {
 		tooltipContent: t('Add comment to selected text.'),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
-		enabledSelector: 'not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
+		enabledSelector: 'exists(fonto:selection-common-ancestor()) and not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
 	});
 
 	// This is a test annotation type that is only enabled for a specific document.
 	registerTextRangeReviewAnnotationType('enabled-selector-comment', {
-		enabledSelector: 'fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/sample.xml"',
+		enabledSelector: 'exists(fonto:selection-common-ancestor()) and fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/sample.xml"',
 		icon: 'far fa-comment',
 		label: 'EnabledSelector comment',
 		priority: -1,
@@ -61,7 +61,7 @@ export default function install(): void {
 		tooltipContent: t('Propose a change to selected text.'),
 		keyBinding: 'ctrl+alt+e',
 		osxKeyBinding: 'cmd+alt+e',
-		enabledSelector: 'not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
+		enabledSelector: 'exists(fonto:selection-common-ancestor()) and not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
@@ -74,12 +74,12 @@ export default function install(): void {
 		),
 		keyBinding: 'ctrl+alt+g',
 		osxKeyBinding: 'cmd+alt+g',
-		enabledSelector: 'not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
+		enabledSelector: 'exists(fonto:selection-common-ancestor()) and not(fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/allannotationsdisabled.xml")',
 	});
 
 	// Review annotation type for testing the enabledSelector option.
 	registerPublicationReviewAnnotationType('enabled-selector-publication-comment', {
-		enabledSelector: 'fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/sample.xml"',
+		enabledSelector: 'exists(fonto:selection-common-ancestor()) and fonto:remote-document-id(fonto:selection-common-ancestor()) = "clogs/sample.xml"',
 		icon: 'global-comments-stacked-icons',
 		label: 'EnabledSelector Global comment',
 		priority: -2,
