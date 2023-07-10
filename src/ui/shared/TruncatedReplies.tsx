@@ -13,6 +13,7 @@ import Replies from '../shared/Replies';
 const MAX_NUMBER_OF_REPLIES_TO_SHOW = 2;
 
 type Props = RepliesProps & {
+	focusableRef: React.MutableRefObject<HTMLElement>;
 	replies: ReviewCardContentComponentProps['reviewAnnotation']['replies'];
 	hasResolution: boolean;
 	includeResolutionInTruncatedReplies?: boolean;
@@ -20,6 +21,7 @@ type Props = RepliesProps & {
 };
 
 const TruncatedReplies: React.FC<Props> = ({
+	focusableRef,
 	replies,
 	isEditingReply,
 	includeResolutionInTruncatedReplies,
@@ -30,6 +32,7 @@ const TruncatedReplies: React.FC<Props> = ({
 
 	const handleExpandRepliesTextLinkClick = React.useCallback(() => {
 		setAreRepliesExpanded(true);
+		focusableRef.current.focus();
 	}, []);
 
 	const wasEditingReplyInitially = React.useRef<boolean>(isEditingReply);
