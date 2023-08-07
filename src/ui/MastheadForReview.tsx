@@ -19,7 +19,7 @@ const configuredScope = configurationManager.get('scope') as {
 }
 
 const MastheadForReview = (): JSX.Element => {
-	const { displayName } = configuredScope.user;
+	const { displayName } = configuredScope?.user ?? {};
 	return (
 		<Masthead>
 			<MastheadContent>
