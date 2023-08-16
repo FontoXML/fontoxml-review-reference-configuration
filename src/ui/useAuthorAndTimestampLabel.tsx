@@ -1,73 +1,66 @@
 import * as React from 'react';
 
 import configurationManager from 'fontoxml-configuration/src/configurationManager';
-import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type {
+	ReviewAnnotation,
 	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-const configuredScope = configurationManager.get('scope') as {
-	user: {
-		displayName: string,
-		id: string
-	}
-}
+const configuredUserScope = configurationManager.get('scope').user as UserScope
 
 /**
- * A custom React hook that formats the author and timestamp of the given
- * reviewAnnotation or reply.
+ * A custom React hook that returns the author id and formatted
+ * timestamp for a review annotation or reply.
  *
- * Renders the author name as "You" if the author id matches the current scope
- * user id.
- *
- * The timestamp label will not contain any kind of dashes.
- *
- * @param reviewAnnotationOrReply    -
+ * @param reviewAnnotationOrReply    - Can be either a ReviewAnnotation or a
+ * ReviewReply object. These objects contain information about the review
+ * annotation or reply, including the author and timestamp.
  * @param isReviewAnnotationResolved - If set to true it uses the resolvedAuthor
  * and resolvedTimestamp fields of the given reviewAnnotation, otherwise it uses
  * the (created) author and timestamp fields.
- * @param fallback                   - A string to display when the (resolved)
- * author field is not set on the given reviewAnnotationOrReply.
  *
- * @returns Object containing the 'author' and the 'timestamp' keys.
+ * The hook first determines the authorId by checking the reviewAnnotationOrReply
+ * object. If the author or resolvedAuthor field has an id property, it uses
+ * that as the authorId. Otherwise, it falls back to the id property of the
+ * configured user scope. If neither of these ids is available, it sets the
+ * authorId to null, indicating an 'Anonymous' user.
+ *
+ * @returns Object containing the 'authorId' and the 'timestamp' keys.
  * @react
  */
 export default function useAuthorAndTimestampLabel(
 	reviewAnnotationOrReply:
+		| ReviewAnnotation
 		| ReviewCardContentComponentProps['reviewAnnotation']
 		| ReviewReply,
 	isReviewAnnotationResolved: boolean,
-	fallback = t('Author not available')
 ): {
-	author: string;
+	authorId: string;
 	timestamp: string;
 } {
-	const formattedAuthor = React.useMemo(() => {
-		let authorLabel = t('You');
-		if (reviewAnnotationOrReply.busyState === ReviewBusyState.ADDING) {
-			return authorLabel;
-		}
+	const authorId = React.useMemo(() => {
 
 		const authorField = isReviewAnnotationResolved
 			? 'resolvedAuthor'
 			: 'author';
 
-		if (!reviewAnnotationOrReply[authorField]) {
-			// Use fallback value if author is not present.
-			return fallback;
+		// If the annotation exists we'll use the id from the author or
+		// resolvedAuthor.
+		if (reviewAnnotationOrReply[authorField]?.id) {
+			return reviewAnnotationOrReply[authorField].id;
 		}
 
-		if (
-			configuredScope.user &&
-			reviewAnnotationOrReply[authorField].id !== configuredScope.user.id
-		) {
-			authorLabel = reviewAnnotationOrReply[authorField].displayName;
+		// Otherwise we will obtain the id from the configured user scope.
+		if (configuredUserScope?.id) {
+			return configuredUserScope.id;
 		}
 
-		return t('{AUTHOR_LABEL}', { AUTHOR_LABEL: authorLabel });
-	}, [fallback, isReviewAnnotationResolved, reviewAnnotationOrReply]);
+		// If neither of the prior ids exists, we'll return 'null' as default.
+		// This user is considered to be an 'Anonymous' user.
+		return null;
+	}, [isReviewAnnotationResolved, reviewAnnotationOrReply]);
 
 	const timestampField = isReviewAnnotationResolved
 		? 'resolvedTimestamp'
@@ -83,5 +76,5 @@ export default function useAuthorAndTimestampLabel(
 		});
 	}, [timestamp]);
 
-	return { author: formattedAuthor, timestamp: formattedTimestamp };
+	return { authorId, timestamp: formattedTimestamp };
 }
