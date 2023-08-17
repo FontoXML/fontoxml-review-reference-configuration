@@ -32,7 +32,9 @@ const TruncatedReplies: React.FC<Props> = ({
 
 	const handleExpandRepliesTextLinkClick = React.useCallback(() => {
 		setAreRepliesExpanded(true);
-		focusableRef.current.focus();
+		if (focusableRef.current) {
+			focusableRef.current.focus();
+		}
 	}, []);
 
 	const wasEditingReplyInitially = React.useRef<boolean>(isEditingReply);
