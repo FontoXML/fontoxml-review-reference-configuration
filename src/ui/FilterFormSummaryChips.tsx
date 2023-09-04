@@ -243,7 +243,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 				<Flex spaceSize="s">
 					<Icon icon="spinner" colorName="icon-s-info-color" />
 
-					<Label isBold>{t('Updating filterâ€¦')}</Label>
+					<Label isBold>{t('Updating filter…')}</Label>
 				</Flex>
 			)}
 
