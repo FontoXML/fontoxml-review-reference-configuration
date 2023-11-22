@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {
 	Block,
+	CompactStateMessage,
 	Diff,
 	Flex,
 	HorizontalSeparationLine,
@@ -119,6 +120,22 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 					onAcknowledge={onReviewAnnotationErrorAcknowledge}
 					onRefresh={onReviewAnnotationRefresh}
 				/>
+			</Block>
+		);
+	}
+
+	if (reviewAnnotation.isFiltered) {
+		return (
+			<Block paddingSize="m">
+				<Flex alignItems="center" flexDirection="column">
+					<CompactStateMessage
+						connotation="info"
+						isSingleLine={false}
+						message={t(
+							"Your comment was filtered out. Adjust filters to see it"
+						)}
+					/>
+				</Flex>
 			</Block>
 		);
 	}

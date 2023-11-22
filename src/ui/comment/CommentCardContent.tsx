@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {
 	Block,
+	CompactStateMessage,
 	Flex,
 	Icon,
 	Label,
@@ -110,6 +111,23 @@ function CommentCardContent({
 			</Block>
 		);
 	}
+
+	if (reviewAnnotation.isFiltered) {
+		return (
+			<Block paddingSize="m">
+				<Flex alignItems="center" flexDirection="column">
+					<CompactStateMessage
+						connotation="info"
+						isSingleLine={false}
+						message={t(
+							"Your comment was filtered out. Adjust filters to see it"
+						)}
+					/>
+				</Flex>
+			</Block>
+		);
+	}
+
 	if (
 		reviewAnnotation.isLoading &&
 		reviewAnnotation.busyState === ReviewBusyState.REFRESHING
