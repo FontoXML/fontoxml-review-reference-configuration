@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import configurationManager from 'fontoxml-configuration/src/configurationManager';
 import {
 	Flex,
 	Icon,
@@ -11,15 +10,10 @@ import {
 } from 'fontoxml-design-system/src/components';
 import ReviewLogo from 'fontoxml-feedback/src/ReviewLogo';
 
-const configuredScope = configurationManager.get('scope') as {
-	user: {
-		displayName: string,
-		id: string
-	}
-}
+import { currentScopeUser } from './constants';
 
 const MastheadForReview = (): JSX.Element => {
-	const { displayName } = configuredScope?.user ?? {};
+	const { displayName } = currentScopeUser;
 	return (
 		<Masthead>
 			<MastheadContent>
@@ -37,6 +31,6 @@ const MastheadForReview = (): JSX.Element => {
 			</MastheadContent>
 		</Masthead>
 	);
-}
+};
 
-export default MastheadForReview
+export default MastheadForReview;

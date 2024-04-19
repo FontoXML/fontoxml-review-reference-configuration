@@ -18,7 +18,7 @@ import type {
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
-import { CARD_HEADER_HEIGHT } from './../constants';
+import { CARD_HEADER_HEIGHT, currentScopeUser } from './../constants';
 import ReplyActionsDrop from './ReplyActionsDrop';
 import TruncatedText from './TruncatedText';
 
@@ -80,40 +80,44 @@ const Reply: React.FC<Props> = ({
 						<AuthorAndTimestampLabel reviewAnnotation={reply} />
 					</Flex>
 
-					{showActionsMenuButton && !reply.error && (
-						<DropAnchor
-							renderAnchor={({
-								isDropOpened,
-								onRef,
-								setIsDropOpened,
-							}) => (
-								<Button
-									icon="ellipsis-h"
-									isDisabled={isDisabled}
-									isSelected={isDropOpened}
-									onClick={() => {
-										setIsDropOpened(
-											(isDropOpened) => !isDropOpened
-										);
-									}}
-									onRef={onRef}
-									tooltipContent={t('More actions')}
-									type="transparent"
-								/>
-							)}
-							renderDrop={({ setIsDropOpened }) => (
-								<ReplyActionsDrop
-									onEditButtonClick={handleEditButtonClick}
-									onRemoveButtonClick={
-										handleRemoveButtonClick
-									}
-									closeDrop={() => {
-										setIsDropOpened(false);
-									}}
-								/>
-							)}
-						/>
-					)}
+					{showActionsMenuButton &&
+						!reply.error &&
+						reply.author.id === currentScopeUser.id && (
+							<DropAnchor
+								renderAnchor={({
+									isDropOpened,
+									onRef,
+									setIsDropOpened,
+								}) => (
+									<Button
+										icon="ellipsis-h"
+										isDisabled={isDisabled}
+										isSelected={isDropOpened}
+										onClick={() => {
+											setIsDropOpened(
+												(isDropOpened) => !isDropOpened
+											);
+										}}
+										onRef={onRef}
+										tooltipContent={t('More actions')}
+										type="transparent"
+									/>
+								)}
+								renderDrop={({ setIsDropOpened }) => (
+									<ReplyActionsDrop
+										onEditButtonClick={
+											handleEditButtonClick
+										}
+										onRemoveButtonClick={
+											handleRemoveButtonClick
+										}
+										closeDrop={() => {
+											setIsDropOpened(false);
+										}}
+									/>
+								)}
+							/>
+						)}
 				</Flex>
 
 				<Block data-test-id="reply-text">
@@ -176,4 +180,4 @@ const Reply: React.FC<Props> = ({
 	);
 };
 
-export default Reply
+export default Reply;

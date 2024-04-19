@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import configurationManager from 'fontoxml-configuration/src/configurationManager';
 import type {
 	ReviewAnnotation,
 	ReviewCardContentComponentProps,
@@ -8,7 +7,7 @@ import type {
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-const configuredUserScope = configurationManager.get('scope').user as UserScope
+import { currentScopeUser } from './constants';
 
 /**
  * A custom React hook that returns the author id and formatted
@@ -35,13 +34,12 @@ export default function useAuthorAndTimestampLabel(
 		| ReviewAnnotation
 		| ReviewCardContentComponentProps['reviewAnnotation']
 		| ReviewReply,
-	isReviewAnnotationResolved: boolean,
+	isReviewAnnotationResolved: boolean
 ): {
 	authorId: string;
 	timestamp: string;
 } {
 	const authorId = React.useMemo(() => {
-
 		const authorField = isReviewAnnotationResolved
 			? 'resolvedAuthor'
 			: 'author';
@@ -53,8 +51,8 @@ export default function useAuthorAndTimestampLabel(
 		}
 
 		// Otherwise we will obtain the id from the configured user scope.
-		if (configuredUserScope?.id) {
-			return configuredUserScope.id;
+		if (currentScopeUser.id) {
+			return currentScopeUser.id;
 		}
 
 		// If neither of the prior ids exists, we'll return 'null' as default.
