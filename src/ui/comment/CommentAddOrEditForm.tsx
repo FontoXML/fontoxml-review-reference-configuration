@@ -102,12 +102,13 @@ const CommentAddOrEditFormContent: React.FC<Props & {
 							}
 						/>
 
-						<Block data-test-id="comment-type-label">{label}</Block>
+						<Block dataTestId="comment-type-label">{label}</Block>
 					</Flex>
 				}
 				labelColorName="text-color"
 			>
 				<TextArea
+					dataTestId="comment"
 					dir={valueByName['comment.dir']}
 					isDisabled={isDisabled}
 					name="comment"
@@ -116,7 +117,6 @@ const CommentAddOrEditFormContent: React.FC<Props & {
 					ref={focusableRef}
 					rows={rows}
 					validate={validateCommentField}
-					data-test-id="comment"
 				/>
 			</FormRow>
 

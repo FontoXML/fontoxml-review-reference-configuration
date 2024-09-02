@@ -98,7 +98,7 @@ const ProposalAddOrEditFormContent: React.FC<Props & {
 						<Flex alignItems="center" isInline spaceSize="s">
 							<Icon icon="far fa-pencil-square-o" isInline />
 
-							<Block data-test-id="comment-type-label" isInline>
+							<Block dataTestId="comment-type-label" isInline>
 								{t('Proposed change')}
 							</Block>
 						</Flex>
@@ -108,6 +108,7 @@ const ProposalAddOrEditFormContent: React.FC<Props & {
 					labelColorName="text-color"
 				>
 					<TextAreaWithDiff
+						dataTestId="comment"
 						dir={reviewAnnotation.metadata['proposedChange.dir']}
 						isDisabled={isDisabled}
 						name="proposedChange"
@@ -119,7 +120,6 @@ const ProposalAddOrEditFormContent: React.FC<Props & {
 						ref={focusableRef}
 						rows={rows}
 						validate={validate}
-						data-test-id="comment"
 					/>
 				</FormRow>
 
@@ -129,13 +129,13 @@ const ProposalAddOrEditFormContent: React.FC<Props & {
 					labelColorName="text-color"
 				>
 					<TextArea
+						dataTestId="motivation"
 						dir={reviewAnnotation.metadata['comment.dir']}
 						isDisabled={isDisabled}
 						name="comment"
 						onDirChange={handleCommentDirChange}
 						rows={rows}
 						placeholder={t('Motivate your proposal')}
-						data-test-id="motivation"
 					/>
 				</FormRow>
 			</Block>

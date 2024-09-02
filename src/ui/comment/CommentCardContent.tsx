@@ -166,7 +166,7 @@ function CommentCardContent({
 	return (
 		<Block
 			paddingSize="m"
-			data-test-id="fontoxml-review-reference-configuration-comment-card-content"
+			dataTestId="fontoxml-review-reference-configuration-comment-card-content"
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			data-review-annotation-comment-type={
@@ -212,7 +212,7 @@ function CommentCardContent({
 										/>
 
 										<Label
-											data-test-id="comment-type-label"
+											dataTestId="comment-type-label"
 											isBold
 										>
 											{` ${publicationCommentType} `}
@@ -223,7 +223,7 @@ function CommentCardContent({
 										<Icon icon="far fa-comment" />
 
 										<Label
-											data-test-id="comment-type-label"
+											dataTestId="comment-type-label"
 											isBold
 										>{` ${commentType} `}</Label>
 
@@ -247,7 +247,7 @@ function CommentCardContent({
 
 							{reviewAnnotation.isSelected && (
 								<TruncatedText
-									data-test-id="comment"
+									dataTestId="comment"
 									dir={
 										reviewAnnotation.metadata['comment.dir']
 									}
@@ -257,11 +257,11 @@ function CommentCardContent({
 							)}
 							{!reviewAnnotation.isSelected && (
 								<Label
-									isBlock
-									data-test-id="comment"
+									dataTestId="comment"
 									dir={
 										reviewAnnotation.metadata['comment.dir']
 									}
+									isBlock
 								>
 									{reviewAnnotation.metadata.comment}
 								</Label>

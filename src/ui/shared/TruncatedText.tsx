@@ -56,9 +56,9 @@ function useTruncation(): {
 }
 
 type Props = {
-	dir?: FdsDir,
 	children: React.ReactNode,
-	'data-test-id'?: string
+	dataTestId?: string,
+	dir?: FdsDir,
 }
 
 const TruncatedText: React.FC<Props> = (props) => {
@@ -70,7 +70,7 @@ const TruncatedText: React.FC<Props> = (props) => {
 
 	return (
 		<>
-			<Text data-test-id={props['data-test-id']} dir={props.dir}>
+			<Text dataTestId={props.dataTestId} dir={props.dir}>
 				<Block
 					{...styles}
 					style={{

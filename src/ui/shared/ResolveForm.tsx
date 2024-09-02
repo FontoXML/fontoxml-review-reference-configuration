@@ -106,7 +106,7 @@ function ResolveFormContent({
 	}, [onSubmit, valueByName])
 
 	return (
-		<Block spaceVerticalSize="m" data-test-id="resolve-form">
+		<Block dataTestId="resolve-form" spaceVerticalSize="m">
 			<HorizontalSeparationLine />
 
 			<Block spaceVerticalSize="l">
@@ -136,13 +136,13 @@ function ResolveFormContent({
 				</Flex>
 
 				<TextArea
+					dataTestId="resolve-form-text"
 					isDisabled={isDisabled}
 					name="resolutionComment"
 					placeholder={t(
 						'Optionally describe how or why you resolved this comment'
 					)}
 					rows={rows}
-					data-test-id="resolve-form-text"
 				/>
 
 				{error && (

@@ -67,7 +67,7 @@ const Reply: React.FC<Props> = ({
 		<>
 			<HorizontalSeparationLine />
 
-			<Block data-test-id="reply">
+			<Block dataTestId="reply">
 				<Flex
 					alignItems="center"
 					flexDirection="row"
@@ -116,7 +116,7 @@ const Reply: React.FC<Props> = ({
 					)}
 				</Flex>
 
-				<Block data-test-id="reply-text">
+				<Block dataTestId="reply-text">
 					{reviewAnnotation.isSelected && (
 						<TruncatedText dir={reply.metadata['reply.dir']}>
 							{reply.metadata.reply}

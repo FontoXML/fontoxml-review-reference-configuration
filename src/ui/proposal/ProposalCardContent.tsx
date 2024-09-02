@@ -154,10 +154,10 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 
 	return (
 		<Block
-			paddingSize="m"
-			data-test-id="fontoxml-review-reference-configuration-proposal-card-content"
+			dataTestId="fontoxml-review-reference-configuration-proposal-card-content"
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
+			paddingSize="m"
 		>
 			<CardHeader
 				context={context}
@@ -196,7 +196,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 										<Icon icon="far fa-pencil-square-o" />
 
 										<Label
-											data-test-id="comment-type-label"
+											dataTestId="comment-type-label"
 											isBold
 										>
 											{t('Proposed change')}
@@ -227,6 +227,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 											}
 										>
 											<Diff
+												dataTestId="comment"
 												isSingleLine={
 													!reviewAnnotation.isSelected
 												}
@@ -237,12 +238,12 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 													reviewAnnotation.metadata
 														.proposedChange as string
 												}
-												data-test-id="comment"
 											/>
 										</TruncatedText>
 									)}
 									{!reviewAnnotation.isSelected && (
 										<Diff
+											dataTestId="comment"
 											dir={
 												reviewAnnotation.metadata[
 													'proposedChange.dir'
@@ -258,7 +259,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 												reviewAnnotation.metadata
 													.proposedChange as string
 											}
-											data-test-id="comment"
 										/>
 									)}
 								</Block>
@@ -270,7 +270,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 
 									{reviewAnnotation.isSelected && (
 										<TruncatedText
-											data-test-id="motivation"
+											dataTestId="motivation"
 											dir={
 												reviewAnnotation.metadata[
 													'comment.dir'
@@ -282,13 +282,13 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 									)}
 									{!reviewAnnotation.isSelected && (
 										<Label
-											isBlock
-											data-test-id="motivation"
+											dataTestId="motivation"
 											dir={
 												reviewAnnotation.metadata[
 													'comment.dir'
 												]
 											}
+											isBlock
 										>
 											{reviewAnnotation.metadata.comment}
 										</Label>
