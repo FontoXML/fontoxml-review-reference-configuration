@@ -11,6 +11,7 @@ import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
+import useReviewAnnotationRangeVisibility from 'fontoxml-feedback/src/useReviewAnnotationRangeVisibility';
 import t from 'fontoxml-localization/src/t';
 
 import commentTypes from '../commentTypes';
@@ -95,6 +96,12 @@ function CommentCardContent({
 		reviewAnnotation.error &&
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
 
+	// This is only here as an example
+	const reviewRangeVisibility = useReviewAnnotationRangeVisibility(
+		reviewAnnotation.id,
+		context
+	);
+
 	if (
 		reviewAnnotation.isLoading &&
 		reviewAnnotation.busyState === ReviewBusyState.REFRESHING
@@ -151,6 +158,7 @@ function CommentCardContent({
 	return (
 		<Block
 			dataTestId="fontoxml-review-reference-configuration-comment-card-content"
+			data-review-annotation-range-visibility={reviewRangeVisibility.toLowerCase()}
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			data-review-annotation-comment-type={
