@@ -14,6 +14,7 @@ import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
+import useReviewAnnotationRangeVisibility from 'fontoxml-feedback/src/useReviewAnnotationRangeVisibility';
 import t from 'fontoxml-localization/src/t';
 
 import CardErrorFooter from '../shared/CardErrorFooter';
@@ -104,6 +105,12 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		}
 	}, [focusableRef, showFooter]);
 
+	// This is only here as an example
+	const reviewRangeVisibility = useReviewAnnotationRangeVisibility(
+		reviewAnnotation.id,
+		context
+	);
+
 	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
 	if (
 		typeof reviewAnnotation.error !== 'number' &&
@@ -155,6 +162,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	return (
 		<Block
 			dataTestId="fontoxml-review-reference-configuration-proposal-card-content"
+			data-review-annotation-range-visibility={reviewRangeVisibility.toLowerCase()}
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			paddingSize="m"
