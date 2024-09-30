@@ -52,8 +52,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 					...changedFields.reduce(
 						(changedValueByName, changedField) => {
 							changedValueByName[changedField.name] =
-								changedField.value ===
-								'indeterminate'
+								changedField.value === 'indeterminate'
 									? false
 									: changedField.value;
 							return changedValueByName;
@@ -73,7 +72,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 
 	return (
 		<Block>
-			<ChipGroup>
+			<ChipGroup ariaLabel="Filter chips">
 				<Flex
 					alignItems="center"
 					applyCss={{ height: '2.5rem' }}
@@ -258,6 +257,6 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 			)}
 		</Block>
 	);
-}
+};
 
 export default FilterFormSummaryChips;
