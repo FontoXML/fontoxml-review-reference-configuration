@@ -15,6 +15,7 @@ import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
 import Replies from '../shared/Replies';
 import ResolveForm from '../shared/ResolveForm';
+
 import RepliesCount from './RepliesCount';
 import ReplyForm from './ReplyForm';
 import TruncatedReplies from './TruncatedReplies';
@@ -186,7 +187,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			)}
 
 			{reviewAnnotation.isSelected && resolution && (
-				<Block spaceVerticalSize="s">
+				<Block dataTestId='resolution-reply' spaceVerticalSize="s">
 					<HorizontalSeparationLine />
 
 					<Flex alignItems="center" flex="none" spaceSize="s">
