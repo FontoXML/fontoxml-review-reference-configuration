@@ -25,7 +25,6 @@ import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
-
 import { CARD_HEADER_HEIGHT } from './../constants';
 
 function determineShareButtonLabel(
@@ -280,7 +279,7 @@ const CardHeader: React.FC<Props> = ({
 	}
 
 	const resolutionBadgeTooltipContent = React.useMemo(() => {
-		if (!reviewAnnotation.resolvedMetadata.resolution) {
+		if (!reviewAnnotation.resolvedMetadata?.resolution) {
 			return undefined;
 		}
 
@@ -389,7 +388,7 @@ const CardHeader: React.FC<Props> = ({
 							{reviewAnnotation.status ===
 								ReviewAnnotationStatus.RESOLVED &&
 								reviewAnnotation.resolvedMetadata
-									.resolution && (
+									?.resolution && (
 									<Chip
 										iconBefore={
 											reviewAnnotation.resolvedMetadata
@@ -427,6 +426,6 @@ const CardHeader: React.FC<Props> = ({
 			</Flex>
 		</Flex>
 	);
-};
+}
 
-export default CardHeader;
+export default CardHeader
