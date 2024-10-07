@@ -25,6 +25,7 @@ import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
+
 import { CARD_HEADER_HEIGHT } from './../constants';
 
 function determineShareButtonLabel(
@@ -125,6 +126,7 @@ const CardHeader: React.FC<Props> = ({
 		({ isDropOpened, onRef, setIsDropOpened }) => {
 			return (
 				<Button
+					ariaLabel={t('More actions')}
 					icon="ellipsis-h"
 					isDisabled={reviewAnnotation.isLoading}
 					isSelected={isDropOpened}
@@ -132,7 +134,7 @@ const CardHeader: React.FC<Props> = ({
 						setIsDropOpened((isDropOpened) => !isDropOpened)
 					}
 					onRef={onRef}
-					tooltipContent={t('More actions')}
+					tooltipContent={t('Show more actions')}
 					type="transparent"
 				/>
 			);
@@ -278,7 +280,7 @@ const CardHeader: React.FC<Props> = ({
 	}
 
 	const resolutionBadgeTooltipContent = React.useMemo(() => {
-		if (!reviewAnnotation.resolvedMetadata?.resolution) {
+		if (!reviewAnnotation.resolvedMetadata.resolution) {
 			return undefined;
 		}
 
@@ -291,10 +293,10 @@ const CardHeader: React.FC<Props> = ({
 		return reviewAnnotation.type === 'proposal'
 			? t('This proposal is {RESOLUTION}', {
 					RESOLUTION: resolution,
-			  })
+				})
 			: t('This comment is {RESOLUTION}', {
 					RESOLUTION: resolution,
-			  });
+				});
 	}, [reviewAnnotation]);
 
 	return (
@@ -343,10 +345,10 @@ const CardHeader: React.FC<Props> = ({
 										reviewAnnotation.type === 'proposal'
 											? t(
 													'Proposal is private. Click to share.'
-											  )
+												)
 											: t(
 													'Comment is private. Click to share.'
-											  )
+												)
 									}
 								/>
 							)}
@@ -371,10 +373,10 @@ const CardHeader: React.FC<Props> = ({
 											reviewAnnotation.type === 'proposal'
 												? t(
 														'Proposal is shared. Click to resolve.'
-												  )
+													)
 												: t(
 														'Comment is shared. Click to resolve.'
-												  )
+													)
 										}
 										type={
 											reviewAnnotation.isSelected
@@ -387,18 +389,18 @@ const CardHeader: React.FC<Props> = ({
 							{reviewAnnotation.status ===
 								ReviewAnnotationStatus.RESOLVED &&
 								reviewAnnotation.resolvedMetadata
-									?.resolution && (
+									.resolution && (
 									<Chip
 										iconBefore={
 											reviewAnnotation.resolvedMetadata
 												.resolution === 'accepted'
 												? 'far fa-check'
 												: reviewAnnotation
-														.resolvedMetadata
-														.resolution ===
-												  'rejected'
-												? 'far fa-times'
-												: null
+															.resolvedMetadata
+															.resolution ===
+													  'rejected'
+													? 'far fa-times'
+													: null
 										}
 										isCondensed={
 											reviewAnnotation.isSelected
@@ -425,6 +427,6 @@ const CardHeader: React.FC<Props> = ({
 			</Flex>
 		</Flex>
 	);
-}
+};
 
-export default CardHeader
+export default CardHeader;
