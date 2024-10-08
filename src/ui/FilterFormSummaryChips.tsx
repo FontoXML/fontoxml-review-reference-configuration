@@ -84,6 +84,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 
 				{valueByName.typeCommentTechnical && (
 					<Chip
+						dataTestId="feedback-type|comment|technical"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Technical')}
 						tooltipContent={t('Only show technical comments.')}
@@ -95,6 +96,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 				)}
 				{valueByName.typeCommentGeneral && (
 					<Chip
+						dataTestId="feedback-type|comment|general"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('General')}
 						tooltipContent={t('Only show general comments.')}
@@ -106,6 +108,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 				)}
 				{valueByName.typeCommentEditorial && (
 					<Chip
+						dataTestId="feedback-type|comment|editorial"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Editorial')}
 						tooltipContent={t('Only show editorial comments.')}
@@ -118,6 +121,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 
 				{valueByName.typePublicationCommentTechnical && (
 					<Chip
+						dataTestId="feedback-type|publication|technical"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Technical')}
 						tooltipContent={t(
@@ -134,6 +138,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 				)}
 				{valueByName.typePublicationCommentGeneral && (
 					<Chip
+						dataTestId="feedback-type|publication|general"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: General')}
 						tooltipContent={t(
@@ -150,6 +155,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 				)}
 				{valueByName.typePublicationCommentEditorial && (
 					<Chip
+						dataTestId="feedback-type|publication|editorial"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Global: Editorial')}
 						tooltipContent={t(
@@ -167,6 +173,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 
 				{valueByName.typeProposal && (
 					<Chip
+						dataTestId="feedback-type|proposal"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Proposal')}
 						tooltipContent={t('Only show proposals.')}
@@ -179,6 +186,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 
 				{valueByName.resolutionResolvedAccepted && (
 					<Chip
+						dataTestId="resolution|accepted"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Accepted')}
 						tooltipContent={t(
@@ -195,6 +203,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 				)}
 				{valueByName.resolutionResolvedRejected && (
 					<Chip
+						dataTestId="resolution|rejected"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Rejected')}
 						tooltipContent={t(
@@ -211,6 +220,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 				)}
 				{valueByName.resolutionUnresolved && (
 					<Chip
+						dataTestId="resolution|unresolved"
 						isDisabled={isDisabled || isSubmitting}
 						label={t('Unresolved')}
 						tooltipContent={t('Only show unresolved feedback.')}
