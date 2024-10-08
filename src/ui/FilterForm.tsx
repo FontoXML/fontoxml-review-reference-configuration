@@ -12,41 +12,52 @@ import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
 
-const INDETERMINATE = "indeterminate";
+const INDETERMINATE = 'indeterminate';
 
-type CheckboxValue = boolean | "indeterminate";
+type CheckboxValue = boolean | 'indeterminate';
 
 function determineParentFieldValue(
 	subFieldNames: string[],
 	valueByNameForUI: FdsFormValueByName
 ): CheckboxValue {
-	return subFieldNames.reduce<CheckboxValue>((value, subFieldName): CheckboxValue => {
-		if (value === INDETERMINATE) {
-			return value;
-		}
+	return subFieldNames.reduce<CheckboxValue>(
+		(value, subFieldName): CheckboxValue => {
+			if (value === INDETERMINATE) {
+				return value;
+			}
 
-		if (value === true && valueByNameForUI[subFieldName] === true) {
-			return true;
-		}
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+			if (value === true && valueByNameForUI[subFieldName] === true) {
+				return true;
+			}
 
-		if (value === false && valueByNameForUI[subFieldName] === false) {
-			return false;
-		}
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+			if (value === false && valueByNameForUI[subFieldName] === false) {
+				return false;
+			}
 
-		if (value === false && valueByNameForUI[subFieldName] === true) {
-			return INDETERMINATE;
-		}
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+			if (value === false && valueByNameForUI[subFieldName] === true) {
+				return INDETERMINATE;
+			}
 
-		if (value === true && valueByNameForUI[subFieldName] === false) {
-			return INDETERMINATE;
-		}
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+			if (value === true && valueByNameForUI[subFieldName] === false) {
+				return INDETERMINATE;
+			}
 
-		if (value === undefined && valueByNameForUI[subFieldName] === true) {
-			return INDETERMINATE;
-		}
+			if (
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				value === undefined &&
+				valueByNameForUI[subFieldName] === true
+			) {
+				return INDETERMINATE;
+			}
 
-		return !!valueByNameForUI[subFieldName];
-	}, null);
+			return !!valueByNameForUI[subFieldName];
+		},
+		null
+	);
 }
 
 // This file describes a form to filter on all the different conceptual 'properties' of the feedback
@@ -151,7 +162,9 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 							onChange={(value: boolean) => {
 								onCheckboxChange('typeComment', value);
 							}}
-							value={valueByNameForUI.typeComment as CheckboxValue}
+							value={
+								valueByNameForUI.typeComment as CheckboxValue
+							}
 						/>
 
 						<Block
@@ -166,7 +179,9 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 										value
 									);
 								}}
-								value={valueByNameForUI.typeCommentTechnical as CheckboxValue}
+								value={
+									valueByNameForUI.typeCommentTechnical as CheckboxValue
+								}
 							/>
 							<Checkbox
 								label={t('General')}
@@ -176,7 +191,9 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 										value
 									);
 								}}
-								value={valueByNameForUI.typeCommentGeneral as CheckboxValue}
+								value={
+									valueByNameForUI.typeCommentGeneral as CheckboxValue
+								}
 							/>
 							<Checkbox
 								label={t('Editorial')}
@@ -186,7 +203,9 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 										value
 									);
 								}}
-								value={valueByNameForUI.typeCommentEditorial as CheckboxValue}
+								value={
+									valueByNameForUI.typeCommentEditorial as CheckboxValue
+								}
 							/>
 						</Block>
 					</Block>
@@ -200,7 +219,9 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 									value
 								);
 							}}
-							value={valueByNameForUI.typePublicationComment as CheckboxValue}
+							value={
+								valueByNameForUI.typePublicationComment as CheckboxValue
+							}
 						/>
 
 						<Block
@@ -265,7 +286,9 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 						onChange={(value: boolean) => {
 							onCheckboxChange('resolutionResolved', value);
 						}}
-						value={valueByNameForUI.resolutionResolved as CheckboxValue}
+						value={
+							valueByNameForUI.resolutionResolved as CheckboxValue
+						}
 					/>
 
 					<Block
@@ -304,12 +327,14 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 						onChange={(value: boolean) => {
 							onCheckboxChange('resolutionUnresolved', value);
 						}}
-						value={valueByNameForUI.resolutionUnresolved as CheckboxValue}
+						value={
+							valueByNameForUI.resolutionUnresolved as CheckboxValue
+						}
 					/>
 				</Block>
 			</Block>
 		</Flex>
 	);
-}
+};
 
 export default FilterForm;
