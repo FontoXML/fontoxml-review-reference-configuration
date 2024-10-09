@@ -157,6 +157,7 @@ function ResolveFormContent({
 
 				{isRejectingMergedProposal && (
 					<Toast
+						dataTestId="reject-message"
 						icon="info-circle"
 						connotation="info"
 						content={
@@ -166,10 +167,12 @@ function ResolveFormContent({
 								)}
 							</Text>
 						}
+						role="status"
 					/>
 				)}
 				{isAcceptingUnmergedProposal && (
 					<Toast
+						dataTestId="accept-message"
 						icon="info-circle"
 						connotation="info"
 						content={
@@ -179,10 +182,12 @@ function ResolveFormContent({
 								)}
 							</Text>
 						}
+						role="status"
 					/>
 				)}
 				{isAcceptingChangedProposal && (
 					<Toast
+						dataTestId="check-accept-message"
 						icon="info-circle"
 						connotation="info"
 						content={
@@ -192,6 +197,7 @@ function ResolveFormContent({
 								)}
 							</Text>
 						}
+						role="status"
 					/>
 				)}
 

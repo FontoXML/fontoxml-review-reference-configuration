@@ -331,6 +331,7 @@ const CardHeader: React.FC<Props> = ({
 						<Flex alignItems="center" spaceSize="m">
 							{showShareButton && (
 								<Button
+									ariaLabel={t('Share')}
 									key={shareButtonType}
 									icon={
 										reviewAnnotation.isLoading
@@ -357,6 +358,7 @@ const CardHeader: React.FC<Props> = ({
 								reviewAnnotation.busyState !==
 									ReviewBusyState.RESOLVING && (
 									<Button
+										ariaLabel={t('Resolve')}
 										key={
 											reviewAnnotation.isSelected
 												? 'primary'
@@ -391,6 +393,12 @@ const CardHeader: React.FC<Props> = ({
 								reviewAnnotation.resolvedMetadata
 									?.resolution && (
 									<Chip
+										ariaLabel={
+											reviewAnnotation.resolvedMetadata
+												.resolution === 'accepted' 
+												? t('Accepted') 
+												: t('Rejected')
+										}
 										iconBefore={
 											reviewAnnotation.resolvedMetadata
 												.resolution === 'accepted'
@@ -410,6 +418,7 @@ const CardHeader: React.FC<Props> = ({
 											(reviewAnnotation.resolvedMetadata
 												.resolution as string)
 										}
+										role='status'
 										tooltipContent={
 											resolutionBadgeTooltipContent
 										}
