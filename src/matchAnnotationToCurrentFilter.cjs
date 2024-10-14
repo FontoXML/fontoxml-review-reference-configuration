@@ -2,8 +2,6 @@ module.exports = function matchAnnotationToCurrentFilter(
 	filterFormValueByName,
 	annotation
 ) {
-	console.log('filterFormValueByName', filterFormValueByName);
-	console.log('annotation', annotation);
 	// This function filters annotations on type AND resolution.
 
 	const isTypeComment =
@@ -90,9 +88,6 @@ module.exports = function matchAnnotationToCurrentFilter(
 			!filterFormValueByName.resolutionResolvedAccepted &&
 			!filterFormValueByName.resolutionResolvedRejected &&
 			!filterFormValueByName.resolutionUnresolved);
-
-	console.log('matchesType', matchesType);
-	console.log('matchesResolution', matchesResolution);
 
 	return matchesType && matchesResolution;
 };
