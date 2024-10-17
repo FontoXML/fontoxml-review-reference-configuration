@@ -10,8 +10,6 @@ import type {
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
-
 function determineSaveButtonLabel(
 	error: ReviewAnnotationError,
 	isLoading: boolean
@@ -66,14 +64,12 @@ const AddOrEditFormFooter: React.FC<Props> = ({
 				/>
 			)}
 
-			<Flex justifyContent="flex-end">
+			<Flex justifyContent="flex-end" spaceSize="m">
 				<Button
 					isDisabled={isDisabled}
 					label={t('Cancel')}
 					onClick={onCancel}
 				/>
-
-				<ResponsiveButtonSpacer />
 
 				<Button
 					icon={isLoading ? 'spinner' : null}
@@ -85,6 +81,6 @@ const AddOrEditFormFooter: React.FC<Props> = ({
 			</Flex>
 		</Flex>
 	);
-}
+};
 
 export default AddOrEditFormFooter;

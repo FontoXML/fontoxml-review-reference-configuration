@@ -349,7 +349,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 							alignItems="center"
 							applyCss={footerButtonContainerStyles}
 							justifyContent="flex-end"
-							spaceSize="l"
+							spaceSize="m"
 						>
 							{showReplyButton && (
 								<ProposalReplyComponent

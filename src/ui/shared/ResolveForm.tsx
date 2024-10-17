@@ -30,7 +30,6 @@ import type {
 import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
-import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
 const footerButtonContainerStyles = { height: '32px' };
 
@@ -101,9 +100,12 @@ function ResolveFormContent({
 		context === FeedbackContextType.REVIEW ||
 		context === FeedbackContextType.REVIEW_SHARING;
 
-	const handleResolveButtonClick = React.useCallback((_event: MouseEvent)  => {
-		onSubmit(valueByName)
-	}, [onSubmit, valueByName])
+	const handleResolveButtonClick = React.useCallback(
+		(_event: MouseEvent) => {
+			onSubmit(valueByName);
+		},
+		[onSubmit, valueByName]
+	);
 
 	return (
 		<Block dataTestId="resolve-form" spaceVerticalSize="m">
@@ -197,6 +199,7 @@ function ResolveFormContent({
 					alignItems="center"
 					applyCss={footerButtonContainerStyles}
 					justifyContent="flex-end"
+					spaceSize="m"
 				>
 					<Button
 						isDisabled={isDisabled}
@@ -204,22 +207,16 @@ function ResolveFormContent({
 						onClick={onCancel}
 					/>
 
-					<ResponsiveButtonSpacer />
-
 					{!isInReview &&
 						reviewAnnotation.type === 'proposal' &&
 						reviewAnnotation.status !==
 							ReviewAnnotationStatus.RESOLVED &&
 						onProposalMerge &&
 						proposalState && (
-							<>
-								<ReviewAnnotationAcceptProposalButton
-									onProposalMerge={onProposalMerge}
-									proposalState={proposalState}
-								/>
-
-								<ResponsiveButtonSpacer />
-							</>
+							<ReviewAnnotationAcceptProposalButton
+								onProposalMerge={onProposalMerge}
+								proposalState={proposalState}
+							/>
 						)}
 
 					<Button

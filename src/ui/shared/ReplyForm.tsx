@@ -26,7 +26,6 @@ import t from 'fontoxml-localization/src/t';
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 
 import { CARD_HEADER_HEIGHT } from './../constants';
-import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
 function determineSaveButtonLabel(
 	error: ReviewAnnotationError,
@@ -160,14 +159,12 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 				)}
 			</Flex>
 
-			<Flex justifyContent="flex-end">
+			<Flex justifyContent="flex-end" spaceSize="m">
 				<Button
 					isDisabled={isDisabled}
 					label={t('Cancel')}
 					onClick={onCancelButtonClick}
 				/>
-
-				<ResponsiveButtonSpacer />
 
 				<Button
 					icon={isLoading ? 'spinner' : null}
