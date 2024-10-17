@@ -24,6 +24,7 @@ import type {
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
+
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ResponsiveButtonSpacer from './ResponsiveButtonSpacer';
 
@@ -78,10 +79,10 @@ type ReplyFormContentProps = {
 	onCancelButtonClick(): void;
 	onHideLinkClick: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefreshLinkClick: ReviewCardContentComponentProps['onReplyRefresh'];
-	onSubmit(valueByName?: FdsFormValueByName): void
+	onSubmit(valueByName?: FdsFormValueByName): void;
 	reply: ReviewReply;
 	valueByName: FdsFormValueByName;
-}
+};
 
 const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 	focusableRef,
@@ -116,9 +117,12 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 		[onFieldChange]
 	);
 
-	const handleReplyButtonClick = React.useCallback((_event: MouseEvent)  => {
-		onSubmit(valueByName)
-	}, [onSubmit, valueByName])
+	const handleReplyButtonClick = React.useCallback(
+		(_event: MouseEvent) => {
+			onSubmit(valueByName);
+		},
+		[onSubmit, valueByName]
+	);
 
 	return (
 		<Block spaceVerticalSize="l">
@@ -179,7 +183,7 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 			</Flex>
 		</Block>
 	);
-}
+};
 
 type ReplyFormProps = {
 	focusableRef: React.MutableRefObject<HTMLElement>;
@@ -236,6 +240,6 @@ const ReplyForm: React.FC<ReplyFormProps> = ({
 			)}
 		</ReviewAnnotationForm>
 	);
-}
+};
 
 export default ReplyForm;

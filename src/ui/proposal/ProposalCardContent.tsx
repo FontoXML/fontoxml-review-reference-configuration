@@ -23,6 +23,7 @@ import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
 import ErrorStateMessage from '../shared/ErrorStateMessage';
 import LoadingStateMessage from '../shared/LoadingStateMessage';
 import TruncatedText from '../shared/TruncatedText';
+
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ProposalAddOrEditForm from './ProposalAddOrEditForm';
 import ProposalReplyComponent from './ProposalReplyComponent';
@@ -98,7 +99,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
 
 	React.useEffect(() => {
-		if (!showFooter && focusableRef && focusableRef.current !== null) {
+		if (!showFooter && focusableRef?.current) {
 			focusableRef.current.focus();
 		}
 	}, [focusableRef, showFooter]);
@@ -146,7 +147,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	}
 
 	const hasProposedChange =
-		reviewAnnotation.metadata &&
 		reviewAnnotation.metadata.proposedChange !== undefined &&
 		reviewAnnotation.metadata.proposedChange !== null;
 
@@ -370,6 +370,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 			</Block>
 		</Block>
 	);
-}
+};
 
 export default ProposalCardContent;
