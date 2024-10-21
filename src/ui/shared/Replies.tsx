@@ -44,7 +44,7 @@ const Replies: React.FC<Props> = ({
 					return (
 						<Block
 							key={reply.id}
-							paddingSize={isLast ? null : { bottom: 'm' }}
+							paddingSize={isLast ? undefined : { bottom: 'm' }}
 							spaceVerticalSize="m"
 						>
 							<HorizontalSeparationLine />
@@ -64,7 +64,7 @@ const Replies: React.FC<Props> = ({
 					return (
 						<Block
 							key={reply.id}
-							paddingSize={isLast ? null : { bottom: 'm' }}
+							paddingSize={isLast ? undefined : { bottom: 'm' }}
 							spaceVerticalSize="m"
 						>
 							<HorizontalSeparationLine />
