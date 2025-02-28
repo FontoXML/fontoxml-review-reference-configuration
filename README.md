@@ -7,4 +7,4 @@ Contact Fonto Support for feature requests and/or bug reports.
 
 # Documentation
 
-Please find the documentation on how to use this package on [our own documentation website](https://documentation.fontoxml.com/latest/review-9c9f35e6d1bf).
+Please find the documentation on how to use this package on [our own documentation website](https://documentation.fontoxml.com/latest/fonto-review-8ca615260377).
