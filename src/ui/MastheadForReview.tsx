@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useMemo } from 'react';
 
 import configurationManager from 'fontoxml-configuration/src/configurationManager';
 import {
@@ -11,7 +12,7 @@ import {
 	Menu,
 } from 'fontoxml-design-system/src/components';
 import ReviewLogo from 'fontoxml-feedback/src/ReviewLogo';
-import FxOperationButton from 'fontoxml-fx/src/FxOperationButton';
+import FxMultiOperationsButton from 'fontoxml-fx/src/FxMultiOperationsButton';
 import FxOperationMenuItem from 'fontoxml-fx/src/FxOperationMenuItem';
 import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
 
@@ -19,6 +20,21 @@ const configuredScope = configurationManager.get('scope');
 
 const MastheadForReview: FC = () => {
 	const { id } = configuredScope.user ?? {};
+
+	const wideCanvasOperations = useMemo(
+		() => [
+			{
+				operationName:
+					'wide-canvas-content-view-to-150%-text-size-not-150%',
+			},
+			{
+				operationName:
+					'untoggle-wide-canvas-content-view-to-150%-text-size-not-150%',
+			},
+		],
+		[]
+	);
+
 	return (
 		<Masthead>
 			<MastheadContent>
@@ -26,7 +42,10 @@ const MastheadForReview: FC = () => {
 
 				<MastheadAlignRight>
 					<Flex spaceSize="m">
-						<FxOperationButton operationName=":toggle-wide-canvas" />
+						<FxMultiOperationsButton
+							operations={wideCanvasOperations}
+						/>
+
 						<ButtonWithDrop
 							icon="search-plus"
 							label="Zoom"
