@@ -10,11 +10,13 @@ import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
 import Replies from '../shared/Replies';
 import ResolveForm from '../shared/ResolveForm';
+
 import RepliesCount from './RepliesCount';
 import ReplyForm from './ReplyForm';
 import TruncatedReplies from './TruncatedReplies';
@@ -189,25 +191,27 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 				<Block spaceVerticalSize="s">
 					<HorizontalSeparationLine />
 
-					<Flex alignItems="center" flex="none" spaceSize="s">
-						{resolution.value === 'accepted' && (
-							<Icon icon="check" />
-						)}
-						{resolution.value === 'rejected' && (
-							<Icon icon="times" />
-						)}
+					<Block aria-label={resolution.displayLabel}>
+						<Flex alignItems="center" flex="none" spaceSize="s">
+							{resolution.value === 'accepted' && (
+								<Icon icon="check" />
+							)}
+							{resolution.value === 'rejected' && (
+								<Icon icon="times" />
+							)}
 
-						<AuthorAndTimestampLabel
-							reviewAnnotation={reviewAnnotation}
-							isReviewAnnotationResolved={true}
-						/>
-					</Flex>
+							<AuthorAndTimestampLabel
+								reviewAnnotation={reviewAnnotation}
+								isReviewAnnotationResolved={true}
+							/>
+						</Flex>
 
-					<TruncatedText>
-						{resolutionComment
-							? `${resolution.displayLabel} - ${resolutionComment}`
-							: resolution.displayLabel}
-					</TruncatedText>
+						<TruncatedText>
+							{resolutionComment
+								? `${resolution.displayLabel} - ${resolutionComment}`
+								: resolution.displayLabel}
+						</TruncatedText>
+					</Block>
 				</Block>
 			)}
 			{reviewAnnotation.busyState === ReviewBusyState.RESOLVING && (

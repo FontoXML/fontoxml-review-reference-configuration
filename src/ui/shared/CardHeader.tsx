@@ -25,6 +25,7 @@ import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
 import resolutions from '../feedbackResolutions';
+
 import { CARD_HEADER_HEIGHT } from './../constants';
 
 function determineShareButtonLabel(
@@ -250,12 +251,13 @@ const CardHeader: React.FC<Props> = ({
 
 	const shareButtonLabel =
 		reviewAnnotation.isSelected &&
-		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
-		determineShareButtonLabel(
-			reviewAnnotation,
-			reviewAnnotation.error,
-			reviewAnnotation.isLoading
-		);
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING
+			? determineShareButtonLabel(
+					reviewAnnotation,
+					reviewAnnotation.error,
+					reviewAnnotation.isLoading
+			  )
+			: undefined;
 
 	const shareButtonIsDisabled =
 		(typeof reviewAnnotation.error !== 'number' &&
@@ -316,6 +318,7 @@ const CardHeader: React.FC<Props> = ({
 								ReviewRecoveryOption.RETRYABLE)) && (
 						<Block>
 							<Checkbox
+								ariaLabel={t('Select comment')}
 								isDisabled={reviewAnnotation.isLoading}
 								onChange={
 									onReviewAnnotationShareAddRemoveToggle
@@ -330,6 +333,11 @@ const CardHeader: React.FC<Props> = ({
 						<Flex alignItems="center" spaceSize="m">
 							{showShareButton && (
 								<Button
+									ariaLabel={
+										!shareButtonLabel
+											? t('Share')
+											: undefined
+									}
 									key={shareButtonType}
 									icon={
 										reviewAnnotation.isLoading
@@ -356,6 +364,11 @@ const CardHeader: React.FC<Props> = ({
 								reviewAnnotation.busyState !==
 									ReviewBusyState.RESOLVING && (
 									<Button
+										ariaLabel={
+											!reviewAnnotation.isSelected
+												? t('Resolve')
+												: undefined
+										}
 										key={
 											reviewAnnotation.isSelected
 												? 'primary'
@@ -364,8 +377,9 @@ const CardHeader: React.FC<Props> = ({
 										icon="check"
 										isDisabled={reviewAnnotation.isLoading}
 										label={
-											reviewAnnotation.isSelected &&
-											t('Resolve')
+											reviewAnnotation.isSelected
+												? t('Resolve')
+												: undefined
 										}
 										onClick={onReviewAnnotationResolve}
 										tooltipContent={
@@ -390,6 +404,14 @@ const CardHeader: React.FC<Props> = ({
 								reviewAnnotation.resolvedMetadata
 									?.resolution && (
 									<Chip
+										ariaLabel={
+											!reviewAnnotation.isSelected
+												? (reviewAnnotation
+														.resolvedMetadata
+														.resolution as string)
+												: undefined
+										}
+										ariaRole="status"
 										iconBefore={
 											reviewAnnotation.resolvedMetadata
 												.resolution === 'accepted'
@@ -426,6 +448,6 @@ const CardHeader: React.FC<Props> = ({
 			</Flex>
 		</Flex>
 	);
-}
+};
 
-export default CardHeader
+export default CardHeader;

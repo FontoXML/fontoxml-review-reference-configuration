@@ -67,7 +67,7 @@ const Reply: React.FC<Props> = ({
 		<>
 			<HorizontalSeparationLine />
 
-			<Block dataTestId="reply">
+			<Block aria-label={t('reply')} dataTestId="reply">
 				<Flex
 					alignItems="center"
 					flexDirection="row"

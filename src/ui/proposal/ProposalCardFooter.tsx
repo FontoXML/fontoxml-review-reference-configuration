@@ -9,7 +9,10 @@ type Props = {
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
-const ProposalCardFooter: React.FC<Props> = ({ onReplyAdd, reviewAnnotation }) => {
+const ProposalCardFooter: React.FC<Props> = ({
+	onReplyAdd,
+	reviewAnnotation,
+}) => {
 	const textInputRef = React.useRef<HTMLElement>(null);
 
 	const handleTextInputRef = React.useCallback((domNode: HTMLElement) => {
@@ -39,11 +42,12 @@ const ProposalCardFooter: React.FC<Props> = ({ onReplyAdd, reviewAnnotation }) =
 	});
 	return (
 		<TextInput
+			ariaLabel={t('Reply')}
 			onRef={handleTextInputRef}
 			isDisabled={!!reviewAnnotation.error || reviewAnnotation.isLoading}
 			placeholder={t('Type your reply')}
 		/>
 	);
-}
+};
 
 export default ProposalCardFooter;

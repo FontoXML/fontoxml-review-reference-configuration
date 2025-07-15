@@ -122,10 +122,10 @@ function ResolveFormContent({
 						<Icon icon="check" />
 
 						<FormRow
-							label={t('Resolve and')}
 							hasRequiredAsterisk
-							labelColorName="text-color"
 							isLabelBold
+							label={t('Resolve and')}
+							labelColorName="text-color"
 						/>
 					</Flex>
 
@@ -138,6 +138,7 @@ function ResolveFormContent({
 				</Flex>
 
 				<TextArea
+					ariaLabel={t('Resolution message')}
 					dataTestId="resolve-form-text"
 					isDisabled={isDisabled}
 					name="resolutionComment"
@@ -199,6 +200,7 @@ function ResolveFormContent({
 					alignItems="center"
 					applyCss={footerButtonContainerStyles}
 					justifyContent="flex-end"
+					role="group"
 					spaceSize="m"
 				>
 					<Button

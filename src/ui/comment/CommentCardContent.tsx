@@ -22,6 +22,7 @@ import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
 import ErrorStateMessage from '../shared/ErrorStateMessage';
 import LoadingStateMessage from '../shared/LoadingStateMessage';
 import TruncatedText from '../shared/TruncatedText';
+
 import { CARD_HEADER_HEIGHT } from './../constants';
 import CommentAddOrEditForm from './CommentAddOrEditForm';
 import CommentCardFooter from './CommentCardFooter';
@@ -199,10 +200,10 @@ function CommentCardContent({
 					reviewAnnotation.metadata.comment && (
 						<Block>
 							<Flex
-								style={{ height: CARD_HEADER_HEIGHT }}
 								alignItems="center"
 								flexDirection="row"
 								spaceSize="s"
+								style={{ height: CARD_HEADER_HEIGHT }}
 							>
 								{publicationCommentType ? (
 									<>
@@ -214,6 +215,7 @@ function CommentCardContent({
 										<Label
 											dataTestId="comment-type-label"
 											isBold
+											ariaRole="heading"
 										>
 											{` ${publicationCommentType} `}
 										</Label>
@@ -225,10 +227,10 @@ function CommentCardContent({
 										<Label
 											dataTestId="comment-type-label"
 											isBold
+											ariaRole="heading"
 										>{` ${commentType} `}</Label>
 
-										{reviewAnnotation.targetFoundForRevision ===
-											false && (
+										{!reviewAnnotation.targetFoundForRevision && (
 											<Icon
 												colorName={
 													reviewAnnotation.isSelected

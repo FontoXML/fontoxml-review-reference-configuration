@@ -13,7 +13,10 @@ type Props = {
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
-const CommentCardFooter: React.FC<Props> = ({ onReplyAdd, reviewAnnotation }) => {
+const CommentCardFooter: React.FC<Props> = ({
+	onReplyAdd,
+	reviewAnnotation,
+}) => {
 	const textInputRef = React.useRef<HTMLElement>(null);
 
 	const handleTextInputRef = React.useCallback((domNode: HTMLElement) => {
@@ -47,6 +50,7 @@ const CommentCardFooter: React.FC<Props> = ({ onReplyAdd, reviewAnnotation }) =>
 			<HorizontalSeparationLine />
 
 			<TextInput
+				ariaLabel={t('Reply')}
 				onRef={handleTextInputRef}
 				isDisabled={
 					!!reviewAnnotation.error || reviewAnnotation.isLoading
@@ -55,6 +59,6 @@ const CommentCardFooter: React.FC<Props> = ({ onReplyAdd, reviewAnnotation }) =>
 			/>
 		</Block>
 	);
-}
+};
 
 export default CommentCardFooter;

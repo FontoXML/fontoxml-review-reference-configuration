@@ -149,13 +149,20 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 		valueByNameForUI,
 		handleFieldsChange
 	);
+	const typesOfFeedbackLabelId = React.useId();
+	const resolutionLabelId = React.useId();
 
 	return (
 		<Flex spaceSize="l">
 			<Block flex="none" spaceVerticalSize="s">
-				<Label isBold>{t('Type(s) of feedback')}</Label>
+				<Label id={typesOfFeedbackLabelId} isBold ariaRole="heading">
+					{t('Type(s) of feedback')}
+				</Label>
 
-				<Block spaceVerticalSize="l">
+				<Block
+					aria-labelledby={typesOfFeedbackLabelId}
+					spaceVerticalSize="l"
+				>
 					<Block spaceVerticalSize="s">
 						<Checkbox
 							label={t('Comment')}
@@ -278,9 +285,14 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 			</Block>
 
 			<Block flex="none" spaceVerticalSize="s">
-				<Label isBold>{t('Resolution')}</Label>
+				<Label id={resolutionLabelId} isBold ariaRole="heading">
+					{t('Resolution')}
+				</Label>
 
-				<Block spaceVerticalSize="s">
+				<Block
+					aria-labelledby={resolutionLabelId}
+					spaceVerticalSize="s"
+				>
 					<Checkbox
 						label={t('Resolved')}
 						onChange={(value: boolean) => {

@@ -32,12 +32,14 @@ function validateCommentField(value: string): FdsFormFeedback | null {
 
 const rows = { minimum: 2, maximum: 6 };
 
-const CommentAddOrEditFormContent: React.FC<Props & {
-	focusableRef: React.MutableRefObject<HTMLElement>;
-	isSubmitDisabled: boolean;
-	onFieldChange(...args: unknown[]): void;
-	valueByName: FdsFormValueByName;
-}> = ({
+const CommentAddOrEditFormContent: React.FC<
+	Props & {
+		focusableRef: React.MutableRefObject<HTMLElement>;
+		isSubmitDisabled: boolean;
+		onFieldChange(...args: unknown[]): void;
+		valueByName: FdsFormValueByName;
+	}
+> = ({
 	focusableRef,
 	isSubmitDisabled,
 	onCancel,
@@ -77,7 +79,9 @@ const CommentAddOrEditFormContent: React.FC<Props & {
 		reviewAnnotation.targets[0].type ===
 		ReviewTargetType.PUBLICATION_SELECTOR;
 	if (isPublicationLevelComment) {
-		label =  t('Global {LABEL}', {LABEL: `${label[0].toLowerCase()}${label.substring(1)}`});
+		label = t('Global {LABEL}', {
+			LABEL: `${label[0].toLowerCase()}${label.substring(1)}`,
+		});
 	}
 
 	const handleCommentDirChange = React.useCallback(
@@ -121,9 +125,9 @@ const CommentAddOrEditFormContent: React.FC<Props & {
 			</FormRow>
 
 			<FormRow
-				label={t('Type')}
 				hasRequiredAsterisk
 				isLabelBold
+				label={t('Type')}
 				labelColorName="text-color"
 			>
 				<RadioButtonGroup
@@ -144,7 +148,7 @@ const CommentAddOrEditFormContent: React.FC<Props & {
 			/>
 		</>
 	);
-}
+};
 
 type Props = {
 	focusableRef: React.MutableRefObject<HTMLElement>;
@@ -180,6 +184,6 @@ const CommentAddOrEditForm: React.FC<Props> = ({
 			)}
 		</ReviewAnnotationForm>
 	);
-}
+};
 
 export default CommentAddOrEditForm;
