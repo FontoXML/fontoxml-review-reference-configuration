@@ -202,8 +202,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 											{t('Proposed change')}
 										</Label>
 
-										{reviewAnnotation.targetFoundForRevision ===
-											false && (
+										{!reviewAnnotation.targetFoundForRevision && (
 											<Icon
 												colorName={
 													reviewAnnotation.isSelected
@@ -348,6 +347,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 						<Flex
 							alignItems="center"
 							applyCss={footerButtonContainerStyles}
+							ariaRole="group"
 							justifyContent="flex-end"
 							spaceSize="m"
 						>

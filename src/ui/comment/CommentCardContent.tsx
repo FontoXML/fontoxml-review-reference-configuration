@@ -22,6 +22,7 @@ import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
 import ErrorStateMessage from '../shared/ErrorStateMessage';
 import LoadingStateMessage from '../shared/LoadingStateMessage';
 import TruncatedText from '../shared/TruncatedText';
+
 import { CARD_HEADER_HEIGHT } from './../constants';
 import CommentAddOrEditForm from './CommentAddOrEditForm';
 import CommentCardFooter from './CommentCardFooter';
@@ -199,10 +200,10 @@ function CommentCardContent({
 					reviewAnnotation.metadata.comment && (
 						<Block>
 							<Flex
-								style={{ height: CARD_HEADER_HEIGHT }}
 								alignItems="center"
 								flexDirection="row"
 								spaceSize="s"
+								style={{ height: CARD_HEADER_HEIGHT }}
 							>
 								{publicationCommentType ? (
 									<>
@@ -212,6 +213,7 @@ function CommentCardContent({
 										/>
 
 										<Label
+											ariaRole="heading"
 											dataTestId="comment-type-label"
 											isBold
 										>
@@ -223,13 +225,14 @@ function CommentCardContent({
 										<Icon icon="far fa-comment" />
 
 										<Label
+											ariaRole="heading"
 											dataTestId="comment-type-label"
 											isBold
 										>{` ${commentType} `}</Label>
 
-										{reviewAnnotation.targetFoundForRevision ===
-											false && (
+										{!reviewAnnotation.targetFoundForRevision && (
 											<Icon
+												ariaLabel={t('Lost comment')}
 												colorName={
 													reviewAnnotation.isSelected
 														? 'tombstone-icon-selected-color'

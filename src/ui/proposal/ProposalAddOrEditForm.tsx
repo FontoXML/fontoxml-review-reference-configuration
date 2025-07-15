@@ -33,11 +33,13 @@ function validateProposedChangeField(
 
 const rows = { minimum: 2, maximum: 6 };
 
-const ProposalAddOrEditFormContent: React.FC<Props & {
-	focusableRef: React.MutableRefObject<HTMLElement>;
-	isSubmitDisabled: boolean;
-	onFieldChange(...args: unknown[]): void;
-}> = ({
+const ProposalAddOrEditFormContent: React.FC<
+	Props & {
+		focusableRef: React.MutableRefObject<HTMLElement>;
+		isSubmitDisabled: boolean;
+		onFieldChange(...args: unknown[]): void;
+	}
+> = ({
 	focusableRef,
 	isSubmitDisabled,
 	onCancel,
@@ -151,7 +153,7 @@ const ProposalAddOrEditFormContent: React.FC<Props & {
 			/>
 		</>
 	);
-}
+};
 
 type Props = {
 	focusableRef: React.MutableRefObject<HTMLElement>;
@@ -186,6 +188,6 @@ const ProposalAddOrEditForm: React.FC<Props> = ({
 			)}
 		</ReviewAnnotationForm>
 	);
-}
+};
 
 export default ProposalAddOrEditForm;

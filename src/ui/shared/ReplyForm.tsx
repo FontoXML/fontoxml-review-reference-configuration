@@ -139,6 +139,7 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 				</Flex>
 
 				<TextArea
+					ariaLabel={t('Reply')}
 					dir={valueByName['reply.dir']}
 					isDisabled={isDisabled}
 					name="reply"

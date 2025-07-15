@@ -122,10 +122,10 @@ function ResolveFormContent({
 						<Icon icon="check" />
 
 						<FormRow
-							label={t('Resolve and')}
 							hasRequiredAsterisk
-							labelColorName="text-color"
 							isLabelBold
+							label={t('Resolve and')}
+							labelColorName="text-color"
 						/>
 					</Flex>
 
@@ -138,6 +138,7 @@ function ResolveFormContent({
 				</Flex>
 
 				<TextArea
+					ariaLabel={t('Resolution message')}
 					dataTestId="resolve-form-text"
 					isDisabled={isDisabled}
 					name="resolutionComment"
@@ -157,6 +158,7 @@ function ResolveFormContent({
 
 				{isRejectingMergedProposal && (
 					<Toast
+						ariaRole="status"
 						icon="info-circle"
 						connotation="info"
 						content={
@@ -170,6 +172,7 @@ function ResolveFormContent({
 				)}
 				{isAcceptingUnmergedProposal && (
 					<Toast
+						ariaRole="status"
 						icon="info-circle"
 						connotation="info"
 						content={
@@ -183,6 +186,7 @@ function ResolveFormContent({
 				)}
 				{isAcceptingChangedProposal && (
 					<Toast
+						ariaRole="status"
 						icon="info-circle"
 						connotation="info"
 						content={
@@ -197,6 +201,7 @@ function ResolveFormContent({
 
 				<Flex
 					alignItems="center"
+					ariaRole="status"
 					applyCss={footerButtonContainerStyles}
 					justifyContent="flex-end"
 					spaceSize="m"

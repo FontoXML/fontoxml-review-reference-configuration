@@ -73,7 +73,7 @@ const FilterFormSummaryChips: React.FC<ReviewFilterFormSummaryComponent> = ({
 
 	return (
 		<Block>
-			<ChipGroup>
+			<ChipGroup ariaLabel={t('Filter chips')}>
 				<Flex
 					alignItems="center"
 					applyCss={{ height: '2.5rem' }}
