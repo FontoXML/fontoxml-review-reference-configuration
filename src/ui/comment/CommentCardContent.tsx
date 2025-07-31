@@ -232,6 +232,7 @@ function CommentCardContent({
 
 										{!reviewAnnotation.targetFoundForRevision && (
 											<Icon
+												ariaLabel={t('Lost comment')}
 												colorName={
 													reviewAnnotation.isSelected
 														? 'tombstone-icon-selected-color'

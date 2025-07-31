@@ -67,7 +67,7 @@ const Reply: React.FC<Props> = ({
 		<>
 			<HorizontalSeparationLine />
 
-			<Block aria-label={t('reply')} dataTestId="reply">
+			<Block aria-label={t('Reply')} dataTestId="reply">
 				<Flex
 					alignItems="center"
 					flexDirection="row"
@@ -88,6 +88,7 @@ const Reply: React.FC<Props> = ({
 								setIsDropOpened,
 							}) => (
 								<Button
+									ariaLabel={t('More actions')}
 									icon="ellipsis-h"
 									isDisabled={isDisabled}
 									isSelected={isDropOpened}
@@ -97,7 +98,7 @@ const Reply: React.FC<Props> = ({
 										);
 									}}
 									onRef={onRef}
-									tooltipContent={t('More actions')}
+									tooltipContent={t('Show more actions')}
 									type="transparent"
 								/>
 							)}

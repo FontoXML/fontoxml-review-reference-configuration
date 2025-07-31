@@ -167,6 +167,7 @@ function ResolveFormContent({
 								)}
 							</Text>
 						}
+						role="status"
 					/>
 				)}
 				{isAcceptingUnmergedProposal && (
@@ -180,6 +181,7 @@ function ResolveFormContent({
 								)}
 							</Text>
 						}
+						role="status"
 					/>
 				)}
 				{isAcceptingChangedProposal && (
@@ -193,6 +195,7 @@ function ResolveFormContent({
 								)}
 							</Text>
 						}
+						role="status"
 					/>
 				)}
 

@@ -431,6 +431,7 @@ const CardHeader: React.FC<Props> = ({
 											(reviewAnnotation.resolvedMetadata
 												.resolution as string)
 										}
+										role="status"
 										tooltipContent={
 											resolutionBadgeTooltipContent
 										}
