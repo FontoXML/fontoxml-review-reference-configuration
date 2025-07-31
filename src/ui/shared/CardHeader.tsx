@@ -285,11 +285,14 @@ const CardHeader: React.FC<Props> = ({
 			return undefined;
 		}
 
-		const resolution = resolutions
-			.find(
-				(r) => r.value === reviewAnnotation.resolvedMetadata.resolution
-			)
-			.displayLabel.toLowerCase();
+		const foundResolution = resolutions.find(
+			(r) => r.value === reviewAnnotation.resolvedMetadata?.resolution
+		);
+		if (!foundResolution) {
+			return undefined;
+		}
+
+		const resolution = foundResolution.displayLabel.toLowerCase();
 
 		return reviewAnnotation.type === 'proposal'
 			? t('This proposal is {RESOLUTION}', {
@@ -299,6 +302,10 @@ const CardHeader: React.FC<Props> = ({
 					RESOLUTION: resolution,
 				});
 	}, [reviewAnnotation]);
+
+	const resolution = reviewAnnotation.resolvedMetadata?.resolution as
+		| string
+		| undefined;
 
 	return (
 		<Flex
@@ -401,35 +408,30 @@ const CardHeader: React.FC<Props> = ({
 
 							{reviewAnnotation.status ===
 								ReviewAnnotationStatus.RESOLVED &&
-								reviewAnnotation.resolvedMetadata
-									?.resolution && (
+								resolution && (
 									<Chip
 										ariaLabel={
 											!reviewAnnotation.isSelected
 												? (reviewAnnotation
 														.resolvedMetadata
-														.resolution as string)
+														?.resolution as string)
 												: undefined
 										}
 										ariaRole="status"
 										iconBefore={
-											reviewAnnotation.resolvedMetadata
-												.resolution === 'accepted'
+											resolution === 'accepted'
 												? 'far fa-check'
-												: reviewAnnotation
-															.resolvedMetadata
-															.resolution ===
-													  'rejected'
+												: resolution === 'rejected'
 													? 'far fa-times'
-													: null
+													: undefined
 										}
 										isCondensed={
 											reviewAnnotation.isSelected
 										}
 										label={
-											!reviewAnnotation.isSelected &&
-											(reviewAnnotation.resolvedMetadata
-												.resolution as string)
+											!reviewAnnotation.isSelected
+												? resolution
+												: undefined
 										}
 										tooltipContent={
 											resolutionBadgeTooltipContent

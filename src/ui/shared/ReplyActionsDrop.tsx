@@ -41,7 +41,6 @@ const ReplyActionsDrop: React.FC<Props> = ({
 			</Menu>
 		</Drop>
 	);
-}
+};
 
-
-export default ReplyActionsDrop
+export default ReplyActionsDrop;
