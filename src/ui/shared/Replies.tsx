@@ -33,7 +33,7 @@ const Replies: React.FC<Props> = ({
 	showActionsMenuButton,
 }) => {
 	return (
-		<Block spaceVerticalSize="m">
+		<Block dataTestId="replies" spaceVerticalSize="m">
 			{replies.map((reply, index) => {
 				const isLast = index === replies.length - 1;
 
@@ -44,6 +44,8 @@ const Replies: React.FC<Props> = ({
 					return (
 						<Block
 							key={reply.id}
+							data-review-reply-state={reply.busyState}
+							dataTestId="reply"
 							paddingSize={isLast ? undefined : { bottom: 'm' }}
 							spaceVerticalSize="m"
 						>
@@ -64,6 +66,8 @@ const Replies: React.FC<Props> = ({
 					return (
 						<Block
 							key={reply.id}
+							data-review-reply-state={reply.busyState}
+							dataTestId="reply"
 							paddingSize={isLast ? undefined : { bottom: 'm' }}
 							spaceVerticalSize="m"
 						>

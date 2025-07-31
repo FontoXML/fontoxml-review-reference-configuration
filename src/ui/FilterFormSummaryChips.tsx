@@ -151,6 +151,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.typeCommentTechnical) {
 			chips.push(
 				<Chip
+					dataTestId="feedback-type|comment|technical"
 					isDisabled={isDisabled || isSubmitting}
 					key="typeCommentTechnical"
 					label={t('Technical')}
@@ -165,6 +166,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.typeCommentGeneral) {
 			chips.push(
 				<Chip
+					dataTestId="feedback-type|comment|general"
 					isDisabled={isDisabled || isSubmitting}
 					key="typeCommentGeneral"
 					label={t('General')}
@@ -179,6 +181,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.typeCommentEditorial) {
 			chips.push(
 				<Chip
+					dataTestId="feedback-type|comment|editorial"
 					isDisabled={isDisabled || isSubmitting}
 					key="typeCommentEditorial"
 					label={t('Editorial')}
@@ -193,6 +196,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.typePublicationCommentTechnical) {
 			chips.push(
 				<Chip
+					dataTestId="feedback-type|publication|technical"
 					isDisabled={isDisabled || isSubmitting}
 					key="typePublicationCommentTechnical"
 					label={t('Global: Technical')}
@@ -212,6 +216,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.typePublicationCommentGeneral) {
 			chips.push(
 				<Chip
+					dataTestId="feedback-type|publication|general"
 					isDisabled={isDisabled || isSubmitting}
 					key="typePublicationCommentGeneral"
 					label={t('Global: General')}
@@ -231,6 +236,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.typePublicationCommentEditorial) {
 			chips.push(
 				<Chip
+					dataTestId="feedback-type|publication|editorial"
 					isDisabled={isDisabled || isSubmitting}
 					key="typePublicationCommentEditorial"
 					label={t('Global: Editorial')}
@@ -250,6 +256,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.typeProposal) {
 			chips.push(
 				<Chip
+					dataTestId="feedback-type|proposal"
 					isDisabled={isDisabled || isSubmitting}
 					key="typeProposal"
 					label={t('Proposal')}
@@ -264,6 +271,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.resolutionUnresolvedPrivate) {
 			chips.push(
 				<Chip
+					dataTestId="resolution|private"
 					isDisabled={isDisabled || isSubmitting}
 					key="resolutionUnresolvedPrivate"
 					label={t('Private')}
@@ -280,6 +288,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.resolutionUnresolvedShared) {
 			chips.push(
 				<Chip
+					dataTestId="resolution|shared"
 					isDisabled={isDisabled || isSubmitting}
 					key="resolutionUnresolvedShared"
 					label={t('Shared')}
@@ -296,6 +305,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.resolutionResolvedAccepted) {
 			chips.push(
 				<Chip
+					dataTestId="resolution|accepted"
 					isDisabled={isDisabled || isSubmitting}
 					key="resolutionResolvedAccepted"
 					label={t('Accepted')}
@@ -312,6 +322,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		if (valueByName.resolutionResolvedRejected) {
 			chips.push(
 				<Chip
+					dataTestId="resolution|rejected"
 					isDisabled={isDisabled || isSubmitting}
 					key="resolutionResolvedRejected"
 					label={t('Rejected')}
@@ -371,7 +382,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		return (
 			<Flex
 				alignItems="center"
-				dataTestId="FilterFormSummaryChips"
+				dataTestId="filter-form-summary-chips"
 				data-is-single-line
 				flex="1"
 				flexDirection="row"
@@ -402,7 +413,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 
 	return (
 		<Flex
-			dataTestId="FilterFormSummaryChips"
+			dataTestId="filter-form-summary-chips"
 			flex="none"
 			flexDirection="column"
 			spaceSize="s"
@@ -412,7 +423,7 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 			</ChipGroup>
 
 			{isSubmitting && (
-				<Flex alignItems="center" flex="none" spaceSize="s">
+				<Flex alignItems="center" flex="none" spaceSize="s" dataTestId="filter-update-message">
 					<Icon icon="spinner" colorName="icon-s-info-color" />
 
 					<Label isBold>{t('Updating filter…')}</Label>
