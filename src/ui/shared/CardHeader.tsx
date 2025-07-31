@@ -127,6 +127,7 @@ const CardHeader: React.FC<Props> = ({
 			return (
 				<Button
 					ariaLabel={t('More actions')}
+					dataTestId="more-actions-drop-button"
 					icon="ellipsis-h"
 					isDisabled={reviewAnnotation.isLoading}
 					isSelected={isDropOpened}
@@ -145,7 +146,7 @@ const CardHeader: React.FC<Props> = ({
 	const renderViewInDrop = React.useCallback(
 		({ closeOuterDrop }) => {
 			return (
-				<Drop>
+				<Drop dataTestId="view-in-drop">
 					<Menu>
 						<MenuItem
 							isDisabled={!showCreatedContextButton}
@@ -185,7 +186,7 @@ const CardHeader: React.FC<Props> = ({
 	const renderDrop = React.useCallback(
 		({ setIsDropOpened }) => {
 			return (
-				<Drop>
+				<Drop dataTestId="more-actions-drop">
 					<Menu>
 						{showEditButton && (
 							<MenuItem
@@ -310,6 +311,7 @@ const CardHeader: React.FC<Props> = ({
 	return (
 		<Flex
 			alignItems="center"
+			dataTestId="card-header"
 			justifyContent="space-between"
 			spaceSize="s"
 			style={{ height: CARD_HEADER_HEIGHT }}

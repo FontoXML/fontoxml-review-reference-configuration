@@ -124,7 +124,11 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 	);
 
 	return (
-		<Block spaceVerticalSize="l">
+		<Block
+			data-review-reply-state={reply.busyState}
+			dataTestId="reply"
+			spaceVerticalSize="l"
+		>
 			<Flex flexDirection="column" spaceSize="m">
 				<HorizontalSeparationLine />
 
