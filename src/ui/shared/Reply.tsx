@@ -18,6 +18,7 @@ import type {
 import t from 'fontoxml-localization/src/t';
 
 import AuthorAndTimestampLabel from '../AuthorAndTimestampLabel';
+
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ReplyActionsDrop from './ReplyActionsDrop';
 import TruncatedText from './TruncatedText';
@@ -177,4 +178,4 @@ const Reply: React.FC<Props> = ({
 	);
 };
 
-export default Reply
+export default Reply;
