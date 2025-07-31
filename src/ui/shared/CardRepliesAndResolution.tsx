@@ -190,7 +190,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			)}
 
 			{reviewAnnotation.isSelected && resolution && (
-				<Block spaceVerticalSize="s">
+				<Block dataTestId="resolution-reply" spaceVerticalSize="s">
 					<HorizontalSeparationLine />
 
 					<Block aria-label={resolution.displayLabel}>

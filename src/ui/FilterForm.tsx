@@ -165,6 +165,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 				>
 					<Block spaceVerticalSize="s">
 						<Checkbox
+							dataTestId="feedback-type|comment"
 							label={t('Comment')}
 							onChange={(value: boolean) => {
 								onCheckboxChange('typeComment', value);
@@ -179,6 +180,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 							spaceVerticalSize="s"
 						>
 							<Checkbox
+								dataTestId="feedback-type|comment|technical"
 								label={t('Technical')}
 								onChange={(value: boolean) => {
 									onCheckboxChange(
@@ -191,6 +193,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 								}
 							/>
 							<Checkbox
+								dataTestId="feedback-type|comment|general"
 								label={t('General')}
 								onChange={(value: boolean) => {
 									onCheckboxChange(
@@ -203,6 +206,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 								}
 							/>
 							<Checkbox
+								dataTestId="feedback-type|comment|editorial"
 								label={t('Editorial')}
 								onChange={(value: boolean) => {
 									onCheckboxChange(
@@ -219,6 +223,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 
 					<Block spaceVerticalSize="s">
 						<Checkbox
+							dataTestId="feedback-type|publication"
 							label={t('Global Comment')}
 							onChange={(value: boolean) => {
 								onCheckboxChange(
@@ -236,6 +241,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 							spaceVerticalSize="s"
 						>
 							<Checkbox
+								dataTestId="feedback-type|publication|technical"
 								label={t('Technical')}
 								onChange={(value: boolean) => {
 									onCheckboxChange(
@@ -248,6 +254,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 								}
 							/>
 							<Checkbox
+								dataTestId="feedback-type|publication|general"
 								label={t('General')}
 								onChange={(value: boolean) => {
 									onCheckboxChange(
@@ -260,6 +267,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 								}
 							/>
 							<Checkbox
+								dataTestId="feedback-type|publication|editorial"
 								label={t('Editorial')}
 								onChange={(value: boolean) => {
 									onCheckboxChange(
@@ -275,6 +283,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 					</Block>
 
 					<Checkbox
+						dataTestId="feedback-type|proposal"
 						label={t('Proposal')}
 						onChange={(value: boolean) => {
 							onCheckboxChange('typeProposal', value);
@@ -294,6 +303,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 					spaceVerticalSize="s"
 				>
 					<Checkbox
+						dataTestId="resolution|resolved"
 						label={t('Resolved')}
 						onChange={(value: boolean) => {
 							onCheckboxChange('resolutionResolved', value);
@@ -308,6 +318,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 						spaceVerticalSize="s"
 					>
 						<Checkbox
+							dataTestId="resolution|accepted"
 							label={t('Accepted')}
 							onChange={(value: boolean) => {
 								onCheckboxChange(
@@ -321,6 +332,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 						/>
 
 						<Checkbox
+							dataTestId="resolution|rejected"
 							label={t('Rejected')}
 							onChange={(value: boolean) => {
 								onCheckboxChange(
@@ -335,6 +347,7 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 					</Block>
 
 					<Checkbox
+						dataTestId="resolution|unresolved"
 						label={t('Unresolved')}
 						onChange={(value: boolean) => {
 							onCheckboxChange('resolutionUnresolved', value);

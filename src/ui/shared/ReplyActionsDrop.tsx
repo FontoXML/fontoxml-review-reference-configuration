@@ -25,7 +25,7 @@ const ReplyActionsDrop: React.FC<Props> = ({
 	}, [closeDrop, onRemoveButtonClick]);
 
 	return (
-		<Drop>
+		<Drop dataTestId="reply-more-actions-drop">
 			<Menu>
 				<MenuItem
 					icon="far fa-edit"
