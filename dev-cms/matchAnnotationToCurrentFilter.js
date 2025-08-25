@@ -1,8 +1,16 @@
 module.exports = function matchAnnotationToCurrentFilter(
 	filterFormValueByName,
-	annotation
+	annotation,
+	navigatorId
 ) {
-	// This function filters annotations on type AND resolution.
+	// Note: This function defines the filter logic for all annotations for all navigators.
+	// The navigatorId can be used to distinguish between these.
+	// The following logic corresponds to the filters configured for the "comments-and-proposals"
+	// navigator(Id) registered in this package's install.ts file.
+	// If your application supports multiple navigators, use the navigatorId argument to apply the
+	// appropriate filtering logic for each navigator.
+
+	// This function filters "comments-and-proposals" annotations on type AND resolution.
 
 	const isTypeComment =
 		annotation.type === 'comment' || annotation.type === 'object-comment';
