@@ -136,24 +136,6 @@ export default function install(): void {
 		}
 	);
 
-	registerObjectReviewAnnotationType('topicref-comment', {
-		navigatorId: REVIEW_NAVIGATOR_ID,
-		enabledSelector:
-			'self::*[fonto:dita-class(., "map/topicref") and @href and (parent::relcell or parent::relcolspec)]',
-		// This has the same name and icon as the 'comment' text range annotation.
-		// The "Insert comment" dropdown and the popover that shows on selection change on the
-		// /review route both only show menu items / buttons for annotation types that are enabled.
-		// This together leads to a single "Add comment" option that works for text ranges and
-		// objects.
-		icon: 'fas fa-comment',
-		label: 'Comment',
-		priority: 3,
-		CardContentComponent: CommentCardContent,
-		tooltipContent: t('Add comment to selected topic reference.'),
-		keyBinding: 'ctrl+alt+m',
-		osxKeyBinding: 'cmd+alt+m',
-	});
-
 	uiManager.registerReactComponent('MastheadForReview', MastheadForReview);
 
 	uiManager.registerCustomIcon(
