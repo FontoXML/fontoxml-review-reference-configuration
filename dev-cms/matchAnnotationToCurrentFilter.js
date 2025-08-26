@@ -3,17 +3,31 @@ module.exports = function matchAnnotationToCurrentFilter(
 	annotation,
 	navigatorId
 ) {
-	// Note: This function defines the filter logic for all annotations for all navigators.
-	// The navigatorId can be used to distinguish between these.
 	// The following logic corresponds to the filters configured for the "comments-and-proposals"
 	// navigator(Id) registered in this package's install.ts file.
 	// If your application supports multiple navigators, use the navigatorId argument to apply the
 	// appropriate filtering logic for each navigator.
+	// You can also have this inside the configureDevCms file in your dev-cms application folder,
+	// which can then conditionally delegate to this function if the navigatorId matches.
+
+	// First make sure annotation.type matches one of the types configured for this navigator.
+	if (
+		annotation.type !== 'comment' &&
+		annotation.type !== 'object-comment' &&
+		annotation.type !== 'publication-comment' &&
+		annotation.type !== 'proposal' &&
+		annotation.type !== 'enabled-selector-comment' &&
+		annotation.type !== 'enabled-selector-publication-comment'
+	) {
+		return false;
+	}
 
 	// This function filters "comments-and-proposals" annotations on type AND resolution.
 
 	const isTypeComment =
-		annotation.type === 'comment' || annotation.type === 'object-comment';
+		annotation.type === 'comment' ||
+		annotation.type === 'object-comment' ||
+		annotation.type === 'enabled-selector-comment';
 	const isTypeCommentTechnical =
 		isTypeComment &&
 		annotation.metadata &&
@@ -27,7 +41,9 @@ module.exports = function matchAnnotationToCurrentFilter(
 		annotation.metadata &&
 		annotation.metadata.commentType === 'editorial';
 
-	const isTypePublicationComment = annotation.type === 'publication-comment';
+	const isTypePublicationComment =
+		annotation.type === 'publication-comment' ||
+		annotation.type === 'enabled-selector-publication-comment';
 	const isTypePublicationCommentTechnical =
 		isTypePublicationComment &&
 		annotation.metadata &&
