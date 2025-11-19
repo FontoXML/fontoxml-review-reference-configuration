@@ -127,7 +127,7 @@ function CommentCardContent({
 	) {
 		return (
 			<Block paddingSize="m">
-				<LoadingStateMessage message={t('Removing comment…')} />
+				<LoadingStateMessage message={t('Discarding comment…')} />
 			</Block>
 		);
 	}

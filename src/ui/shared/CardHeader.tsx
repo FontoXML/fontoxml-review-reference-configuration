@@ -203,7 +203,7 @@ const CardHeader: React.FC<Props> = ({
 							<MenuItem
 								icon="trash-can"
 								isDisabled={reviewAnnotation.isLoading}
-								label={t('Remove')}
+								label={t('Discard')}
 								onClick={() => {
 									onReviewAnnotationRemove();
 									setIsDropOpened(false);

@@ -37,13 +37,13 @@ const CardErrorFooter: React.FC<Props> = ({
 				/>
 
 				<Button
-					label={t('Retry remove')}
+					label={t('Retry discard')}
 					onClick={onReviewAnnotationRemove}
 					type="primary"
 				/>
 			</Flex>
 		</Block>
 	);
-}
+};
 
-export default CardErrorFooter
+export default CardErrorFooter;
