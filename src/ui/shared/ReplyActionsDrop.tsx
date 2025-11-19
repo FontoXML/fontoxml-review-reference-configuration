@@ -35,7 +35,7 @@ const ReplyActionsDrop: React.FC<Props> = ({
 
 				<MenuItem
 					icon="trash-can"
-					label={t('Remove')}
+					label={t('Discard')}
 					onClick={handleRemoveButtonClick}
 				/>
 			</Menu>

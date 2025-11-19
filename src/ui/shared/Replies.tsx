@@ -71,7 +71,7 @@ const Replies: React.FC<Props> = ({
 
 							<CompactStateMessage
 								isSingleLine={false}
-								message={t('Removing reply…')}
+								message={t('Discarding reply…')}
 								visual="spinner"
 							/>
 						</Block>

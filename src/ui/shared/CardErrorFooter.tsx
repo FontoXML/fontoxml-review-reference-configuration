@@ -20,7 +20,7 @@ type Props = {
  *
  * Instead of showing the regular footer, show something that looks similar to the footer you
  * see when editing/replying to a comment.
- * And make sure to render that footer in the error state (Retry remove label on the primary button).
+ * And make sure to render that footer in the error state (Retry discard label on the primary button).
  */
 const CardErrorFooter: React.FC<Props> = ({
 	onReviewAnnotationFormCancel,
@@ -37,13 +37,13 @@ const CardErrorFooter: React.FC<Props> = ({
 				/>
 
 				<Button
-					label={t('Retry remove')}
+					label={t('Retry discard')}
 					onClick={onReviewAnnotationRemove}
 					type="primary"
 				/>
 			</Flex>
 		</Block>
 	);
-}
+};
 
-export default CardErrorFooter
+export default CardErrorFooter;

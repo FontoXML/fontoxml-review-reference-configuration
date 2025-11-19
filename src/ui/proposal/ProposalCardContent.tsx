@@ -141,7 +141,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	) {
 		return (
 			<Block paddingSize="m">
-				<LoadingStateMessage message={t('Removing proposal…')} />
+				<LoadingStateMessage message={t('Discarding proposal…')} />
 			</Block>
 		);
 	}

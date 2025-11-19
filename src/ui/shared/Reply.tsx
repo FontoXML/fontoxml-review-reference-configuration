@@ -134,7 +134,7 @@ const Reply: React.FC<Props> = ({
 				{/* If there was an error while removing the annotation, we show that error in an ErrorToast.
 				Instead of showing the regular footer, show something that looks similar to the footer you
 				see when editing a reply.
-				And make sure to render that footer in the error state (Retry remove label on the primary button).*/}
+				And make sure to render that footer in the error state (Retry discard label on the primary button).*/}
 				{error && reply.busyState === ReviewBusyState.REMOVING && (
 					<Flex flexDirection="column" spaceSize="m">
 						<ErrorToast
@@ -156,7 +156,7 @@ const Reply: React.FC<Props> = ({
 							/>
 
 							<Button
-								label={t('Retry remove')}
+								label={t('Retry discard')}
 								onClick={handleRemoveButtonClick}
 								type="primary"
 							/>
