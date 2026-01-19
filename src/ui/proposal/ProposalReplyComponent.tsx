@@ -12,7 +12,10 @@ type Props = {
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
-const ProposalReplyComponent: React.FC<Props> = ({ onReplyAdd, reviewAnnotation }) => {
+const ProposalReplyComponent: React.FC<Props> = ({
+	onReplyAdd,
+	reviewAnnotation,
+}) => {
 	// Check if we are on the "/review" route.
 	const { path } = useRouteMatch();
 	const isOnReviewRoute = path === '/review';
@@ -38,6 +41,6 @@ const ProposalReplyComponent: React.FC<Props> = ({ onReplyAdd, reviewAnnotation 
 			tooltipContent={t('Reply to the proposed change.')}
 		/>
 	);
-}
+};
 
 export default ProposalReplyComponent;

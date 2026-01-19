@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type { FdsFormValueByName } from 'fontoxml-design-system/src/types';
 
-type OnCheckboxChangecallback = (name: string, value: boolean) => void
+type OnCheckboxChangecallback = (name: string, value: boolean) => void;
 
 const useNestedCheckboxesForFilterOptions = (
 	valueByName: FdsFormValueByName,
@@ -124,7 +124,7 @@ const useNestedCheckboxesForFilterOptions = (
 
 								// child checkboxes whose value is not initialized yet (undefined)
 								// or is set to null is also considered the same as false.
-								if (value === false) {
+								if (!value) {
 									return (
 										childNode.value !== false &&
 										childNode.value !== undefined &&
@@ -181,6 +181,6 @@ const useNestedCheckboxesForFilterOptions = (
 	// so for each rendered Checkbox's onChange callback.
 	// Which is done by FilterForm and FilterFormSummaryChips that use this hook.
 	return onCheckboxChange;
-}
+};
 
 export default useNestedCheckboxesForFilterOptions;

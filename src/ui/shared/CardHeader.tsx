@@ -256,7 +256,7 @@ const CardHeader: React.FC<Props> = ({
 					reviewAnnotation,
 					reviewAnnotation.error,
 					reviewAnnotation.isLoading
-			  )
+				)
 			: undefined;
 
 	const shareButtonIsDisabled =

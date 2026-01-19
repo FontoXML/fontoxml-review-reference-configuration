@@ -23,7 +23,11 @@ type Props = {
 	onRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
 };
 
-const ErrorStateMessage: React.FC<Props> = ({ error, onAcknowledge, onRefresh }) =>{
+const ErrorStateMessage: React.FC<Props> = ({
+	error,
+	onAcknowledge,
+	onRefresh,
+}) => {
 	const isAnnotationError = typeof error !== 'number';
 
 	const connotation =
@@ -62,6 +66,6 @@ const ErrorStateMessage: React.FC<Props> = ({ error, onAcknowledge, onRefresh })
 				)}
 		</Flex>
 	);
-}
+};
 
 export default ErrorStateMessage;

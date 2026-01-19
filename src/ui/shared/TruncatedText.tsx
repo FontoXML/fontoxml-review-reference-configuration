@@ -56,10 +56,10 @@ function useTruncation(): {
 }
 
 type Props = {
-	children: React.ReactNode,
-	dataTestId?: string,
-	dir?: FdsDir,
-}
+	children: React.ReactNode;
+	dataTestId?: string;
+	dir?: FdsDir;
+};
 
 const TruncatedText: React.FC<Props> = (props) => {
 	const {

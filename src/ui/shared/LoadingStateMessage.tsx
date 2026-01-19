@@ -15,6 +15,6 @@ const LoadingStateMessage: React.FC<Props> = ({ message }) => {
 			visual="spinner"
 		/>
 	);
-}
+};
 
 export default LoadingStateMessage;

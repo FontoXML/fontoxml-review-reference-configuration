@@ -8,7 +8,7 @@ import type {
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-const configuredUserScope = configurationManager.get('scope').user as UserScope
+const configuredUserScope = configurationManager.get('scope').user as UserScope;
 
 /**
  * A custom React hook that returns the author id and formatted
@@ -31,17 +31,13 @@ const configuredUserScope = configurationManager.get('scope').user as UserScope
  * @react
  */
 export default function useAuthorAndTimestampLabel(
-	reviewAnnotationOrReply:
-		| ReviewAnnotation
-		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply,
-	isReviewAnnotationResolved: boolean,
+	reviewAnnotationOrReply: ReviewAnnotation | ReviewReply,
+	isReviewAnnotationResolved: boolean
 ): {
 	authorId: string;
 	timestamp: string;
 } {
 	const authorId = React.useMemo(() => {
-
 		const authorField = isReviewAnnotationResolved
 			? 'resolvedAuthor'
 			: 'author';

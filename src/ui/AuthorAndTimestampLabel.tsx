@@ -11,10 +11,7 @@ import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
 import useAuthorAndTimestampLabel from './useAuthorAndTimestampLabel';
 
 type Props = {
-	reviewAnnotation:
-		| ReviewAnnotation
-		| ReviewCardContentComponentProps['reviewAnnotation']
-		| ReviewReply;
+	reviewAnnotation: ReviewAnnotation | ReviewReply;
 	isReviewAnnotationResolved?: boolean;
 };
 
@@ -22,20 +19,23 @@ const AuthorAndTimestampLabel: React.FC<Props> = ({
 	reviewAnnotation,
 	isReviewAnnotationResolved = false,
 }) => {
-	const { authorId, timestamp: timestampLabel } =
-		useAuthorAndTimestampLabel(
-			reviewAnnotation,
-			isReviewAnnotationResolved
-		);
+	const { authorId, timestamp: timestampLabel } = useAuthorAndTimestampLabel(
+		reviewAnnotation,
+		isReviewAnnotationResolved
+	);
 
 	return (
 		<Flex alignItems="center" spaceSize="s">
 			<FxProfileChip
 				profileId={authorId}
-				secondaryLabel={timestampLabel ? {
-					value: timestampLabel,
-					position: 'below',
-				} : null}
+				secondaryLabel={
+					timestampLabel
+						? {
+								value: timestampLabel,
+								position: 'below',
+							}
+						: null
+				}
 			/>
 		</Flex>
 	);
