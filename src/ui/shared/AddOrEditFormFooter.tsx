@@ -46,6 +46,12 @@ const AddOrEditFormFooter: React.FC<Props> = ({
 	onReviewAnnotationRefresh,
 	onSubmit,
 }) => {
+	const areFormButtonsVisible = !(
+		error &&
+		typeof error !== 'number' &&
+		error.recovery === ReviewRecoveryOption.ACKNOWLEDGEABLE
+	);
+
 	const handleSubmit = React.useCallback(() => {
 		onSubmit({});
 	}, [onSubmit]);
@@ -60,25 +66,28 @@ const AddOrEditFormFooter: React.FC<Props> = ({
 				<ErrorToast
 					error={error && typeof error !== 'number' ? error : null}
 					onRefreshLinkClick={onReviewAnnotationRefresh}
+					onHideLinkClick={onCancel}
 					onRetryLinkClick={onSubmit}
 				/>
 			)}
 
-			<Flex justifyContent="flex-end" spaceSize="m">
-				<Button
-					isDisabled={isDisabled}
-					label={t('Cancel')}
-					onClick={onCancel}
-				/>
+			{areFormButtonsVisible && (
+				<Flex justifyContent="flex-end" spaceSize="m">
+					<Button
+						isDisabled={isDisabled}
+						label={t('Cancel')}
+						onClick={onCancel}
+					/>
 
-				<Button
-					icon={isLoading ? 'spinner' : null}
-					isDisabled={isDisabled || isLoading || isSubmitDisabled}
-					label={saveButtonLabel}
-					onClick={handleSubmit}
-					type="primary"
-				/>
-			</Flex>
+					<Button
+						icon={isLoading ? 'spinner' : null}
+						isDisabled={isDisabled || isLoading || isSubmitDisabled}
+						label={saveButtonLabel}
+						onClick={handleSubmit}
+						type="primary"
+					/>
+				</Flex>
+			)}
 		</Flex>
 	);
 };

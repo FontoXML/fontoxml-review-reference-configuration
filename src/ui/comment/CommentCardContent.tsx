@@ -19,7 +19,6 @@ import CardErrorFooter from '../shared/CardErrorFooter';
 import CardErrors from '../shared/CardErrors';
 import CardHeader from '../shared/CardHeader';
 import CardRepliesAndResolution from '../shared/CardRepliesAndResolution';
-import ErrorStateMessage from '../shared/ErrorStateMessage';
 import LoadingStateMessage from '../shared/LoadingStateMessage';
 import TruncatedText from '../shared/TruncatedText';
 
@@ -70,7 +69,13 @@ function CommentCardContent({
 	}, [reviewAnnotation.replies]);
 
 	const showReplyButton =
-		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED;
+		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
+		!(
+			reviewAnnotation.error &&
+			typeof reviewAnnotation.error !== 'number' &&
+			reviewAnnotation.error.recovery ===
+				ReviewRecoveryOption.ACKNOWLEDGEABLE
+		);
 
 	const showFooter =
 		showReplyButton &&
@@ -92,25 +97,6 @@ function CommentCardContent({
 		}
 	}, [focusableRef, showFooter]);
 
-	// Replace the whole card if the reviewAnnotation.error is acknowledgeable.
-	if (
-		typeof reviewAnnotation.error !== 'number' &&
-		reviewAnnotation.error &&
-		(reviewAnnotation.error.recovery ===
-			ReviewRecoveryOption.ACKNOWLEDGEABLE ||
-			(reviewAnnotation.busyState === ReviewBusyState.IDLE &&
-				!hasReplyInNonIdleBusyState))
-	) {
-		return (
-			<Block paddingSize="m">
-				<ErrorStateMessage
-					error={reviewAnnotation.error}
-					onAcknowledge={onReviewAnnotationErrorAcknowledge}
-					onRefresh={onReviewAnnotationRefresh}
-				/>
-			</Block>
-		);
-	}
 	if (
 		reviewAnnotation.isLoading &&
 		reviewAnnotation.busyState === ReviewBusyState.REFRESHING
@@ -299,6 +285,9 @@ function CommentCardContent({
 				/>
 
 				<CardErrors
+					onReviewAnnotationErrorAcknowledge={
+						onReviewAnnotationErrorAcknowledge
+					}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onReviewAnnotationRemove={onReviewAnnotationRemove}
 					onReviewAnnotationShare={onReviewAnnotationShare}

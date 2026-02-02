@@ -161,11 +161,7 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 			</Flex>
 
 			<Flex justifyContent="flex-end" spaceSize="m">
-				<Button
-					isDisabled={isDisabled}
-					label={t('Cancel')}
-					onClick={onCancelButtonClick}
-				/>
+				<Button label={t('Cancel')} onClick={onCancelButtonClick} />
 
 				<Button
 					icon={isLoading ? 'spinner' : null}
