@@ -21,11 +21,11 @@ export default function install(): void {
 		// will only be displayed in Document History if the application also 
 		// includes the fontoxml-document-history-feedback add-on
 		annotationsInitiallyVisibleIn: [
-            'editor',
-            'review',
+			'editor',
+			'review',
 			'editor/history',
 			'review/history',
-        ],
+		],
 
 		filterConfiguration: {
 			FormComponent: FilterForm,
