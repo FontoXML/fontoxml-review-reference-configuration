@@ -17,7 +17,15 @@ const REVIEW_NAVIGATOR_ID = 'comments-and-proposals';
 
 export default function install(): void {
 	registerReviewNavigator(REVIEW_NAVIGATOR_ID, {
-		annotationsInitiallyVisibleIn: ['editor', 'review'],
+		// Initially show annotations everywhere. Please note that annotations 
+		// will only be displayed in Document History if the application also 
+		// includes the fontoxml-document-history-feedback add-on
+		annotationsInitiallyVisibleIn: [
+            'editor',
+            'review',
+			'editor/history',
+			'review/history',
+        ],
 
 		filterConfiguration: {
 			FormComponent: FilterForm,
@@ -55,6 +63,7 @@ export default function install(): void {
 		tooltipContent: t('Add comment to selected text.'),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
+		visibleIn: ['review', 'editor', 'editor/history', 'review/history'],
 	});
 
 	// This is a test annotation type that is only enabled for a specific document.
@@ -87,6 +96,7 @@ export default function install(): void {
 		tooltipContent: t('Add comment to selected image.'),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
+		visibleIn: ['review', 'editor', 'editor/history', 'review/history'],
 	});
 
 	registerTextRangeReviewAnnotationType('proposal', {
@@ -100,6 +110,7 @@ export default function install(): void {
 		tooltipContent: t('Propose a change to selected text.'),
 		keyBinding: 'ctrl+alt+e',
 		osxKeyBinding: 'cmd+alt+e',
+		visibleIn: ['review', 'editor', 'editor/history', 'review/history'],
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
@@ -115,6 +126,7 @@ export default function install(): void {
 		),
 		keyBinding: 'ctrl+alt+g',
 		osxKeyBinding: 'cmd+alt+g',
+		visibleIn: ['review', 'editor', 'editor/history', 'review/history'],
 	});
 
 	// Review annotation type for testing the enabledSelector option.
