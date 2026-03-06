@@ -17,6 +17,9 @@ const REVIEW_NAVIGATOR_ID = 'comments-and-proposals';
 
 export default function install(): void {
 	registerReviewNavigator(REVIEW_NAVIGATOR_ID, {
+		// Initially show annotations everywhere. Please note that annotations 
+		// will only be displayed in Document History if the application also 
+		// includes the fontoxml-document-history-feedback add-on
 		annotationsInitiallyVisibleIn: [
             'editor',
             'review',
