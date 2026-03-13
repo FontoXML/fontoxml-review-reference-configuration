@@ -32,6 +32,7 @@ type Props = {
 	onReplyFormSubmit: ReviewCardContentComponentProps['onReplyFormSubmit'];
 	onReplyRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
 	onReplyRemove: ReviewCardContentComponentProps['onReplyRemove'];
+	onReviewAnnotationErrorAcknowledge: ReviewCardContentComponentProps['onReviewAnnotationErrorAcknowledge'];
 	onReviewAnnotationFormCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationFormSubmit: ReviewCardContentComponentProps['onReviewAnnotationFormSubmit'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
@@ -48,6 +49,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 	onReplyFormSubmit,
 	onReplyRefresh,
 	onReplyRemove,
+	onReviewAnnotationErrorAcknowledge,
 	onReviewAnnotationFormCancel,
 	onReviewAnnotationFormSubmit,
 	onReviewAnnotationRefresh,
@@ -219,6 +221,9 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 					context={context}
 					onCancel={onReviewAnnotationFormCancel}
 					onProposalMerge={onProposalMerge}
+					onReviewAnnotationErrorAcknowledge={
+						onReviewAnnotationErrorAcknowledge
+					}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onSubmit={onReviewAnnotationFormSubmit}
 					reviewAnnotation={reviewAnnotation}
