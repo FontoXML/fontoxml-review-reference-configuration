@@ -63,6 +63,7 @@ function ResolveFormContent({
 	isSubmitDisabled,
 	onCancel,
 	onProposalMerge,
+	onReviewAnnotationErrorAcknowledge,
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
@@ -151,6 +152,7 @@ function ResolveFormContent({
 				{error && (
 					<ErrorToast
 						error={typeof error !== 'number' ? error : null}
+						onHideLinkClick={onReviewAnnotationErrorAcknowledge}
 						onRefreshLinkClick={onReviewAnnotationRefresh}
 						onRetryLinkClick={onSubmit}
 					/>
@@ -242,6 +244,7 @@ type Props = {
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onProposalMerge: ReviewCardContentComponentProps['onProposalMerge'];
+	onReviewAnnotationErrorAcknowledge: ReviewCardContentComponentProps['onReviewAnnotationErrorAcknowledge'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
 	onSubmit(valueByName: FdsFormValueByName): void;
 };
@@ -251,6 +254,7 @@ const ResolveForm: React.FC<Props> = ({
 	reviewAnnotation,
 	onCancel,
 	onProposalMerge = null,
+	onReviewAnnotationErrorAcknowledge,
 	onReviewAnnotationRefresh,
 	onSubmit,
 }) => {
@@ -266,6 +270,9 @@ const ResolveForm: React.FC<Props> = ({
 					isSubmitDisabled={isSubmitDisabled}
 					onCancel={onCancel}
 					onProposalMerge={onProposalMerge}
+					onReviewAnnotationErrorAcknowledge={
+						onReviewAnnotationErrorAcknowledge
+					}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onSubmit={onSubmit}
 					reviewAnnotation={reviewAnnotation}

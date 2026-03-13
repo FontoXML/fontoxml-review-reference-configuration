@@ -303,6 +303,9 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 					onReplyFormSubmit={onReplyFormSubmit}
 					onReplyRefresh={onReplyRefresh}
 					onReplyRemove={onReplyRemove}
+					onReviewAnnotationErrorAcknowledge={
+						onReviewAnnotationErrorAcknowledge
+					}
 					onReviewAnnotationFormCancel={onReviewAnnotationFormCancel}
 					onReviewAnnotationFormSubmit={onReviewAnnotationFormSubmit}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
