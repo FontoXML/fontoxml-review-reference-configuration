@@ -73,8 +73,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	}, [reviewAnnotation.replies]);
 
 	const showAcceptProposalButton =
-		(context === FeedbackContextType.EDITOR ||
-			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY) &&
+		context === FeedbackContextType.EDITOR &&
 		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
 		onProposalMerge &&
 		!!reviewAnnotation.proposalState;
