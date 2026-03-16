@@ -320,7 +320,9 @@ const CardHeader: React.FC<Props> = ({
 
 			<Flex flex="0 0 auto" spaceSize="m">
 				{(context === FeedbackContextType.EDITOR_SHARING ||
-					context === FeedbackContextType.REVIEW_SHARING) &&
+					context === FeedbackContextType.REVIEW_SHARING ||
+					context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING ||
+					context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING) &&
 					(!reviewAnnotation.error ||
 						(typeof reviewAnnotation.error !== 'number' &&
 							reviewAnnotation.error.recovery ===
@@ -338,7 +340,9 @@ const CardHeader: React.FC<Props> = ({
 					)}
 
 				{context !== FeedbackContextType.EDITOR_SHARING &&
-					context !== FeedbackContextType.REVIEW_SHARING && (
+					context !== FeedbackContextType.REVIEW_SHARING && 
+					context !== FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
+					context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING && (
 						<Flex alignItems="center" spaceSize="m">
 							{showShareButton && (
 								<Button
