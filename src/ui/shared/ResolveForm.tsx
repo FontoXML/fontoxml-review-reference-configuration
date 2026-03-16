@@ -99,6 +99,7 @@ function ResolveFormContent({
 
 	const isInReview =
 		context === FeedbackContextType.REVIEW ||
+		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
 		context === FeedbackContextType.REVIEW_SHARING;
 
 	const handleResolveButtonClick = React.useCallback(

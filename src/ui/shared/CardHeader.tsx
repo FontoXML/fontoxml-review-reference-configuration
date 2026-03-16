@@ -247,7 +247,9 @@ const CardHeader: React.FC<Props> = ({
 		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
 		reviewAnnotation.status === ReviewAnnotationStatus.PRIVATE &&
 		(context === FeedbackContextType.EDITOR ||
-			context === FeedbackContextType.REVIEW);
+			context === FeedbackContextType.REVIEW ||
+			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
+	 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY);
 
 	const shareButtonLabel =
 		reviewAnnotation.isSelected &&

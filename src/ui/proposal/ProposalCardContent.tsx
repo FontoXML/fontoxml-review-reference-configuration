@@ -73,7 +73,8 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	}, [reviewAnnotation.replies]);
 
 	const showAcceptProposalButton =
-		context === FeedbackContextType.EDITOR &&
+		(context === FeedbackContextType.EDITOR ||
+			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY) &&
 		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
 		onProposalMerge &&
 		!!reviewAnnotation.proposalState;
@@ -92,7 +93,9 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	const showFooter =
 		showAnyFooterButton &&
 		(context === FeedbackContextType.EDITOR ||
-			context === FeedbackContextType.REVIEW) &&
+			context === FeedbackContextType.REVIEW ||
+			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
+	 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY) &&
 		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
 		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
