@@ -97,9 +97,11 @@ function ResolveFormContent({
 		proposalState !== ReviewProposalState.MERGED &&
 		valueByName.resolution === 'accepted';
 
-	const isInReview =
-		context === FeedbackContextType.REVIEW ||
-		context === FeedbackContextType.REVIEW_SHARING;
+	const showAcceptProposalButton =
+		context === FeedbackContextType.EDITOR &&
+		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
+		onProposalMerge &&
+		!!reviewAnnotation.proposalState;
 
 	const handleResolveButtonClick = React.useCallback(
 		(_event: MouseEvent) => {
@@ -214,12 +216,7 @@ function ResolveFormContent({
 						onClick={onCancel}
 					/>
 
-					{!isInReview &&
-						reviewAnnotation.type === 'proposal' &&
-						reviewAnnotation.status !==
-							ReviewAnnotationStatus.RESOLVED &&
-						onProposalMerge &&
-						proposalState && (
+					{showAcceptProposalButton && (
 							<ReviewAnnotationAcceptProposalButton
 								onProposalMerge={onProposalMerge}
 								proposalState={proposalState}
