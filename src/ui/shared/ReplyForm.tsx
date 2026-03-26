@@ -104,6 +104,11 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 			? reply.error
 			: null;
 
+	const areFormButtonsVisible = !(
+		error &&
+		typeof error !== 'number' &&
+		error.recovery === ReviewRecoveryOption.ACKNOWLEDGEABLE
+	);
 	const isDisabled =
 		reply.isLoading ||
 		(error && error.recovery !== ReviewRecoveryOption.RETRYABLE);
@@ -160,21 +165,23 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 				)}
 			</Flex>
 
-			<Flex justifyContent="flex-end" spaceSize="m">
-				<Button label={t('Cancel')} onClick={onCancelButtonClick} />
+			{areFormButtonsVisible && (
+				<Flex justifyContent="flex-end" spaceSize="m">
+					<Button label={t('Cancel')} onClick={onCancelButtonClick} />
 
-				<Button
-					icon={isLoading ? 'spinner' : null}
-					isDisabled={isDisabled || isLoading || isSubmitDisabled}
-					label={determineSaveButtonLabel(
-						error,
-						isEditing,
-						isLoading
-					)}
-					onClick={handleReplyButtonClick}
-					type="primary"
-				/>
-			</Flex>
+					<Button
+						icon={isLoading ? 'spinner' : null}
+						isDisabled={isDisabled || isLoading || isSubmitDisabled}
+						label={determineSaveButtonLabel(
+							error,
+							isEditing,
+							isLoading
+						)}
+						onClick={handleReplyButtonClick}
+						type="primary"
+					/>
+				</Flex>
+			)}
 		</Block>
 	);
 };
