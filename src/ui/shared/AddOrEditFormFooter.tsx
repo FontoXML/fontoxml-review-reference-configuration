@@ -73,11 +73,7 @@ const AddOrEditFormFooter: React.FC<Props> = ({
 
 			{areFormButtonsVisible && (
 				<Flex justifyContent="flex-end" spaceSize="m">
-					<Button
-						isDisabled={isDisabled}
-						label={t('Cancel')}
-						onClick={onCancel}
-					/>
+					<Button label={t('Cancel')} onClick={onCancel} />
 
 					<Button
 						icon={isLoading ? 'spinner' : null}

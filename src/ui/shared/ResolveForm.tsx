@@ -73,6 +73,11 @@ function ResolveFormContent({
 	valueByName: FdsFormValueByName;
 }) {
 	const error = reviewAnnotation.error ? reviewAnnotation.error : null;
+	const areFormButtonsVisible = !(
+		error &&
+		typeof error !== 'number' &&
+		error.recovery === ReviewRecoveryOption.ACKNOWLEDGEABLE
+	);
 	const isDisabled =
 		reviewAnnotation.isLoading ||
 		(typeof error !== 'number' &&
@@ -203,34 +208,34 @@ function ResolveFormContent({
 					/>
 				)}
 
-				<Flex
-					alignItems="center"
-					ariaRole="status"
-					applyCss={footerButtonContainerStyles}
-					justifyContent="flex-end"
-					spaceSize="m"
-				>
-					<Button
-						isDisabled={isDisabled}
-						label={t('Cancel')}
-						onClick={onCancel}
-					/>
+				{areFormButtonsVisible && (
+					<Flex
+						alignItems="center"
+						ariaRole="status"
+						applyCss={footerButtonContainerStyles}
+						justifyContent="flex-end"
+						spaceSize="m"
+					>
+						<Button label={t('Cancel')} onClick={onCancel} />
 
-					{showAcceptProposalButton && (
+						{showAcceptProposalButton && (
 							<ReviewAnnotationAcceptProposalButton
 								onProposalMerge={onProposalMerge}
 								proposalState={proposalState}
 							/>
 						)}
 
-					<Button
-						icon={isLoading ? 'spinner' : null}
-						isDisabled={isDisabled || isLoading || isSubmitDisabled}
-						label={determineSaveButtonLabel(error, isLoading)}
-						onClick={handleResolveButtonClick}
-						type="primary"
-					/>
-				</Flex>
+						<Button
+							icon={isLoading ? 'spinner' : null}
+							isDisabled={
+								isDisabled || isLoading || isSubmitDisabled
+							}
+							label={determineSaveButtonLabel(error, isLoading)}
+							onClick={handleResolveButtonClick}
+							type="primary"
+						/>
+					</Flex>
+				)}
 			</Block>
 		</Block>
 	);
