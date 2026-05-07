@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Flex } from 'fontoxml-design-system/src/components';
 import type {
 	ReviewAnnotation,
-	ReviewCardContentComponentProps,
 	ReviewReply,
 } from 'fontoxml-feedback/src/types';
 import FxProfileChip from 'fontoxml-fx/src/FxProfileChip';
@@ -25,7 +24,7 @@ const AuthorAndTimestampLabel: React.FC<Props> = ({
 	);
 
 	return (
-		<Flex alignItems="center" spaceSize="s">
+		<Flex alignItems="center" spaceSize="s" flex="1">
 			<FxProfileChip
 				profileId={authorId}
 				secondaryLabel={

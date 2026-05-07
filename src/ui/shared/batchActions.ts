@@ -1,0 +1,190 @@
+import editAnnotation from 'fontoxml-feedback/src/editAnnotation';
+import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import type {
+	ReviewBatchAction,
+	ReviewBatchActionCallback,
+	ReviewBatchActionForm,
+} from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
+
+import BatchResolveForm from './BatchResolveForm';
+
+const batchActions: ReviewBatchAction[] = [
+	{
+		type: 'callback',
+		callback: (applicableInstances) => {
+			for (const instance of applicableInstances) {
+				editAnnotation(instance.data.id, {
+					status: ReviewAnnotationStatus.SHARED,
+				});
+			}
+		},
+		label: t('Share'),
+		icon: 'far fa-users',
+		tooltipContent: t('Share the selected comments'),
+		isAlwaysInMoreMenu: false,
+		getApplicability: (instance, _formData) => {
+			if (instance.data.error) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments in an error state can not be shared. Resolve the error to proceed.'
+					),
+				};
+			}
+			if (instance.hasOpenForm) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments with open forms can not be shared. Close the form to proceed.'
+					),
+				};
+			}
+			if (instance.data.status === ReviewAnnotationStatus.ARCHIVED) {
+				return {
+					type: 'problem',
+					message: t('This comment is no longer available'),
+				};
+			}
+			if (
+				instance.data.status === ReviewAnnotationStatus.RESOLVED ||
+				instance.data.status === ReviewAnnotationStatus.SHARED
+			) {
+				return {
+					type: 'problem',
+					message: t('This comment is already shared'),
+				};
+			}
+
+			return { type: 'ok' };
+		},
+		renderProblemWarningMessage: ({ okCount, problemCount }) =>
+			okCount === 0
+				? t('No selected comments are available for sharing')
+				: t(
+						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for sharing and will be skipped',
+						{ PROBLEM_COUNT: problemCount }
+					),
+		noMoreProblemsMessage: t('All comments are available for sharing'),
+	} as ReviewBatchActionCallback,
+	{
+		type: 'form',
+		Component: BatchResolveForm,
+		id: 'resolve-form',
+		label: t('Resolve'),
+		icon: 'far fa-check',
+		tooltipContent: t('Resolve the selected comments'),
+		isAlwaysInMoreMenu: false,
+		getApplicability: (instance, _formData) => {
+			if (instance.data.error) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments in an error state can not be resolved. Resolve the error to proceed.'
+					),
+				};
+			}
+			if (instance.hasOpenForm) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments with open forms can not be resolved. Close the form to proceed.'
+					),
+				};
+			}
+			if (instance.data.status === ReviewAnnotationStatus.ARCHIVED) {
+				return {
+					type: 'problem',
+					message: t('This comment is no longer available'),
+				};
+			}
+			if (instance.data.status === ReviewAnnotationStatus.RESOLVED) {
+				return {
+					type: 'problem',
+					message: t('This comment is already resolved'),
+				};
+			}
+			if (instance.data.status !== ReviewAnnotationStatus.SHARED) {
+				return {
+					type: 'problem',
+					message: t(
+						'Private comments can not be resolved. Share the comment to proceed.'
+					),
+				};
+			}
+
+			return { type: 'ok' };
+		},
+		renderProblemWarningMessage: ({ okCount, problemCount }) =>
+			okCount === 0
+				? t('No selected comments are available for resolving')
+				: t(
+						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for resolving and will be skipped',
+						{ PROBLEM_COUNT: problemCount }
+					),
+	} as ReviewBatchActionForm,
+	{
+		type: 'callback',
+		callback: (applicableInstances) => {
+			for (const instance of applicableInstances) {
+				editAnnotation(instance.data.id, {
+					status: ReviewAnnotationStatus.ARCHIVED,
+				});
+			}
+		},
+		label: t('Discard'),
+		icon: 'far fa-trash-can',
+		tooltipContent: t('Discard the selected comments'),
+		isAlwaysInMoreMenu: true,
+		getApplicability: (instance, _formData) => {
+			if (instance.data.error) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments in an error state can not be discarded. Resolve the error to proceed.'
+					),
+				};
+			}
+			if (instance.hasOpenForm) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments with open forms can not be discarded. Close the form to proceed.'
+					),
+				};
+			}
+			if (instance.data.status === ReviewAnnotationStatus.ARCHIVED) {
+				return {
+					type: 'problem',
+					message: t('This comment is no longer available'),
+				};
+			}
+			if (instance.data.status === ReviewAnnotationStatus.RESOLVED) {
+				return {
+					type: 'problem',
+					message: t('Resolved comments can not be discarded'),
+				};
+			}
+			if (instance.data.status === ReviewAnnotationStatus.SHARED) {
+				return {
+					type: 'problem',
+					message: t('Shared comments can not be discarded'),
+				};
+			}
+
+			return { type: 'ok' };
+		},
+		confirmationMessage: t(
+			'This will discard all selected comments and their data. This process cannot be reversed.'
+		),
+		renderProblemWarningMessage: ({ okCount, problemCount }) =>
+			okCount === 0
+				? t('No selected comments are available for discarding')
+				: t(
+						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for discarding and will be skipped',
+						{ PROBLEM_COUNT: problemCount }
+					),
+	} as ReviewBatchActionCallback,
+];
+
+export default batchActions;

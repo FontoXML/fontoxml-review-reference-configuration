@@ -8,11 +8,13 @@ import {
 	Icon,
 	TextArea,
 } from 'fontoxml-design-system/src/components';
+import { applyCss } from 'fontoxml-design-system/src/system';
 import type {
 	FdsFormFeedback,
 	FdsFormValueByName,
 } from 'fontoxml-design-system/src/types';
 import ErrorToast from 'fontoxml-feedback/src/ErrorToast';
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationForm from 'fontoxml-feedback/src/ReviewAnnotationForm';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
@@ -71,10 +73,16 @@ function validateReplyField(value: string): FdsFormFeedback | null {
 	return null;
 }
 
+const stickyStyles = applyCss({
+	position: 'sticky',
+	bottom: 0,
+	backgroundColor: 'white',
+});
+
 type ReplyFormContentProps = {
-	focusableRef: React.MutableRefObject<HTMLElement>;
 	isSubmitDisabled: boolean;
 	onFieldChange(...args: unknown[]): void;
+	onFocusableRef: (domNodeOrNull: HTMLElement | null) => void;
 	onCancelButtonClick(): void;
 	onHideLinkClick: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefreshLinkClick: ReviewCardContentComponentProps['onReplyRefresh'];
@@ -84,10 +92,10 @@ type ReplyFormContentProps = {
 };
 
 const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
-	focusableRef,
 	isSubmitDisabled,
 	onCancelButtonClick,
 	onFieldChange,
+	onFocusableRef,
 	onHideLinkClick,
 	onRefreshLinkClick,
 	onSubmit,
@@ -149,7 +157,7 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 					isDisabled={isDisabled}
 					name="reply"
 					onDirChange={handleReplyDirChange}
-					ref={focusableRef}
+					ref={onFocusableRef}
 					rows={rows}
 					validate={validateReplyField}
 					placeholder={t('Type your reply')}
@@ -191,7 +199,7 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 };
 
 type ReplyFormProps = {
-	focusableRef: React.MutableRefObject<HTMLElement>;
+	context: ReviewCardContentComponentProps['context'];
 	onCancel: ReviewCardContentComponentProps['onReplyFormCancel'];
 	onHide: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
@@ -200,7 +208,7 @@ type ReplyFormProps = {
 };
 
 const ReplyForm: React.FC<ReplyFormProps> = ({
-	focusableRef,
+	context,
 	onCancel,
 	onHide,
 	onRefresh,
@@ -225,25 +233,37 @@ const ReplyForm: React.FC<ReplyFormProps> = ({
 	);
 
 	return (
-		<ReviewAnnotationForm
-			key={reply.id}
-			initialValueByName={reply.metadata}
-			onSubmit={handleSubmit}
+		<Block
+			{...(context === FeedbackContextType.OVERVIEW_DETAILS
+				? stickyStyles
+				: {})}
 		>
-			{({ isSubmitDisabled, onFieldChange, onSubmit, valueByName }) => (
-				<ReplyFormContent
-					focusableRef={focusableRef}
-					isSubmitDisabled={isSubmitDisabled}
-					onCancelButtonClick={handleCancelButtonClick}
-					onFieldChange={onFieldChange}
-					onHideLinkClick={handleHideLinkClick}
-					onRefreshLinkClick={handleRefreshLinkClick}
-					onSubmit={onSubmit}
-					reply={reply}
-					valueByName={valueByName}
-				/>
-			)}
-		</ReviewAnnotationForm>
+			<ReviewAnnotationForm
+				key={reply.id}
+				initialValueByName={reply.metadata}
+				onSubmit={handleSubmit}
+			>
+				{({
+					isSubmitDisabled,
+					onFieldChange,
+					onFocusableRef,
+					onSubmit,
+					valueByName,
+				}) => (
+					<ReplyFormContent
+						isSubmitDisabled={isSubmitDisabled}
+						onCancelButtonClick={handleCancelButtonClick}
+						onFieldChange={onFieldChange}
+						onFocusableRef={onFocusableRef}
+						onHideLinkClick={handleHideLinkClick}
+						onRefreshLinkClick={handleRefreshLinkClick}
+						onSubmit={onSubmit}
+						reply={reply}
+						valueByName={valueByName}
+					/>
+				)}
+			</ReviewAnnotationForm>
+		</Block>
 	);
 };
 

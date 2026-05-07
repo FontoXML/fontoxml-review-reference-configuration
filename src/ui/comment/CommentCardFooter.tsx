@@ -5,15 +5,25 @@ import {
 	HorizontalSeparationLine,
 	TextInput,
 } from 'fontoxml-design-system/src/components';
+import { applyCss } from 'fontoxml-design-system/src/system';
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
+const stickyStyles = applyCss({
+	position: 'sticky',
+	bottom: 0,
+	backgroundColor: 'white',
+});
+
 type Props = {
+	context: ReviewCardContentComponentProps['context'];
 	onReplyAdd: ReviewCardContentComponentProps['onReplyAdd'];
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
 const CommentCardFooter: React.FC<Props> = ({
+	context,
 	onReplyAdd,
 	reviewAnnotation,
 }) => {
@@ -46,7 +56,12 @@ const CommentCardFooter: React.FC<Props> = ({
 	});
 
 	return (
-		<Block spaceVerticalSize="m">
+		<Block
+			{...(context === FeedbackContextType.OVERVIEW_DETAILS
+				? stickyStyles
+				: {})}
+			spaceVerticalSize="m"
+		>
 			<HorizontalSeparationLine />
 
 			<TextInput

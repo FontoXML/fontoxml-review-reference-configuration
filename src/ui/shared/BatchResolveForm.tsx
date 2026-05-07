@@ -1,0 +1,192 @@
+import type { ComponentProps } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import {
+	RadioButtonGroup,
+	TextArea,
+	Form,
+	Flex,
+	Button,
+} from 'fontoxml-design-system/src/components';
+import type { FdsFormValueByName } from 'fontoxml-design-system/src/types';
+import type {
+	FdsFormFeedback,
+	FdsValidateCallback,
+	FdsFormFeedbackByName,
+} from 'fontoxml-design-system/src/types';
+import editAnnotation from 'fontoxml-feedback/src/editAnnotation';
+import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import type { ReviewAnnotationsOverviewBatchActionFormComponentProps } from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
+
+import resolutions from '../feedbackResolutions';
+
+import type { ReviewAnnotationResolvedMetadata } from './types';
+import useDelayedFormFeedback from './useDelayedFormFeedback';
+
+// NOTE: for every field (name) in the form,
+// there should be a key with the same name and a value of null here.
+const EMPTY_FEEDBACK: FdsFormFeedbackByName = {
+	// TODO: FdsFormFeedbackByName is badly typed (but public):
+	// it should also accept null instead of only FdsFormFeedback as a value.
+	resolution: null,
+};
+
+const ROWS = { minimum: 1, maximum: 2 };
+
+type FeedbackByName = FdsFormFeedbackByName & {
+	resolution?: FdsFormFeedback;
+};
+
+type ValueByName = FdsFormValueByName & {
+	resolution?: string;
+	resolutionComment?: string;
+};
+
+type OnFieldChange = Exclude<
+	ComponentProps<typeof Form>['onFieldChange'],
+	undefined
+>;
+
+type Props = ReviewAnnotationsOverviewBatchActionFormComponentProps;
+
+const BatchResolveForm = ({
+	applicableInstances,
+	okCount,
+	problemCount,
+	totalCount,
+
+	updateApplicability,
+
+	closeForm,
+	onSubmit,
+}: Props) => {
+	const [feedbackByName, setFeedbackByName] =
+		useState<FeedbackByName>(EMPTY_FEEDBACK);
+	const [valueByName, setValueByName] = useState<ValueByName>({});
+
+	const [
+		showFormFeedback,
+		_hasAnyFormFeedback,
+		hasErrorFormFeedback,
+		onFormSubmitWithDelayedFormFeedback,
+	] = useDelayedFormFeedback(feedbackByName);
+
+	const handleFormFieldChange = useCallback<OnFieldChange>(
+		({ feedback, name, value }) => {
+			setFeedbackByName((prevFeedbackByName) => ({
+				...prevFeedbackByName,
+				[name]: feedback,
+			}));
+			setValueByName((prevValueByName) => ({
+				...prevValueByName,
+				[name]: value,
+			}));
+		},
+		[]
+	);
+
+	useEffect(() => {
+		updateApplicability(valueByName);
+	}, [updateApplicability, valueByName]);
+
+	const validateResolutionField = useCallback<FdsValidateCallback>(
+		(value: unknown) => {
+			if (!value) {
+				return {
+					connotation: 'error',
+					message: 'Resolution is required',
+				} as FdsFormFeedback;
+			}
+
+			return null;
+		},
+		[]
+	);
+
+	const handleSubmitButtonClick = useCallback(() => {
+		onFormSubmitWithDelayedFormFeedback(() => {
+			onSubmit(() => {
+				for (const instance of applicableInstances) {
+					editAnnotation(instance.data.id, {
+						// Use the currently loaded document's revision if
+						// available. If this document is not loaded, the
+						// property will be omitted from the request and the CMS
+						// is expected to provide a suitable value in its
+						// response.
+						// Note: this is a change in behavior compared to
+						// pre-8.18 endpoint requirements. If your CMS does not
+						// implement this behavior and your editor uses JIT
+						// loading, you should either update the CMS or disable
+						// the batch resolve operation.
+						resolvedDocumentRevisionId: instance.data.localDocumentRevisionId,
+						resolvedMetadata: {
+							resolution: valueByName.resolution,
+							resolutionComment: valueByName.resolutionComment,
+						} as ReviewAnnotationResolvedMetadata,
+						status: ReviewAnnotationStatus.RESOLVED,
+					});
+				}
+			});
+			closeForm();
+		});
+	}, [
+		applicableInstances,
+		closeForm,
+		onFormSubmitWithDelayedFormFeedback,
+		onSubmit,
+		valueByName.resolution,
+		valueByName.resolutionComment,
+	]);
+
+	return (
+		<Form
+			feedbackByName={showFormFeedback ? feedbackByName : EMPTY_FEEDBACK}
+			onFieldChange={handleFormFieldChange}
+			spaceVerticalSize="m"
+			valueByName={valueByName}
+		>
+			<RadioButtonGroup
+				items={resolutions}
+				name="resolution"
+				validate={validateResolutionField}
+			/>
+
+			<TextArea
+				ariaLabel={t('Resolution message')}
+				name="resolutionComment"
+				placeholder={t(
+					'Optionally describe how or why you resolved these comments'
+				)}
+				rows={ROWS}
+			/>
+
+			<Flex
+				flexDirection="row"
+				justifyContent="space-between"
+				spaceSize="l"
+			>
+				<Button label={t('Cancel')} onClick={closeForm} />
+
+				<Button
+					isDisabled={
+						okCount === 0 ||
+						(showFormFeedback && hasErrorFormFeedback)
+					}
+					label={
+						problemCount === 0
+							? t('Resolve')
+							: t('Resolve ({OK_COUNT} of {TOTAL_COUNT})', {
+									OK_COUNT: okCount,
+									TOTAL_COUNT: totalCount,
+								})
+					}
+					onClick={handleSubmitButtonClick}
+					type="primary"
+				/>
+			</Flex>
+		</Form>
+	);
+};
+
+export default BatchResolveForm;

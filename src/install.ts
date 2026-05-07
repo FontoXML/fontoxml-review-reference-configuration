@@ -7,31 +7,40 @@ import uiManager from 'fontoxml-modular-ui/src/uiManager';
 
 import CommentCardContent from './ui/comment/CommentCardContent';
 import CommentsAndProposalsReviewNavigatorContent from './ui/CommentsAndProposalsReviewNavigatorContent';
+import { REVIEW_NAVIGATOR_ID } from './ui/constants';
 import FilterForm from './ui/FilterForm';
 import FilterFormSummaryChips from './ui/FilterFormSummaryChips';
 import globalCommentsStackedIcons from './ui/global-comments-stacked-icons.svg';
+import ManageCommentsModal from './ui/manage-comments-modal/ManageCommentsModal';
 import MastheadForReview from './ui/MastheadForReview';
 import ProposalCardContent from './ui/proposal/ProposalCardContent';
-
-const REVIEW_NAVIGATOR_ID = 'comments-and-proposals';
+import batchActions from './ui/shared/batchActions';
 
 export default function install(): void {
 	registerReviewNavigator(REVIEW_NAVIGATOR_ID, {
-		// Initially show annotations everywhere. Please note that annotations 
-		// will only be displayed in Document History if the application also 
+		// Initially show annotations everywhere. Please note that annotations
+		// will only be displayed in Document History if the application also
 		// includes the fontoxml-document-history-feedback add-on
 		annotationsInitiallyVisibleIn: [
-            'editor',
-            'review',
+			'editor',
+			'review',
 			'editor/history',
 			'review/history',
-        ],
+		],
 
 		filterConfiguration: {
 			FormComponent: FilterForm,
 			FormSummaryComponent: FilterFormSummaryChips,
-			initialFilterStateForEditor: { resolutionUnresolved: true },
-			initialFilterStateForReview: { resolutionUnresolved: true },
+			initialFilterStateForEditor: {
+				resolutionUnresolved: true,
+				resolutionUnresolvedPrivate: true,
+				resolutionUnresolvedShared: true,
+			},
+			initialFilterStateForReview: {
+				resolutionUnresolved: true,
+				resolutionUnresolvedPrivate: true,
+				resolutionUnresolvedShared: true,
+			},
 		},
 
 		icon: 'far fa-comment',
@@ -50,6 +59,13 @@ export default function install(): void {
 		noAnnotationsFoundNotificationTitle: t('No comments found'),
 
 		NavigatorContentComponent: CommentsAndProposalsReviewNavigatorContent,
+
+		sidebar: {
+			label: t('Comments'),
+			batchActions,
+			globalMenuOperations: [{ name: 'open-manage-comments-modal' }],
+			showInModalOperationName: 'open-manage-comments-modal',
+		},
 	});
 
 	registerTextRangeReviewAnnotationType('comment', {
@@ -149,6 +165,12 @@ export default function install(): void {
 	);
 
 	uiManager.registerReactComponent('MastheadForReview', MastheadForReview);
+
+	// Used by the "open-manage-comments-modal" operation
+	uiManager.registerReactComponent(
+		'ManageCommentsModal',
+		ManageCommentsModal
+	);
 
 	uiManager.registerCustomIcon(
 		'global-comments-stacked-icons',

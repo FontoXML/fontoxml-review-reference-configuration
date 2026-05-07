@@ -1,13 +1,24 @@
-import * as React from 'react';
+import { useMemo, useCallback } from 'react';
 
-import type { FdsFormValueByName } from 'fontoxml-design-system/src/types';
+import type {
+	FdsCheckboxValue,
+	FdsFormValueByName,
+} from 'fontoxml-design-system/src/types';
 
-type OnCheckboxChangecallback = (name: string, value: boolean) => void;
+type CheckboxNode = {
+	name: string;
+	value: FdsCheckboxValue | null | undefined;
+	children?: CheckboxNode[];
+};
+
+type OnCheckboxChangeCallback = (name: string, value: boolean) => void;
 
 const useNestedCheckboxesForFilterOptions = (
 	valueByName: FdsFormValueByName,
-	onFieldsChange: (...args: unknown[]) => void
-): OnCheckboxChangecallback => {
+	onFieldsChange: (
+		changedFields: { name: string; value: FdsCheckboxValue }[]
+	) => void
+): OnCheckboxChangeCallback => {
 	// This hook automatically updates parent/child checkboxes, including the
 	// indeterminate state based on the configured nesting (1st parameter).
 	//
@@ -18,71 +29,86 @@ const useNestedCheckboxesForFilterOptions = (
 	// (When clicking on an indeterminate checkbox, it will become true.)
 
 	// This object describes how the data is nested.
-	const checkboxForest = React.useMemo(
+	const checkboxForest = useMemo<CheckboxNode[]>(
 		() => [
 			{
 				name: 'typeComment',
-				value: valueByName.typeComment,
+				value: valueByName.typeComment as CheckboxNode['value'],
 				children: [
 					{
 						name: 'typeCommentTechnical',
-						value: valueByName.typeCommentTechnical,
+						value: valueByName.typeCommentTechnical as CheckboxNode['value'],
 					},
 					{
 						name: 'typeCommentGeneral',
-						value: valueByName.typeCommentGeneral,
+						value: valueByName.typeCommentGeneral as CheckboxNode['value'],
 					},
 					{
 						name: 'typeCommentEditorial',
-						value: valueByName.typeCommentEditorial,
+						value: valueByName.typeCommentEditorial as CheckboxNode['value'],
 					},
 				],
 			},
 			{
 				name: 'typePublicationComment',
-				value: valueByName.typePublicationComment,
+				value: valueByName.typePublicationComment as CheckboxNode['value'],
 				children: [
 					{
 						name: 'typePublicationCommentTechnical',
-						value: valueByName.typePublicationCommentTechnical,
+						value: valueByName.typePublicationCommentTechnical as CheckboxNode['value'],
 					},
 					{
 						name: 'typePublicationCommentGeneral',
-						value: valueByName.typePublicationCommentGeneral,
+						value: valueByName.typePublicationCommentGeneral as CheckboxNode['value'],
 					},
 					{
 						name: 'typePublicationCommentEditorial',
-						value: valueByName.typePublicationCommentEditorial,
+						value: valueByName.typePublicationCommentEditorial as CheckboxNode['value'],
 					},
 				],
 			},
-			{ name: 'typeProposal', value: valueByName.typeProposal },
 			{
-				name: 'resolutionResolved',
-				value: valueByName.resolutionResolved,
-				children: [
-					{
-						name: 'resolutionResolvedAccepted',
-						value: valueByName.resolutionResolvedAccepted,
-					},
-					{
-						name: 'resolutionResolvedRejected',
-						value: valueByName.resolutionResolvedRejected,
-					},
-				],
+				name: 'typeProposal',
+				value: valueByName.typeProposal as CheckboxNode['value'],
 			},
 			{
 				name: 'resolutionUnresolved',
-				value: valueByName.resolutionUnresolved,
+				value: valueByName.resolutionUnresolved as CheckboxNode['value'],
+				children: [
+					{
+						name: 'resolutionUnresolvedPrivate',
+						value: valueByName.resolutionUnresolvedPrivate as CheckboxNode['value'],
+					},
+					{
+						name: 'resolutionUnresolvedShared',
+						value: valueByName.resolutionUnresolvedShared as CheckboxNode['value'],
+					},
+				],
+			},
+			{
+				name: 'resolutionResolved',
+				value: valueByName.resolutionResolved as CheckboxNode['value'],
+				children: [
+					{
+						name: 'resolutionResolvedAccepted',
+						value: valueByName.resolutionResolvedAccepted as CheckboxNode['value'],
+					},
+					{
+						name: 'resolutionResolvedRejected',
+						value: valueByName.resolutionResolvedRejected as CheckboxNode['value'],
+					},
+				],
 			},
 		],
 		// This is just a derivative of valueByName (which is not nested in this case).
 		// So it will also change whenever one of the referenced properties in valueByName changes.
 		[
+			valueByName.resolutionUnresolved,
+			valueByName.resolutionUnresolvedPrivate,
+			valueByName.resolutionUnresolvedShared,
 			valueByName.resolutionResolved,
 			valueByName.resolutionResolvedAccepted,
 			valueByName.resolutionResolvedRejected,
-			valueByName.resolutionUnresolved,
 			valueByName.typeComment,
 			valueByName.typeCommentEditorial,
 			valueByName.typeCommentGeneral,
@@ -100,11 +126,17 @@ const useNestedCheckboxesForFilterOptions = (
 	// They will be applied to the valueByName mapping, this is done in the onFieldsChange
 	// callback provided by FilterForm and FilterFormSummaryChips.
 	// onFieldsChange is called at the end of this callback with the list of changed fields.
-	const onCheckboxChange = React.useCallback(
+	const onCheckboxChange = useCallback(
 		(name: string, value: boolean) => {
-			const changedCheckboxes = [];
+			const changedCheckboxes: {
+				name: string;
+				value: FdsCheckboxValue;
+			}[] = [];
 
-			const walkTree = (node, parentNode) => {
+			const walkTree = (
+				node: CheckboxNode,
+				parentNode?: CheckboxNode
+			) => {
 				if (node.name === name) {
 					// set node to value
 					// This is always a different value than the current value, this was the
@@ -115,7 +147,7 @@ const useNestedCheckboxesForFilterOptions = (
 					if (parentNode) {
 						// update the parent based on the new values of all siblings
 						const someSiblingWillHaveDifferentValue =
-							parentNode.children.some((childNode) => {
+							parentNode.children?.some((childNode) => {
 								if (childNode.name === name) {
 									// The node were are currently changing will of course have the
 									// correct (same) value were currently setting.
@@ -166,7 +198,7 @@ const useNestedCheckboxesForFilterOptions = (
 			};
 			// start by looping through each tree in the forest and walking each tree
 			checkboxForest.forEach((childNode) => {
-				walkTree(childNode, null);
+				walkTree(childNode);
 			});
 
 			if (changedCheckboxes.length > 0) {

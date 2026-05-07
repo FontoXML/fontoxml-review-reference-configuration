@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import {
-	Block,
 	Button,
 	Checkbox,
 	Chip,
@@ -14,6 +13,7 @@ import {
 } from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import ReviewApplicabilityIndicator from 'fontoxml-feedback/src/ReviewApplicabilityIndicator';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import ReviewTargetType from 'fontoxml-feedback/src/ReviewTargetType';
@@ -48,12 +48,13 @@ function determineShareButtonLabel(
 type Props = {
 	context: ReviewCardContentComponentProps['context'];
 	hasReplyInNonIdleBusyState: boolean;
-	isSelectedToShare: ReviewCardContentComponentProps['isSelectedToShare'];
+	showCheckbox: ReviewCardContentComponentProps['showCheckbox'];
+	isChecked: ReviewCardContentComponentProps['isChecked'];
+	onCheckboxChange: ReviewCardContentComponentProps['onCheckboxChange'];
 	onReviewAnnotationEdit: ReviewCardContentComponentProps['onReviewAnnotationEdit'];
 	onReviewAnnotationRemove: ReviewCardContentComponentProps['onReviewAnnotationRemove'];
 	onReviewAnnotationResolve: ReviewCardContentComponentProps['onReviewAnnotationResolve'];
 	onReviewAnnotationShare: ReviewCardContentComponentProps['onReviewAnnotationShare'];
-	onReviewAnnotationShareAddRemoveToggle: ReviewCardContentComponentProps['onReviewAnnotationShareAddRemoveToggle'];
 	onReviewAnnotationShowInCreatedContext: ReviewCardContentComponentProps['onReviewAnnotationShowInCreatedContext'];
 	onReviewAnnotationShowInResolvedContext: ReviewCardContentComponentProps['onReviewAnnotationShowInResolvedContext'];
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
@@ -62,12 +63,13 @@ type Props = {
 const CardHeader: React.FC<Props> = ({
 	context,
 	hasReplyInNonIdleBusyState,
-	isSelectedToShare,
+	showCheckbox,
+	isChecked,
+	onCheckboxChange,
 	onReviewAnnotationEdit,
 	onReviewAnnotationRemove,
 	onReviewAnnotationResolve,
 	onReviewAnnotationShare,
-	onReviewAnnotationShareAddRemoveToggle,
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	reviewAnnotation,
@@ -249,7 +251,9 @@ const CardHeader: React.FC<Props> = ({
 		(context === FeedbackContextType.EDITOR ||
 			context === FeedbackContextType.REVIEW ||
 			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
-	 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY);
+			context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
+			context === FeedbackContextType.OVERVIEW_DETAILS ||
+			context === FeedbackContextType.SIDEBAR);
 
 	const shareButtonLabel =
 		reviewAnnotation.isSelected &&
@@ -281,6 +285,12 @@ const CardHeader: React.FC<Props> = ({
 	} else {
 		shareButtonType = 'transparent';
 	}
+
+	const isBatchShareModal =
+		context === FeedbackContextType.EDITOR_SHARING ||
+		context === FeedbackContextType.REVIEW_SHARING ||
+		context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING ||
+		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING;
 
 	const resolutionBadgeTooltipContent = React.useMemo(() => {
 		if (!reviewAnnotation.resolvedMetadata?.resolution) {
@@ -316,143 +326,130 @@ const CardHeader: React.FC<Props> = ({
 			spaceSize="s"
 			style={{ height: CARD_HEADER_HEIGHT }}
 		>
+			{showCheckbox && (
+				<Flex flex="none" flexDirection="row" spaceSize="s">
+					<Checkbox
+						ariaLabel={t('Select comment')}
+						isDisabled={reviewAnnotation.isLoading}
+						onChange={onCheckboxChange}
+						value={isChecked}
+					/>
+
+					<ReviewApplicabilityIndicator
+						annotationId={reviewAnnotation.id}
+					/>
+				</Flex>
+			)}
+
 			<AuthorAndTimestampLabel reviewAnnotation={reviewAnnotation} />
 
 			<Flex flex="0 0 auto" spaceSize="m">
-				{(context === FeedbackContextType.EDITOR_SHARING ||
-					context === FeedbackContextType.REVIEW_SHARING ||
-					context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING ||
-					context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING) &&
-					(!reviewAnnotation.error ||
-						(typeof reviewAnnotation.error !== 'number' &&
-							reviewAnnotation.error.recovery ===
-								ReviewRecoveryOption.RETRYABLE)) && (
-						<Block>
-							<Checkbox
-								ariaLabel={t('Select comment')}
-								isDisabled={reviewAnnotation.isLoading}
-								onChange={
-									onReviewAnnotationShareAddRemoveToggle
+				{!isBatchShareModal && (
+					<Flex alignItems="center" spaceSize="m">
+						{showShareButton && (
+							<Button
+								ariaLabel={
+									!shareButtonLabel ? t('Share') : undefined
 								}
-								value={isSelectedToShare}
+								key={shareButtonType}
+								icon={
+									reviewAnnotation.isLoading
+										? 'spinner'
+										: 'far fa-user-lock'
+								}
+								isDisabled={shareButtonIsDisabled}
+								label={shareButtonLabel}
+								onClick={onReviewAnnotationShare}
+								type={shareButtonType}
+								tooltipContent={
+									reviewAnnotation.type === 'proposal'
+										? t(
+												'Proposal is private. Click to share.'
+											)
+										: t(
+												'Comment is private. Click to share.'
+											)
+								}
 							/>
-						</Block>
-					)}
+						)}
 
-				{context !== FeedbackContextType.EDITOR_SHARING &&
-					context !== FeedbackContextType.REVIEW_SHARING && 
-					context !== FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
-					context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING && (
-						<Flex alignItems="center" spaceSize="m">
-							{showShareButton && (
+						{showResolveButton &&
+							reviewAnnotation.busyState !==
+								ReviewBusyState.RESOLVING && (
 								<Button
 									ariaLabel={
-										!shareButtonLabel
-											? t('Share')
+										!reviewAnnotation.isSelected
+											? t('Resolve')
 											: undefined
 									}
-									key={shareButtonType}
-									icon={
-										reviewAnnotation.isLoading
-											? 'spinner'
-											: 'far fa-user-lock'
+									key={
+										reviewAnnotation.isSelected
+											? 'primary'
+											: 'transparent'
 									}
-									isDisabled={shareButtonIsDisabled}
-									label={shareButtonLabel}
-									onClick={onReviewAnnotationShare}
-									type={shareButtonType}
+									icon="check"
+									isDisabled={reviewAnnotation.isLoading}
+									label={
+										reviewAnnotation.isSelected
+											? t('Resolve')
+											: undefined
+									}
+									onClick={onReviewAnnotationResolve}
 									tooltipContent={
 										reviewAnnotation.type === 'proposal'
 											? t(
-													'Proposal is private. Click to share.'
+													'Proposal is shared. Click to resolve.'
 												)
 											: t(
-													'Comment is private. Click to share.'
+													'Comment is shared. Click to resolve.'
 												)
+									}
+									type={
+										reviewAnnotation.isSelected
+											? 'primary'
+											: 'transparent'
 									}
 								/>
 							)}
 
-							{showResolveButton &&
-								reviewAnnotation.busyState !==
-									ReviewBusyState.RESOLVING && (
-									<Button
-										ariaLabel={
-											!reviewAnnotation.isSelected
-												? t('Resolve')
+						{reviewAnnotation.status ===
+							ReviewAnnotationStatus.RESOLVED &&
+							resolution && (
+								<Chip
+									ariaLabel={
+										!reviewAnnotation.isSelected
+											? (reviewAnnotation.resolvedMetadata
+													?.resolution as string)
+											: undefined
+									}
+									ariaRole="status"
+									iconBefore={
+										resolution === 'accepted'
+											? 'far fa-check'
+											: resolution === 'rejected'
+												? 'far fa-times'
 												: undefined
-										}
-										key={
-											reviewAnnotation.isSelected
-												? 'primary'
-												: 'transparent'
-										}
-										icon="check"
-										isDisabled={reviewAnnotation.isLoading}
-										label={
-											reviewAnnotation.isSelected
-												? t('Resolve')
-												: undefined
-										}
-										onClick={onReviewAnnotationResolve}
-										tooltipContent={
-											reviewAnnotation.type === 'proposal'
-												? t(
-														'Proposal is shared. Click to resolve.'
-													)
-												: t(
-														'Comment is shared. Click to resolve.'
-													)
-										}
-										type={
-											reviewAnnotation.isSelected
-												? 'primary'
-												: 'transparent'
-										}
-									/>
-								)}
-
-							{reviewAnnotation.status ===
-								ReviewAnnotationStatus.RESOLVED &&
-								resolution && (
-									<Chip
-										ariaLabel={
-											!reviewAnnotation.isSelected
-												? (reviewAnnotation
-														.resolvedMetadata
-														?.resolution as string)
-												: undefined
-										}
-										ariaRole="status"
-										iconBefore={
-											resolution === 'accepted'
-												? 'far fa-check'
-												: resolution === 'rejected'
-													? 'far fa-times'
-													: undefined
-										}
-										isCondensed={
-											reviewAnnotation.isSelected
-										}
-										label={
-											!reviewAnnotation.isSelected
-												? resolution
-												: undefined
-										}
-										tooltipContent={
-											resolutionBadgeTooltipContent
-										}
-									/>
-								)}
-
-							{showPopoverButton && (
-								<DropAnchor
-									renderAnchor={renderAnchor}
-									renderDrop={renderDrop}
+									}
+									isCondensed={reviewAnnotation.isSelected}
+									label={
+										!reviewAnnotation.isSelected
+											? resolution
+											: undefined
+									}
+									tooltipContent={
+										resolutionBadgeTooltipContent
+									}
 								/>
 							)}
-						</Flex>
-					)}
+
+						{showPopoverButton && (
+							<DropAnchor
+								renderAnchor={renderAnchor}
+								renderDrop={renderDrop}
+							/>
+						)}
+					</Flex>
+				)}
 			</Flex>
 		</Flex>
 	);

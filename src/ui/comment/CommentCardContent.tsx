@@ -28,8 +28,9 @@ import CommentCardFooter from './CommentCardFooter';
 
 function CommentCardContent({
 	context,
-	focusableRef,
-	isSelectedToShare,
+	showCheckbox,
+	isChecked,
+	onCheckboxChange,
 	reviewAnnotation,
 	onReviewAnnotationEdit,
 	onReviewAnnotationErrorAcknowledge,
@@ -39,7 +40,6 @@ function CommentCardContent({
 	onReviewAnnotationRemove,
 	onReviewAnnotationResolve,
 	onReviewAnnotationShare,
-	onReviewAnnotationShareAddRemoveToggle,
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	onReplyAdd,
@@ -79,10 +79,12 @@ function CommentCardContent({
 
 	const showFooter =
 		showReplyButton &&
-		(context === FeedbackContextType.EDITOR ||
-			context === FeedbackContextType.REVIEW ||
-			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
-	 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY) &&
+		context !== FeedbackContextType.EDITOR_SHARING &&
+		context !== FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
+		context !== FeedbackContextType.REVIEW_SHARING &&
+		context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING &&
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT &&
 		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
 		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
@@ -92,12 +94,6 @@ function CommentCardContent({
 	const showErrorFooter =
 		reviewAnnotation.error &&
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
-
-	React.useEffect(() => {
-		if (!showFooter && focusableRef && focusableRef.current !== null) {
-			focusableRef.current.focus();
-		}
-	}, [focusableRef, showFooter]);
 
 	if (
 		reviewAnnotation.isLoading &&
@@ -154,25 +150,26 @@ function CommentCardContent({
 
 	return (
 		<Block
-			paddingSize="m"
 			dataTestId="fontoxml-review-reference-configuration-comment-card-content"
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			data-review-annotation-comment-type={
 				reviewAnnotation.metadata.commentType
 			}
+			paddingSize={
+				context === FeedbackContextType.OVERVIEW_DETAILS ? 0 : 'm'
+			}
 		>
 			<CardHeader
 				context={context}
 				hasReplyInNonIdleBusyState={hasReplyInNonIdleBusyState}
-				isSelectedToShare={isSelectedToShare}
+				showCheckbox={showCheckbox}
+				isChecked={isChecked}
+				onCheckboxChange={onCheckboxChange}
 				onReviewAnnotationEdit={onReviewAnnotationEdit}
 				onReviewAnnotationRemove={onReviewAnnotationRemove}
 				onReviewAnnotationResolve={onReviewAnnotationResolve}
 				onReviewAnnotationShare={onReviewAnnotationShare}
-				onReviewAnnotationShareAddRemoveToggle={
-					onReviewAnnotationShareAddRemoveToggle
-				}
 				onReviewAnnotationShowInCreatedContext={
 					onReviewAnnotationShowInCreatedContext
 				}
@@ -218,20 +215,23 @@ function CommentCardContent({
 											isBold
 										>{` ${commentType} `}</Label>
 
-										{!reviewAnnotation.targetFoundForRevision && (
-											<Icon
-												ariaLabel={t('Lost comment')}
-												colorName={
-													reviewAnnotation.isSelected
-														? 'tombstone-icon-selected-color'
-														: 'tombstone-icon-color'
-												}
-												icon="far fa-unlink"
-												tooltipContent={t(
-													'This comment lost its position in the content'
-												)}
-											/>
-										)}
+										{reviewAnnotation.localDocumentId &&
+											!reviewAnnotation.targetFoundForRevision && (
+												<Icon
+													ariaLabel={t(
+														'Lost comment'
+													)}
+													colorName={
+														reviewAnnotation.isSelected
+															? 'tombstone-icon-selected-color'
+															: 'tombstone-icon-color'
+													}
+													icon="far fa-unlink"
+													tooltipContent={t(
+														'This comment lost its position in the content'
+													)}
+												/>
+											)}
 									</>
 								)}
 							</Flex>
@@ -263,7 +263,6 @@ function CommentCardContent({
 				{(reviewAnnotation.busyState === ReviewBusyState.ADDING ||
 					reviewAnnotation.busyState === ReviewBusyState.EDITING) && (
 					<CommentAddOrEditForm
-						focusableRef={focusableRef}
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}
 						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
@@ -273,7 +272,6 @@ function CommentCardContent({
 
 				<CardRepliesAndResolution
 					context={context}
-					focusableRef={focusableRef}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}
 					onReplyFormCancel={onReplyFormCancel}
@@ -310,6 +308,7 @@ function CommentCardContent({
 
 				{showFooter && !showErrorFooter && (
 					<CommentCardFooter
+						context={context}
 						onReplyAdd={onReplyAdd}
 						reviewAnnotation={reviewAnnotation}
 					/>

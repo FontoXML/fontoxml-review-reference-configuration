@@ -2,18 +2,21 @@ import * as React from 'react';
 
 import {
 	Block,
+	Button,
 	Diff,
 	Flex,
 	HorizontalSeparationLine,
 	Icon,
 	Label,
 } from 'fontoxml-design-system/src/components';
+import { applyCss } from 'fontoxml-design-system/src/system';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
+import useXPath from 'fontoxml-fx/src/useXPath';
 import t from 'fontoxml-localization/src/t';
 
 import CardErrorFooter from '../shared/CardErrorFooter';
@@ -25,14 +28,21 @@ import TruncatedText from '../shared/TruncatedText';
 
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ProposalAddOrEditForm from './ProposalAddOrEditForm';
-import ProposalReplyComponent from './ProposalReplyComponent';
+import ProposalCardFooter from './ProposalCardFooter';
 
-const footerButtonContainerStyles = { height: '32px' };
+const footerButtonContainerStyles = applyCss({ height: '32px' });
+
+const stickyStyles = applyCss({
+	position: 'sticky',
+	bottom: 0,
+	backgroundColor: 'white',
+});
 
 const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	context,
-	focusableRef,
-	isSelectedToShare,
+	showCheckbox,
+	isChecked,
+	onCheckboxChange,
 	reviewAnnotation,
 	onReviewAnnotationEdit,
 	onReviewAnnotationErrorAcknowledge,
@@ -42,7 +52,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	onReviewAnnotationRemove,
 	onReviewAnnotationResolve,
 	onReviewAnnotationShare,
-	onReviewAnnotationShareAddRemoveToggle,
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	onReplyAdd,
@@ -72,8 +81,23 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		);
 	}, [reviewAnnotation.replies]);
 
+	const isOnReviewRoute = useXPath<boolean>(
+		'fonto:is-on-review-route()',
+		null,
+		{ expectedResultType: XPathResult.BOOLEAN_TYPE }
+	);
+
 	const showAcceptProposalButton =
-		context === FeedbackContextType.EDITOR &&
+		!isOnReviewRoute &&
+		context !== FeedbackContextType.EDITOR_SHARING &&
+		context !== FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
+		context !== FeedbackContextType.REVIEW &&
+		context !== FeedbackContextType.REVIEW_SHARING &&
+		context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY &&
+		context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING &&
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT &&
+		context !== FeedbackContextType.OVERVIEW_DETAILS &&
 		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
 		onProposalMerge &&
 		!!reviewAnnotation.proposalState;
@@ -91,25 +115,28 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 
 	const showFooter =
 		showAnyFooterButton &&
-		(context === FeedbackContextType.EDITOR ||
-			context === FeedbackContextType.REVIEW ||
-			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
-			context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY) &&
+		context !== FeedbackContextType.EDITOR_SHARING &&
+		context !== FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
+		context !== FeedbackContextType.REVIEW_SHARING &&
+		context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING &&
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT &&
 		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
 		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
 		reviewAnnotation.busyState !== ReviewBusyState.RESOLVING &&
 		!hasReplyInNonIdleBusyState;
 
+	const showReplyAddInputField =
+		showReplyButton &&
+		(context === FeedbackContextType.OVERVIEW_DETAILS ||
+			context === FeedbackContextType.REVIEW ||
+			context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
+			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY);
+
 	const showErrorFooter =
 		reviewAnnotation.error &&
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
-
-	React.useEffect(() => {
-		if (!showFooter && focusableRef?.current) {
-			focusableRef.current.focus();
-		}
-	}, [focusableRef, showFooter]);
 
 	if (
 		reviewAnnotation.isLoading &&
@@ -144,19 +171,20 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 			dataTestId="fontoxml-review-reference-configuration-proposal-card-content"
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
-			paddingSize="m"
+			paddingSize={
+				context === FeedbackContextType.OVERVIEW_DETAILS ? 0 : 'm'
+			}
 		>
 			<CardHeader
 				context={context}
 				hasReplyInNonIdleBusyState={hasReplyInNonIdleBusyState}
-				isSelectedToShare={isSelectedToShare}
+				showCheckbox={showCheckbox}
+				isChecked={isChecked}
+				onCheckboxChange={onCheckboxChange}
 				onReviewAnnotationEdit={onReviewAnnotationEdit}
 				onReviewAnnotationRemove={onReviewAnnotationRemove}
 				onReviewAnnotationResolve={onReviewAnnotationResolve}
 				onReviewAnnotationShare={onReviewAnnotationShare}
-				onReviewAnnotationShareAddRemoveToggle={
-					onReviewAnnotationShareAddRemoveToggle
-				}
 				onReviewAnnotationShowInCreatedContext={
 					onReviewAnnotationShowInCreatedContext
 				}
@@ -189,19 +217,23 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 											{t('Proposed change')}
 										</Label>
 
-										{!reviewAnnotation.targetFoundForRevision && (
-											<Icon
-												colorName={
-													reviewAnnotation.isSelected
-														? 'tombstone-icon-selected-color'
-														: 'tombstone-icon-color'
-												}
-												icon="far fa-unlink"
-												tooltipContent={t(
-													'This proposed change lost its position in the content'
-												)}
-											/>
-										)}
+										{reviewAnnotation.localDocumentId &&
+											!reviewAnnotation.targetFoundForRevision && (
+												<Icon
+													ariaLabel={t(
+														'Lost proposed change'
+													)}
+													colorName={
+														reviewAnnotation.isSelected
+															? 'tombstone-icon-selected-color'
+															: 'tombstone-icon-color'
+													}
+													icon="far fa-unlink"
+													tooltipContent={t(
+														'This proposed change lost its position in the content'
+													)}
+												/>
+											)}
 									</Flex>
 
 									{reviewAnnotation.isSelected && (
@@ -287,7 +319,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 				{(reviewAnnotation.busyState === ReviewBusyState.ADDING ||
 					reviewAnnotation.busyState === ReviewBusyState.EDITING) && (
 					<ProposalAddOrEditForm
-						focusableRef={focusableRef}
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}
 						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
@@ -297,7 +328,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 
 				<CardRepliesAndResolution
 					context={context}
-					focusableRef={focusableRef}
 					onProposalMerge={onProposalMerge}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}
@@ -334,30 +364,50 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 				)}
 
 				{showFooter && !showErrorFooter && (
-					<Block spaceVerticalSize="m">
+					<Block
+						{...(context === FeedbackContextType.OVERVIEW_DETAILS
+							? stickyStyles
+							: {})}
+						spaceVerticalSize="m"
+					>
 						<HorizontalSeparationLine />
 
 						<Flex
 							alignItems="center"
-							applyCss={footerButtonContainerStyles}
-							ariaRole="group"
+							{...(!showReplyAddInputField
+								? footerButtonContainerStyles
+								: {})}
 							justifyContent="flex-end"
 							spaceSize="m"
 						>
-							{showReplyButton && (
-								<ProposalReplyComponent
-									context={context}
+							{showReplyAddInputField && (
+								<ProposalCardFooter
 									onReplyAdd={onReplyAdd}
 									reviewAnnotation={reviewAnnotation}
 								/>
 							)}
-
-							{showAcceptProposalButton && (
-								<ReviewAnnotationAcceptProposalButton
-									onProposalMerge={onProposalMerge}
-									proposalState={proposalState}
+							{!showReplyAddInputField && showReplyButton && (
+								<Button
+									icon="far fa-reply"
+									isDisabled={
+										!!reviewAnnotation.error ||
+										reviewAnnotation.isLoading
+									}
+									label={t('Reply')}
+									onClick={onReplyAdd}
+									tooltipContent={t(
+										'Reply to the proposed change.'
+									)}
 								/>
 							)}
+
+							{!showReplyAddInputField &&
+								showAcceptProposalButton && (
+									<ReviewAnnotationAcceptProposalButton
+										onProposalMerge={onProposalMerge}
+										proposalState={proposalState}
+									/>
+								)}
 						</Flex>
 					</Block>
 				)}
