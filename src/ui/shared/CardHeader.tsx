@@ -249,7 +249,7 @@ const CardHeader: React.FC<Props> = ({
 		(context === FeedbackContextType.EDITOR ||
 			context === FeedbackContextType.REVIEW ||
 			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
-	 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY);
+			context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY);
 
 	const shareButtonLabel =
 		reviewAnnotation.isSelected &&
@@ -316,33 +316,35 @@ const CardHeader: React.FC<Props> = ({
 			spaceSize="s"
 			style={{ height: CARD_HEADER_HEIGHT }}
 		>
+			{(context === FeedbackContextType.EDITOR_SHARING ||
+				context === FeedbackContextType.REVIEW_SHARING ||
+				context ===
+					FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING ||
+				context ===
+					FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING) &&
+				(!reviewAnnotation.error ||
+					(typeof reviewAnnotation.error !== 'number' &&
+						reviewAnnotation.error.recovery ===
+							ReviewRecoveryOption.RETRYABLE)) && (
+					<Flex flex="none">
+						<Checkbox
+							ariaLabel={t('Select comment')}
+							isDisabled={reviewAnnotation.isLoading}
+							onChange={onReviewAnnotationShareAddRemoveToggle}
+							value={isSelectedToShare}
+						/>
+					</Flex>
+				)}
+
 			<AuthorAndTimestampLabel reviewAnnotation={reviewAnnotation} />
 
 			<Flex flex="0 0 auto" spaceSize="m">
-				{(context === FeedbackContextType.EDITOR_SHARING ||
-					context === FeedbackContextType.REVIEW_SHARING ||
-					context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING ||
-					context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING) &&
-					(!reviewAnnotation.error ||
-						(typeof reviewAnnotation.error !== 'number' &&
-							reviewAnnotation.error.recovery ===
-								ReviewRecoveryOption.RETRYABLE)) && (
-						<Block>
-							<Checkbox
-								ariaLabel={t('Select comment')}
-								isDisabled={reviewAnnotation.isLoading}
-								onChange={
-									onReviewAnnotationShareAddRemoveToggle
-								}
-								value={isSelectedToShare}
-							/>
-						</Block>
-					)}
-
 				{context !== FeedbackContextType.EDITOR_SHARING &&
-					context !== FeedbackContextType.REVIEW_SHARING && 
-					context !== FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
-					context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING && (
+					context !== FeedbackContextType.REVIEW_SHARING &&
+					context !==
+						FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
+					context !==
+						FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING && (
 						<Flex alignItems="center" spaceSize="m">
 							{showShareButton && (
 								<Button
