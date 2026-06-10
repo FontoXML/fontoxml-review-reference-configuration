@@ -112,7 +112,7 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 	const isDisabled =
 		reply.isLoading ||
 		(error && error.recovery !== ReviewRecoveryOption.RETRYABLE);
-	const isLoading = reply.isLoading && (isAdding || isEditing);
+	const isLoading = !!reply.isLoading && (isAdding || isEditing);
 
 	const handleReplyDirChange = React.useCallback(
 		(dir) => {
@@ -167,7 +167,11 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 
 			{areFormButtonsVisible && (
 				<Flex justifyContent="flex-end" spaceSize="m">
-					<Button label={t('Cancel')} onClick={onCancelButtonClick} />
+					<Button
+						isDisabled={isLoading}
+						label={t('Cancel')}
+						onClick={onCancelButtonClick}
+					/>
 
 					<Button
 						icon={isLoading ? 'spinner' : null}

@@ -216,7 +216,11 @@ function ResolveFormContent({
 						justifyContent="flex-end"
 						spaceSize="m"
 					>
-						<Button label={t('Cancel')} onClick={onCancel} />
+						<Button
+							isDisabled={isLoading}
+							label={t('Cancel')}
+							onClick={onCancel}
+						/>
 
 						{showAcceptProposalButton && (
 							<ReviewAnnotationAcceptProposalButton
