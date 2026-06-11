@@ -16,13 +16,18 @@ const ProposalReplyComponent: React.FC<Props> = ({
 	onReplyAdd,
 	reviewAnnotation,
 }) => {
-	// Check if we are on the "/review" route.
+	// Check if we are on the "/review" or "/*/history" route.
 	const { path } = useRouteMatch();
-	const isOnReviewRoute = path === '/review';
+
+	const isOnReviewOrHistoryRoute = [
+		'/review',
+		'/review/history',
+		'/editor/history',
+	].includes(path);
 
 	// If we are on the review route, we need to show the text input
 	// to add the reply.
-	if (isOnReviewRoute) {
+	if (isOnReviewOrHistoryRoute) {
 		return (
 			<ProposalCardFooter
 				onReplyAdd={onReplyAdd}
