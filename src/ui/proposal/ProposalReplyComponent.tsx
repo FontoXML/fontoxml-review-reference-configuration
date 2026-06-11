@@ -1,32 +1,31 @@
 import * as React from 'react';
-import { useRouteMatch } from 'react-router-dom';
 
 import { Button } from 'fontoxml-design-system/src/components';
+import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import ProposalCardFooter from './ProposalCardFooter';
 
 type Props = {
+	context: ReviewCardContentComponentProps['context'];
 	onReplyAdd: ReviewCardContentComponentProps['onReplyAdd'];
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 };
 
 const ProposalReplyComponent: React.FC<Props> = ({
+	context,
 	onReplyAdd,
 	reviewAnnotation,
 }) => {
 	// Check if we are on the "/review" or "/*/history" route.
-	const { path } = useRouteMatch();
+	const isOnReviewOrHistoryRoute =
+		context === FeedbackContextType.REVIEW ||
+		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
+		context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY;
 
-	const isOnReviewOrHistoryRoute = [
-		'/review',
-		'/review/history',
-		'/editor/history',
-	].includes(path);
-
-	// If we are on the review route, we need to show the text input
-	// to add the reply.
+	// If we are on the review or history route, we need to show the
+	// text input to add the reply.
 	if (isOnReviewOrHistoryRoute) {
 		return (
 			<ProposalCardFooter

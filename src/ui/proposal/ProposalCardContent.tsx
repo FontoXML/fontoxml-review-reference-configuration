@@ -94,7 +94,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		(context === FeedbackContextType.EDITOR ||
 			context === FeedbackContextType.REVIEW ||
 			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
-	 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY) &&
+			context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY) &&
 		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
 		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
@@ -346,6 +346,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 						>
 							{showReplyButton && (
 								<ProposalReplyComponent
+									context={context}
 									onReplyAdd={onReplyAdd}
 									reviewAnnotation={reviewAnnotation}
 								/>
