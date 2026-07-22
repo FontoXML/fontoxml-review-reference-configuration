@@ -1,0 +1,10 @@
+{
+	"open-manage-comments-modal": {
+		"label": "t__Manage comments",
+		"icon": "far fa-comments",
+		"description": "t__Open a modal to quickly manage all comments in the publication.",
+		"steps": {
+			"type": "modal/ManageCommentsModal"
+		}
+	}
+}

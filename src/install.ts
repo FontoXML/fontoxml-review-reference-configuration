@@ -7,25 +7,20 @@ import uiManager from 'fontoxml-modular-ui/src/uiManager';
 
 import CommentCardContent from './ui/comment/CommentCardContent';
 import CommentsAndProposalsReviewNavigatorContent from './ui/CommentsAndProposalsReviewNavigatorContent';
+import { REVIEW_NAVIGATOR_ID } from './ui/constants';
 import FilterForm from './ui/FilterForm';
 import FilterFormSummaryChips from './ui/FilterFormSummaryChips';
 import globalCommentsStackedIcons from './ui/global-comments-stacked-icons.svg';
+import ManageCommentsModal from './ui/ManageCommentsModal';
 import MastheadForReview from './ui/MastheadForReview';
 import ProposalCardContent from './ui/proposal/ProposalCardContent';
-
-const REVIEW_NAVIGATOR_ID = 'comments-and-proposals';
 
 export default function install(): void {
 	registerReviewNavigator(REVIEW_NAVIGATOR_ID, {
 		// Initially show annotations everywhere. Please note that annotations
 		// will only be displayed in Document History if the application also
 		// includes the fontoxml-document-history-feedback add-on
-		annotationsInitiallyVisibleIn: [
-            'editor',
-            'review',
-			'editor/history',
-			'review/history',
-        ],
+		annotationsInitiallyVisibleIn: ['editor', 'review'],
 
 		filterConfiguration: {
 			FormComponent: FilterForm,
@@ -66,7 +61,7 @@ export default function install(): void {
 		tooltipContent: t('Add comment to selected text.'),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
-		visibleIn: ['review', 'editor', 'editor/history', 'review/history'],
+		visibleIn: ['review', 'editor'],
 	});
 
 	// This is a test annotation type that is only enabled for a specific document.
@@ -99,7 +94,7 @@ export default function install(): void {
 		tooltipContent: t('Add comment to selected image.'),
 		keyBinding: 'ctrl+alt+m',
 		osxKeyBinding: 'cmd+alt+m',
-		visibleIn: ['review', 'editor', 'editor/history', 'review/history'],
+		visibleIn: ['review', 'editor'],
 	});
 
 	registerTextRangeReviewAnnotationType('proposal', {
@@ -113,7 +108,7 @@ export default function install(): void {
 		tooltipContent: t('Propose a change to selected text.'),
 		keyBinding: 'ctrl+alt+e',
 		osxKeyBinding: 'cmd+alt+e',
-		visibleIn: ['review', 'editor', 'editor/history', 'review/history'],
+		visibleIn: ['review', 'editor'],
 	});
 
 	registerPublicationReviewAnnotationType('publication-comment', {
@@ -129,7 +124,7 @@ export default function install(): void {
 		),
 		keyBinding: 'ctrl+alt+g',
 		osxKeyBinding: 'cmd+alt+g',
-		visibleIn: ['review', 'editor', 'editor/history', 'review/history'],
+		visibleIn: ['review', 'editor'],
 	});
 
 	// Review annotation type for testing the enabledSelector option.
@@ -152,6 +147,12 @@ export default function install(): void {
 	);
 
 	uiManager.registerReactComponent('MastheadForReview', MastheadForReview);
+
+	// Used by the "open-manage-comments-modal" operation
+	uiManager.registerReactComponent(
+		'ManageCommentsModal',
+		ManageCommentsModal
+	);
 
 	uiManager.registerCustomIcon(
 		'global-comments-stacked-icons',
