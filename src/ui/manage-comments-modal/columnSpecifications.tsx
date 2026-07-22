@@ -1,28 +1,18 @@
 import type { FdsDataTableColumnSpecification } from 'fontoxml-design-system/src/types';
-import {
-	// TODO: move to this application and remove from fontoxml-feedback
-	CellComponentForAuthor,
-	CellComponentForHierarchyNodeTitle,
-	// TODO: move to this application and remove from fontoxml-feedback
-	CellComponentForTimestamp,
-	// TODO: move to this application and remove from fontoxml-feedback
-	CellComponentForType,
-	// TODO: move to this application and remove from fontoxml-feedback
-	CellComponentForRepliesCount,
-	// TODO: move to this application and remove from fontoxml-feedback
-	sortByAuthor,
-	// TODO: move to this application and remove from fontoxml-feedback
-	sortByTimestamp,
-	// TODO: move to this application and remove from fontoxml-feedback
-	sortByTypePriority,
-	// TODO: move to this application and remove from fontoxml-feedback
-	sortByRepliesCount,
-} from 'fontoxml-feedback/src/reviewAnnotationsOverviewHelpers';
+import { CellComponentForHierarchyNodeTitle } from 'fontoxml-feedback/src/reviewAnnotationsOverviewHelpers';
 import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
+import CellComponentForAuthor from './cells/CellComponentForAuthor';
 import CellComponentForComment from './cells/CellComponentForComment';
+import CellComponentForRepliesCount from './cells/CellComponentForRepliesCount';
+import CellComponentForTimestamp from './cells/CellComponentForTimestamp';
+import CellComponentForType from './cells/CellComponentForType';
+import sortByAuthor from './cells/sorters/sortByAuthor';
 import sortByComment from './cells/sorters/sortByComment';
+import sortByRepliesCount from './cells/sorters/sortByRepliesCount';
+import sortByTimestamp from './cells/sorters/sortByTimestamp';
+import sortByType from './cells/sorters/sortByType';
 
 const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOverviewDataTableRow>[] =
 	[
@@ -60,7 +50,7 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			label: t('Type'),
 			maxWidth: 126,
 			minWidth: 126,
-			sortBy: sortByTypePriority,
+			sortBy: sortByType,
 		},
 		{
 			CellComponent: CellComponentForComment,

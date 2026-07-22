@@ -5,7 +5,7 @@ import type { ReviewAnnotationMetadata } from '../../types';
 export default function sortByComment(
 	rowA: ReviewAnnotationsOverviewDataTableRow,
 	rowB: ReviewAnnotationsOverviewDataTableRow
-) {
+): number {
 	const metadataA = rowA.reviewAnnotation
 		.metadata as ReviewAnnotationMetadata;
 	const metadataB = rowB.reviewAnnotation
