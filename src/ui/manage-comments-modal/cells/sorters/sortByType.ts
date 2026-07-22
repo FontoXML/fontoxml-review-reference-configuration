@@ -7,6 +7,18 @@ export default function sortByType(
 	rowA: ReviewAnnotationsOverviewDataTableRow,
 	rowB: ReviewAnnotationsOverviewDataTableRow
 ): number {
+	if (rowA.reviewAnnotation.type === 'proposal') {
+		if (rowB.reviewAnnotation.type === 'proposal') {
+			return 0;
+		}
+		// Let proposals come second.
+		return 1;
+	}
+	if (rowB.reviewAnnotation.type === 'proposal') {
+		// Let proposals come second.
+		return -1;
+	}
+
 	const commentTypeValueA = rowA.reviewAnnotation.metadata
 		.commentType as ReviewAnnotationMetadata['commentType'];
 	const commentTypeA = commentTypes.find(
