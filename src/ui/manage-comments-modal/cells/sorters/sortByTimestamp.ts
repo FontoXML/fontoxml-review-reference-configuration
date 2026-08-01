@@ -5,7 +5,7 @@ export default function sortByTimestamp(
 	rowB: ReviewAnnotationsOverviewDataTableRow
 ): number {
 	return (
-		new Date(rowA.reviewAnnotation.timestamp).getTime() -
-		new Date(rowB.reviewAnnotation.timestamp).getTime()
+		new Date(rowA.data.timestamp).getTime() -
+		new Date(rowB.data.timestamp).getTime()
 	);
 }

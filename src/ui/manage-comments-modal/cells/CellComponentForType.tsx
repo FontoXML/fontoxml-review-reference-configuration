@@ -15,18 +15,18 @@ const CellComponentForType = ({
 	row,
 }: CellComponentProps<ReviewAnnotationsOverviewDataTableRow>) => {
 	const typeLabel = useMemo(() => {
-		if (row.reviewAnnotation.type === 'proposal') {
+		if (row.data.type === 'proposal') {
 			return t('Proposal');
 		}
 
-		const commentTypeValue = row.reviewAnnotation.metadata
+		const commentTypeValue = row.data.metadata
 			.commentType as ReviewAnnotationMetadata['commentType'];
 
 		const commentType = commentTypes.find(
 			(commentType) => commentType.value === commentTypeValue
 		);
 		return commentType ? commentType.label : commentTypeValue;
-	}, [row.reviewAnnotation.metadata.commentType, row.reviewAnnotation.type]);
+	}, [row.data.metadata.commentType, row.data.type]);
 
 	return (
 		<Flex

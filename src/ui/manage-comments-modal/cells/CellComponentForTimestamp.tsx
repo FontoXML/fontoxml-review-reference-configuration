@@ -14,9 +14,9 @@ const CellComponentForTimestamp = ({
 	const dateLabel = useMemo(
 		() =>
 			t('{DATE, fonto_date} {DATE, time}', {
-				DATE: new Date(row.reviewAnnotation.timestamp),
+				DATE: new Date(row.data.timestamp),
 			}),
-		[row.reviewAnnotation.timestamp]
+		[row.data.timestamp]
 	);
 
 	return (

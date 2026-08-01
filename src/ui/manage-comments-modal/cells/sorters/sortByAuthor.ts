@@ -4,7 +4,7 @@ export default function sortByAuthor(
 	rowA: ReviewAnnotationsOverviewDataTableRow,
 	rowB: ReviewAnnotationsOverviewDataTableRow
 ): number {
-	return rowA.reviewAnnotation.author.displayName.localeCompare(
-		rowB.reviewAnnotation.author.displayName
+	return rowA.data.author.displayName.localeCompare(
+		rowB.data.author.displayName
 	);
 }

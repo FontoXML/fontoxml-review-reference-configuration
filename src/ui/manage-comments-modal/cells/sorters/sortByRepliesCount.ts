@@ -4,8 +4,5 @@ export default function sortByRepliesCount(
 	rowA: ReviewAnnotationsOverviewDataTableRow,
 	rowB: ReviewAnnotationsOverviewDataTableRow
 ): number {
-	return (
-		rowA.reviewAnnotation.replies.length -
-		rowB.reviewAnnotation.replies.length
-	);
+	return rowA.data.replies.length - rowB.data.replies.length;
 }

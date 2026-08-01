@@ -6,10 +6,8 @@ export default function sortByComment(
 	rowA: ReviewAnnotationsOverviewDataTableRow,
 	rowB: ReviewAnnotationsOverviewDataTableRow
 ): number {
-	const metadataA = rowA.reviewAnnotation
-		.metadata as ReviewAnnotationMetadata;
-	const metadataB = rowB.reviewAnnotation
-		.metadata as ReviewAnnotationMetadata;
+	const metadataA = rowA.data.metadata as ReviewAnnotationMetadata;
+	const metadataB = rowB.data.metadata as ReviewAnnotationMetadata;
 
 	const commentOrProposalA = metadataA.proposedChange
 		? `${metadataA.proposedChange} ${metadataA.comment}`

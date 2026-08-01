@@ -12,7 +12,7 @@ const CellComponentForRepliesCount = ({
 	row,
 }: CellComponentProps<ReviewAnnotationsOverviewDataTableRow>) => {
 	const { count, label } = useMemo(() => {
-		const count = row.reviewAnnotation.replies.length;
+		const count = row.data.replies.length;
 
 		return {
 			count,
@@ -21,7 +21,7 @@ const CellComponentForRepliesCount = ({
 				{ REPLIES_COUNT: count }
 			),
 		};
-	}, [row.reviewAnnotation.replies]);
+	}, [row.data.replies]);
 
 	if (count === 0) {
 		return null;

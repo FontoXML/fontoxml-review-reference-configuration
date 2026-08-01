@@ -15,12 +15,10 @@ const CellComponentForAuthor = ({
 }: FdsDataTableCellComponentProps<ReviewAnnotationsOverviewDataTableRow>) => {
 	const { displayName, profileId } = useMemo(
 		() => ({
-			displayName:
-				row.reviewAnnotation.author.displayName ||
-				row.reviewAnnotation.author.id,
-			profileId: row.reviewAnnotation.author.id,
+			displayName: row.data.author.displayName || row.data.author.id,
+			profileId: row.data.author.id,
 		}),
-		[row.reviewAnnotation]
+		[row.data]
 	);
 
 	return (

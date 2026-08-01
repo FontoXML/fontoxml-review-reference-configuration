@@ -7,26 +7,26 @@ export default function sortByType(
 	rowA: ReviewAnnotationsOverviewDataTableRow,
 	rowB: ReviewAnnotationsOverviewDataTableRow
 ): number {
-	if (rowA.reviewAnnotation.type === 'proposal') {
-		if (rowB.reviewAnnotation.type === 'proposal') {
+	if (rowA.data.type === 'proposal') {
+		if (rowB.data.type === 'proposal') {
 			return 0;
 		}
 		// Let proposals come second.
 		return 1;
 	}
-	if (rowB.reviewAnnotation.type === 'proposal') {
+	if (rowB.data.type === 'proposal') {
 		// Let proposals come second.
 		return -1;
 	}
 
-	const commentTypeValueA = rowA.reviewAnnotation.metadata
+	const commentTypeValueA = rowA.data.metadata
 		.commentType as ReviewAnnotationMetadata['commentType'];
 	const commentTypeA = commentTypes.find(
 		(commentType) => commentType.value === commentTypeValueA
 	);
 	const typeLabelA = commentTypeA ? commentTypeA.label : commentTypeValueA;
 
-	const commentTypeValueB = rowB.reviewAnnotation.metadata
+	const commentTypeValueB = rowB.data.metadata
 		.commentType as ReviewAnnotationMetadata['commentType'];
 	const commentTypeB = commentTypes.find(
 		(commentType) => commentType.value === commentTypeValueB

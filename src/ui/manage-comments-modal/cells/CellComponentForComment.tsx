@@ -14,21 +14,19 @@ const CellComponentForComment = ({
 	row,
 }: CellComponentProps<ReviewAnnotationsOverviewDataTableRow>) => {
 	const originalText = useMemo(
-		() => row.reviewAnnotation.originalText ?? '',
-		[row.reviewAnnotation.originalText]
+		() => row.data.originalText ?? '',
+		[row.data.originalText]
 	);
 	const proposedChange = useMemo(
 		() =>
-			row.reviewAnnotation.metadata
+			row.data.metadata
 				.proposedChange as ReviewAnnotationMetadata['proposedChange'],
-		[row.reviewAnnotation.metadata.proposedChange]
+		[row.data.metadata.proposedChange]
 	);
 
 	const commentOrMotivation = useMemo(
-		() =>
-			row.reviewAnnotation.metadata
-				.comment as ReviewAnnotationMetadata['comment'],
-		[row.reviewAnnotation.metadata.comment]
+		() => row.data.metadata.comment as ReviewAnnotationMetadata['comment'],
+		[row.data.metadata.comment]
 	);
 
 	return (
