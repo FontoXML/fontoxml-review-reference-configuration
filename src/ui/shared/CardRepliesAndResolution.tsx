@@ -95,6 +95,11 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 		reviewAnnotation.status,
 	]);
 
+	const shouldShowReplies =
+		reviewAnnotation.isSelected &&
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+		reviewAnnotation.busyState !== ReviewBusyState.EDITING;
+
 	const [repliesBefore, addingOrEditingReply, repliesAfter] =
 		React.useMemo(() => {
 			const addingOrEditingReplyIndex =
@@ -104,7 +109,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 						reply.busyState === ReviewBusyState.EDITING
 				);
 
-			if (addingOrEditingReplyIndex !== -1) {
+			if (shouldShowReplies && addingOrEditingReplyIndex !== -1) {
 				// Split the adding or editing reply off. We need the reply form
 				// to be open even if the comment is not selected to prevent the
 				// contents from disappearing.
@@ -136,11 +141,6 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 		// Resolution comments are visually similar to replies. Therefore, we
 		// take them into account too.
 		(reviewAnnotation.status === ReviewAnnotationStatus.RESOLVED ? 1 : 0);
-
-	const shouldShowReplies =
-		reviewAnnotation.isSelected &&
-		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
-		reviewAnnotation.busyState !== ReviewBusyState.EDITING;
 
 	return (
 		<>
