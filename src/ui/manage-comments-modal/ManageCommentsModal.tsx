@@ -10,8 +10,10 @@ import ReviewAnnotationsOverview from 'fontoxml-feedback/src/ReviewAnnotationsOv
 import type { ModalProps } from 'fontoxml-fx/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import { REVIEW_NAVIGATOR_ID } from './constants';
-import columnSpecifications from './manage-comments-modal/columnSpecifications';
+import { REVIEW_NAVIGATOR_ID } from '../constants';
+
+import batchActions from './batchActions';
+import columnSpecifications from './columnSpecifications';
 
 type Props = ModalProps;
 
@@ -31,7 +33,7 @@ const ManageCommentsModal = ({ cancelModal, submitModal }: Props) => {
 
 			<ModalBody>
 				<ReviewAnnotationsOverview
-					// batchActions={batchActions}
+					batchActions={batchActions}
 					columnSpecifications={columnSpecifications}
 					// initialSelectedReviewAnnotationId={}
 					navigatorId={REVIEW_NAVIGATOR_ID}
