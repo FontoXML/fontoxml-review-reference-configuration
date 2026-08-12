@@ -15,6 +15,8 @@ import { REVIEW_NAVIGATOR_ID } from '../constants';
 import batchActions from './batchActions';
 import columnSpecifications from './columnSpecifications';
 
+const TITLE = t('Manage comments and change proposals');
+
 type Props = ModalProps;
 
 const ManageCommentsModal = ({ cancelModal, submitModal }: Props) => {
@@ -29,7 +31,7 @@ const ManageCommentsModal = ({ cancelModal, submitModal }: Props) => {
 
 	return (
 		<Modal size="none" isFullHeight onKeyDown={handleModalKeyDown}>
-			<ModalHeader icon="far fa-comments" title={t('Manage comments')} />
+			<ModalHeader icon="far fa-comments" title={TITLE} />
 
 			<ModalBody>
 				<ReviewAnnotationsOverview

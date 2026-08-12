@@ -11,7 +11,6 @@ import { REVIEW_NAVIGATOR_ID } from './ui/constants';
 import FilterForm from './ui/FilterForm';
 import FilterFormSummaryChips from './ui/FilterFormSummaryChips';
 import globalCommentsStackedIcons from './ui/global-comments-stacked-icons.svg';
-import { installBatchShareAction } from './ui/manage-comments-modal/batch-actions/batchShare';
 import ManageCommentsModal from './ui/manage-comments-modal/ManageCommentsModal';
 import MastheadForReview from './ui/MastheadForReview';
 import ProposalCardContent from './ui/proposal/ProposalCardContent';
@@ -159,6 +158,4 @@ export default function install(): void {
 		'global-comments-stacked-icons',
 		globalCommentsStackedIcons
 	);
-
-	installBatchShareAction();
 }

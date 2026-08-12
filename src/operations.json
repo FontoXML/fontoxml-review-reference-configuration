@@ -6,13 +6,5 @@
 		"steps": {
 			"type": "modal/ManageCommentsModal"
 		}
-	},
-	"batch-share": {
-		"label": "t__Share comments",
-		"icon": "far fa-share-square",
-		"description": "t__Share selected comments with others.",
-		"steps": {
-			"type": "action/batchShare"
-		}
 	}
 }
