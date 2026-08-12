@@ -24,7 +24,7 @@ function isRowShareable(row: ReviewAnnotationsOverviewDataTableRow): boolean {
 
 export function installBatchShareAction(): void {
 	const feedbackIdSet =
-		reviewNavigatorsManager.getFeedbackIdSetByReviewNavigatorId(
+		reviewNavigatorsManager.getPrimaryFeedbackIdSetByReviewNavigatorId(
 			REVIEW_NAVIGATOR_ID
 		);
 
