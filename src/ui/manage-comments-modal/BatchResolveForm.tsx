@@ -1,0 +1,143 @@
+import type { ComponentProps } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import {
+	Block,
+	Flex,
+	Icon,
+	FormRow,
+	RadioButtonGroup,
+	TextArea,
+	Form,
+} from 'fontoxml-design-system/src/components';
+import { applyCss } from 'fontoxml-design-system/src/system';
+import type {
+	FdsDataTableBatchActionFormComponentProps,
+	FdsFormValueByName,
+} from 'fontoxml-design-system/src/types';
+import type {
+	FdsFormFeedback,
+	FdsValidateCallback,
+	FdsFormFeedbackByName,
+} from 'fontoxml-design-system/src/types';
+import type { ReviewAnnotationInstance } from 'fontoxml-feedback/src/types';
+import t from 'fontoxml-localization/src/t';
+
+import resolutions from '../feedbackResolutions';
+
+const ROWS = { minimum: 2, maximum: 6 };
+
+const formContentContainerStyles = applyCss({
+	minWidth: '20rem',
+});
+
+type FeedbackByName = FdsFormFeedbackByName & {
+	resolution?: FdsFormFeedback;
+};
+
+type ValueByName = FdsFormValueByName & {
+	resolution?: string;
+	resolutionComment?: string;
+};
+
+type OnFieldChange = Exclude<
+	ComponentProps<typeof Form>['onFieldChange'],
+	undefined
+>;
+
+type Props =
+	FdsDataTableBatchActionFormComponentProps<ReviewAnnotationInstance>;
+
+const BatchResolveForm = ({
+	rows,
+	applicabilityByRowId,
+	applicableRows,
+	nonApplicableRows,
+	okCount,
+	problemCount,
+	onDataChange,
+}: Props) => {
+	const [feedbackByName, setFeedbackByName] = useState<FeedbackByName>({});
+	const [valueByName, setValueByName] = useState<ValueByName>({});
+
+	const handleFormFieldChange = useCallback<OnFieldChange>(
+		({ feedback, name, value }) => {
+			setFeedbackByName((prevFeedbackByName) => ({
+				...prevFeedbackByName,
+				[name]: feedback,
+			}));
+			setValueByName((prevValueByName) => ({
+				...prevValueByName,
+				[name]: value,
+			}));
+		},
+		[]
+	);
+
+	useEffect(() => {
+		onDataChange(valueByName);
+	}, [onDataChange, valueByName]);
+
+	const validateResolutionField = useCallback<FdsValidateCallback>(
+		(value: unknown) => {
+			if (!value) {
+				return {
+					connotation: 'error',
+					message: 'Resolution is required.',
+				} as FdsFormFeedback;
+			}
+
+			return null;
+		},
+		[]
+	);
+
+	return (
+		<Form
+			feedbackByName={feedbackByName}
+			onFieldChange={handleFormFieldChange}
+			valueByName={valueByName}
+		>
+			<Block
+				{...formContentContainerStyles}
+				dataTestId="BatchResolveForm"
+				spaceVerticalSize="m"
+			>
+				<Flex flexDirection="column" spaceSize="s">
+					<Flex
+						alignItems="center"
+						flexDirection="row"
+						justifyContent="flex-start"
+						spaceSize="s"
+					>
+						<Icon icon="check" />
+
+						<FormRow
+							hasRequiredAsterisk
+							isLabelBold
+							label={t('Resolve and')}
+							labelColorName="text-color"
+						/>
+					</Flex>
+
+					<RadioButtonGroup
+						items={resolutions}
+						name="resolution"
+						validate={validateResolutionField}
+					/>
+				</Flex>
+
+				<TextArea
+					ariaLabel={t('Resolution message')}
+					name="resolutionComment"
+					placeholder={t(
+						'Optionally describe how or why you resolved these comments'
+					)}
+					rows={ROWS}
+				/>
+			</Block>
+		</Form>
+	);
+};
+
+export default BatchResolveForm;

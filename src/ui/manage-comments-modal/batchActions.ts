@@ -1,8 +1,9 @@
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
-import type {
-	ReviewAnnotationsOverviewBatchAction,
-} from 'fontoxml-feedback/src/types';
+import type { ReviewAnnotationsOverviewBatchAction } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
+
+import BatchResolveForm from './BatchResolveForm';
+import determineResolvedDocumentRevisionIdForAnnotation from './determineResolveDocumentRevisionIdForAnnotation';
 
 const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 	{
@@ -57,6 +58,79 @@ const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 				? t('No selected comments are available for sharing.')
 				: t(
 						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for sharing and will be skipped.',
+						{ PROBLEM_COUNT: problemCount }
+					),
+	},
+	{
+		type: 'callback-with-form',
+		Component: BatchResolveForm,
+		id: 'resolve-form',
+		callback: (applicableRows, data, { editAnnotation }) => {
+			for (const row of applicableRows) {
+				const hierarchyNodeId = row.hierarchyNodeId;
+				const resolvedDocumentRevisionId =
+					determineResolvedDocumentRevisionIdForAnnotation(
+						hierarchyNodeId,
+						row.data.id
+					);
+
+				editAnnotation(row.data.id, {
+					resolvedDocumentRevisionId,
+					// TODO: this casting is :( can we describe the incoming
+					// data type with a generic type param somewhere?
+					// TODO: resolvedMetadata is typed as any JSON value,
+					// can we describe its expected shape somewhere?
+					resolvedMetadata: {
+						resolution: data.resolution,
+						resolutionComment: data.resolutionComment,
+					} as {
+						resolution: 'accepted' | 'rejected';
+						resolutionComment?: string;
+					},
+					status: ReviewAnnotationStatus.RESOLVED,
+				});
+			}
+		},
+		label: t('Resolve'),
+		icon: 'check',
+		tooltipContent: t('Resolve the selected comments.'),
+		isAlwaysInMoreMenu: false,
+		getApplicability: (row, _formData) => {
+			if (row.hasOpenForm) {
+				return {
+					type: 'problem',
+					message: t(
+						'You cannot resolve a comment while it is being edited.'
+					),
+				};
+			}
+
+			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
+				return {
+					type: 'problem',
+					message: t('This comment is no longer available.'),
+				};
+			}
+			if (row.data.status === ReviewAnnotationStatus.RESOLVED) {
+				return {
+					type: 'problem',
+					message: t('This comment is already resolved.'),
+				};
+			}
+			if (row.data.status !== ReviewAnnotationStatus.SHARED) {
+				return {
+					type: 'problem',
+					message: t('This comment is not shared yet.'),
+				};
+			}
+
+			return { type: 'ok' };
+		},
+		renderProblemWarningMessage: ({ okCount, problemCount }) =>
+			okCount === 0
+				? t('No selected comments are available for resolving.')
+				: t(
+						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for resolving and will be skipped.',
 						{ PROBLEM_COUNT: problemCount }
 					),
 	},
