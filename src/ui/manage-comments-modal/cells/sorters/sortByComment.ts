@@ -9,13 +9,8 @@ export default function sortByComment(
 	const metadataA = rowA.data.metadata as ReviewAnnotationMetadata;
 	const metadataB = rowB.data.metadata as ReviewAnnotationMetadata;
 
-	const commentOrProposalA = metadataA.proposedChange
-		? `${metadataA.proposedChange} ${metadataA.comment}`
-		: metadataA.comment;
+	const commentA = metadataA.proposedChange ? '' : metadataA.comment;
+	const commentB = metadataB.proposedChange ? '' : metadataB.comment;
 
-	const commentOrProposalB = metadataB.proposedChange
-		? `${metadataB.proposedChange} ${metadataB.comment}`
-		: metadataB.comment;
-
-	return commentOrProposalA.localeCompare(commentOrProposalB);
+	return commentA.localeCompare(commentB);
 }

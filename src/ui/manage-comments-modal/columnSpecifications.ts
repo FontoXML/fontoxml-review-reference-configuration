@@ -5,12 +5,16 @@ import t from 'fontoxml-localization/src/t';
 
 import CellComponentForAuthor from './cells/CellComponentForAuthor';
 import CellComponentForComment from './cells/CellComponentForComment';
+import CellComponentForProposedChange from './cells/CellComponentForProposedChange';
 import CellComponentForRepliesCount from './cells/CellComponentForRepliesCount';
+import CellComponentForResolution from './cells/CellComponentForResolution';
 import CellComponentForTimestamp from './cells/CellComponentForTimestamp';
 import CellComponentForType from './cells/CellComponentForType';
 import sortByAuthor from './cells/sorters/sortByAuthor';
 import sortByComment from './cells/sorters/sortByComment';
+import sortByProposedChange from './cells/sorters/sortByProposedChange';
 import sortByRepliesCount from './cells/sorters/sortByRepliesCount';
+import sortByResolution from './cells/sorters/sortByResolution';
 import sortByTimestamp from './cells/sorters/sortByTimestamp';
 import sortByType from './cells/sorters/sortByType';
 
@@ -56,19 +60,19 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			CellComponent: CellComponentForComment,
 			canBeHidden: false,
 			column: 'comment',
-			label: t('Comment or Proposal'),
+			label: t('Comment'),
 			maxWidth: 350,
 			minWidth: 135,
 			sortBy: sortByComment,
 		},
-		// {
-		// 	CellComponent: CellComponentForProposedChange,
-		// 	column: 'proposedChange',
-		// 	label: t('Proposed change'),
-		// 	maxWidth: 350,
-		// 	minWidth: 184,
-		// 	sortBy: sortByProposedChange,
-		// },
+		{
+			CellComponent: CellComponentForProposedChange,
+			column: 'proposedChange',
+			label: t('Proposed change'),
+			maxWidth: 350,
+			minWidth: 184,
+			sortBy: sortByProposedChange,
+		},
 		{
 			CellComponent: CellComponentForRepliesCount,
 			column: 'replies',
@@ -78,15 +82,15 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			minWidth: 148,
 			sortBy: sortByRepliesCount,
 		},
-		// {
-		// 	CellComponent: CellComponentForResolution,
-		// 	column: 'resolution',
-		// 	initialWidth: '139px',
-		// 	label: t('Resolution'),
-		// 	maxWidth: 139,
-		// 	minWidth: 139,
-		// 	sortBy: sortByResolution,
-		// },
+		{
+			CellComponent: CellComponentForResolution,
+			column: 'resolution',
+			initialWidth: '139px',
+			label: t('Resolution'),
+			maxWidth: 139,
+			minWidth: 139,
+			sortBy: sortByResolution,
+		},
 	];
 
 export default columnSpecifications;

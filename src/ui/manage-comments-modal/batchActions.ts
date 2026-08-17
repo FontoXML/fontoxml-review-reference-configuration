@@ -4,6 +4,7 @@ import t from 'fontoxml-localization/src/t';
 
 import BatchResolveForm from './BatchResolveForm';
 import determineResolvedDocumentRevisionIdForAnnotation from './determineResolveDocumentRevisionIdForAnnotation';
+import type { ReviewAnnotationResolvedMetadata } from './types';
 
 const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 	{
@@ -76,17 +77,10 @@ const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 
 				editAnnotation(row.data.id, {
 					resolvedDocumentRevisionId,
-					// TODO: this casting is :( can we describe the incoming
-					// data type with a generic type param somewhere?
-					// TODO: resolvedMetadata is typed as any JSON value,
-					// can we describe its expected shape somewhere?
 					resolvedMetadata: {
 						resolution: data.resolution,
 						resolutionComment: data.resolutionComment,
-					} as {
-						resolution: 'accepted' | 'rejected';
-						resolutionComment?: string;
-					},
+					} as ReviewAnnotationResolvedMetadata,
 					status: ReviewAnnotationStatus.RESOLVED,
 				});
 			}
