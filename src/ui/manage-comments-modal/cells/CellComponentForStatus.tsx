@@ -34,7 +34,11 @@ const CellComponentForStatus = ({
 		if (row.data.status === ReviewAnnotationStatus.RESOLVED && resolution) {
 			return (
 				<Chip
-					iconBefore={resolution === 'accepted' ? 'check' : 'cross'}
+					iconBefore={
+						resolution === 'accepted'
+							? 'far fa-check'
+							: 'far fa-times'
+					}
 					label={resolutionLabelByResolution[resolution]}
 				/>
 			);
