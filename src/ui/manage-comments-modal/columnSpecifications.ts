@@ -7,14 +7,14 @@ import CellComponentForAuthor from './cells/CellComponentForAuthor';
 import CellComponentForComment from './cells/CellComponentForComment';
 import CellComponentForProposedChange from './cells/CellComponentForProposedChange';
 import CellComponentForRepliesCount from './cells/CellComponentForRepliesCount';
-import CellComponentForResolution from './cells/CellComponentForResolution';
+import CellComponentForStatus from './cells/CellComponentForStatus';
 import CellComponentForTimestamp from './cells/CellComponentForTimestamp';
 import CellComponentForType from './cells/CellComponentForType';
 import sortByAuthor from './cells/sorters/sortByAuthor';
 import sortByComment from './cells/sorters/sortByComment';
 import sortByProposedChange from './cells/sorters/sortByProposedChange';
 import sortByRepliesCount from './cells/sorters/sortByRepliesCount';
-import sortByResolution from './cells/sorters/sortByResolution';
+import sortByStatus from './cells/sorters/sortByStatus';
 import sortByTimestamp from './cells/sorters/sortByTimestamp';
 import sortByType from './cells/sorters/sortByType';
 
@@ -83,13 +83,13 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			sortBy: sortByRepliesCount,
 		},
 		{
-			CellComponent: CellComponentForResolution,
-			column: 'resolution',
+			CellComponent: CellComponentForStatus,
+			column: 'status',
 			initialWidth: '139px',
-			label: t('Resolution'),
+			label: t('Status'),
 			maxWidth: 139,
 			minWidth: 139,
-			sortBy: sortByResolution,
+			sortBy: sortByStatus,
 		},
 	];
 

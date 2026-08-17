@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Flex, Label } from 'fontoxml-design-system/src/components';
+import { Flex, Icon, Label } from 'fontoxml-design-system/src/components';
 import type { CellComponentProps } from 'fontoxml-design-system/src/components/data-table/types';
 import type { FdsPaddingSize } from 'fontoxml-design-system/src/types';
 import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
@@ -33,7 +33,10 @@ const CellComponentForRepliesCount = ({
 			flex="1"
 			flexDirection="row"
 			paddingSize={paddingSize}
+			spaceSize="s"
 		>
+			<Icon icon="far fa-reply" size="s" />
+
 			<Label>{label}</Label>
 		</Flex>
 	);
