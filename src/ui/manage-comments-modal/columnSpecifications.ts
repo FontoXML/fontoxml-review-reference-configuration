@@ -49,11 +49,11 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 		{
 			CellComponent: CellComponentForType,
 			column: 'type',
-			initialWidth: '126px',
+			initialWidth: '144px',
 			isInitiallyVisible: true,
 			label: t('Type'),
-			maxWidth: 126,
-			minWidth: 126,
+			maxWidth: 144,
+			minWidth: 144,
 			sortBy: sortByType,
 		},
 		{
@@ -85,10 +85,10 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 		{
 			CellComponent: CellComponentForStatus,
 			column: 'status',
-			initialWidth: '139px',
+			initialWidth: '115px',
 			label: t('Status'),
-			maxWidth: 139,
-			minWidth: 139,
+			maxWidth: 115,
+			minWidth: 115,
 			sortBy: sortByStatus,
 		},
 	];
