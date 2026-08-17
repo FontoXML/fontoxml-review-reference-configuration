@@ -75,8 +75,8 @@ const BatchResolveForm = ({
 	);
 
 	useEffect(() => {
-		onDataChange(valueByName);
-	}, [onDataChange, valueByName]);
+		onDataChange(feedbackByName, valueByName);
+	}, [feedbackByName, onDataChange, valueByName]);
 
 	const validateResolutionField = useCallback<FdsValidateCallback>(
 		(value: unknown) => {
