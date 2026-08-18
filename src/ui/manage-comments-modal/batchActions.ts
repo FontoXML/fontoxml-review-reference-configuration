@@ -51,9 +51,6 @@ const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 
 			return { type: 'ok' };
 		},
-		confirmationMessage: t(
-			'This will share all selected comments and their data. This process cannot be reversed.'
-		),
 		renderProblemWarningMessage: ({ okCount, problemCount }) =>
 			okCount === 0
 				? t('No selected comments are available for sharing.')
@@ -61,6 +58,7 @@ const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for sharing and will be skipped.',
 						{ PROBLEM_COUNT: problemCount }
 					),
+		noMoreProblemsMessage: t('All comments are available for sharing.'),
 	},
 	{
 		type: 'callback-with-form',
