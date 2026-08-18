@@ -24,7 +24,7 @@ import TruncatedText from './TruncatedText';
 
 type Props = {
 	context: ReviewCardContentComponentProps['context'];
-	focusableRef: React.MutableRefObject<HTMLElement>;
+	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	onProposalMerge?: ReviewCardContentComponentProps['onProposalMerge'];
 	onReplyEdit: ReviewCardContentComponentProps['onReplyEdit'];
 	onReplyErrorHide: ReviewCardContentComponentProps['onReplyErrorHide'];

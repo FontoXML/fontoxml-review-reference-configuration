@@ -13,7 +13,7 @@ import Replies from '../shared/Replies';
 const MAX_NUMBER_OF_REPLIES_TO_SHOW = 2;
 
 type Props = RepliesProps & {
-	focusableRef: React.MutableRefObject<HTMLElement>;
+	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	replies: ReviewCardContentComponentProps['reviewAnnotation']['replies'];
 	hasResolution: boolean;
 	includeResolutionInTruncatedReplies?: boolean;

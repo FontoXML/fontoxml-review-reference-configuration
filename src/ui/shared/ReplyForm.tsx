@@ -72,7 +72,7 @@ function validateReplyField(value: string): FdsFormFeedback | null {
 }
 
 type ReplyFormContentProps = {
-	focusableRef: React.MutableRefObject<HTMLElement>;
+	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	isSubmitDisabled: boolean;
 	onFieldChange(...args: unknown[]): void;
 	onCancelButtonClick(): void;
@@ -191,7 +191,7 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 };
 
 type ReplyFormProps = {
-	focusableRef: React.MutableRefObject<HTMLElement>;
+	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	onCancel: ReviewCardContentComponentProps['onReplyFormCancel'];
 	onHide: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefresh: ReviewCardContentComponentProps['onReplyRefresh'];

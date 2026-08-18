@@ -34,7 +34,7 @@ const rows = { minimum: 2, maximum: 6 };
 
 const CommentAddOrEditFormContent: React.FC<
 	Props & {
-		focusableRef: React.MutableRefObject<HTMLElement>;
+		focusableRef: React.MutableRefObject<HTMLElement | null>;
 		isSubmitDisabled: boolean;
 		onFieldChange(...args: unknown[]): void;
 		valueByName: FdsFormValueByName;
@@ -151,7 +151,7 @@ const CommentAddOrEditFormContent: React.FC<
 };
 
 type Props = {
-	focusableRef: React.MutableRefObject<HTMLElement>;
+	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
