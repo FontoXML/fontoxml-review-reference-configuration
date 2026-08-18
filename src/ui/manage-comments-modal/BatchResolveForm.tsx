@@ -25,11 +25,7 @@ import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
 
-const ROWS = { minimum: 2, maximum: 6 };
-
-const formContentContainerStyles = applyCss({
-	minWidth: '20rem',
-});
+const ROWS = { minimum: 1, maximum: 2 };
 
 type FeedbackByName = FdsFormFeedbackByName & {
 	resolution?: FdsFormFeedback;
@@ -98,34 +94,12 @@ const BatchResolveForm = ({
 			onFieldChange={handleFormFieldChange}
 			valueByName={valueByName}
 		>
-			<Block
-				{...formContentContainerStyles}
-				dataTestId="BatchResolveForm"
-				spaceVerticalSize="m"
-			>
-				<Flex flexDirection="column" spaceSize="s">
-					<Flex
-						alignItems="center"
-						flexDirection="row"
-						justifyContent="flex-start"
-						spaceSize="s"
-					>
-						<Icon icon="check" />
-
-						<FormRow
-							hasRequiredAsterisk
-							isLabelBold
-							label={t('Resolve and')}
-							labelColorName="text-color"
-						/>
-					</Flex>
-
-					<RadioButtonGroup
-						items={resolutions}
-						name="resolution"
-						validate={validateResolutionField}
-					/>
-				</Flex>
+			<Block dataTestId="BatchResolveForm" spaceVerticalSize="m">
+				<RadioButtonGroup
+					items={resolutions}
+					name="resolution"
+					validate={validateResolutionField}
+				/>
 
 				<TextArea
 					ariaLabel={t('Resolution message')}

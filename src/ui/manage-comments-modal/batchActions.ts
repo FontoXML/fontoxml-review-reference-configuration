@@ -64,6 +64,7 @@ const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 		type: 'callback-with-form',
 		Component: BatchResolveForm,
 		id: 'resolve-form',
+		maxWidth: '42rem',
 		callback: (applicableRows, data, { editAnnotation }) => {
 			for (const row of applicableRows) {
 				const hierarchyNodeId = row.hierarchyNodeId;
