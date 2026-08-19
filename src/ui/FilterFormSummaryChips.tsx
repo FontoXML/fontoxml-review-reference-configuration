@@ -1,12 +1,17 @@
+import type { ComponentProps, CSSProperties } from 'react';
 import { useCallback, useMemo } from 'react';
 
 import {
+	Button,
 	Chip,
 	ChipGroup,
 	CompactStateMessage,
 	Flex,
 	Icon,
 	Label,
+	Popover,
+	PopoverAnchor,
+	PopoverBody,
 	SingleLineChipGroup,
 } from 'fontoxml-design-system/src/components';
 import type { FdsCheckboxValue } from 'fontoxml-design-system/src/types';
@@ -14,6 +19,94 @@ import type { ReviewFilterFormSummaryComponent } from 'fontoxml-feedback/src/typ
 import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
+
+const errorMessage = t('Something went wrong while updating the filter');
+
+const ErrorIconButtonWithPopover = () => {
+	const renderAnchor = useCallback<
+		ComponentProps<typeof PopoverAnchor>['renderAnchor']
+	>(
+		({ isPopoverOpened, onRef, setIsPopoverOpened, togglePopover }) => (
+			<Button
+				ariaLabel={errorMessage}
+				// TODO: private API
+				icon={
+					<Icon
+						icon="far fa-exclamation-triangle"
+						colorName="icon-s-warning-color"
+					/>
+				}
+				isSelected={isPopoverOpened}
+				onClick={togglePopover}
+				onRef={onRef}
+				tooltipContent={errorMessage}
+				type="transparent"
+			/>
+		),
+		[]
+	);
+
+	const renderPopover = useCallback<
+		ComponentProps<typeof PopoverAnchor>['renderPopover']
+	>(
+		() => (
+			<Popover>
+				<PopoverBody>
+					<CompactStateMessage
+						connotation="warning"
+						isSingleLine
+						message={errorMessage}
+						paddingSize={0}
+					/>
+				</PopoverBody>
+			</Popover>
+		),
+		[]
+	);
+
+	return (
+		<PopoverAnchor
+			renderAnchor={renderAnchor}
+			renderPopover={renderPopover}
+		/>
+	);
+};
+
+// TODO: unfortunately we cannot put this where it is used ...
+// This uses vw > viewport width.
+// But we want to think about it in terms of the % of width inside the
+// ModalContentToolbar of the ManageCommentsModal
+const DESIRED_VISUAL_MAX_WIDTH: CSSProperties['maxWidth'] = '50vw';
+// So deduct a bunch of things.
+// Because the Modal is size="none", see ManageCommentsModal + FDS' Modal.
+const MODAL_MARGIN_LEFT: CSSProperties['marginLeft'] = '1rem';
+const MODAL_MARGIN_RIGHT: CSSProperties['marginRight'] = '1rem';
+// Hardcoded to match FDS' ModalBody.
+const MODAL_BODY_PADDING_LEFT: CSSProperties['paddingLeft'] = '1rem';
+const MODAL_BODY_PADDING_RIGHT: CSSProperties['paddingLeft'] = '1rem';
+// Hardcoded to match FDS' ModalContentToolbar.
+const MODAL_TOOLBAR_CONTENT_PADDING_LEFT: CSSProperties['paddingLeft'] =
+	'0.5rem';
+const MODAL_TOOLBAR_CONTENT_PADDING_RIGHT: CSSProperties['paddingRight'] =
+	'0.5rem';
+// Hardcoded to match (the manually measured) FxFilterIconButton.
+const FILTER_FORM_DROP_ICON_BUTTON_WIDTH: CSSProperties['width'] = '62px';
+// Hardcoded to match ReviewAnnotationOverview's Flex spaceSize="m" container
+// that is in its ModalContentToolbar around this component and the drop button.
+const SPACE_BETWEEN_SUMMARY_AND_DROP_BUTTON: CSSProperties['marginLeft'] =
+	'0.5rem';
+// From left to right visually, add everything up.
+const TOTAL_COMPENSATION: CSSProperties['maxWidth'] = `calc(${
+	MODAL_MARGIN_LEFT
+} + ${MODAL_BODY_PADDING_LEFT} + ${MODAL_TOOLBAR_CONTENT_PADDING_LEFT} + ${
+	SPACE_BETWEEN_SUMMARY_AND_DROP_BUTTON
+} + ${FILTER_FORM_DROP_ICON_BUTTON_WIDTH} + ${
+	MODAL_TOOLBAR_CONTENT_PADDING_RIGHT
+} + ${MODAL_BODY_PADDING_RIGHT} + ${MODAL_MARGIN_RIGHT})`;
+
+const SINGLE_LINE_CHIP_GROUP_MAX_WIDTH: CSSProperties['maxWidth'] = `calc(${
+	DESIRED_VISUAL_MAX_WIDTH
+} - ${TOTAL_COMPENSATION})`;
 
 const FilterFormSummaryChips = ({
 	// This is set if the /review/state endpoint is called (whenever onChange is
@@ -287,21 +380,43 @@ const FilterFormSummaryChips = ({
 		valueByName.typePublicationCommentTechnical,
 	]);
 
+	if (isSingleLine) {
+		return (
+			<Flex
+				alignItems="center"
+				dataTestId="FilterFormSummaryChips"
+				data-is-single-line
+				flex="1"
+				flexDirection="row"
+				justifyContent="flex-end"
+				spaceSize="m"
+			>
+				<SingleLineChipGroup
+					flex="1"
+					justifyContent="flex-end"
+					maxWidth={SINGLE_LINE_CHIP_GROUP_MAX_WIDTH}
+				>
+					{chips}
+				</SingleLineChipGroup>
+
+				{isSubmitting && (
+					<Icon icon="spinner" colorName="icon-s-info-color" />
+				)}
+				{error && !isSubmitting && <ErrorIconButtonWithPopover />}
+			</Flex>
+		);
+	}
+
 	return (
 		<Flex
-			alignItems="center"
+			dataTestId="FilterFormSummaryChips"
 			flex="none"
-			flexDirection={isSingleLine ? 'row' : 'column'}
+			flexDirection="column"
 			spaceSize="s"
 		>
-			{isSingleLine && (
-				<SingleLineChipGroup flex="none">{chips}</SingleLineChipGroup>
-			)}
-			{!isSingleLine && (
-				<ChipGroup ariaLabel={t('Filter chips')} flex="none">
-					{chips}
-				</ChipGroup>
-			)}
+			<ChipGroup ariaLabel={t('Filter chips')} flex="none">
+				{chips}
+			</ChipGroup>
 
 			{isSubmitting && (
 				<Flex alignItems="center" flex="none" spaceSize="s">
@@ -314,10 +429,7 @@ const FilterFormSummaryChips = ({
 			{error && !isSubmitting && (
 				<CompactStateMessage
 					connotation="warning"
-					isSingleLine={isSingleLine}
-					message={t(
-						'Something went wrong while updating the filter.'
-					)}
+					message={errorMessage}
 					paddingSize={0}
 				/>
 			)}
