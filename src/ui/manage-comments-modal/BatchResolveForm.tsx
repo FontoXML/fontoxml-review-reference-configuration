@@ -25,6 +25,14 @@ import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
 
+// NOTE: for every field (name) in the form,
+// there should be a key with the same name and a value of null here.
+const EMPTY_FEEDBACK: FdsFormFeedbackByName = {
+	// TODO: FdsFormFeedbackByName is badly typed (but public):
+	// it should also accept null instead of only FdsFormFeedback as a value.
+	resolution: null,
+};
+
 const ROWS = { minimum: 1, maximum: 2 };
 
 type FeedbackByName = FdsFormFeedbackByName & {
@@ -52,8 +60,10 @@ const BatchResolveForm = ({
 	okCount,
 	problemCount,
 	onDataChange,
+	showFeedback,
 }: Props) => {
-	const [feedbackByName, setFeedbackByName] = useState<FeedbackByName>({});
+	const [feedbackByName, setFeedbackByName] =
+		useState<FeedbackByName>(EMPTY_FEEDBACK);
 	const [valueByName, setValueByName] = useState<ValueByName>({});
 
 	const handleFormFieldChange = useCallback<OnFieldChange>(
@@ -90,7 +100,7 @@ const BatchResolveForm = ({
 
 	return (
 		<Form
-			feedbackByName={feedbackByName}
+			feedbackByName={showFeedback ? feedbackByName : EMPTY_FEEDBACK}
 			onFieldChange={handleFormFieldChange}
 			valueByName={valueByName}
 		>
