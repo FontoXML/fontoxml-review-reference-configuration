@@ -3,14 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 
 import {
 	Block,
-	Flex,
-	Icon,
-	FormRow,
 	RadioButtonGroup,
 	TextArea,
 	Form,
 } from 'fontoxml-design-system/src/components';
-import { applyCss } from 'fontoxml-design-system/src/system';
 import type {
 	FdsDataTableBatchActionFormComponentProps,
 	FdsFormValueByName,
