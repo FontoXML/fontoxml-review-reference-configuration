@@ -54,7 +54,7 @@ type Props =
 
 const BatchResolveForm = ({
 	rows,
-	applicabilityByRowId,
+	applicabilityByRows,
 	applicableRows,
 	nonApplicableRows,
 	okCount,
