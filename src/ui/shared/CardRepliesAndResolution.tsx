@@ -133,7 +133,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			}
 
 			return [reviewAnnotation.replies, null, []];
-		}, [reviewAnnotation.replies]);
+		}, [reviewAnnotation.replies, shouldShowReplies]);
 
 	const repliesCount =
 		repliesBefore.length +
