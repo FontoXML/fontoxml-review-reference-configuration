@@ -2,24 +2,28 @@ import type { ComponentProps } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
 import {
-	Block,
 	RadioButtonGroup,
 	TextArea,
 	Form,
+	Flex,
+	Button,
+	Block,
 } from 'fontoxml-design-system/src/components';
-import type {
-	FdsDataTableBatchActionFormComponentProps,
-	FdsFormValueByName,
-} from 'fontoxml-design-system/src/types';
+import { applyCss } from 'fontoxml-design-system/src/system';
+import type { FdsFormValueByName } from 'fontoxml-design-system/src/types';
 import type {
 	FdsFormFeedback,
 	FdsValidateCallback,
 	FdsFormFeedbackByName,
 } from 'fontoxml-design-system/src/types';
-import type { ReviewAnnotationInstance } from 'fontoxml-feedback/src/types';
+import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import type { ReviewAnnotationsOverviewBatchActionFormComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
+
+import determineResolvedDocumentRevisionIdForAnnotation from './determineResolveDocumentRevisionIdForAnnotation';
+import type { ReviewAnnotationResolvedMetadata } from './types';
 
 // NOTE: for every field (name) in the form,
 // there should be a key with the same name and a value of null here.
@@ -30,6 +34,17 @@ const EMPTY_FEEDBACK: FdsFormFeedbackByName = {
 };
 
 const ROWS = { minimum: 1, maximum: 2 };
+
+// NOTE: this cannot be bigger than 22rem
+// The preview pane inside the ReviewAnnotationsOverview can be as big as
+// 100% - 26rem (26rem is the available space for the table with the preview
+// pane open).
+// And inside the table there is 1rem margin on the left and right around the
+// BatchActionsOverlay, and inside that there is 1 rem padding left and right
+// around the form, which leaves 22rem for the form itself.
+// Without this, the Form itself will render even smaller because this form only
+// has a small heading, radio button group and textarea in it.
+const styles = applyCss({ minWidth: '22rem' });
 
 type FeedbackByName = FdsFormFeedbackByName & {
 	resolution?: FdsFormFeedback;
@@ -45,18 +60,22 @@ type OnFieldChange = Exclude<
 	undefined
 >;
 
-type Props =
-	FdsDataTableBatchActionFormComponentProps<ReviewAnnotationInstance>;
+type Props = ReviewAnnotationsOverviewBatchActionFormComponentProps;
 
 const BatchResolveForm = ({
 	rows,
-	applicabilityByRows,
+	applicabilityByRow,
 	applicableRows,
 	nonApplicableRows,
 	okCount,
 	problemCount,
+
 	onDataChange,
+
 	showFeedback,
+
+	closeForm,
+	onSubmit,
 }: Props) => {
 	const [feedbackByName, setFeedbackByName] =
 		useState<FeedbackByName>(EMPTY_FEEDBACK);
@@ -94,13 +113,41 @@ const BatchResolveForm = ({
 		[]
 	);
 
+	const handleSubmitButtonClick = useCallback(() => {
+		onSubmit(({ editAnnotation }) => {
+			for (const row of applicableRows) {
+				const hierarchyNodeId = row.hierarchyNodeId;
+				const resolvedDocumentRevisionId =
+					determineResolvedDocumentRevisionIdForAnnotation(
+						hierarchyNodeId,
+						row.data.id
+					);
+
+				editAnnotation(row.data.id, {
+					resolvedDocumentRevisionId,
+					resolvedMetadata: {
+						resolution: valueByName.resolution,
+						resolutionComment: valueByName.resolutionComment,
+					} as ReviewAnnotationResolvedMetadata,
+					status: ReviewAnnotationStatus.RESOLVED,
+				});
+			}
+		});
+	}, [
+		applicableRows,
+		onSubmit,
+		valueByName.resolution,
+		valueByName.resolutionComment,
+	]);
+
 	return (
-		<Form
-			feedbackByName={showFeedback ? feedbackByName : EMPTY_FEEDBACK}
-			onFieldChange={handleFormFieldChange}
-			valueByName={valueByName}
-		>
-			<Block dataTestId="BatchResolveForm" spaceVerticalSize="m">
+		<Block {...styles}>
+			<Form
+				feedbackByName={showFeedback ? feedbackByName : EMPTY_FEEDBACK}
+				onFieldChange={handleFormFieldChange}
+				spaceVerticalSize="m"
+				valueByName={valueByName}
+			>
 				<RadioButtonGroup
 					items={resolutions}
 					name="resolution"
@@ -115,8 +162,22 @@ const BatchResolveForm = ({
 					)}
 					rows={ROWS}
 				/>
-			</Block>
-		</Form>
+
+				<Flex
+					flexDirection="row"
+					justifyContent="space-between"
+					spaceSize="l"
+				>
+					<Button label={t('Cancel')} onClick={closeForm} />
+
+					<Button
+						label={t('Resolve')}
+						onClick={handleSubmitButtonClick}
+						type="primary"
+					/>
+				</Flex>
+			</Form>
+		</Block>
 	);
 };
 

@@ -1,12 +1,16 @@
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
-import type { ReviewAnnotationsOverviewBatchAction } from 'fontoxml-feedback/src/types';
+import type {
+	ReviewAnnotationsOverviewBatchActionCallback,
+	ReviewAnnotationsOverviewBatchActionForm,
+} from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import BatchResolveForm from './BatchResolveForm';
-import determineResolvedDocumentRevisionIdForAnnotation from './determineResolveDocumentRevisionIdForAnnotation';
-import type { ReviewAnnotationResolvedMetadata } from './types';
 
-const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
+const batchActions: (
+	| ReviewAnnotationsOverviewBatchActionCallback
+	| ReviewAnnotationsOverviewBatchActionForm
+)[] = [
 	{
 		type: 'callback',
 		callback: (applicableRows, { editAnnotation }) => {
@@ -59,31 +63,12 @@ const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 						{ PROBLEM_COUNT: problemCount }
 					),
 		noMoreProblemsMessage: t('All comments are available for sharing.'),
-	},
+	} as ReviewAnnotationsOverviewBatchActionCallback,
 	{
-		type: 'callback-with-form',
+		type: 'form',
 		Component: BatchResolveForm,
 		id: 'resolve-form',
 		maxWidth: '42rem',
-		callback: (applicableRows, data, { editAnnotation }) => {
-			for (const row of applicableRows) {
-				const hierarchyNodeId = row.hierarchyNodeId;
-				const resolvedDocumentRevisionId =
-					determineResolvedDocumentRevisionIdForAnnotation(
-						hierarchyNodeId,
-						row.data.id
-					);
-
-				editAnnotation(row.data.id, {
-					resolvedDocumentRevisionId,
-					resolvedMetadata: {
-						resolution: data.resolution,
-						resolutionComment: data.resolutionComment,
-					} as ReviewAnnotationResolvedMetadata,
-					status: ReviewAnnotationStatus.RESOLVED,
-				});
-			}
-		},
 		label: t('Resolve'),
 		icon: 'far fa-check',
 		tooltipContent: t('Resolve the selected comments.'),
@@ -126,7 +111,7 @@ const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for resolving and will be skipped.',
 						{ PROBLEM_COUNT: problemCount }
 					),
-	},
+	} as ReviewAnnotationsOverviewBatchActionForm,
 	{
 		type: 'callback',
 		callback: (applicableRows, { editAnnotation }) => {
@@ -181,7 +166,7 @@ const batchActions: ReviewAnnotationsOverviewBatchAction[] = [
 						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for discarding and will be skipped.',
 						{ PROBLEM_COUNT: problemCount }
 					),
-	},
+	} as ReviewAnnotationsOverviewBatchActionCallback,
 ];
 
 export default batchActions;

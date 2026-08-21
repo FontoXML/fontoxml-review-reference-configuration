@@ -19,7 +19,7 @@ const TITLE = t('Manage comments and change proposals');
 
 type Props = ModalProps;
 
-const ManageCommentsModal = ({ cancelModal, submitModal }: Props) => {
+const ManageCommentsModal = ({ cancelModal }: Props) => {
 	const handleModalKeyDown = useCallback<FdsOnKeyDownCallback>(
 		(event) => {
 			if (event.key === 'Escape') {
@@ -39,7 +39,6 @@ const ManageCommentsModal = ({ cancelModal, submitModal }: Props) => {
 					columnSpecifications={columnSpecifications}
 					// initialSelectedReviewAnnotationId={}
 					navigatorId={REVIEW_NAVIGATOR_ID}
-					// rowActions={rowActions}
 					// searchFilterCallback={}
 				/>
 			</ModalBody>
