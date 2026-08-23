@@ -28,6 +28,7 @@ const ManageCommentsModal = ({ cancelModal }: Props) => {
 		},
 		[cancelModal]
 	);
+	const tableId = 'overview-table';
 
 	return (
 		<Modal size="none" isFullHeight onKeyDown={handleModalKeyDown}>
@@ -35,6 +36,7 @@ const ManageCommentsModal = ({ cancelModal }: Props) => {
 
 			<ModalBody>
 				<ReviewAnnotationsOverview
+					tableId={tableId}
 					batchActions={batchActions}
 					columnSpecifications={columnSpecifications}
 					// initialSelectedReviewAnnotationId={}
