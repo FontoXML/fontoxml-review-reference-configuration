@@ -24,6 +24,7 @@ import resolutions from '../feedbackResolutions';
 
 import determineResolvedDocumentRevisionIdForAnnotation from './determineResolveDocumentRevisionIdForAnnotation';
 import type { ReviewAnnotationResolvedMetadata } from './types';
+import useDelayedFormFeedback from './useDelayedFormFeedback';
 
 // NOTE: for every field (name) in the form,
 // there should be a key with the same name and a value of null here.
@@ -70,9 +71,7 @@ const BatchResolveForm = ({
 	okCount,
 	problemCount,
 
-	onDataChange,
-
-	showFeedback,
+	updateApplicability,
 
 	closeForm,
 	onSubmit,
@@ -80,6 +79,13 @@ const BatchResolveForm = ({
 	const [feedbackByName, setFeedbackByName] =
 		useState<FeedbackByName>(EMPTY_FEEDBACK);
 	const [valueByName, setValueByName] = useState<ValueByName>({});
+
+	const [
+		showFormFeedback,
+		_hasAnyFormFeedback,
+		hasErrorFormFeedback,
+		onFormSubmitWithDelayedFormFeedback,
+	] = useDelayedFormFeedback(feedbackByName);
 
 	const handleFormFieldChange = useCallback<OnFieldChange>(
 		({ feedback, name, value }) => {
@@ -96,8 +102,8 @@ const BatchResolveForm = ({
 	);
 
 	useEffect(() => {
-		onDataChange(feedbackByName, valueByName);
-	}, [feedbackByName, onDataChange, valueByName]);
+		updateApplicability(valueByName);
+	}, [updateApplicability, valueByName]);
 
 	const validateResolutionField = useCallback<FdsValidateCallback>(
 		(value: unknown) => {
@@ -114,27 +120,30 @@ const BatchResolveForm = ({
 	);
 
 	const handleSubmitButtonClick = useCallback(() => {
-		onSubmit(({ editAnnotation }) => {
-			for (const row of applicableRows) {
-				const hierarchyNodeId = row.hierarchyNodeId;
-				const resolvedDocumentRevisionId =
-					determineResolvedDocumentRevisionIdForAnnotation(
-						hierarchyNodeId,
-						row.data.id
-					);
+		onFormSubmitWithDelayedFormFeedback(() => {
+			onSubmit(({ editAnnotation }) => {
+				for (const row of applicableRows) {
+					const hierarchyNodeId = row.hierarchyNodeId;
+					const resolvedDocumentRevisionId =
+						determineResolvedDocumentRevisionIdForAnnotation(
+							hierarchyNodeId,
+							row.data.id
+						);
 
-				editAnnotation(row.data.id, {
-					resolvedDocumentRevisionId,
-					resolvedMetadata: {
-						resolution: valueByName.resolution,
-						resolutionComment: valueByName.resolutionComment,
-					} as ReviewAnnotationResolvedMetadata,
-					status: ReviewAnnotationStatus.RESOLVED,
-				});
-			}
+					editAnnotation(row.data.id, {
+						resolvedDocumentRevisionId,
+						resolvedMetadata: {
+							resolution: valueByName.resolution,
+							resolutionComment: valueByName.resolutionComment,
+						} as ReviewAnnotationResolvedMetadata,
+						status: ReviewAnnotationStatus.RESOLVED,
+					});
+				}
+			});
 		});
 	}, [
 		applicableRows,
+		onFormSubmitWithDelayedFormFeedback,
 		onSubmit,
 		valueByName.resolution,
 		valueByName.resolutionComment,
@@ -143,7 +152,9 @@ const BatchResolveForm = ({
 	return (
 		<Block {...styles}>
 			<Form
-				feedbackByName={showFeedback ? feedbackByName : EMPTY_FEEDBACK}
+				feedbackByName={
+					showFormFeedback ? feedbackByName : EMPTY_FEEDBACK
+				}
 				onFieldChange={handleFormFieldChange}
 				spaceVerticalSize="m"
 				valueByName={valueByName}
@@ -174,6 +185,7 @@ const BatchResolveForm = ({
 						label={t('Resolve')}
 						onClick={handleSubmitButtonClick}
 						type="primary"
+						isDisabled={showFormFeedback && hasErrorFormFeedback}
 					/>
 				</Flex>
 			</Form>
