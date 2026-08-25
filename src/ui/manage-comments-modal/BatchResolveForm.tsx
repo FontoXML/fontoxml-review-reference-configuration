@@ -186,7 +186,14 @@ const BatchResolveForm = ({
 							okCount === 0 ||
 							(showFormFeedback && hasErrorFormFeedback)
 						}
-						label={t('Resolve')}
+						label={
+							problemCount === 0
+								? t('Resolve')
+								: t('Resolve ({OK_COUNT} of {TOTAL_COUNT})', {
+										OK_COUNT: okCount,
+										TOTAL_COUNT: rows.length,
+									})
+						}
 						onClick={handleSubmitButtonClick}
 						type="primary"
 					/>
