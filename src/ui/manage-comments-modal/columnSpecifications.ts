@@ -27,7 +27,9 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 250,
 			minWidth: 115,
 			sortBy: sortByAuthor,
+			sortIncreasingIcon: 'far fa-arrow-up-z-a',
 			sortIncreasingLabel: t('Sort A to Z'),
+			sortDecreasingIcon: 'far fa-arrow-down-z-a',
 			sortDecreasingLabel: t('Sort Z to A'),
 		},
 		{
@@ -59,7 +61,9 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 144,
 			minWidth: 144,
 			sortBy: sortByType,
+			sortIncreasingIcon: 'far fa-arrow-up-z-a',
 			sortIncreasingLabel: t('Sort A to Z'),
+			sortDecreasingIcon: 'far fa-arrow-down-z-a',
 			sortDecreasingLabel: t('Sort Z to A'),
 		},
 		{
@@ -70,7 +74,9 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 350,
 			minWidth: 135,
 			sortBy: sortByComment,
+			sortIncreasingIcon: 'far fa-arrow-up-z-a',
 			sortIncreasingLabel: t('Sort A to Z'),
+			sortDecreasingIcon: 'far fa-arrow-down-z-a',
 			sortDecreasingLabel: t('Sort Z to A'),
 		},
 		{
@@ -80,7 +86,9 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 350,
 			minWidth: 184,
 			sortBy: sortByProposedChange,
+			sortIncreasingIcon: 'far fa-arrow-up-z-a',
 			sortIncreasingLabel: t('Sort A to Z'),
+			sortDecreasingIcon: 'far fa-arrow-down-z-a',
 			sortDecreasingLabel: t('Sort Z to A'),
 		},
 		{
