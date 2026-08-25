@@ -22,14 +22,14 @@ const batchActions: (
 		},
 		label: t('Share'),
 		icon: 'far fa-users',
-		tooltipContent: t('Share the selected comments.'),
+		tooltipContent: t('Share the selected comments'),
 		isAlwaysInMoreMenu: false,
 		getApplicability: (row, _formData) => {
 			if (row.hasOpenForm) {
 				return {
 					type: 'problem',
 					message: t(
-						'You cannot share a comment while it is being edited.'
+						'You cannot share a comment while it is being edited'
 					),
 				};
 			}
@@ -37,19 +37,19 @@ const batchActions: (
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
-					message: t('This comment is no longer available.'),
+					message: t('This comment is no longer available'),
 				};
 			}
 			if (row.data.status === ReviewAnnotationStatus.RESOLVED) {
 				return {
 					type: 'problem',
-					message: t('This comment is already resolved.'),
+					message: t('This comment is already resolved'),
 				};
 			}
 			if (row.data.status === ReviewAnnotationStatus.SHARED) {
 				return {
 					type: 'problem',
-					message: t('This comment is already shared.'),
+					message: t('This comment is already shared'),
 				};
 			}
 
@@ -57,12 +57,12 @@ const batchActions: (
 		},
 		renderProblemWarningMessage: ({ okCount, problemCount }) =>
 			okCount === 0
-				? t('No selected comments are available for sharing.')
+				? t('No selected comments are available for sharing')
 				: t(
-						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for sharing and will be skipped.',
+						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for sharing and will be skipped',
 						{ PROBLEM_COUNT: problemCount }
 					),
-		noMoreProblemsMessage: t('All comments are available for sharing.'),
+		noMoreProblemsMessage: t('All comments are available for sharing'),
 	} as ReviewAnnotationsOverviewBatchActionCallback,
 	{
 		type: 'form',
@@ -71,14 +71,14 @@ const batchActions: (
 		maxWidth: '42rem',
 		label: t('Resolve'),
 		icon: 'far fa-check',
-		tooltipContent: t('Resolve the selected comments.'),
+		tooltipContent: t('Resolve the selected comments'),
 		isAlwaysInMoreMenu: false,
 		getApplicability: (row, _formData) => {
 			if (row.hasOpenForm) {
 				return {
 					type: 'problem',
 					message: t(
-						'You cannot resolve a comment while it is being edited.'
+						'You cannot resolve a comment while it is being edited'
 					),
 				};
 			}
@@ -86,19 +86,19 @@ const batchActions: (
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
-					message: t('This comment is no longer available.'),
+					message: t('This comment is no longer available'),
 				};
 			}
 			if (row.data.status === ReviewAnnotationStatus.RESOLVED) {
 				return {
 					type: 'problem',
-					message: t('This comment is already resolved.'),
+					message: t('This comment is already resolved'),
 				};
 			}
 			if (row.data.status !== ReviewAnnotationStatus.SHARED) {
 				return {
 					type: 'problem',
-					message: t('This comment is not shared yet.'),
+					message: t('This comment is not shared yet'),
 				};
 			}
 
@@ -106,9 +106,9 @@ const batchActions: (
 		},
 		renderProblemWarningMessage: ({ okCount, problemCount }) =>
 			okCount === 0
-				? t('No selected comments are available for resolving.')
+				? t('No selected comments are available for resolving')
 				: t(
-						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for resolving and will be skipped.',
+						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for resolving and will be skipped',
 						{ PROBLEM_COUNT: problemCount }
 					),
 	} as ReviewAnnotationsOverviewBatchActionForm,
@@ -123,14 +123,14 @@ const batchActions: (
 		},
 		label: t('Discard'),
 		icon: 'far fa-trash-can',
-		tooltipContent: t('Discard the selected comments.'),
+		tooltipContent: t('Discard the selected comments'),
 		isAlwaysInMoreMenu: true,
 		getApplicability: (row, _formData) => {
 			if (row.hasOpenForm) {
 				return {
 					type: 'problem',
 					message: t(
-						'You cannot discard a comment while it is being edited.'
+						'You cannot discard a comment while it is being edited'
 					),
 				};
 			}
@@ -138,19 +138,19 @@ const batchActions: (
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
-					message: t('This comment is no longer available.'),
+					message: t('This comment is no longer available'),
 				};
 			}
 			if (row.data.status === ReviewAnnotationStatus.RESOLVED) {
 				return {
 					type: 'problem',
-					message: t('Resolved comments can no longer be discarded.'),
+					message: t('Resolved comments can no longer be discarded'),
 				};
 			}
 			if (row.data.status === ReviewAnnotationStatus.SHARED) {
 				return {
 					type: 'problem',
-					message: t('Shared comments can no longer be discarded.'),
+					message: t('Shared comments can no longer be discarded'),
 				};
 			}
 
@@ -161,9 +161,9 @@ const batchActions: (
 		),
 		renderProblemWarningMessage: ({ okCount, problemCount }) =>
 			okCount === 0
-				? t('No selected comments are available for discarding.')
+				? t('No selected comments are available for discarding')
 				: t(
-						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for discarding and will be skipped.',
+						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for discarding and will be skipped',
 						{ PROBLEM_COUNT: problemCount }
 					),
 	} as ReviewAnnotationsOverviewBatchActionCallback,

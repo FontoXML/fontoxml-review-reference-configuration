@@ -110,7 +110,7 @@ const BatchResolveForm = ({
 			if (!value) {
 				return {
 					connotation: 'error',
-					message: 'Resolution is required.',
+					message: 'Resolution is required',
 				} as FdsFormFeedback;
 			}
 
