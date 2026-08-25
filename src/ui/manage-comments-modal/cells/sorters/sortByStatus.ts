@@ -11,12 +11,27 @@ export default function sortByStatus(
 	const rowBIsPrivate = rowB.data.status === ReviewAnnotationStatus.PRIVATE;
 
 	if (rowAIsPrivate && !rowBIsPrivate) {
-		return 1;
-	}
-	if (!rowAIsPrivate && rowBIsPrivate) {
 		return -1;
 	}
+	if (!rowAIsPrivate && rowBIsPrivate) {
+		return 1;
+	}
 	if (rowAIsPrivate && rowBIsPrivate) {
+		return 0;
+	}
+
+	const rowAIsUnresolved =
+		rowA.data.status !== ReviewAnnotationStatus.RESOLVED;
+	const rowBIsUnresolved =
+		rowB.data.status !== ReviewAnnotationStatus.RESOLVED;
+
+	if (rowAIsUnresolved && !rowBIsUnresolved) {
+		return -1;
+	}
+	if (!rowAIsUnresolved && rowBIsUnresolved) {
+		return 1;
+	}
+	if (rowAIsUnresolved && rowBIsUnresolved) {
 		return 0;
 	}
 

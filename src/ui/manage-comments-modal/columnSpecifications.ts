@@ -27,6 +27,8 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 250,
 			minWidth: 115,
 			sortBy: sortByAuthor,
+			sortIncreasingLabel: t('Sort A to Z'),
+			sortDecreasingLabel: t('Sort Z to A'),
 		},
 		{
 			CellComponent: CellComponentForTimestamp,
@@ -35,6 +37,8 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 250,
 			minWidth: 101,
 			sortBy: sortByTimestamp,
+			sortIncreasingLabel: t('Sort oldest to newest'),
+			sortDecreasingLabel: t('Sort newest to oldest'),
 		},
 		{
 			CellComponent: CellComponentForHierarchyNodeTitle,
@@ -55,6 +59,8 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 144,
 			minWidth: 144,
 			sortBy: sortByType,
+			sortIncreasingLabel: t('Sort A to Z'),
+			sortDecreasingLabel: t('Sort Z to A'),
 		},
 		{
 			CellComponent: CellComponentForComment,
@@ -64,6 +70,8 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 350,
 			minWidth: 135,
 			sortBy: sortByComment,
+			sortIncreasingLabel: t('Sort A to Z'),
+			sortDecreasingLabel: t('Sort Z to A'),
 		},
 		{
 			CellComponent: CellComponentForProposedChange,
@@ -72,6 +80,8 @@ const columnSpecifications: FdsDataTableColumnSpecification<ReviewAnnotationsOve
 			maxWidth: 350,
 			minWidth: 184,
 			sortBy: sortByProposedChange,
+			sortIncreasingLabel: t('Sort A to Z'),
+			sortDecreasingLabel: t('Sort Z to A'),
 		},
 		{
 			CellComponent: CellComponentForRepliesCount,
