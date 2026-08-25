@@ -395,6 +395,7 @@ const FilterFormSummaryChips = ({
 					flex="1"
 					justifyContent="flex-end"
 					maxWidth={SINGLE_LINE_CHIP_GROUP_MAX_WIDTH}
+					spaceSize="m"
 				>
 					{chips}
 				</SingleLineChipGroup>
