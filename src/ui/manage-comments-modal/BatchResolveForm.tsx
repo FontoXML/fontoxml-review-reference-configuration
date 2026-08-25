@@ -182,10 +182,13 @@ const BatchResolveForm = ({
 					<Button label={t('Cancel')} onClick={closeForm} />
 
 					<Button
+						isDisabled={
+							okCount === 0 ||
+							(showFormFeedback && hasErrorFormFeedback)
+						}
 						label={t('Resolve')}
 						onClick={handleSubmitButtonClick}
 						type="primary"
-						isDisabled={showFormFeedback && hasErrorFormFeedback}
 					/>
 				</Flex>
 			</Form>
