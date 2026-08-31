@@ -29,62 +29,65 @@ const useNestedCheckboxesForFilterOptions = (
 	// (When clicking on an indeterminate checkbox, it will become true.)
 
 	// This object describes how the data is nested.
-	const checkboxForest = useMemo(
+	const checkboxForest = useMemo<CheckboxNode[]>(
 		() => [
 			{
 				name: 'typeComment',
-				value: !!valueByName.typeComment,
+				value: valueByName.typeComment as CheckboxNode['value'],
 				children: [
 					{
 						name: 'typeCommentTechnical',
-						value: !!valueByName.typeCommentTechnical,
+						value: valueByName.typeCommentTechnical as CheckboxNode['value'],
 					},
 					{
 						name: 'typeCommentGeneral',
-						value: !!valueByName.typeCommentGeneral,
+						value: valueByName.typeCommentGeneral as CheckboxNode['value'],
 					},
 					{
 						name: 'typeCommentEditorial',
-						value: !!valueByName.typeCommentEditorial,
+						value: valueByName.typeCommentEditorial as CheckboxNode['value'],
 					},
 				],
 			},
 			{
 				name: 'typePublicationComment',
-				value: !!valueByName.typePublicationComment,
+				value: valueByName.typePublicationComment as CheckboxNode['value'],
 				children: [
 					{
 						name: 'typePublicationCommentTechnical',
-						value: !!valueByName.typePublicationCommentTechnical,
+						value: valueByName.typePublicationCommentTechnical as CheckboxNode['value'],
 					},
 					{
 						name: 'typePublicationCommentGeneral',
-						value: !!valueByName.typePublicationCommentGeneral,
+						value: valueByName.typePublicationCommentGeneral as CheckboxNode['value'],
 					},
 					{
 						name: 'typePublicationCommentEditorial',
-						value: !!valueByName.typePublicationCommentEditorial,
+						value: valueByName.typePublicationCommentEditorial as CheckboxNode['value'],
 					},
 				],
 			},
-			{ name: 'typeProposal', value: !!valueByName.typeProposal },
+			{
+				name: 'typeProposal',
+				value: valueByName.typeProposal as CheckboxNode['value'],
+			},
 			{
 				name: 'resolutionResolved',
-				value: !!valueByName.resolutionResolved,
+				value: valueByName.resolutionResolved as CheckboxNode['value'],
 				children: [
 					{
 						name: 'resolutionResolvedAccepted',
-						value: !!valueByName.resolutionResolvedAccepted,
+						value: valueByName.resolutionResolvedAccepted as CheckboxNode['value'],
 					},
 					{
 						name: 'resolutionResolvedRejected',
-						value: !!valueByName.resolutionResolvedRejected,
+						value: valueByName.resolutionResolvedRejected as CheckboxNode['value'],
 					},
 				],
 			},
 			{
 				name: 'resolutionUnresolved',
-				value: !!valueByName.resolutionUnresolved,
+				value: valueByName.resolutionUnresolved as CheckboxNode['value'],
 			},
 		],
 		// This is just a derivative of valueByName (which is not nested in this case).
