@@ -25,15 +25,6 @@ const batchActions: (
 		tooltipContent: t('Share the selected comments'),
 		isAlwaysInMoreMenu: false,
 		getApplicability: (row, _formData) => {
-			if (row.hasOpenForm) {
-				return {
-					type: 'problem',
-					message: t(
-						'You cannot share a comment while it is being edited'
-					),
-				};
-			}
-
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
@@ -74,15 +65,6 @@ const batchActions: (
 		tooltipContent: t('Resolve the selected comments'),
 		isAlwaysInMoreMenu: false,
 		getApplicability: (row, _formData) => {
-			if (row.hasOpenForm) {
-				return {
-					type: 'problem',
-					message: t(
-						'You cannot resolve a comment while it is being edited'
-					),
-				};
-			}
-
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
@@ -126,15 +108,6 @@ const batchActions: (
 		tooltipContent: t('Discard the selected comments'),
 		isAlwaysInMoreMenu: true,
 		getApplicability: (row, _formData) => {
-			if (row.hasOpenForm) {
-				return {
-					type: 'problem',
-					message: t(
-						'You cannot discard a comment while it is being edited'
-					),
-				};
-			}
-
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
