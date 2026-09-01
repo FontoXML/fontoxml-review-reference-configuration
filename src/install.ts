@@ -46,8 +46,7 @@ export default function install(): void {
 
 		NavigatorContentComponent: CommentsAndProposalsReviewNavigatorContent,
 
-		enableSidebar: true,
-		sidebarLabel: t('Comments'),
+		sidebar: { label: t('Comments'), batchEditOptions: [{}] },
 	});
 
 	registerTextRangeReviewAnnotationType('comment', {
