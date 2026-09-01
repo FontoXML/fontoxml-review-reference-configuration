@@ -36,17 +36,6 @@ const EMPTY_FEEDBACK: FdsFormFeedbackByName = {
 
 const ROWS = { minimum: 1, maximum: 2 };
 
-// NOTE: this cannot be bigger than 22rem
-// The preview pane inside the ReviewAnnotationsOverview can be as big as
-// 100% - 26rem (26rem is the available space for the table with the preview
-// pane open).
-// And inside the table there is 1rem margin on the left and right around the
-// BatchActionsOverlay, and inside that there is 1 rem padding left and right
-// around the form, which leaves 22rem for the form itself.
-// Without this, the Form itself will render even smaller because this form only
-// has a small heading, radio button group and textarea in it.
-const styles = applyCss({ minWidth: '22rem' });
-
 type FeedbackByName = FdsFormFeedbackByName & {
 	resolution?: FdsFormFeedback;
 };
@@ -150,56 +139,52 @@ const BatchResolveForm = ({
 	]);
 
 	return (
-		<Block {...styles}>
-			<Form
-				feedbackByName={
-					showFormFeedback ? feedbackByName : EMPTY_FEEDBACK
-				}
-				onFieldChange={handleFormFieldChange}
-				spaceVerticalSize="m"
-				valueByName={valueByName}
+		<Form
+			feedbackByName={showFormFeedback ? feedbackByName : EMPTY_FEEDBACK}
+			onFieldChange={handleFormFieldChange}
+			spaceVerticalSize="m"
+			valueByName={valueByName}
+		>
+			<RadioButtonGroup
+				items={resolutions}
+				name="resolution"
+				validate={validateResolutionField}
+			/>
+
+			<TextArea
+				ariaLabel={t('Resolution message')}
+				name="resolutionComment"
+				placeholder={t(
+					'Optionally describe how or why you resolved these comments'
+				)}
+				rows={ROWS}
+			/>
+
+			<Flex
+				flexDirection="row"
+				justifyContent="space-between"
+				spaceSize="l"
 			>
-				<RadioButtonGroup
-					items={resolutions}
-					name="resolution"
-					validate={validateResolutionField}
+				<Button label={t('Cancel')} onClick={closeForm} />
+
+				<Button
+					isDisabled={
+						okCount === 0 ||
+						(showFormFeedback && hasErrorFormFeedback)
+					}
+					label={
+						problemCount === 0
+							? t('Resolve')
+							: t('Resolve ({OK_COUNT} of {TOTAL_COUNT})', {
+									OK_COUNT: okCount,
+									TOTAL_COUNT: rows.length,
+								})
+					}
+					onClick={handleSubmitButtonClick}
+					type="primary"
 				/>
-
-				<TextArea
-					ariaLabel={t('Resolution message')}
-					name="resolutionComment"
-					placeholder={t(
-						'Optionally describe how or why you resolved these comments'
-					)}
-					rows={ROWS}
-				/>
-
-				<Flex
-					flexDirection="row"
-					justifyContent="space-between"
-					spaceSize="l"
-				>
-					<Button label={t('Cancel')} onClick={closeForm} />
-
-					<Button
-						isDisabled={
-							okCount === 0 ||
-							(showFormFeedback && hasErrorFormFeedback)
-						}
-						label={
-							problemCount === 0
-								? t('Resolve')
-								: t('Resolve ({OK_COUNT} of {TOTAL_COUNT})', {
-										OK_COUNT: okCount,
-										TOTAL_COUNT: rows.length,
-									})
-						}
-						onClick={handleSubmitButtonClick}
-						type="primary"
-					/>
-				</Flex>
-			</Form>
-		</Block>
+			</Flex>
+		</Form>
 	);
 };
 
