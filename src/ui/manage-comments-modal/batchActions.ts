@@ -25,6 +25,22 @@ const batchActions: (
 		tooltipContent: t('Share the selected comments'),
 		isAlwaysInMoreMenu: false,
 		getApplicability: (row, _formData) => {
+			if (row.data.error) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments in an error state can not be shared. Resolve the error to proceed.'
+					),
+				};
+			}
+			if (row.hasOpenForm) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments with open forms can not be shared. Close the form to proceed.'
+					),
+				};
+			}
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
@@ -65,6 +81,22 @@ const batchActions: (
 		tooltipContent: t('Resolve the selected comments'),
 		isAlwaysInMoreMenu: false,
 		getApplicability: (row, _formData) => {
+			if (row.data.error) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments in an error state can not be resolved. Resolve the error to proceed.'
+					),
+				};
+			}
+			if (row.hasOpenForm) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments with open forms can not be resolved. Close the form to proceed.'
+					),
+				};
+			}
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
@@ -108,6 +140,22 @@ const batchActions: (
 		tooltipContent: t('Discard the selected comments'),
 		isAlwaysInMoreMenu: true,
 		getApplicability: (row, _formData) => {
+			if (row.data.error) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments in an error state can not be discarded. Resolve the error to proceed.'
+					),
+				};
+			}
+			if (row.hasOpenForm) {
+				return {
+					type: 'problem',
+					message: t(
+						'Comments with open forms can not be discarded. Close the form to proceed.'
+					),
+				};
+			}
 			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
