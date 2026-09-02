@@ -47,13 +47,10 @@ const batchActions: (
 					message: t('This comment is no longer available'),
 				};
 			}
-			if (row.data.status === ReviewAnnotationStatus.RESOLVED) {
-				return {
-					type: 'problem',
-					message: t('This comment is already resolved'),
-				};
-			}
-			if (row.data.status === ReviewAnnotationStatus.SHARED) {
+			if (
+				row.data.status === ReviewAnnotationStatus.RESOLVED ||
+				row.data.status === ReviewAnnotationStatus.SHARED
+			) {
 				return {
 					type: 'problem',
 					message: t('This comment is already shared'),
@@ -111,7 +108,9 @@ const batchActions: (
 			if (row.data.status !== ReviewAnnotationStatus.SHARED) {
 				return {
 					type: 'problem',
-					message: t('This comment is not shared yet'),
+					message: t(
+						'Private comments can not be resolved. Share the comment to proceed.'
+					),
 				};
 			}
 
@@ -164,13 +163,13 @@ const batchActions: (
 			if (row.data.status === ReviewAnnotationStatus.RESOLVED) {
 				return {
 					type: 'problem',
-					message: t('Resolved comments can no longer be discarded'),
+					message: t('Resolved comments can not be discarded'),
 				};
 			}
 			if (row.data.status === ReviewAnnotationStatus.SHARED) {
 				return {
 					type: 'problem',
-					message: t('Shared comments can no longer be discarded'),
+					message: t('Shared comments can not be discarded'),
 				};
 			}
 
