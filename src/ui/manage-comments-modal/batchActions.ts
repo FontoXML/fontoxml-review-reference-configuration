@@ -75,7 +75,6 @@ const batchActions: (
 		type: 'form',
 		Component: BatchResolveForm,
 		id: 'resolve-form',
-		maxWidth: '42rem',
 		label: t('Resolve'),
 		icon: 'far fa-check',
 		tooltipContent: t('Resolve the selected comments'),
