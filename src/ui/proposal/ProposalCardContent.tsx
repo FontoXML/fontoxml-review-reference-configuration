@@ -32,7 +32,8 @@ const footerButtonContainerStyles = { height: '32px' };
 const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	context,
 	focusableRef,
-	isSelectedToShare,
+	isChecked,
+	onCheckboxChange,
 	reviewAnnotation,
 	onReviewAnnotationEdit,
 	onReviewAnnotationErrorAcknowledge,
@@ -42,7 +43,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	onReviewAnnotationRemove,
 	onReviewAnnotationResolve,
 	onReviewAnnotationShare,
-	onReviewAnnotationShareAddRemoveToggle,
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	onReplyAdd,
@@ -149,14 +149,12 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 			<CardHeader
 				context={context}
 				hasReplyInNonIdleBusyState={hasReplyInNonIdleBusyState}
-				isSelectedToShare={isSelectedToShare}
+				isChecked={isChecked}
+				onCheckboxChange={onCheckboxChange}
 				onReviewAnnotationEdit={onReviewAnnotationEdit}
 				onReviewAnnotationRemove={onReviewAnnotationRemove}
 				onReviewAnnotationResolve={onReviewAnnotationResolve}
 				onReviewAnnotationShare={onReviewAnnotationShare}
-				onReviewAnnotationShareAddRemoveToggle={
-					onReviewAnnotationShareAddRemoveToggle
-				}
 				onReviewAnnotationShowInCreatedContext={
 					onReviewAnnotationShowInCreatedContext
 				}

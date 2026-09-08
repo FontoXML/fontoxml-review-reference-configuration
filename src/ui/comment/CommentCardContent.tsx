@@ -29,7 +29,8 @@ import CommentCardFooter from './CommentCardFooter';
 function CommentCardContent({
 	context,
 	focusableRef,
-	isSelectedToShare,
+	isChecked,
+	onCheckboxChange,
 	reviewAnnotation,
 	onReviewAnnotationEdit,
 	onReviewAnnotationErrorAcknowledge,
@@ -39,7 +40,6 @@ function CommentCardContent({
 	onReviewAnnotationRemove,
 	onReviewAnnotationResolve,
 	onReviewAnnotationShare,
-	onReviewAnnotationShareAddRemoveToggle,
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	onReplyAdd,
@@ -165,14 +165,12 @@ function CommentCardContent({
 			<CardHeader
 				context={context}
 				hasReplyInNonIdleBusyState={hasReplyInNonIdleBusyState}
-				isSelectedToShare={isSelectedToShare}
+				isChecked={isChecked}
+				onCheckboxChange={onCheckboxChange}
 				onReviewAnnotationEdit={onReviewAnnotationEdit}
 				onReviewAnnotationRemove={onReviewAnnotationRemove}
 				onReviewAnnotationResolve={onReviewAnnotationResolve}
 				onReviewAnnotationShare={onReviewAnnotationShare}
-				onReviewAnnotationShareAddRemoveToggle={
-					onReviewAnnotationShareAddRemoveToggle
-				}
 				onReviewAnnotationShowInCreatedContext={
 					onReviewAnnotationShowInCreatedContext
 				}

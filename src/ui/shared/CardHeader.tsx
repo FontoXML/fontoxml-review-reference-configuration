@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import {
-	Block,
 	Button,
 	Checkbox,
 	Chip,
@@ -48,12 +47,12 @@ function determineShareButtonLabel(
 type Props = {
 	context: ReviewCardContentComponentProps['context'];
 	hasReplyInNonIdleBusyState: boolean;
-	isSelectedToShare: ReviewCardContentComponentProps['isSelectedToShare'];
+	isChecked: ReviewCardContentComponentProps['isChecked'];
+	onCheckboxChange: ReviewCardContentComponentProps['onCheckboxChange'];
 	onReviewAnnotationEdit: ReviewCardContentComponentProps['onReviewAnnotationEdit'];
 	onReviewAnnotationRemove: ReviewCardContentComponentProps['onReviewAnnotationRemove'];
 	onReviewAnnotationResolve: ReviewCardContentComponentProps['onReviewAnnotationResolve'];
 	onReviewAnnotationShare: ReviewCardContentComponentProps['onReviewAnnotationShare'];
-	onReviewAnnotationShareAddRemoveToggle: ReviewCardContentComponentProps['onReviewAnnotationShareAddRemoveToggle'];
 	onReviewAnnotationShowInCreatedContext: ReviewCardContentComponentProps['onReviewAnnotationShowInCreatedContext'];
 	onReviewAnnotationShowInResolvedContext: ReviewCardContentComponentProps['onReviewAnnotationShowInResolvedContext'];
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
@@ -62,12 +61,12 @@ type Props = {
 const CardHeader: React.FC<Props> = ({
 	context,
 	hasReplyInNonIdleBusyState,
-	isSelectedToShare,
+	isChecked,
+	onCheckboxChange,
 	onReviewAnnotationEdit,
 	onReviewAnnotationRemove,
 	onReviewAnnotationResolve,
 	onReviewAnnotationShare,
-	onReviewAnnotationShareAddRemoveToggle,
 	onReviewAnnotationShowInCreatedContext,
 	onReviewAnnotationShowInResolvedContext,
 	reviewAnnotation,
@@ -333,8 +332,8 @@ const CardHeader: React.FC<Props> = ({
 					<Checkbox
 						ariaLabel={t('Select comment')}
 						isDisabled={reviewAnnotation.isLoading}
-						onChange={onReviewAnnotationShareAddRemoveToggle}
-						value={isSelectedToShare}
+						onChange={onCheckboxChange}
+						value={isChecked}
 					/>
 				</Flex>
 			)}
