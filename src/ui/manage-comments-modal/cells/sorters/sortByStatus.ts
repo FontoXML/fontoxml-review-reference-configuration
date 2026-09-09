@@ -1,7 +1,7 @@
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
 import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
 
-import type { ReviewAnnotationResolvedMetadata } from '../../types';
+import type { ReviewAnnotationResolvedMetadata } from '../../../shared/types';
 
 export default function sortByStatus(
 	rowA: ReviewAnnotationsOverviewDataTableRow,

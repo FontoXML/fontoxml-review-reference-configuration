@@ -1,7 +1,7 @@
 import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
 
 import commentTypes from '../../../commentTypes';
-import type { ReviewAnnotationMetadata } from '../../types';
+import type { ReviewAnnotationMetadata } from '../../../shared/types';
 
 export default function sortByType(
 	rowA: ReviewAnnotationsOverviewDataTableRow,

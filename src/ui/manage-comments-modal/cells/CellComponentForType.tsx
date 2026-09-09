@@ -7,7 +7,7 @@ import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/sr
 import t from 'fontoxml-localization/src/t';
 
 import commentTypes from '../../commentTypes';
-import type { ReviewAnnotationMetadata } from '../types';
+import type { ReviewAnnotationMetadata } from '../../shared/types';
 
 const paddingSize: FdsPaddingSize = { horizontal: 'm' };
 

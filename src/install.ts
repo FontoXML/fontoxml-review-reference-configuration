@@ -14,6 +14,7 @@ import globalCommentsStackedIcons from './ui/global-comments-stacked-icons.svg';
 import ManageCommentsModal from './ui/manage-comments-modal/ManageCommentsModal';
 import MastheadForReview from './ui/MastheadForReview';
 import ProposalCardContent from './ui/proposal/ProposalCardContent';
+import batchActions from './ui/shared/batchActions';
 
 export default function install(): void {
 	registerReviewNavigator(REVIEW_NAVIGATOR_ID, {
@@ -46,7 +47,7 @@ export default function install(): void {
 
 		NavigatorContentComponent: CommentsAndProposalsReviewNavigatorContent,
 
-		sidebar: { label: t('Comments'), batchEditOptions: [{}] },
+		sidebar: { label: t('Comments'), batchActions },
 	});
 
 	registerTextRangeReviewAnnotationType('comment', {

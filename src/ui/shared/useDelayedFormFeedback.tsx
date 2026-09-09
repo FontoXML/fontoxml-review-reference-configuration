@@ -1,6 +1,7 @@
-import { hasFormFeedback } from 'fds/system';
-import type { FdsFormFeedbackByName } from 'fds/types';
 import { useState, useCallback, useMemo } from 'react';
+
+import { hasFormFeedback } from 'fontoxml-design-system/src/system';
+import type { FdsFormFeedbackByName } from 'fontoxml-design-system/src/types';
 
 /**
  * Delay showing Form feedback until the first form submit attempt.
@@ -29,10 +30,11 @@ export default function useDelayedFormFeedback(
 	const hasAnyFormFeedback = useMemo(() => {
 		return hasFormFeedback(feedbackByName);
 	}, [feedbackByName]);
+
 	const hasErrorFormFeedback = useMemo(() => {
 		return Object.values(feedbackByName).some(
-			// TODO: FdsFormFeedbackByName and  should also be typed to
-			// expect null.
+			// TODO: FdsFormFeedbackByName and FdsFormFeedback should also be
+			// typed to expect null.
 			(feedback) => feedback?.connotation === 'error'
 		);
 	}, [feedbackByName]);

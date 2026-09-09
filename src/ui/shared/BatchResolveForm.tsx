@@ -7,9 +7,7 @@ import {
 	Form,
 	Flex,
 	Button,
-	Block,
 } from 'fontoxml-design-system/src/components';
-import { applyCss } from 'fontoxml-design-system/src/system';
 import type { FdsFormValueByName } from 'fontoxml-design-system/src/types';
 import type {
 	FdsFormFeedback,
@@ -22,7 +20,7 @@ import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
 
-import determineResolvedDocumentRevisionIdForAnnotation from './determineResolveDocumentRevisionIdForAnnotation';
+import determineResolvedDocumentRevisionIdForAnnotation from './determineResolvedDocumentRevisionIdForAnnotation';
 import type { ReviewAnnotationResolvedMetadata } from './types';
 import useDelayedFormFeedback from './useDelayedFormFeedback';
 

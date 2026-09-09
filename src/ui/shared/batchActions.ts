@@ -1,16 +1,14 @@
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
 import type {
-	ReviewAnnotationsOverviewBatchActionCallback,
-	ReviewAnnotationsOverviewBatchActionForm,
+	ReviewBatchAction,
+	ReviewBatchActionCallback,
+	ReviewBatchActionForm,
 } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import BatchResolveForm from './BatchResolveForm';
 
-const batchActions: (
-	| ReviewAnnotationsOverviewBatchActionCallback
-	| ReviewAnnotationsOverviewBatchActionForm
-)[] = [
+const batchActions: ReviewBatchAction[] = [
 	{
 		type: 'callback',
 		callback: (applicableRows, { editAnnotation }) => {
@@ -67,7 +65,7 @@ const batchActions: (
 						{ PROBLEM_COUNT: problemCount }
 					),
 		noMoreProblemsMessage: t('All comments are available for sharing'),
-	} as ReviewAnnotationsOverviewBatchActionCallback,
+	} as ReviewBatchActionCallback,
 	{
 		type: 'form',
 		Component: BatchResolveForm,
@@ -123,7 +121,7 @@ const batchActions: (
 						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for resolving and will be skipped',
 						{ PROBLEM_COUNT: problemCount }
 					),
-	} as ReviewAnnotationsOverviewBatchActionForm,
+	} as ReviewBatchActionForm,
 	{
 		type: 'callback',
 		callback: (applicableRows, { editAnnotation }) => {
@@ -185,7 +183,7 @@ const batchActions: (
 						'{PROBLEM_COUNT, plural, one {1 comment is} other {# comments are}} not available for discarding and will be skipped',
 						{ PROBLEM_COUNT: problemCount }
 					),
-	} as ReviewAnnotationsOverviewBatchActionCallback,
+	} as ReviewBatchActionCallback,
 ];
 
 export default batchActions;

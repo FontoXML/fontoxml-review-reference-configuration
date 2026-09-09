@@ -6,7 +6,7 @@ import type { FdsPaddingSize } from 'fontoxml-design-system/src/types';
 import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
-import type { ReviewAnnotationMetadata } from '../types';
+import type { ReviewAnnotationMetadata } from '../../shared/types';
 
 const paddingSize: FdsPaddingSize = { horizontal: 'm' };
 
