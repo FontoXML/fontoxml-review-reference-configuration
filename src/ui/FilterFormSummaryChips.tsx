@@ -125,6 +125,9 @@ const FilterFormSummaryChips = ({
 	// If the filter form is visible, the filter form header already handles and displays the
 	// loading/submitting state.
 	isSubmitting,
+	// Used to align the chips when isSingleLine is true, used in the ReviewAnnotationOverview and
+	// FeedbackSidebar.
+	justifyContent,
 	// Call this with a new version of the given valueByName to update the filter in any way you
 	// like from this summary. In this implementation it is called with a null value for the field
 	// whose Chip's "remove (X) button" you click: effectively removing the filter option.
@@ -388,21 +391,26 @@ const FilterFormSummaryChips = ({
 				data-is-single-line
 				flex="1"
 				flexDirection="row"
-				justifyContent="flex-end"
+				justifyContent={justifyContent}
 				spaceSize="m"
 			>
+				{isSubmitting && justifyContent !== 'flex-end' && (
+					<Icon icon="spinner" colorName="icon-s-info-color" />
+				)}
+
 				<SingleLineChipGroup
 					flex="1"
-					justifyContent="flex-end"
+					justifyContent={justifyContent}
 					maxWidth={SINGLE_LINE_CHIP_GROUP_MAX_WIDTH}
 					spaceSize="m"
 				>
 					{chips}
 				</SingleLineChipGroup>
 
-				{isSubmitting && (
+				{isSubmitting && justifyContent === 'flex-end' && (
 					<Icon icon="spinner" colorName="icon-s-info-color" />
 				)}
+
 				{error && !isSubmitting && <ErrorIconButtonWithPopover />}
 			</Flex>
 		);
