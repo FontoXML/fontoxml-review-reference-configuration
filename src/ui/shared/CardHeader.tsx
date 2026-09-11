@@ -288,7 +288,7 @@ const CardHeader: React.FC<Props> = ({
 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING;
 	const hasNonRetryableError =
 		reviewAnnotation.error &&
-		(reviewAnnotation.error.recovery !== ReviewRecoveryOption.RETRYABLE);
+		reviewAnnotation.error.recovery !== ReviewRecoveryOption.RETRYABLE;
 	const showCheckbox =
 		context === FeedbackContextType.SIDEBAR_MULTI_SELECT ||
 		(isBatchShareModal && !hasNonRetryableError);
@@ -331,7 +331,17 @@ const CardHeader: React.FC<Props> = ({
 				<Flex flex="none">
 					<Checkbox
 						ariaLabel={t('Select comment')}
-						isDisabled={reviewAnnotation.isLoading}
+						isDisabled={
+							reviewAnnotation.isLoading ||
+							reviewAnnotation.busyState ===
+								ReviewBusyState.ADDING
+						}
+						tooltipContent={
+							reviewAnnotation.busyState ===
+							ReviewBusyState.ADDING
+								? t('Finish creating this comment to select it')
+								: undefined
+						}
 						onChange={onCheckboxChange}
 						value={isChecked}
 					/>
@@ -346,9 +356,7 @@ const CardHeader: React.FC<Props> = ({
 						{showShareButton && (
 							<Button
 								ariaLabel={
-									!shareButtonLabel
-										? t('Share')
-										: undefined
+									!shareButtonLabel ? t('Share') : undefined
 								}
 								key={shareButtonType}
 								icon={
@@ -417,8 +425,7 @@ const CardHeader: React.FC<Props> = ({
 								<Chip
 									ariaLabel={
 										!reviewAnnotation.isSelected
-											? (reviewAnnotation
-													.resolvedMetadata
+											? (reviewAnnotation.resolvedMetadata
 													?.resolution as string)
 											: undefined
 									}
@@ -430,9 +437,7 @@ const CardHeader: React.FC<Props> = ({
 												? 'far fa-times'
 												: undefined
 									}
-									isCondensed={
-										reviewAnnotation.isSelected
-									}
+									isCondensed={reviewAnnotation.isSelected}
 									label={
 										!reviewAnnotation.isSelected
 											? resolution
