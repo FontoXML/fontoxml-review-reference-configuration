@@ -18,15 +18,12 @@ const ProposalReplyComponent: React.FC<Props> = ({
 	onReplyAdd,
 	reviewAnnotation,
 }) => {
-	// Check if we are on the "/review" or "/*/history" route.
-	const isOnReviewOrHistoryRoute =
+	const showReplyAddInputField =
+		context === FeedbackContextType.OVERVIEW_DETAILS_PANE ||
 		context === FeedbackContextType.REVIEW ||
 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
 		context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY;
-
-	// If we are on the review or history route, we need to show the
-	// text input to add the reply.
-	if (isOnReviewOrHistoryRoute) {
+	if (showReplyAddInputField) {
 		return (
 			<ProposalCardFooter
 				onReplyAdd={onReplyAdd}
