@@ -79,10 +79,12 @@ function CommentCardContent({
 
 	const showFooter =
 		showReplyButton &&
-		(context === FeedbackContextType.EDITOR ||
-			context === FeedbackContextType.REVIEW ||
-			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
-	 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY) &&
+		context !== FeedbackContextType.EDITOR_SHARING &&
+		context !== FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
+		context !== FeedbackContextType.REVIEW_SHARING &&
+		context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING &&
+		context !== FeedbackContextType.CREATED_CONTEXT &&
+		context !== FeedbackContextType.RESOLVED_CONTEXT &&
 		reviewAnnotation.isSelected &&
 		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
 		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
