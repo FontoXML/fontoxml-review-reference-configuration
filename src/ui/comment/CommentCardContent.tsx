@@ -218,20 +218,23 @@ function CommentCardContent({
 											isBold
 										>{` ${commentType} `}</Label>
 
-										{!reviewAnnotation.targetFoundForRevision && (
-											<Icon
-												ariaLabel={t('Lost comment')}
-												colorName={
-													reviewAnnotation.isSelected
-														? 'tombstone-icon-selected-color'
-														: 'tombstone-icon-color'
-												}
-												icon="far fa-unlink"
-												tooltipContent={t(
-													'This comment lost its position in the content'
-												)}
-											/>
-										)}
+										{reviewAnnotation.localDocumentId &&
+											!reviewAnnotation.targetFoundForRevision && (
+												<Icon
+													ariaLabel={t(
+														'Lost comment'
+													)}
+													colorName={
+														reviewAnnotation.isSelected
+															? 'tombstone-icon-selected-color'
+															: 'tombstone-icon-color'
+													}
+													icon="far fa-unlink"
+													tooltipContent={t(
+														'This comment lost its position in the content'
+													)}
+												/>
+											)}
 									</>
 								)}
 							</Flex>

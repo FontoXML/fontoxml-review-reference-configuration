@@ -189,19 +189,23 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 											{t('Proposed change')}
 										</Label>
 
-										{!reviewAnnotation.targetFoundForRevision && (
-											<Icon
-												colorName={
-													reviewAnnotation.isSelected
-														? 'tombstone-icon-selected-color'
-														: 'tombstone-icon-color'
-												}
-												icon="far fa-unlink"
-												tooltipContent={t(
-													'This proposed change lost its position in the content'
-												)}
-											/>
-										)}
+										{reviewAnnotation.localDocumentId &&
+											!reviewAnnotation.targetFoundForRevision && (
+												<Icon
+													ariaLabel={t(
+														'Lost proposed change'
+													)}
+													colorName={
+														reviewAnnotation.isSelected
+															? 'tombstone-icon-selected-color'
+															: 'tombstone-icon-color'
+													}
+													icon="far fa-unlink"
+													tooltipContent={t(
+														'This proposed change lost its position in the content'
+													)}
+												/>
+											)}
 									</Flex>
 
 									{reviewAnnotation.isSelected && (
