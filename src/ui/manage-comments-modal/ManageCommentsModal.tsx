@@ -40,6 +40,7 @@ const ManageCommentsModal = ({ cancelModal }: Props) => {
 					batchActions={batchActions}
 					columnSpecifications={columnSpecifications}
 					// initialSelectedReviewAnnotationId={}
+					modalName="ManageCommentsModal"
 					navigatorId={REVIEW_NAVIGATOR_ID}
 					// searchFilterCallback={}
 				/>

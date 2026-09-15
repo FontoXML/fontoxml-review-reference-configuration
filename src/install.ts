@@ -47,7 +47,11 @@ export default function install(): void {
 
 		NavigatorContentComponent: CommentsAndProposalsReviewNavigatorContent,
 
-		sidebar: { label: t('Comments'), batchActions },
+		sidebar: {
+			label: t('Comments'),
+			batchActions,
+			globalMenuOperations: [{ name: 'open-manage-comments-modal' }],
+		},
 	});
 
 	registerTextRangeReviewAnnotationType('comment', {
