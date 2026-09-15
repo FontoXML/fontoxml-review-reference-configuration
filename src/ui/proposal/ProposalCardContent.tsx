@@ -2,12 +2,14 @@ import * as React from 'react';
 
 import {
 	Block,
+	Button,
 	Diff,
 	Flex,
 	HorizontalSeparationLine,
 	Icon,
 	Label,
 } from 'fontoxml-design-system/src/components';
+import { applyCss } from 'fontoxml-design-system/src/system';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationAcceptProposalButton from 'fontoxml-feedback/src/ReviewAnnotationAcceptProposalButton';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
@@ -25,9 +27,9 @@ import TruncatedText from '../shared/TruncatedText';
 
 import { CARD_HEADER_HEIGHT } from './../constants';
 import ProposalAddOrEditForm from './ProposalAddOrEditForm';
-import ProposalReplyComponent from './ProposalReplyComponent';
+import ProposalCardFooter from './ProposalCardFooter';
 
-const footerButtonContainerStyles = { height: '32px' };
+const footerButtonContainerStyles = applyCss({ height: '32px' });
 
 const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	context,
@@ -110,6 +112,12 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		reviewAnnotation.busyState !== ReviewBusyState.EDITING &&
 		reviewAnnotation.busyState !== ReviewBusyState.RESOLVING &&
 		!hasReplyInNonIdleBusyState;
+
+	const showReplyAddInputField =
+		context === FeedbackContextType.OVERVIEW_DETAILS_PANE ||
+		context === FeedbackContextType.REVIEW ||
+		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
+		context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY;
 
 	const showErrorFooter =
 		reviewAnnotation.error &&
@@ -351,25 +359,40 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 
 						<Flex
 							alignItems="center"
-							applyCss={footerButtonContainerStyles}
-							ariaRole="group"
+							{...(!showReplyAddInputField
+								? footerButtonContainerStyles
+								: {})}
 							justifyContent="flex-end"
 							spaceSize="m"
 						>
-							{showReplyButton && (
-								<ProposalReplyComponent
-									context={context}
+							{showReplyAddInputField && (
+								<ProposalCardFooter
 									onReplyAdd={onReplyAdd}
 									reviewAnnotation={reviewAnnotation}
 								/>
 							)}
-
-							{showAcceptProposalButton && (
-								<ReviewAnnotationAcceptProposalButton
-									onProposalMerge={onProposalMerge}
-									proposalState={proposalState}
+							{!showReplyAddInputField && (
+								<Button
+									icon="far fa-reply"
+									isDisabled={
+										!!reviewAnnotation.error ||
+										reviewAnnotation.isLoading
+									}
+									label={t('Reply')}
+									onClick={onReplyAdd}
+									tooltipContent={t(
+										'Reply to the proposed change.'
+									)}
 								/>
 							)}
+
+							{!showReplyAddInputField &&
+								showAcceptProposalButton && (
+									<ReviewAnnotationAcceptProposalButton
+										onProposalMerge={onProposalMerge}
+										proposalState={proposalState}
+									/>
+								)}
 						</Flex>
 					</Block>
 				)}
