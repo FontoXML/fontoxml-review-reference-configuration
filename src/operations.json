@@ -6,7 +6,7 @@
 		"steps": {
 			"type": "modal/ManageCommentsModal",
 			"data": {
-				"initialCheckedRowIds": "{{initialCheckedRowIds}}"
+				"initialCheckedAnnotationIds": "{{initialCheckedAnnotationIds}}"
 			}
 		}
 	}

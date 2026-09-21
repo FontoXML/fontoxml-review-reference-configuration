@@ -19,12 +19,12 @@ import columnSpecifications from './columnSpecifications';
 const TITLE = t('Manage comments and change proposals');
 
 type Props = ModalProps<{
-	initialCheckedRowIds: ReviewAnnotationsOverviewDataTableRow['id'][];
+	initialCheckedAnnotationIds: ReviewAnnotationsOverviewDataTableRow['id'][];
 }>;
 
 const ManageCommentsModal = ({
 	cancelModal,
-	data: { initialCheckedRowIds },
+	data: { initialCheckedAnnotationIds },
 }: Props) => {
 	const handleModalKeyDown = useCallback<FdsOnKeyDownCallback>(
 		(event) => {
@@ -45,7 +45,7 @@ const ManageCommentsModal = ({
 					tableId={tableId}
 					batchActions={batchActions}
 					columnSpecifications={columnSpecifications}
-					initialCheckedRowIds={initialCheckedRowIds}
+					initialCheckedAnnotationIds={initialCheckedAnnotationIds}
 					modalName="ManageCommentsModal"
 					navigatorId={REVIEW_NAVIGATOR_ID}
 					// searchFilterCallback={}
