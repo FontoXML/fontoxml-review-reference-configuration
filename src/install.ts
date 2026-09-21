@@ -51,6 +51,7 @@ export default function install(): void {
 			label: t('Comments'),
 			batchActions,
 			globalMenuOperations: [{ name: 'open-manage-comments-modal' }],
+			showInModalOperationName: 'open-manage-comments-modal',
 		},
 	});
 

@@ -7,6 +7,7 @@ import {
 } from 'fontoxml-design-system/src/components';
 import type { FdsOnKeyDownCallback } from 'fontoxml-design-system/src/types';
 import ReviewAnnotationsOverview from 'fontoxml-feedback/src/ReviewAnnotationsOverview';
+import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
 import type { ModalProps } from 'fontoxml-fx/src/types';
 import t from 'fontoxml-localization/src/t';
 
@@ -17,9 +18,14 @@ import columnSpecifications from './columnSpecifications';
 
 const TITLE = t('Manage comments and change proposals');
 
-type Props = ModalProps;
+type Props = ModalProps<{
+	initialCheckedRowIds: ReviewAnnotationsOverviewDataTableRow['id'][];
+}>;
 
-const ManageCommentsModal = ({ cancelModal }: Props) => {
+const ManageCommentsModal = ({
+	cancelModal,
+	data: { initialCheckedRowIds },
+}: Props) => {
 	const handleModalKeyDown = useCallback<FdsOnKeyDownCallback>(
 		(event) => {
 			if (event.key === 'Escape') {
@@ -39,7 +45,7 @@ const ManageCommentsModal = ({ cancelModal }: Props) => {
 					tableId={tableId}
 					batchActions={batchActions}
 					columnSpecifications={columnSpecifications}
-					// initialSelectedReviewAnnotationId={}
+					initialCheckedRowIds={initialCheckedRowIds}
 					modalName="ManageCommentsModal"
 					navigatorId={REVIEW_NAVIGATOR_ID}
 					// searchFilterCallback={}

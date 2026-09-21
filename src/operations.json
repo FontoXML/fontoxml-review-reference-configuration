@@ -4,7 +4,10 @@
 		"icon": "far fa-comments",
 		"description": "t__Open a modal to quickly manage all comments in the publication",
 		"steps": {
-			"type": "modal/ManageCommentsModal"
+			"type": "modal/ManageCommentsModal",
+			"data": {
+				"initialCheckedRowIds": "{{initialCheckedRowIds}}"
+			}
 		}
 	}
 }
