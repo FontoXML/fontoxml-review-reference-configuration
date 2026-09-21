@@ -1,4 +1,4 @@
-import type { ComponentProps, CSSProperties } from 'react';
+import type { ComponentProps } from 'react';
 import { useCallback, useMemo } from 'react';
 
 import {
@@ -26,7 +26,7 @@ const ErrorIconButtonWithPopover = () => {
 	const renderAnchor = useCallback<
 		ComponentProps<typeof PopoverAnchor>['renderAnchor']
 	>(
-		({ isPopoverOpened, onRef, setIsPopoverOpened, togglePopover }) => (
+		({ isPopoverOpened, onRef, togglePopover }) => (
 			<Button
 				ariaLabel={errorMessage}
 				// TODO: private API
@@ -71,42 +71,6 @@ const ErrorIconButtonWithPopover = () => {
 		/>
 	);
 };
-
-// TODO: unfortunately we cannot put this where it is used ...
-// This uses vw > viewport width.
-// But we want to think about it in terms of the % of width inside the
-// ModalContentToolbar of the ManageCommentsModal
-const DESIRED_VISUAL_MAX_WIDTH: CSSProperties['maxWidth'] = '50vw';
-// So deduct a bunch of things.
-// Because the Modal is size="none", see ManageCommentsModal + FDS' Modal.
-const MODAL_MARGIN_LEFT: CSSProperties['marginLeft'] = '1rem';
-const MODAL_MARGIN_RIGHT: CSSProperties['marginRight'] = '1rem';
-// Hardcoded to match FDS' ModalBody.
-const MODAL_BODY_PADDING_LEFT: CSSProperties['paddingLeft'] = '1rem';
-const MODAL_BODY_PADDING_RIGHT: CSSProperties['paddingLeft'] = '1rem';
-// Hardcoded to match FDS' ModalContentToolbar.
-const MODAL_TOOLBAR_CONTENT_PADDING_LEFT: CSSProperties['paddingLeft'] =
-	'0.5rem';
-const MODAL_TOOLBAR_CONTENT_PADDING_RIGHT: CSSProperties['paddingRight'] =
-	'0.5rem';
-// Hardcoded to match (the manually measured) FxFilterIconButton.
-const FILTER_FORM_DROP_ICON_BUTTON_WIDTH: CSSProperties['width'] = '62px';
-// Hardcoded to match ReviewAnnotationOverview's Flex spaceSize="m" container
-// that is in its ModalContentToolbar around this component and the drop button.
-const SPACE_BETWEEN_SUMMARY_AND_DROP_BUTTON: CSSProperties['marginLeft'] =
-	'0.5rem';
-// From left to right visually, add everything up.
-const TOTAL_COMPENSATION: CSSProperties['maxWidth'] = `calc(${
-	MODAL_MARGIN_LEFT
-} + ${MODAL_BODY_PADDING_LEFT} + ${MODAL_TOOLBAR_CONTENT_PADDING_LEFT} + ${
-	SPACE_BETWEEN_SUMMARY_AND_DROP_BUTTON
-} + ${FILTER_FORM_DROP_ICON_BUTTON_WIDTH} + ${
-	MODAL_TOOLBAR_CONTENT_PADDING_RIGHT
-} + ${MODAL_BODY_PADDING_RIGHT} + ${MODAL_MARGIN_RIGHT})`;
-
-const SINGLE_LINE_CHIP_GROUP_MAX_WIDTH: CSSProperties['maxWidth'] = `calc(${
-	DESIRED_VISUAL_MAX_WIDTH
-} - ${TOTAL_COMPENSATION})`;
 
 const FilterFormSummaryChips = ({
 	// This is set if the /review/state endpoint is called (whenever onChange is
@@ -401,7 +365,7 @@ const FilterFormSummaryChips = ({
 				<SingleLineChipGroup
 					flex="1"
 					justifyContent={justifyContent}
-					maxWidth={SINGLE_LINE_CHIP_GROUP_MAX_WIDTH}
+					// TODO: remove and either replace with a maxWidth around it or remove it entirely if possible
 					spaceSize="m"
 				>
 					{chips}
