@@ -290,8 +290,9 @@ const CardHeader: React.FC<Props> = ({
 		reviewAnnotation.error &&
 		reviewAnnotation.error.recovery !== ReviewRecoveryOption.RETRYABLE;
 	const showCheckbox =
-		context === FeedbackContextType.SIDEBAR_MULTI_SELECT ||
-		(isBatchShareModal && !hasNonRetryableError);
+		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
+		(context === FeedbackContextType.SIDEBAR_MULTI_SELECT ||
+			(isBatchShareModal && !hasNonRetryableError));
 
 	const resolutionBadgeTooltipContent = React.useMemo(() => {
 		if (!reviewAnnotation.resolvedMetadata?.resolution) {
@@ -331,17 +332,7 @@ const CardHeader: React.FC<Props> = ({
 				<Flex flex="none">
 					<Checkbox
 						ariaLabel={t('Select comment')}
-						isDisabled={
-							reviewAnnotation.isLoading ||
-							reviewAnnotation.busyState ===
-								ReviewBusyState.ADDING
-						}
-						tooltipContent={
-							reviewAnnotation.busyState ===
-							ReviewBusyState.ADDING
-								? t('Finish creating this comment to select it')
-								: undefined
-						}
+						isDisabled={reviewAnnotation.isLoading}
 						onChange={onCheckboxChange}
 						value={isChecked}
 					/>
