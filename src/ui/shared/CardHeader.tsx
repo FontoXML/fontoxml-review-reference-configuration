@@ -13,6 +13,7 @@ import {
 } from 'fontoxml-design-system/src/components';
 import FeedbackContextType from 'fontoxml-feedback/src/FeedbackContextType';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
+import ReviewApplicabilityIndicator from 'fontoxml-feedback/src/ReviewApplicabilityIndicator';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import ReviewTargetType from 'fontoxml-feedback/src/ReviewTargetType';
@@ -329,12 +330,16 @@ const CardHeader: React.FC<Props> = ({
 			style={{ height: CARD_HEADER_HEIGHT }}
 		>
 			{showCheckbox && (
-				<Flex flex="none">
+				<Flex flex="none" flexDirection="row" spaceSize="s">
 					<Checkbox
 						ariaLabel={t('Select comment')}
 						isDisabled={reviewAnnotation.isLoading}
 						onChange={onCheckboxChange}
 						value={isChecked}
+					/>
+
+					<ReviewApplicabilityIndicator
+						annotationId={reviewAnnotation.id}
 					/>
 				</Flex>
 			)}
