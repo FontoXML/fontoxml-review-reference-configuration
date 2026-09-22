@@ -14,6 +14,7 @@ import type {
 	FdsValidateCallback,
 	FdsFormFeedbackByName,
 } from 'fontoxml-design-system/src/types';
+import editAnnotation from 'fontoxml-feedback/src/editAnnotation';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
 import type { ReviewAnnotationsOverviewBatchActionFormComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -108,7 +109,7 @@ const BatchResolveForm = ({
 
 	const handleSubmitButtonClick = useCallback(() => {
 		onFormSubmitWithDelayedFormFeedback(() => {
-			onSubmit(({ editAnnotation }) => {
+			onSubmit(() => {
 				for (const row of applicableRows) {
 					const hierarchyNodeId = row.hierarchyNodeId;
 					const resolvedDocumentRevisionId =

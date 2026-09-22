@@ -1,3 +1,4 @@
+import editAnnotation from 'fontoxml-feedback/src/editAnnotation';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
 import type {
 	ReviewBatchAction,
@@ -11,7 +12,7 @@ import BatchResolveForm from './BatchResolveForm';
 const batchActions: ReviewBatchAction[] = [
 	{
 		type: 'callback',
-		callback: (applicableRows, { editAnnotation }) => {
+		callback: (applicableRows) => {
 			for (const row of applicableRows) {
 				editAnnotation(row.data.id, {
 					status: ReviewAnnotationStatus.SHARED,
@@ -124,7 +125,7 @@ const batchActions: ReviewBatchAction[] = [
 	} as ReviewBatchActionForm,
 	{
 		type: 'callback',
-		callback: (applicableRows, { editAnnotation }) => {
+		callback: (applicableRows) => {
 			for (const row of applicableRows) {
 				editAnnotation(row.data.id, {
 					status: ReviewAnnotationStatus.ARCHIVED,
