@@ -52,12 +52,10 @@ type OnFieldChange = Exclude<
 type Props = ReviewAnnotationsOverviewBatchActionFormComponentProps;
 
 const BatchResolveForm = ({
-	rows,
-	applicabilityByRow,
 	applicableRows,
-	nonApplicableRows,
 	okCount,
 	problemCount,
+	totalCount,
 
 	updateApplicability,
 
@@ -176,7 +174,7 @@ const BatchResolveForm = ({
 							? t('Resolve')
 							: t('Resolve ({OK_COUNT} of {TOTAL_COUNT})', {
 									OK_COUNT: okCount,
-									TOTAL_COUNT: rows.length,
+									TOTAL_COUNT: totalCount,
 								})
 					}
 					onClick={handleSubmitButtonClick}
