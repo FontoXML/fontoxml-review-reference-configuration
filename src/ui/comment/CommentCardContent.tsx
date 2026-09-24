@@ -29,6 +29,7 @@ import CommentCardFooter from './CommentCardFooter';
 function CommentCardContent({
 	context,
 	focusableRef,
+	showCheckbox,
 	isChecked,
 	onCheckboxChange,
 	reviewAnnotation,
@@ -167,6 +168,7 @@ function CommentCardContent({
 			<CardHeader
 				context={context}
 				hasReplyInNonIdleBusyState={hasReplyInNonIdleBusyState}
+				showCheckbox={showCheckbox}
 				isChecked={isChecked}
 				onCheckboxChange={onCheckboxChange}
 				onReviewAnnotationEdit={onReviewAnnotationEdit}

@@ -34,6 +34,7 @@ const footerButtonContainerStyles = applyCss({ height: '32px' });
 const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	context,
 	focusableRef,
+	showCheckbox,
 	isChecked,
 	onCheckboxChange,
 	reviewAnnotation,
@@ -83,7 +84,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		context !== FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING &&
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT &&
-		context !== FeedbackContextType.OVERVIEW_DETAILS_PANE &&
+		context !== FeedbackContextType.OVERVIEW_DETAILS &&
 		reviewAnnotation.status !== ReviewAnnotationStatus.RESOLVED &&
 		onProposalMerge &&
 		!!reviewAnnotation.proposalState;
@@ -114,7 +115,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		!hasReplyInNonIdleBusyState;
 
 	const showReplyAddInputField =
-		context === FeedbackContextType.OVERVIEW_DETAILS_PANE ||
+		context === FeedbackContextType.OVERVIEW_DETAILS ||
 		context === FeedbackContextType.REVIEW ||
 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
 		context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY;
@@ -167,6 +168,7 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 			<CardHeader
 				context={context}
 				hasReplyInNonIdleBusyState={hasReplyInNonIdleBusyState}
+				showCheckbox={showCheckbox}
 				isChecked={isChecked}
 				onCheckboxChange={onCheckboxChange}
 				onReviewAnnotationEdit={onReviewAnnotationEdit}

@@ -48,6 +48,7 @@ function determineShareButtonLabel(
 type Props = {
 	context: ReviewCardContentComponentProps['context'];
 	hasReplyInNonIdleBusyState: boolean;
+	showCheckbox: ReviewCardContentComponentProps['showCheckbox'];
 	isChecked: ReviewCardContentComponentProps['isChecked'];
 	onCheckboxChange: ReviewCardContentComponentProps['onCheckboxChange'];
 	onReviewAnnotationEdit: ReviewCardContentComponentProps['onReviewAnnotationEdit'];
@@ -62,6 +63,7 @@ type Props = {
 const CardHeader: React.FC<Props> = ({
 	context,
 	hasReplyInNonIdleBusyState,
+	showCheckbox,
 	isChecked,
 	onCheckboxChange,
 	onReviewAnnotationEdit,
@@ -287,13 +289,6 @@ const CardHeader: React.FC<Props> = ({
 		context === FeedbackContextType.REVIEW_SHARING ||
 		context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING ||
 		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY_SHARING;
-	const hasNonRetryableError =
-		reviewAnnotation.error &&
-		reviewAnnotation.error.recovery !== ReviewRecoveryOption.RETRYABLE;
-	const showCheckbox =
-		reviewAnnotation.busyState !== ReviewBusyState.ADDING &&
-		(context === FeedbackContextType.SIDEBAR_MULTI_SELECT ||
-			(isBatchShareModal && !hasNonRetryableError));
 
 	const resolutionBadgeTooltipContent = React.useMemo(() => {
 		if (!reviewAnnotation.resolvedMetadata?.resolution) {
