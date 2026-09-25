@@ -31,6 +31,12 @@ import ProposalCardFooter from './ProposalCardFooter';
 
 const footerButtonContainerStyles = applyCss({ height: '32px' });
 
+const stickyStyles = applyCss({
+	position: 'sticky',
+	bottom: 0,
+	backgroundColor: 'white',
+});
+
 const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	context,
 	focusableRef,
@@ -163,7 +169,9 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 			dataTestId="fontoxml-review-reference-configuration-proposal-card-content"
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
-			paddingSize="m"
+			paddingSize={
+				context === FeedbackContextType.OVERVIEW_DETAILS ? 0 : 'm'
+			}
 		>
 			<CardHeader
 				context={context}
@@ -356,7 +364,12 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 				)}
 
 				{showFooter && !showErrorFooter && (
-					<Block spaceVerticalSize="m">
+					<Block
+						{...(context === FeedbackContextType.OVERVIEW_DETAILS
+							? stickyStyles
+							: {})}
+						spaceVerticalSize="m"
+					>
 						<HorizontalSeparationLine />
 
 						<Flex

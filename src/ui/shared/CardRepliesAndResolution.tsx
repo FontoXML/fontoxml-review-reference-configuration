@@ -168,6 +168,7 @@ const CardRepliesAndResolution: React.FC<Props> = ({
 			{addingOrEditingReply &&
 				context !== FeedbackContextType.CREATED_CONTEXT && (
 					<ReplyForm
+						context={context}
 						focusableRef={focusableRef}
 						onCancel={onReplyFormCancel}
 						onHide={onReplyErrorHide}

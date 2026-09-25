@@ -12,6 +12,7 @@ import {
 	TextArea,
 	Toast,
 } from 'fontoxml-design-system/src/components';
+import { applyCss } from 'fontoxml-design-system/src/system';
 import type {
 	FdsFormFeedback,
 	FdsFormValueByName,
@@ -57,6 +58,12 @@ function validateResolutionField(value: unknown): FdsFormFeedback | null {
 
 	return null;
 }
+
+const stickyStyles = applyCss({
+	position: 'sticky',
+	bottom: '0.25rem',
+	backgroundColor: 'white',
+});
 
 function ResolveFormContent({
 	context,
@@ -265,27 +272,33 @@ const ResolveForm: React.FC<Props> = ({
 	onSubmit,
 }) => {
 	return (
-		<ReviewAnnotationForm
-			initialValueByName={reviewAnnotation.resolvedMetadata}
-			key={reviewAnnotation.id}
-			onSubmit={onSubmit}
+		<Block
+			{...(context === FeedbackContextType.OVERVIEW_DETAILS
+				? stickyStyles
+				: {})}
 		>
-			{({ isSubmitDisabled, onSubmit, valueByName }) => (
-				<ResolveFormContent
-					context={context}
-					isSubmitDisabled={isSubmitDisabled}
-					onCancel={onCancel}
-					onProposalMerge={onProposalMerge}
-					onReviewAnnotationErrorAcknowledge={
-						onReviewAnnotationErrorAcknowledge
-					}
-					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
-					onSubmit={onSubmit}
-					reviewAnnotation={reviewAnnotation}
-					valueByName={valueByName}
-				/>
-			)}
-		</ReviewAnnotationForm>
+			<ReviewAnnotationForm
+				initialValueByName={reviewAnnotation.resolvedMetadata}
+				key={reviewAnnotation.id}
+				onSubmit={onSubmit}
+			>
+				{({ isSubmitDisabled, onSubmit, valueByName }) => (
+					<ResolveFormContent
+						context={context}
+						isSubmitDisabled={isSubmitDisabled}
+						onCancel={onCancel}
+						onProposalMerge={onProposalMerge}
+						onReviewAnnotationErrorAcknowledge={
+							onReviewAnnotationErrorAcknowledge
+						}
+						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+						onSubmit={onSubmit}
+						reviewAnnotation={reviewAnnotation}
+						valueByName={valueByName}
+					/>
+				)}
+			</ReviewAnnotationForm>
+		</Block>
 	);
 };
 

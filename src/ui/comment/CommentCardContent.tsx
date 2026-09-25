@@ -157,12 +157,14 @@ function CommentCardContent({
 
 	return (
 		<Block
-			paddingSize="m"
 			dataTestId="fontoxml-review-reference-configuration-comment-card-content"
 			data-review-annotation-state={reviewAnnotation.busyState}
 			data-review-annotation-type={reviewAnnotation.type}
 			data-review-annotation-comment-type={
 				reviewAnnotation.metadata.commentType
+			}
+			paddingSize={
+				context === FeedbackContextType.OVERVIEW_DETAILS ? 0 : 'm'
 			}
 		>
 			<CardHeader
@@ -315,6 +317,7 @@ function CommentCardContent({
 
 				{showFooter && !showErrorFooter && (
 					<CommentCardFooter
+						context={context}
 						onReplyAdd={onReplyAdd}
 						reviewAnnotation={reviewAnnotation}
 					/>
