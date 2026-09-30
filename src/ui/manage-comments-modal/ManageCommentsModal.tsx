@@ -65,7 +65,6 @@ const ManageCommentsModal = ({
 					modalName="ManageCommentsModal"
 					navigatorId={REVIEW_NAVIGATOR_ID}
 					searchFilterCallback={searchFilterCallback}
-					showColumnSearch={true}
 				/>
 			</ModalBody>
 		</Modal>
