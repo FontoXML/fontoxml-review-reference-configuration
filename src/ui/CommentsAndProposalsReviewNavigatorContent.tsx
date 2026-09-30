@@ -2,11 +2,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 
 import { Block, Flex, Text } from 'fontoxml-design-system/src/components';
-import type {
-	FdsJustifyContent,
-	FdsPaddingSize,
-} from 'fontoxml-design-system/src/types';
-import NavigatorBatchShareButton from 'fontoxml-feedback/src/NavigatorBatchShareButton';
+import type { FdsPaddingSize } from 'fontoxml-design-system/src/types';
 import NavigatorFilterFormSummary from 'fontoxml-feedback/src/NavigatorFilterFormSummary';
 import NavigatorHeading from 'fontoxml-feedback/src/NavigatorHeading';
 import NavigatorShowBalloonsCheckbox from 'fontoxml-feedback/src/NavigatorShowBalloonsCheckbox';
@@ -57,10 +53,6 @@ const NavigatorStateIndicatorsWithMessages: FC<{ withPadding: boolean }> = ({
 const CommentsAndProposalsReviewNavigatorContent: FC<
 	ReviewNavigatorContentProps
 > = ({ balloonsAreVisible, isExpanded }) => {
-	const bottomContainerJustifyContent = useMemo<FdsJustifyContent>(
-		() => (balloonsAreVisible ? 'space-between' : 'flex-end'),
-		[balloonsAreVisible]
-	);
 	const bottomContainerPaddingSize = useMemo<FdsPaddingSize>(
 		() => ({
 			top: balloonsAreVisible ? 'l' : 'm',
@@ -73,6 +65,7 @@ const CommentsAndProposalsReviewNavigatorContent: FC<
 		return (
 			<>
 				<NavigatorToolbarWithMessages />
+
 				<NavigatorStateIndicatorsWithMessages withPadding={true} />
 			</>
 		);
@@ -108,20 +101,11 @@ const CommentsAndProposalsReviewNavigatorContent: FC<
 				alignItems="center"
 				dataTestId="comments-and-proposals-navigator-content-bottom-container"
 				flexDirection="row"
-				justifyContent={bottomContainerJustifyContent}
 				paddingSize={bottomContainerPaddingSize}
 			>
 				<NavigatorShowBalloonsCheckbox
 					label={t('Show comment balloons')}
 				/>
-
-				{balloonsAreVisible && (
-					<NavigatorBatchShareButton
-						globalAnnotationHeader={t('Global comments')}
-						modalTitle={t('Sharing comments and change proposals')}
-						tooltipContent={t('Share multiple private comments')}
-					/>
-				)}
 			</Flex>
 		</>
 	);
