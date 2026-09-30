@@ -61,8 +61,9 @@ function validateResolutionField(value: unknown): FdsFormFeedback | null {
 
 const stickyStyles = applyCss({
 	position: 'sticky',
-	bottom: '0.25rem',
+	bottom: '0',
 	backgroundColor: 'white',
+	paddingBottom: '0.25rem',
 });
 
 function ResolveFormContent({
