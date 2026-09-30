@@ -21,7 +21,6 @@ import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
 
-import determineResolvedDocumentRevisionIdForAnnotation from './determineResolvedDocumentRevisionIdForAnnotation';
 import type { ReviewAnnotationResolvedMetadata } from './types';
 import useDelayedFormFeedback from './useDelayedFormFeedback';
 
@@ -109,15 +108,18 @@ const BatchResolveForm = ({
 		onFormSubmitWithDelayedFormFeedback(() => {
 			onSubmit(() => {
 				for (const row of applicableRows) {
-					const hierarchyNodeId = row.hierarchyNodeId;
-					const resolvedDocumentRevisionId =
-						determineResolvedDocumentRevisionIdForAnnotation(
-							hierarchyNodeId,
-							row.data.id
-						);
-
 					editAnnotation(row.data.id, {
-						resolvedDocumentRevisionId,
+						// Use the currently loaded document's revision if
+						// available. If this document is not loaded, the
+						// property will be omitted from the request and the CMS
+						// is expected to provide a suitable value in its
+						// response.
+						// Note: this is a change in behavior compared to
+						// pre-8.18 endpoint requirements. If your CMS does not
+						// implement this behavior and your editor uses JIT
+						// loading, you should either update the CMS or disable
+						// the batch resolve operation.
+						resolvedDocumentRevisionId: row.data.localDocumentRevisionId,
 						resolvedMetadata: {
 							resolution: valueByName.resolution,
 							resolutionComment: valueByName.resolutionComment,
