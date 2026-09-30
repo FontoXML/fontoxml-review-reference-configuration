@@ -90,19 +90,17 @@ const useNestedCheckboxesForFilterOptions = (
 				value: valueByName.resolutionUnresolved as CheckboxNode['value'],
 			},
 			{
-				name: 'accessPrivate',
-				value: valueByName.accessPrivate as CheckboxNode['value'],
+				name: 'visibilityPrivate',
+				value: valueByName.visibilityPrivate as CheckboxNode['value'],
 			},
 			{
-				name: 'accessShared',
-				value: valueByName.accessShared as CheckboxNode['value'],
+				name: 'visibilityShared',
+				value: valueByName.visibilityShared as CheckboxNode['value'],
 			},
 		],
 		// This is just a derivative of valueByName (which is not nested in this case).
 		// So it will also change whenever one of the referenced properties in valueByName changes.
 		[
-			valueByName.accessPrivate,
-			valueByName.accessShared,
 			valueByName.resolutionResolved,
 			valueByName.resolutionResolvedAccepted,
 			valueByName.resolutionResolvedRejected,
@@ -116,6 +114,8 @@ const useNestedCheckboxesForFilterOptions = (
 			valueByName.typePublicationCommentEditorial,
 			valueByName.typePublicationCommentGeneral,
 			valueByName.typePublicationCommentTechnical,
+			valueByName.visibilityPrivate,
+			valueByName.visibilityShared,
 		]
 	);
 

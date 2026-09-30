@@ -307,6 +307,34 @@ const FilterFormSummaryChips = ({
 				/>
 			);
 		}
+		if (valueByName.visibilityPrivate) {
+			chips.push(
+				<Chip
+					isDisabled={isDisabled || isSubmitting}
+					key="visibilityPrivate"
+					label={t('Private')}
+					tooltipContent={t('Only show private feedback.')}
+					iconAfter="far fa-remove"
+					onIconAfterClick={() => {
+						onCheckboxChange('visibilityPrivate', false);
+					}}
+				/>
+			);
+		}
+		if (valueByName.visibilityShared) {
+			chips.push(
+				<Chip
+					isDisabled={isDisabled || isSubmitting}
+					key="visibilityShared"
+					label={t('Shared')}
+					tooltipContent={t('Only show shared feedback.')}
+					iconAfter="far fa-remove"
+					onIconAfterClick={() => {
+						onCheckboxChange('visibilityShared', false);
+					}}
+				/>
+			);
+		}
 
 		if (
 			!valueByName.resolutionResolvedAccepted &&
@@ -318,7 +346,9 @@ const FilterFormSummaryChips = ({
 			!valueByName.typePublicationCommentTechnical &&
 			!valueByName.typePublicationCommentGeneral &&
 			!valueByName.typePublicationCommentEditorial &&
-			!valueByName.typeProposal
+			!valueByName.typeProposal &&
+			!valueByName.visibilityPrivate &&
+			!valueByName.visibilityShared
 		) {
 			chips.push(
 				<Chip
@@ -345,6 +375,8 @@ const FilterFormSummaryChips = ({
 		valueByName.typePublicationCommentEditorial,
 		valueByName.typePublicationCommentGeneral,
 		valueByName.typePublicationCommentTechnical,
+		valueByName.visibilityPrivate,
+		valueByName.visibilityShared,
 	]);
 
 	if (isSingleLine) {
