@@ -1,11 +1,11 @@
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
-import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
+import type { ReviewAnnotationInstance } from 'fontoxml-feedback/src/types';
 
 import type { ReviewAnnotationResolvedMetadata } from '../../../shared/types';
 
 export default function sortByStatus(
-	rowA: ReviewAnnotationsOverviewDataTableRow,
-	rowB: ReviewAnnotationsOverviewDataTableRow
+	rowA: ReviewAnnotationInstance,
+	rowB: ReviewAnnotationInstance
 ): number {
 	const rowAIsPrivate = rowA.data.status === ReviewAnnotationStatus.PRIVATE;
 	const rowBIsPrivate = rowB.data.status === ReviewAnnotationStatus.PRIVATE;

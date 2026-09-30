@@ -1,10 +1,10 @@
-import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
+import type { ReviewAnnotationInstance } from 'fontoxml-feedback/src/types';
 
 import type { ReviewAnnotationMetadata } from '../../../shared/types';
 
 export default function sortByComment(
-	rowA: ReviewAnnotationsOverviewDataTableRow,
-	rowB: ReviewAnnotationsOverviewDataTableRow
+	rowA: ReviewAnnotationInstance,
+	rowB: ReviewAnnotationInstance
 ): number {
 	const metadataA = rowA.data.metadata as ReviewAnnotationMetadata;
 	const metadataB = rowB.data.metadata as ReviewAnnotationMetadata;

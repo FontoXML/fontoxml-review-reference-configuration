@@ -9,7 +9,7 @@ import type { FdsOnKeyDownCallback } from 'fontoxml-design-system/src/types';
 import ReviewAnnotationsOverview from 'fontoxml-feedback/src/ReviewAnnotationsOverview';
 import type {
 	ReviewAnnotation,
-	ReviewAnnotationsOverviewDataTableRow,
+	ReviewAnnotationId,
 } from 'fontoxml-feedback/src/types';
 import type { ModalProps } from 'fontoxml-fx/src/types';
 import t from 'fontoxml-localization/src/t';
@@ -23,7 +23,7 @@ import columnSpecifications from './columnSpecifications';
 const TITLE = t('Manage comments and change proposals');
 
 type Props = ModalProps<{
-	initialCheckedAnnotationIds: ReviewAnnotationsOverviewDataTableRow['id'][];
+	initialCheckedAnnotationIds: ReviewAnnotationId[];
 }>;
 
 const ManageCommentsModal = ({
@@ -43,10 +43,10 @@ const ManageCommentsModal = ({
 	const searchFilterCallback = useCallback(
 		(annotation: ReviewAnnotation, query: string): boolean => {
 			// How to match an annotation against a search query is up to the
-			// application. In this case, we match against the comment or
-			// proposed change text.
+			// application. In this case, we match against the proposed change
+			// text or comment.
 			const metadata = annotation.metadata as ReviewAnnotationMetadata;
-			const text = metadata.comment ?? metadata.proposedChange;
+			const text = metadata.proposedChange ?? metadata.comment;
 			return text.toLocaleLowerCase().includes(query.toLocaleLowerCase());
 		},
 		[]

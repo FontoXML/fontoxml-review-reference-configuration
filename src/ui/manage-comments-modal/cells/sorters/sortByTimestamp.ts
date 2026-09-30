@@ -1,8 +1,8 @@
-import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
+import type { ReviewAnnotationInstance } from 'fontoxml-feedback/src/types';
 
 export default function sortByTimestamp(
-	rowA: ReviewAnnotationsOverviewDataTableRow,
-	rowB: ReviewAnnotationsOverviewDataTableRow
+	rowA: ReviewAnnotationInstance,
+	rowB: ReviewAnnotationInstance
 ): number {
 	return (
 		new Date(rowA.data.timestamp).getTime() -

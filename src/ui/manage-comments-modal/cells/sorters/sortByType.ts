@@ -1,11 +1,11 @@
-import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
+import type { ReviewAnnotationInstance } from 'fontoxml-feedback/src/types';
 
 import commentTypes from '../../../commentTypes';
 import type { ReviewAnnotationMetadata } from '../../../shared/types';
 
 export default function sortByType(
-	rowA: ReviewAnnotationsOverviewDataTableRow,
-	rowB: ReviewAnnotationsOverviewDataTableRow
+	rowA: ReviewAnnotationInstance,
+	rowB: ReviewAnnotationInstance
 ): number {
 	if (rowA.data.type === 'proposal') {
 		if (rowB.data.type === 'proposal') {

@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
 
 import { Chip, Flex, Icon, Label } from 'fontoxml-design-system/src/components';
-import type { CellComponentProps } from 'fontoxml-design-system/src/components/data-table/types';
 import type { FdsPaddingSize } from 'fontoxml-design-system/src/types';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
-import type { ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
+import type { ReviewAnnotationsOverviewCellComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 const paddingSize: FdsPaddingSize = { horizontal: 'm' };
@@ -16,7 +15,7 @@ const resolutionLabelByResolution = {
 
 const CellComponentForStatus = ({
 	row,
-}: CellComponentProps<ReviewAnnotationsOverviewDataTableRow>) => {
+}: ReviewAnnotationsOverviewCellComponentProps) => {
 	const status = useMemo(() => {
 		if (row.data.status === ReviewAnnotationStatus.PRIVATE) {
 			return (
