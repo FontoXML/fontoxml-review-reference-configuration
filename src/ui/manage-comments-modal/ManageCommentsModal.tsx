@@ -7,15 +7,18 @@ import {
 } from 'fontoxml-design-system/src/components';
 import type { FdsOnKeyDownCallback } from 'fontoxml-design-system/src/types';
 import ReviewAnnotationsOverview from 'fontoxml-feedback/src/ReviewAnnotationsOverview';
-import type { ReviewAnnotation, ReviewAnnotationsOverviewDataTableRow } from 'fontoxml-feedback/src/types';
+import type {
+	ReviewAnnotation,
+	ReviewAnnotationsOverviewDataTableRow,
+} from 'fontoxml-feedback/src/types';
 import type { ModalProps } from 'fontoxml-fx/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import { REVIEW_NAVIGATOR_ID } from '../constants';
 import batchActions from '../shared/batchActions';
+import type { ReviewAnnotationMetadata } from '../shared/types';
 
 import columnSpecifications from './columnSpecifications';
-import { ReviewAnnotationMetadata } from '../shared/types';
 
 const TITLE = t('Manage comments and change proposals');
 
@@ -62,6 +65,7 @@ const ManageCommentsModal = ({
 					modalName="ManageCommentsModal"
 					navigatorId={REVIEW_NAVIGATOR_ID}
 					searchFilterCallback={searchFilterCallback}
+					showColumnSearch={true}
 				/>
 			</ModalBody>
 		</Modal>

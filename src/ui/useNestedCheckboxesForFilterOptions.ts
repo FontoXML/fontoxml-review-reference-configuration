@@ -89,10 +89,20 @@ const useNestedCheckboxesForFilterOptions = (
 				name: 'resolutionUnresolved',
 				value: valueByName.resolutionUnresolved as CheckboxNode['value'],
 			},
+			{
+				name: 'accessPrivate',
+				value: valueByName.accessPrivate as CheckboxNode['value'],
+			},
+			{
+				name: 'accessShared',
+				value: valueByName.accessShared as CheckboxNode['value'],
+			},
 		],
 		// This is just a derivative of valueByName (which is not nested in this case).
 		// So it will also change whenever one of the referenced properties in valueByName changes.
 		[
+			valueByName.accessPrivate,
+			valueByName.accessShared,
 			valueByName.resolutionResolved,
 			valueByName.resolutionResolvedAccepted,
 			valueByName.resolutionResolvedRejected,

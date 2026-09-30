@@ -70,6 +70,9 @@ module.exports = function matchAnnotationToCurrentFilter(
 		annotation.resolvedMetadata.resolution === 'rejected';
 	const isUnresolved = !isResolved;
 
+	const hasAccessPrivate = annotation.status === 'ANNOTATION_STATUS_PRIVATE';
+	const hasAccessShared = annotation.status === 'ANNOTATION_STATUS_SHARED';
+
 	const matchesType =
 		(filterFormValueByName.typeComment && isTypeComment) ||
 		(filterFormValueByName.typeCommentTechnical &&
@@ -113,5 +116,11 @@ module.exports = function matchAnnotationToCurrentFilter(
 			!filterFormValueByName.resolutionResolvedRejected &&
 			!filterFormValueByName.resolutionUnresolved);
 
-	return matchesType && matchesResolution;
+	const matchesAccess =
+		(filterFormValueByName.accessPrivate && hasAccessPrivate) ||
+		(filterFormValueByName.accessShared && hasAccessShared) ||
+		(!filterFormValueByName.accessPrivate &&
+			!filterFormValueByName.accessShared);
+
+	return matchesType && matchesResolution && matchesAccess;
 };

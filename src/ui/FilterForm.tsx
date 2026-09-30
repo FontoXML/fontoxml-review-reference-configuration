@@ -144,6 +144,10 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 		],
 		valueByNameForUI
 	);
+	valueByNameForUI.access = determineParentFieldValue(
+		['access', 'accessPrivate', 'accessShared'],
+		valueByNameForUI
+	);
 
 	const onCheckboxChange = useNestedCheckboxesForFilterOptions(
 		valueByNameForUI,
@@ -151,200 +155,238 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 	);
 	const typesOfFeedbackLabelId = React.useId();
 	const resolutionLabelId = React.useId();
+	const accessLabelId = React.useId();
 
 	return (
-		<Flex spaceSize="l">
-			<Block flex="none" spaceVerticalSize="s">
-				<Label ariaRole="heading" id={typesOfFeedbackLabelId} isBold>
-					{t('Type(s) of feedback')}
-				</Label>
-
-				<Block
-					aria-labelledby={typesOfFeedbackLabelId}
-					spaceVerticalSize="l"
-				>
-					<Block spaceVerticalSize="s">
-						<Checkbox
-							label={t('Comment')}
-							onChange={(value: boolean) => {
-								onCheckboxChange('typeComment', value);
-							}}
-							value={
-								valueByNameForUI.typeComment as CheckboxValue
-							}
-						/>
-
-						<Block
-							applyCss={{ paddingLeft: '22px' }}
-							spaceVerticalSize="s"
-						>
-							<Checkbox
-								label={t('Technical')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'typeCommentTechnical',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.typeCommentTechnical as CheckboxValue
-								}
-							/>
-							<Checkbox
-								label={t('General')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'typeCommentGeneral',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.typeCommentGeneral as CheckboxValue
-								}
-							/>
-							<Checkbox
-								label={t('Editorial')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'typeCommentEditorial',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.typeCommentEditorial as CheckboxValue
-								}
-							/>
-						</Block>
-					</Block>
-
-					<Block spaceVerticalSize="s">
-						<Checkbox
-							label={t('Global Comment')}
-							onChange={(value: boolean) => {
-								onCheckboxChange(
-									'typePublicationComment',
-									value
-								);
-							}}
-							value={
-								valueByNameForUI.typePublicationComment as CheckboxValue
-							}
-						/>
-
-						<Block
-							applyCss={{ paddingLeft: '22px' }}
-							spaceVerticalSize="s"
-						>
-							<Checkbox
-								label={t('Technical')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'typePublicationCommentTechnical',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.typePublicationCommentTechnical as CheckboxValue
-								}
-							/>
-							<Checkbox
-								label={t('General')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'typePublicationCommentGeneral',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.typePublicationCommentGeneral as CheckboxValue
-								}
-							/>
-							<Checkbox
-								label={t('Editorial')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'typePublicationCommentEditorial',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.typePublicationCommentEditorial as CheckboxValue
-								}
-							/>
-						</Block>
-					</Block>
-
-					<Checkbox
-						label={t('Proposal')}
-						onChange={(value: boolean) => {
-							onCheckboxChange('typeProposal', value);
-						}}
-						value={valueByNameForUI.typeProposal as CheckboxValue}
-					/>
-				</Block>
-			</Block>
-
-			<Block flex="none" spaceVerticalSize="s">
-				<Label ariaRole="heading" id={resolutionLabelId} isBold>
-					{t('Resolution')}
-				</Label>
-
-				<Block
-					aria-labelledby={resolutionLabelId}
-					spaceVerticalSize="s"
-				>
-					<Checkbox
-						label={t('Resolved')}
-						onChange={(value: boolean) => {
-							onCheckboxChange('resolutionResolved', value);
-						}}
-						value={
-							valueByNameForUI.resolutionResolved as CheckboxValue
-						}
-					/>
+		<Flex flexDirection="column" spaceSize="l">
+			<Flex flexDirection="row" spaceSize="l">
+				<Block flex="none" spaceVerticalSize="s">
+					<Label
+						ariaRole="heading"
+						id={typesOfFeedbackLabelId}
+						isBold
+					>
+						{t('Type(s) of feedback')}
+					</Label>
 
 					<Block
-						applyCss={{ paddingLeft: '22px' }}
+						aria-labelledby={typesOfFeedbackLabelId}
+						spaceVerticalSize="l"
+					>
+						<Block spaceVerticalSize="s">
+							<Checkbox
+								label={t('Comment')}
+								onChange={(value: boolean) => {
+									onCheckboxChange('typeComment', value);
+								}}
+								value={
+									valueByNameForUI.typeComment as CheckboxValue
+								}
+							/>
+
+							<Block
+								applyCss={{ paddingLeft: '22px' }}
+								spaceVerticalSize="s"
+							>
+								<Checkbox
+									label={t('Technical')}
+									onChange={(value: boolean) => {
+										onCheckboxChange(
+											'typeCommentTechnical',
+											value
+										);
+									}}
+									value={
+										valueByNameForUI.typeCommentTechnical as CheckboxValue
+									}
+								/>
+								<Checkbox
+									label={t('General')}
+									onChange={(value: boolean) => {
+										onCheckboxChange(
+											'typeCommentGeneral',
+											value
+										);
+									}}
+									value={
+										valueByNameForUI.typeCommentGeneral as CheckboxValue
+									}
+								/>
+								<Checkbox
+									label={t('Editorial')}
+									onChange={(value: boolean) => {
+										onCheckboxChange(
+											'typeCommentEditorial',
+											value
+										);
+									}}
+									value={
+										valueByNameForUI.typeCommentEditorial as CheckboxValue
+									}
+								/>
+							</Block>
+						</Block>
+
+						<Block spaceVerticalSize="s">
+							<Checkbox
+								label={t('Global Comment')}
+								onChange={(value: boolean) => {
+									onCheckboxChange(
+										'typePublicationComment',
+										value
+									);
+								}}
+								value={
+									valueByNameForUI.typePublicationComment as CheckboxValue
+								}
+							/>
+
+							<Block
+								applyCss={{ paddingLeft: '22px' }}
+								spaceVerticalSize="s"
+							>
+								<Checkbox
+									label={t('Technical')}
+									onChange={(value: boolean) => {
+										onCheckboxChange(
+											'typePublicationCommentTechnical',
+											value
+										);
+									}}
+									value={
+										valueByNameForUI.typePublicationCommentTechnical as CheckboxValue
+									}
+								/>
+								<Checkbox
+									label={t('General')}
+									onChange={(value: boolean) => {
+										onCheckboxChange(
+											'typePublicationCommentGeneral',
+											value
+										);
+									}}
+									value={
+										valueByNameForUI.typePublicationCommentGeneral as CheckboxValue
+									}
+								/>
+								<Checkbox
+									label={t('Editorial')}
+									onChange={(value: boolean) => {
+										onCheckboxChange(
+											'typePublicationCommentEditorial',
+											value
+										);
+									}}
+									value={
+										valueByNameForUI.typePublicationCommentEditorial as CheckboxValue
+									}
+								/>
+							</Block>
+						</Block>
+
+						<Checkbox
+							label={t('Proposal')}
+							onChange={(value: boolean) => {
+								onCheckboxChange('typeProposal', value);
+							}}
+							value={
+								valueByNameForUI.typeProposal as CheckboxValue
+							}
+						/>
+					</Block>
+				</Block>
+
+				<Block flex="none" spaceVerticalSize="s">
+					<Label ariaRole="heading" id={resolutionLabelId} isBold>
+						{t('Resolution')}
+					</Label>
+
+					<Block
+						aria-labelledby={resolutionLabelId}
 						spaceVerticalSize="s"
 					>
 						<Checkbox
-							label={t('Accepted')}
+							label={t('Resolved')}
 							onChange={(value: boolean) => {
-								onCheckboxChange(
-									'resolutionResolvedAccepted',
-									value
-								);
+								onCheckboxChange('resolutionResolved', value);
 							}}
 							value={
-								valueByNameForUI.resolutionResolvedAccepted as CheckboxValue
+								valueByNameForUI.resolutionResolved as CheckboxValue
 							}
 						/>
 
+						<Block
+							applyCss={{ paddingLeft: '22px' }}
+							spaceVerticalSize="s"
+						>
+							<Checkbox
+								label={t('Accepted')}
+								onChange={(value: boolean) => {
+									onCheckboxChange(
+										'resolutionResolvedAccepted',
+										value
+									);
+								}}
+								value={
+									valueByNameForUI.resolutionResolvedAccepted as CheckboxValue
+								}
+							/>
+
+							<Checkbox
+								label={t('Rejected')}
+								onChange={(value: boolean) => {
+									onCheckboxChange(
+										'resolutionResolvedRejected',
+										value
+									);
+								}}
+								value={
+									valueByNameForUI.resolutionResolvedRejected as CheckboxValue
+								}
+							/>
+						</Block>
+
 						<Checkbox
-							label={t('Rejected')}
+							label={t('Unresolved')}
 							onChange={(value: boolean) => {
-								onCheckboxChange(
-									'resolutionResolvedRejected',
-									value
-								);
+								onCheckboxChange('resolutionUnresolved', value);
 							}}
 							value={
-								valueByNameForUI.resolutionResolvedRejected as CheckboxValue
+								valueByNameForUI.resolutionUnresolved as CheckboxValue
 							}
 						/>
 					</Block>
 
-					<Checkbox
-						label={t('Unresolved')}
-						onChange={(value: boolean) => {
-							onCheckboxChange('resolutionUnresolved', value);
-						}}
-						value={
-							valueByNameForUI.resolutionUnresolved as CheckboxValue
-						}
-					/>
+					<Label ariaRole="heading" id={accessLabelId} isBold>
+						{t('Access')}
+					</Label>
+
+					<Block
+						aria-labelledby={accessLabelId}
+						spaceVerticalSize="s"
+					>
+						<Checkbox
+							label={t('Private')}
+							onChange={(value: boolean) => {
+								onCheckboxChange('accessPrivate', value);
+							}}
+							value={
+								valueByNameForUI.accessPrivate as CheckboxValue
+							}
+						/>
+
+						<Checkbox
+							label={t('Shared')}
+							onChange={(value: boolean) => {
+								onCheckboxChange('accessShared', value);
+							}}
+							value={
+								valueByNameForUI.accessShared as CheckboxValue
+							}
+						/>
+					</Block>
 				</Block>
-			</Block>
+			</Flex>
 		</Flex>
 	);
 };
