@@ -128,9 +128,11 @@ const BatchResolveForm = ({
 					});
 				}
 			});
+			closeForm();
 		});
 	}, [
 		applicableRows,
+		closeForm,
 		onFormSubmitWithDelayedFormFeedback,
 		onSubmit,
 		valueByName.resolution,
