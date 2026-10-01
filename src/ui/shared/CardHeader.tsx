@@ -87,6 +87,7 @@ const CardHeader: React.FC<Props> = ({
 	const showCreatedContextButton =
 		reviewAnnotation.targets[0].type !==
 			ReviewTargetType.PUBLICATION_SELECTOR &&
+		context !== FeedbackContextType.OVERVIEW_DETAILS &&
 		context !== FeedbackContextType.CREATED_CONTEXT &&
 		context !== FeedbackContextType.RESOLVED_CONTEXT;
 
