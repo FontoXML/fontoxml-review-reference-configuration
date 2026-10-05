@@ -1,4 +1,4 @@
-import { CellComponentForHierarchyNodeTitle } from 'fontoxml-feedback/src/reviewAnnotationsOverviewHelpers';
+import { ReviewCellComponentForHierarchyNodeTitle } from 'fontoxml-feedback/src/reviewAnnotationsOverviewHelpers';
 import type { ReviewAnnotationsOverviewColumnSpecification } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
@@ -41,7 +41,7 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 		sortDecreasingLabel: t('Sort newest to oldest'),
 	},
 	{
-		CellComponent: CellComponentForHierarchyNodeTitle,
+		CellComponent: ReviewCellComponentForHierarchyNodeTitle,
 		column: 'topic',
 		label: t('Topic'),
 		maxWidth: 250,
