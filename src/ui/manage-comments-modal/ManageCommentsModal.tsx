@@ -38,7 +38,6 @@ const ManageCommentsModal = ({
 		},
 		[cancelModal]
 	);
-	const tableId = 'overview-table';
 
 	const searchFilterCallback = useCallback(
 		(annotation: ReviewAnnotation, query: string): boolean => {
@@ -58,7 +57,7 @@ const ManageCommentsModal = ({
 
 			<ModalBody>
 				<ReviewAnnotationsOverview
-					tableId={tableId}
+					instanceId="overview-table"
 					batchActions={batchActions}
 					columnSpecifications={columnSpecifications}
 					initialCheckedAnnotationIds={initialCheckedAnnotationIds}
