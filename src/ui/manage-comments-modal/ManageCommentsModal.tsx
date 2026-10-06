@@ -62,7 +62,6 @@ const ManageCommentsModal = ({
 					batchActions={batchActions}
 					columnSpecifications={columnSpecifications}
 					initialCheckedAnnotationIds={initialCheckedAnnotationIds}
-					modalName="ManageCommentsModal"
 					navigatorId={REVIEW_NAVIGATOR_ID}
 					searchFilterCallback={searchFilterCallback}
 				/>
