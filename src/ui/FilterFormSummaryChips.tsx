@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 import { useCallback, useMemo } from 'react';
 
 import {
@@ -15,7 +15,7 @@ import {
 	SingleLineChipGroup,
 } from 'fontoxml-design-system/src/components';
 import type { FdsCheckboxValue } from 'fontoxml-design-system/src/types';
-import type { ReviewFilterFormSummaryComponent } from 'fontoxml-feedback/src/types';
+import type { ReviewFilterFormSummaryComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import useNestedCheckboxesForFilterOptions from './useNestedCheckboxesForFilterOptions';
@@ -72,7 +72,7 @@ const ErrorIconButtonWithPopover = () => {
 	);
 };
 
-const FilterFormSummaryChips = ({
+const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 	// This is set if the /review/state endpoint is called (whenever onChange is
 	// called while the filter form is not visible) and returned an error.
 	// If the filter form is visible, the filter form header already handles and displays the error.
@@ -102,7 +102,7 @@ const FilterFormSummaryChips = ({
 	productContext: _productContext,
 	// This contains the exact value by name mapping used by the filter form for the current context.
 	valueByName,
-}: ReviewFilterFormSummaryComponent) => {
+}) => {
 	// This processes the list of changed fields into a changedValueByName mapping which is then
 	// combined with the existing data (valueByName) to provide a new (complete) version of the data
 	// for the onChange prop.
