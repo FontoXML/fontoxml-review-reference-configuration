@@ -12,9 +12,9 @@ import BatchResolveForm from './BatchResolveForm';
 const batchActions: ReviewBatchAction[] = [
 	{
 		type: 'callback',
-		callback: (applicableRows) => {
-			for (const row of applicableRows) {
-				editAnnotation(row.data.id, {
+		callback: (applicableInstances) => {
+			for (const instance of applicableInstances) {
+				editAnnotation(instance.data.id, {
 					status: ReviewAnnotationStatus.SHARED,
 				});
 			}
@@ -23,8 +23,8 @@ const batchActions: ReviewBatchAction[] = [
 		icon: 'far fa-users',
 		tooltipContent: t('Share the selected comments'),
 		isAlwaysInMoreMenu: false,
-		getApplicability: (row, _formData) => {
-			if (row.data.error) {
+		getApplicability: (instance, _formData) => {
+			if (instance.data.error) {
 				return {
 					type: 'problem',
 					message: t(
@@ -32,7 +32,7 @@ const batchActions: ReviewBatchAction[] = [
 					),
 				};
 			}
-			if (row.hasOpenForm) {
+			if (instance.hasOpenForm) {
 				return {
 					type: 'problem',
 					message: t(
@@ -40,15 +40,15 @@ const batchActions: ReviewBatchAction[] = [
 					),
 				};
 			}
-			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
+			if (instance.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
 					message: t('This comment is no longer available'),
 				};
 			}
 			if (
-				row.data.status === ReviewAnnotationStatus.RESOLVED ||
-				row.data.status === ReviewAnnotationStatus.SHARED
+				instance.data.status === ReviewAnnotationStatus.RESOLVED ||
+				instance.data.status === ReviewAnnotationStatus.SHARED
 			) {
 				return {
 					type: 'problem',
@@ -75,8 +75,8 @@ const batchActions: ReviewBatchAction[] = [
 		icon: 'far fa-check',
 		tooltipContent: t('Resolve the selected comments'),
 		isAlwaysInMoreMenu: false,
-		getApplicability: (row, _formData) => {
-			if (row.data.error) {
+		getApplicability: (instance, _formData) => {
+			if (instance.data.error) {
 				return {
 					type: 'problem',
 					message: t(
@@ -84,7 +84,7 @@ const batchActions: ReviewBatchAction[] = [
 					),
 				};
 			}
-			if (row.hasOpenForm) {
+			if (instance.hasOpenForm) {
 				return {
 					type: 'problem',
 					message: t(
@@ -92,19 +92,19 @@ const batchActions: ReviewBatchAction[] = [
 					),
 				};
 			}
-			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
+			if (instance.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
 					message: t('This comment is no longer available'),
 				};
 			}
-			if (row.data.status === ReviewAnnotationStatus.RESOLVED) {
+			if (instance.data.status === ReviewAnnotationStatus.RESOLVED) {
 				return {
 					type: 'problem',
 					message: t('This comment is already resolved'),
 				};
 			}
-			if (row.data.status !== ReviewAnnotationStatus.SHARED) {
+			if (instance.data.status !== ReviewAnnotationStatus.SHARED) {
 				return {
 					type: 'problem',
 					message: t(
@@ -125,9 +125,9 @@ const batchActions: ReviewBatchAction[] = [
 	} as ReviewBatchActionForm,
 	{
 		type: 'callback',
-		callback: (applicableRows) => {
-			for (const row of applicableRows) {
-				editAnnotation(row.data.id, {
+		callback: (applicableInstances) => {
+			for (const instance of applicableInstances) {
+				editAnnotation(instance.data.id, {
 					status: ReviewAnnotationStatus.ARCHIVED,
 				});
 			}
@@ -136,8 +136,8 @@ const batchActions: ReviewBatchAction[] = [
 		icon: 'far fa-trash-can',
 		tooltipContent: t('Discard the selected comments'),
 		isAlwaysInMoreMenu: true,
-		getApplicability: (row, _formData) => {
-			if (row.data.error) {
+		getApplicability: (instance, _formData) => {
+			if (instance.data.error) {
 				return {
 					type: 'problem',
 					message: t(
@@ -145,7 +145,7 @@ const batchActions: ReviewBatchAction[] = [
 					),
 				};
 			}
-			if (row.hasOpenForm) {
+			if (instance.hasOpenForm) {
 				return {
 					type: 'problem',
 					message: t(
@@ -153,19 +153,19 @@ const batchActions: ReviewBatchAction[] = [
 					),
 				};
 			}
-			if (row.data.status === ReviewAnnotationStatus.ARCHIVED) {
+			if (instance.data.status === ReviewAnnotationStatus.ARCHIVED) {
 				return {
 					type: 'problem',
 					message: t('This comment is no longer available'),
 				};
 			}
-			if (row.data.status === ReviewAnnotationStatus.RESOLVED) {
+			if (instance.data.status === ReviewAnnotationStatus.RESOLVED) {
 				return {
 					type: 'problem',
 					message: t('Resolved comments can not be discarded'),
 				};
 			}
-			if (row.data.status === ReviewAnnotationStatus.SHARED) {
+			if (instance.data.status === ReviewAnnotationStatus.SHARED) {
 				return {
 					type: 'problem',
 					message: t('Shared comments can not be discarded'),
