@@ -20,7 +20,7 @@ import sortByType from './cells/sorters/sortByType';
 const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 	{
 		CellComponent: CellComponentForAuthor,
-		column: 'author',
+		id: 'author',
 		label: t('Author'),
 		maxWidth: 250,
 		minWidth: 115,
@@ -32,7 +32,7 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 	},
 	{
 		CellComponent: CellComponentForTimestamp,
-		column: 'date',
+		id: 'date',
 		label: t('Date'),
 		maxWidth: 250,
 		minWidth: 101,
@@ -42,7 +42,7 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 	},
 	{
 		CellComponent: ReviewCellComponentForHierarchyNodeTitle,
-		column: 'topic',
+		id: 'topic',
 		label: t('Topic'),
 		maxWidth: 250,
 		minWidth: 113,
@@ -52,7 +52,7 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 	},
 	{
 		CellComponent: CellComponentForType,
-		column: 'type',
+		id: 'type',
 		initialWidth: '144px',
 		isInitiallyVisible: true,
 		label: t('Type'),
@@ -67,7 +67,7 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 	{
 		CellComponent: CellComponentForComment,
 		canBeHidden: false,
-		column: 'comment',
+		id: 'comment',
 		label: t('Comment'),
 		maxWidth: 350,
 		minWidth: 135,
@@ -79,7 +79,7 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 	},
 	{
 		CellComponent: CellComponentForProposedChange,
-		column: 'proposedChange',
+		id: 'proposedChange',
 		label: t('Proposed change'),
 		maxWidth: 350,
 		minWidth: 184,
@@ -91,7 +91,7 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 	},
 	{
 		CellComponent: CellComponentForRepliesCount,
-		column: 'replies',
+		id: 'replies',
 		initialWidth: '148px',
 		label: t('Replies'),
 		maxWidth: 148,
@@ -100,7 +100,7 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 	},
 	{
 		CellComponent: CellComponentForStatus,
-		column: 'status',
+		id: 'status',
 		initialWidth: '115px',
 		label: t('Status'),
 		maxWidth: 115,
