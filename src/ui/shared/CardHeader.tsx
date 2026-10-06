@@ -251,7 +251,9 @@ const CardHeader: React.FC<Props> = ({
 		(context === FeedbackContextType.EDITOR ||
 			context === FeedbackContextType.REVIEW ||
 			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY ||
-			context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY);
+			context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
+			context === FeedbackContextType.OVERVIEW_DETAILS ||
+			context === FeedbackContextType.SIDEBAR);
 
 	const shareButtonLabel =
 		reviewAnnotation.isSelected &&
