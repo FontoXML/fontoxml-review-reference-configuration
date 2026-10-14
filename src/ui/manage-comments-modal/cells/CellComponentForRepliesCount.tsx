@@ -3,8 +3,21 @@ import { useMemo } from 'react';
 import { Flex, Icon, Label } from 'fontoxml-design-system/src/components';
 import type { FdsPaddingSize } from 'fontoxml-design-system/src/types';
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
-import type { ReviewAnnotationsOverviewCellComponentProps } from 'fontoxml-feedback/src/types';
+import type {
+	ReviewAnnotationsOverviewCellComponentProps,
+	ReviewReply,
+} from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
+
+export function determineReviewAnnotationReplies(
+	reviewReplies: ReviewReply[]
+): ReviewReply[] {
+	return reviewReplies.filter(
+		(reply) =>
+			// Exclude replies that are being added.
+			reply.busyState !== ReviewBusyState.ADDING
+	);
+}
 
 const paddingSize: FdsPaddingSize = { horizontal: 'm' };
 
@@ -12,10 +25,7 @@ const CellComponentForRepliesCount = ({
 	row,
 }: ReviewAnnotationsOverviewCellComponentProps) => {
 	const { count, label } = useMemo(() => {
-		const count = row.data.replies.filter(
-			// Exclude replies that are being added.
-			(reply) => reply.busyState !== ReviewBusyState.ADDING
-		).length;
+		const count = determineReviewAnnotationReplies(row.data.replies).length;
 
 		return {
 			count,
