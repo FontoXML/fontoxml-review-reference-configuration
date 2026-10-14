@@ -16,6 +16,7 @@ import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus
 import ReviewBusyState from 'fontoxml-feedback/src/ReviewBusyState';
 import ReviewRecoveryOption from 'fontoxml-feedback/src/ReviewRecoveryOption';
 import type { ReviewCardContentComponentProps } from 'fontoxml-feedback/src/types';
+import useXPath from 'fontoxml-fx/src/useXPath';
 import t from 'fontoxml-localization/src/t';
 
 import CardErrorFooter from '../shared/CardErrorFooter';
@@ -81,7 +82,14 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		);
 	}, [reviewAnnotation.replies]);
 
+	const isOnReviewRoute = useXPath<boolean>(
+		'fonto:is-on-review-route()',
+		null,
+		{ expectedResultType: XPathResult.BOOLEAN_TYPE }
+	);
+
 	const showAcceptProposalButton =
+		!isOnReviewRoute &&
 		context !== FeedbackContextType.EDITOR_SHARING &&
 		context !== FeedbackContextType.EDITOR_DOCUMENT_HISTORY_SHARING &&
 		context !== FeedbackContextType.REVIEW &&
