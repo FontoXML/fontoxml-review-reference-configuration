@@ -121,10 +121,11 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 		!hasReplyInNonIdleBusyState;
 
 	const showReplyAddInputField =
-		context === FeedbackContextType.OVERVIEW_DETAILS ||
-		context === FeedbackContextType.REVIEW ||
-		context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
-		context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY;
+		showReplyButton &&
+		(context === FeedbackContextType.OVERVIEW_DETAILS ||
+			context === FeedbackContextType.REVIEW ||
+			context === FeedbackContextType.REVIEW_DOCUMENT_HISTORY ||
+			context === FeedbackContextType.EDITOR_DOCUMENT_HISTORY);
 
 	const showErrorFooter =
 		reviewAnnotation.error &&
