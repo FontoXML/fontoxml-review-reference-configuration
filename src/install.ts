@@ -26,8 +26,16 @@ export default function install(): void {
 		filterConfiguration: {
 			FormComponent: FilterForm,
 			FormSummaryComponent: FilterFormSummaryChips,
-			initialFilterStateForEditor: { resolutionUnresolved: true },
-			initialFilterStateForReview: { resolutionUnresolved: true },
+			initialFilterStateForEditor: {
+				resolutionUnresolved: true,
+				resolutionUnresolvedPrivate: true,
+				resolutionUnresolvedShared: true,
+			},
+			initialFilterStateForReview: {
+				resolutionUnresolved: true,
+				resolutionUnresolvedPrivate: true,
+				resolutionUnresolvedShared: true,
+			},
 		},
 
 		icon: 'far fa-comment',
