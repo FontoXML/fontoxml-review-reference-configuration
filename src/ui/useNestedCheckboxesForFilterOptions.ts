@@ -72,6 +72,20 @@ const useNestedCheckboxesForFilterOptions = (
 				value: valueByName.typeProposal as CheckboxNode['value'],
 			},
 			{
+				name: 'resolutionUnresolved',
+				value: valueByName.resolutionUnresolved as CheckboxNode['value'],
+				children: [
+					{
+						name: 'resolutionUnresolvedPrivate',
+						value: valueByName.resolutionUnresolvedPrivate as CheckboxNode['value'],
+					},
+					{
+						name: 'resolutionUnresolvedShared',
+						value: valueByName.resolutionUnresolvedShared as CheckboxNode['value'],
+					},
+				],
+			},
+			{
 				name: 'resolutionResolved',
 				value: valueByName.resolutionResolved as CheckboxNode['value'],
 				children: [
@@ -85,26 +99,16 @@ const useNestedCheckboxesForFilterOptions = (
 					},
 				],
 			},
-			{
-				name: 'resolutionUnresolved',
-				value: valueByName.resolutionUnresolved as CheckboxNode['value'],
-			},
-			{
-				name: 'visibilityPrivate',
-				value: valueByName.visibilityPrivate as CheckboxNode['value'],
-			},
-			{
-				name: 'visibilityShared',
-				value: valueByName.visibilityShared as CheckboxNode['value'],
-			},
 		],
 		// This is just a derivative of valueByName (which is not nested in this case).
 		// So it will also change whenever one of the referenced properties in valueByName changes.
 		[
+			valueByName.resolutionUnresolved,
+			valueByName.resolutionUnresolvedPrivate,
+			valueByName.resolutionUnresolvedShared,
 			valueByName.resolutionResolved,
 			valueByName.resolutionResolvedAccepted,
 			valueByName.resolutionResolvedRejected,
-			valueByName.resolutionUnresolved,
 			valueByName.typeComment,
 			valueByName.typeCommentEditorial,
 			valueByName.typeCommentGeneral,
@@ -114,8 +118,6 @@ const useNestedCheckboxesForFilterOptions = (
 			valueByName.typePublicationCommentEditorial,
 			valueByName.typePublicationCommentGeneral,
 			valueByName.typePublicationCommentTechnical,
-			valueByName.visibilityPrivate,
-			valueByName.visibilityShared,
 		]
 	);
 

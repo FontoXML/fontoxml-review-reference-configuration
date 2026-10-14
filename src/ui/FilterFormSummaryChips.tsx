@@ -261,6 +261,38 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 				/>
 			);
 		}
+		if (valueByName.resolutionUnresolvedPrivate) {
+			chips.push(
+				<Chip
+					isDisabled={isDisabled || isSubmitting}
+					key="resolutionUnresolvedPrivate"
+					label={t('Private')}
+					tooltipContent={t(
+						'Only show unresolved and private feedback.'
+					)}
+					iconAfter="far fa-remove"
+					onIconAfterClick={() => {
+						onCheckboxChange('resolutionUnresolvedPrivate', false);
+					}}
+				/>
+			);
+		}
+		if (valueByName.resolutionUnresolvedShared) {
+			chips.push(
+				<Chip
+					isDisabled={isDisabled || isSubmitting}
+					key="resolutionUnresolvedShared"
+					label={t('Shared')}
+					tooltipContent={t(
+						'Only show unresolved and shared feedback.'
+					)}
+					iconAfter="far fa-remove"
+					onIconAfterClick={() => {
+						onCheckboxChange('resolutionUnresolvedShared', false);
+					}}
+				/>
+			);
+		}
 		if (valueByName.resolutionResolvedAccepted) {
 			chips.push(
 				<Chip
@@ -293,62 +325,19 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 				/>
 			);
 		}
-		if (valueByName.resolutionUnresolved) {
-			chips.push(
-				<Chip
-					isDisabled={isDisabled || isSubmitting}
-					key="resolutionUnresolved"
-					label={t('Unresolved')}
-					tooltipContent={t('Only show unresolved feedback.')}
-					iconAfter="far fa-remove"
-					onIconAfterClick={() => {
-						onCheckboxChange('resolutionUnresolved', false);
-					}}
-				/>
-			);
-		}
-		if (valueByName.visibilityPrivate) {
-			chips.push(
-				<Chip
-					isDisabled={isDisabled || isSubmitting}
-					key="visibilityPrivate"
-					label={t('Private')}
-					tooltipContent={t('Only show private feedback.')}
-					iconAfter="far fa-remove"
-					onIconAfterClick={() => {
-						onCheckboxChange('visibilityPrivate', false);
-					}}
-				/>
-			);
-		}
-		if (valueByName.visibilityShared) {
-			chips.push(
-				<Chip
-					isDisabled={isDisabled || isSubmitting}
-					key="visibilityShared"
-					label={t('Shared')}
-					tooltipContent={t('Only show shared feedback.')}
-					iconAfter="far fa-remove"
-					onIconAfterClick={() => {
-						onCheckboxChange('visibilityShared', false);
-					}}
-				/>
-			);
-		}
 
 		if (
+			!valueByName.resolutionUnresolvedPrivate &&
+			!valueByName.resolutionUnresolvedShared &&
 			!valueByName.resolutionResolvedAccepted &&
 			!valueByName.resolutionResolvedRejected &&
-			!valueByName.resolutionUnresolved &&
 			!valueByName.typeCommentTechnical &&
 			!valueByName.typeCommentGeneral &&
 			!valueByName.typeCommentEditorial &&
 			!valueByName.typePublicationCommentTechnical &&
 			!valueByName.typePublicationCommentGeneral &&
 			!valueByName.typePublicationCommentEditorial &&
-			!valueByName.typeProposal &&
-			!valueByName.visibilityPrivate &&
-			!valueByName.visibilityShared
+			!valueByName.typeProposal
 		) {
 			chips.push(
 				<Chip
@@ -367,7 +356,8 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		onCheckboxChange,
 		valueByName.resolutionResolvedAccepted,
 		valueByName.resolutionResolvedRejected,
-		valueByName.resolutionUnresolved,
+		valueByName.resolutionUnresolvedPrivate,
+		valueByName.resolutionUnresolvedShared,
 		valueByName.typeCommentEditorial,
 		valueByName.typeCommentGeneral,
 		valueByName.typeCommentTechnical,
@@ -375,8 +365,6 @@ const FilterFormSummaryChips: FC<ReviewFilterFormSummaryComponentProps> = ({
 		valueByName.typePublicationCommentEditorial,
 		valueByName.typePublicationCommentGeneral,
 		valueByName.typePublicationCommentTechnical,
-		valueByName.visibilityPrivate,
-		valueByName.visibilityShared,
 	]);
 
 	if (isSingleLine) {

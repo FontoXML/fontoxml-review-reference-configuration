@@ -136,6 +136,14 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 		],
 		valueByNameForUI
 	);
+	valueByNameForUI.resolutionUnresolved = determineParentFieldValue(
+		[
+			'resolutionUnresolved',
+			'resolutionUnresolvedPrivate',
+			'resolutionUnresolvedShared',
+		],
+		valueByNameForUI
+	);
 	valueByNameForUI.resolutionResolved = determineParentFieldValue(
 		[
 			'resolutionResolved',
@@ -144,18 +152,13 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 		],
 		valueByNameForUI
 	);
-	valueByNameForUI.visibility = determineParentFieldValue(
-		['visibility', 'visibilityPrivate', 'visibilityShared'],
-		valueByNameForUI
-	);
 
 	const onCheckboxChange = useNestedCheckboxesForFilterOptions(
 		valueByNameForUI,
 		handleFieldsChange
 	);
 	const typesOfFeedbackLabelId = React.useId();
-	const resolutionLabelId = React.useId();
-	const visibilityLabelId = React.useId();
+	const statusLabelId = React.useId();
 
 	return (
 		<Flex flexDirection="column" spaceSize="l">
@@ -298,104 +301,104 @@ const FilterForm: React.FC<ReviewFilterFormProps> = ({
 
 				<Block flex="none" spaceVerticalSize="l">
 					<Block flex="none" spaceVerticalSize="s">
-						<Label ariaRole="heading" id={resolutionLabelId} isBold>
-							{t('Resolution')}
+						<Label ariaRole="heading" id={statusLabelId} isBold>
+							{t('Status')}
 						</Label>
 
 						<Block
-							aria-labelledby={resolutionLabelId}
-							spaceVerticalSize="s"
+							aria-labelledby={statusLabelId}
+							spaceVerticalSize="l"
 						>
-							<Checkbox
-								label={t('Resolved')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'resolutionResolved',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.resolutionResolved as CheckboxValue
-								}
-							/>
-
-							<Block
-								applyCss={{ paddingLeft: '22px' }}
-								spaceVerticalSize="s"
-							>
+							<Block spaceVerticalSize="s">
 								<Checkbox
-									label={t('Accepted')}
+									label={t('Unresolved')}
 									onChange={(value: boolean) => {
 										onCheckboxChange(
-											'resolutionResolvedAccepted',
+											'resolutionUnresolved',
 											value
 										);
 									}}
 									value={
-										valueByNameForUI.resolutionResolvedAccepted as CheckboxValue
+										valueByNameForUI.resolutionUnresolved as CheckboxValue
 									}
 								/>
 
-								<Checkbox
-									label={t('Rejected')}
-									onChange={(value: boolean) => {
-										onCheckboxChange(
-											'resolutionResolvedRejected',
-											value
-										);
-									}}
-									value={
-										valueByNameForUI.resolutionResolvedRejected as CheckboxValue
-									}
-								/>
+								<Block
+									applyCss={{ paddingLeft: '22px' }}
+									spaceVerticalSize="s"
+								>
+									<Checkbox
+										label={t('Private')}
+										onChange={(value: boolean) => {
+											onCheckboxChange(
+												'resolutionUnresolvedPrivate',
+												value
+											);
+										}}
+										value={
+											valueByNameForUI.resolutionUnresolvedPrivate as CheckboxValue
+										}
+									/>
+									<Checkbox
+										label={t('Shared')}
+										onChange={(value: boolean) => {
+											onCheckboxChange(
+												'resolutionUnresolvedShared',
+												value
+											);
+										}}
+										value={
+											valueByNameForUI.resolutionUnresolvedShared as CheckboxValue
+										}
+									/>
+								</Block>
 							</Block>
 
-							<Checkbox
-								label={t('Unresolved')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'resolutionUnresolved',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.resolutionUnresolved as CheckboxValue
-								}
-							/>
-						</Block>
-					</Block>
+							<Block spaceVerticalSize="s">
+								<Checkbox
+									label={t('Resolved')}
+									onChange={(value: boolean) => {
+										onCheckboxChange(
+											'resolutionResolved',
+											value
+										);
+									}}
+									value={
+										valueByNameForUI.resolutionResolved as CheckboxValue
+									}
+								/>
 
-					<Block flex="none" spaceVerticalSize="s">
-						<Label ariaRole="heading" id={visibilityLabelId} isBold>
-							{t('Visibility')}
-						</Label>
+								<Block
+									applyCss={{ paddingLeft: '22px' }}
+									spaceVerticalSize="s"
+								>
+									<Checkbox
+										label={t('Accepted')}
+										onChange={(value: boolean) => {
+											onCheckboxChange(
+												'resolutionResolvedAccepted',
+												value
+											);
+										}}
+										value={
+											valueByNameForUI.resolutionResolvedAccepted as CheckboxValue
+										}
+									/>
 
-						<Block
-							aria-labelledby={visibilityLabelId}
-							spaceVerticalSize="s"
-						>
-							<Checkbox
-								label={t('Private')}
-								onChange={(value: boolean) => {
-									onCheckboxChange(
-										'visibilityPrivate',
-										value
-									);
-								}}
-								value={
-									valueByNameForUI.visibilityPrivate as CheckboxValue
-								}
-							/>
-
-							<Checkbox
-								label={t('Shared')}
-								onChange={(value: boolean) => {
-									onCheckboxChange('visibilityShared', value);
-								}}
-								value={
-									valueByNameForUI.visibilityShared as CheckboxValue
-								}
-							/>
+									<Checkbox
+										label={t('Rejected')}
+										onChange={(value: boolean) => {
+											onCheckboxChange(
+												'resolutionResolvedRejected',
+												value
+											);
+										}}
+										value={
+											valueByNameForUI.resolutionResolvedRejected as CheckboxValue
+										}
+									/>
+								</Block>
+							</Block>
 						</Block>
 					</Block>
 				</Block>

@@ -59,6 +59,14 @@ module.exports = function matchAnnotationToCurrentFilter(
 
 	const isTypeProposal = annotation.type === 'proposal';
 
+	const isUnresolved =
+		annotation.status === 'ANNOTATION_STATUS_PRIVATE' ||
+		annotation.status === 'ANNOTATION_STATUS_SHARED';
+	const isUnresolvedAndPrivate =
+		annotation.status === 'ANNOTATION_STATUS_PRIVATE';
+	const isUnresolvedAndShared =
+		annotation.status === 'ANNOTATION_STATUS_SHARED';
+
 	const isResolved = annotation.status === 'ANNOTATION_STATUS_RESOLVED';
 	const isResolvedAndAccepted =
 		isResolved &&
@@ -68,12 +76,6 @@ module.exports = function matchAnnotationToCurrentFilter(
 		isResolved &&
 		annotation.resolvedMetadata &&
 		annotation.resolvedMetadata.resolution === 'rejected';
-	const isUnresolved = !isResolved;
-
-	const hasVisibilityPrivate =
-		annotation.status === 'ANNOTATION_STATUS_PRIVATE';
-	const hasVisibilityShared =
-		annotation.status === 'ANNOTATION_STATUS_SHARED';
 
 	const matchesType =
 		(filterFormValueByName.typeComment && isTypeComment) ||
@@ -106,23 +108,25 @@ module.exports = function matchAnnotationToCurrentFilter(
 			//
 			!filterFormValueByName.typeProposal);
 
-	const matchesResolution =
+	const matchesStatus =
+		(filterFormValueByName.resolutionUnresolved && isUnresolved) ||
+		(filterFormValueByName.resolutionUnresolvedPrivate &&
+			isUnresolvedAndPrivate) ||
+		(filterFormValueByName.resolutionUnresolvedShared &&
+			isUnresolvedAndShared) ||
+		//
 		(filterFormValueByName.resolutionResolved && isResolved) ||
 		(filterFormValueByName.resolutionResolvedAccepted &&
 			isResolvedAndAccepted) ||
 		(filterFormValueByName.resolutionResolvedRejected &&
 			isResolvedAndRejected) ||
-		(filterFormValueByName.resolutionUnresolved && isUnresolved) ||
-		(!filterFormValueByName.resolutionResolved &&
+		//
+		(!filterFormValueByName.resolutionUnresolved &&
+			!filterFormValueByName.resolutionUnresolvedPrivate &&
+			!filterFormValueByName.resolutionUnresolvedShared &&
+			!filterFormValueByName.resolutionResolved &&
 			!filterFormValueByName.resolutionResolvedAccepted &&
-			!filterFormValueByName.resolutionResolvedRejected &&
-			!filterFormValueByName.resolutionUnresolved);
+			!filterFormValueByName.resolutionResolvedRejected);
 
-	const matchesVisibility =
-		(filterFormValueByName.visibilityPrivate && hasVisibilityPrivate) ||
-		(filterFormValueByName.visibilityShared && hasVisibilityShared) ||
-		(!filterFormValueByName.visibilityPrivate &&
-			!filterFormValueByName.visibilityShared);
-
-	return matchesType && matchesResolution && matchesVisibility;
+	return matchesType && matchesStatus;
 };
