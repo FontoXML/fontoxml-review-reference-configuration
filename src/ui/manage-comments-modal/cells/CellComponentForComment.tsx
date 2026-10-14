@@ -13,7 +13,7 @@ const CellComponentForComment = ({
 }: ReviewAnnotationsOverviewCellComponentProps) => {
 	const comment = useMemo(() => {
 		const metadata = row.data.metadata as ReviewAnnotationMetadata;
-		return metadata.proposedChange ? '' : metadata.comment;
+		return metadata.comment;
 	}, [row.data.metadata]);
 
 	return (

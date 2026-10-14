@@ -11,7 +11,6 @@ import CellComponentForTimestamp from './cells/CellComponentForTimestamp';
 import CellComponentForType from './cells/CellComponentForType';
 import sortByAuthor from './cells/sorters/sortByAuthor';
 import sortByComment from './cells/sorters/sortByComment';
-import sortByProposedChange from './cells/sorters/sortByProposedChange';
 import sortByRepliesCount from './cells/sorters/sortByRepliesCount';
 import sortByStatus from './cells/sorters/sortByStatus';
 import sortByTimestamp from './cells/sorters/sortByTimestamp';
@@ -83,11 +82,6 @@ const columnSpecifications: ReviewAnnotationsOverviewColumnSpecification[] = [
 		label: t('Proposed change'),
 		maxWidth: 350,
 		minWidth: 184,
-		sortBy: sortByProposedChange,
-		sortIncreasingIcon: 'far fa-arrow-up-z-a',
-		sortIncreasingLabel: t('Sort A to Z'),
-		sortDecreasingIcon: 'far fa-arrow-down-z-a',
-		sortDecreasingLabel: t('Sort Z to A'),
 	},
 	{
 		CellComponent: CellComponentForRepliesCount,

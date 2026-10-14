@@ -41,12 +41,27 @@ const ManageCommentsModal = ({
 
 	const searchFilterCallback = useCallback(
 		(annotation: ReviewAnnotation, query: string): boolean => {
-			// How to match an annotation against a search query is up to the
-			// application. In this case, we match against the proposed change
-			// text or comment.
+			const lowerCaseQuery = query.toLocaleLowerCase();
+
 			const metadata = annotation.metadata as ReviewAnnotationMetadata;
-			const text = metadata.proposedChange ?? metadata.comment;
-			return text.toLocaleLowerCase().includes(query.toLocaleLowerCase());
+
+			if (annotation.type === 'proposal') {
+				return (
+					!!metadata.proposedChange
+						?.toLocaleLowerCase()
+						.includes(lowerCaseQuery) ||
+					metadata.comment
+						.toLocaleLowerCase()
+						.includes(lowerCaseQuery) ||
+					!!annotation.originalText
+						?.toLocaleLowerCase()
+						.includes(lowerCaseQuery)
+				);
+			}
+
+			return metadata.comment
+				.toLocaleLowerCase()
+				.includes(lowerCaseQuery);
 		},
 		[]
 	);
