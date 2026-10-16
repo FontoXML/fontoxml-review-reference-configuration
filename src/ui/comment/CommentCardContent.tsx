@@ -28,7 +28,6 @@ import CommentCardFooter from './CommentCardFooter';
 
 function CommentCardContent({
 	context,
-	focusableRef,
 	showCheckbox,
 	isChecked,
 	onCheckboxChange,
@@ -95,12 +94,6 @@ function CommentCardContent({
 	const showErrorFooter =
 		reviewAnnotation.error &&
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
-
-	React.useEffect(() => {
-		if (!showFooter && focusableRef && focusableRef.current !== null) {
-			focusableRef.current.focus();
-		}
-	}, [focusableRef, showFooter]);
 
 	if (
 		reviewAnnotation.isLoading &&
@@ -270,7 +263,6 @@ function CommentCardContent({
 				{(reviewAnnotation.busyState === ReviewBusyState.ADDING ||
 					reviewAnnotation.busyState === ReviewBusyState.EDITING) && (
 					<CommentAddOrEditForm
-						focusableRef={focusableRef}
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}
 						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
@@ -280,7 +272,6 @@ function CommentCardContent({
 
 				<CardRepliesAndResolution
 					context={context}
-					focusableRef={focusableRef}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}
 					onReplyFormCancel={onReplyFormCancel}

@@ -35,15 +35,15 @@ const rows = { minimum: 2, maximum: 6 };
 
 const ProposalAddOrEditFormContent: React.FC<
 	Props & {
-		focusableRef: React.MutableRefObject<HTMLElement | null>;
 		isSubmitDisabled: boolean;
 		onFieldChange(...args: unknown[]): void;
+		onFocusableRef: (domNodeOrNull: HTMLElement | null) => void;
 	}
 > = ({
-	focusableRef,
 	isSubmitDisabled,
 	onCancel,
 	onFieldChange,
+	onFocusableRef,
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
@@ -119,7 +119,7 @@ const ProposalAddOrEditFormContent: React.FC<
 						placeholder={t(
 							'Leave empty to propose removing the selected content'
 						)}
-						ref={focusableRef}
+						ref={onFocusableRef}
 						rows={rows}
 						validate={validate}
 					/>
@@ -156,7 +156,6 @@ const ProposalAddOrEditFormContent: React.FC<
 };
 
 type Props = {
-	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
@@ -164,7 +163,6 @@ type Props = {
 };
 
 const ProposalAddOrEditForm: React.FC<Props> = ({
-	focusableRef,
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
@@ -175,13 +173,18 @@ const ProposalAddOrEditForm: React.FC<Props> = ({
 			initialValueByName={reviewAnnotation.metadata}
 			onSubmit={onSubmit}
 		>
-			{({ isSubmitDisabled, onFieldChange, onSubmit }) => (
+			{({
+				isSubmitDisabled,
+				onFieldChange,
+				onFocusableRef,
+				onSubmit,
+			}) => (
 				<ProposalAddOrEditFormContent
-					focusableRef={focusableRef}
 					isSubmitDisabled={isSubmitDisabled}
 					onFieldChange={onFieldChange}
 					onCancel={onCancel}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
+					onFocusableRef={onFocusableRef}
 					onSubmit={onSubmit}
 					reviewAnnotation={reviewAnnotation}
 				/>

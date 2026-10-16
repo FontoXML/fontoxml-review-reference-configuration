@@ -40,7 +40,6 @@ const stickyStyles = applyCss({
 
 const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	context,
-	focusableRef,
 	showCheckbox,
 	isChecked,
 	onCheckboxChange,
@@ -138,12 +137,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 	const showErrorFooter =
 		reviewAnnotation.error &&
 		reviewAnnotation.busyState === ReviewBusyState.REMOVING;
-
-	React.useEffect(() => {
-		if (!showFooter && focusableRef?.current) {
-			focusableRef.current.focus();
-		}
-	}, [focusableRef, showFooter]);
 
 	if (
 		reviewAnnotation.isLoading &&
@@ -326,7 +319,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 				{(reviewAnnotation.busyState === ReviewBusyState.ADDING ||
 					reviewAnnotation.busyState === ReviewBusyState.EDITING) && (
 					<ProposalAddOrEditForm
-						focusableRef={focusableRef}
 						reviewAnnotation={reviewAnnotation}
 						onCancel={onReviewAnnotationFormCancel}
 						onReviewAnnotationRefresh={onReviewAnnotationRefresh}
@@ -336,7 +328,6 @@ const ProposalCardContent: React.FC<ReviewCardContentComponentProps> = ({
 
 				<CardRepliesAndResolution
 					context={context}
-					focusableRef={focusableRef}
 					onProposalMerge={onProposalMerge}
 					onReplyEdit={onReplyEdit}
 					onReplyErrorHide={onReplyErrorHide}

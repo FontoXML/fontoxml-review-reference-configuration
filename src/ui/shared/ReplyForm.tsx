@@ -80,9 +80,9 @@ const stickyStyles = applyCss({
 });
 
 type ReplyFormContentProps = {
-	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	isSubmitDisabled: boolean;
 	onFieldChange(...args: unknown[]): void;
+	onFocusableRef: (domNodeOrNull: HTMLElement | null) => void;
 	onCancelButtonClick(): void;
 	onHideLinkClick: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefreshLinkClick: ReviewCardContentComponentProps['onReplyRefresh'];
@@ -92,10 +92,10 @@ type ReplyFormContentProps = {
 };
 
 const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
-	focusableRef,
 	isSubmitDisabled,
 	onCancelButtonClick,
 	onFieldChange,
+	onFocusableRef,
 	onHideLinkClick,
 	onRefreshLinkClick,
 	onSubmit,
@@ -157,7 +157,7 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 					isDisabled={isDisabled}
 					name="reply"
 					onDirChange={handleReplyDirChange}
-					ref={focusableRef}
+					ref={onFocusableRef}
 					rows={rows}
 					validate={validateReplyField}
 					placeholder={t('Type your reply')}
@@ -200,7 +200,6 @@ const ReplyFormContent: React.FC<ReplyFormContentProps> = ({
 
 type ReplyFormProps = {
 	context: ReviewCardContentComponentProps['context'];
-	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	onCancel: ReviewCardContentComponentProps['onReplyFormCancel'];
 	onHide: ReviewCardContentComponentProps['onReplyErrorHide'];
 	onRefresh: ReviewCardContentComponentProps['onReplyRefresh'];
@@ -210,7 +209,6 @@ type ReplyFormProps = {
 
 const ReplyForm: React.FC<ReplyFormProps> = ({
 	context,
-	focusableRef,
 	onCancel,
 	onHide,
 	onRefresh,
@@ -248,14 +246,15 @@ const ReplyForm: React.FC<ReplyFormProps> = ({
 				{({
 					isSubmitDisabled,
 					onFieldChange,
+					onFocusableRef,
 					onSubmit,
 					valueByName,
 				}) => (
 					<ReplyFormContent
-						focusableRef={focusableRef}
 						isSubmitDisabled={isSubmitDisabled}
 						onCancelButtonClick={handleCancelButtonClick}
 						onFieldChange={onFieldChange}
+						onFocusableRef={onFocusableRef}
 						onHideLinkClick={handleHideLinkClick}
 						onRefreshLinkClick={handleRefreshLinkClick}
 						onSubmit={onSubmit}

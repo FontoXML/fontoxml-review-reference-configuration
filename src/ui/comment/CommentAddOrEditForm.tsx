@@ -34,16 +34,16 @@ const rows = { minimum: 2, maximum: 6 };
 
 const CommentAddOrEditFormContent: React.FC<
 	Props & {
-		focusableRef: React.MutableRefObject<HTMLElement | null>;
 		isSubmitDisabled: boolean;
 		onFieldChange(...args: unknown[]): void;
+		onFocusableRef: (domNodeOrNull: HTMLElement | null) => void;
 		valueByName: FdsFormValueByName;
 	}
 > = ({
-	focusableRef,
 	isSubmitDisabled,
 	onCancel,
 	onFieldChange,
+	onFocusableRef,
 	onReviewAnnotationRefresh,
 	onSubmit,
 	reviewAnnotation,
@@ -118,7 +118,7 @@ const CommentAddOrEditFormContent: React.FC<
 					name="comment"
 					onDirChange={handleCommentDirChange}
 					placeholder={t('Comment on the selected content')}
-					ref={focusableRef}
+					ref={onFocusableRef}
 					rows={rows}
 					validate={validateCommentField}
 				/>
@@ -151,7 +151,6 @@ const CommentAddOrEditFormContent: React.FC<
 };
 
 type Props = {
-	focusableRef: React.MutableRefObject<HTMLElement | null>;
 	reviewAnnotation: ReviewCardContentComponentProps['reviewAnnotation'];
 	onCancel: ReviewCardContentComponentProps['onReviewAnnotationFormCancel'];
 	onReviewAnnotationRefresh: ReviewCardContentComponentProps['onReviewAnnotationRefresh'];
@@ -159,7 +158,6 @@ type Props = {
 };
 
 const CommentAddOrEditForm: React.FC<Props> = ({
-	focusableRef,
 	reviewAnnotation,
 	onCancel,
 	onReviewAnnotationRefresh,
@@ -170,11 +168,17 @@ const CommentAddOrEditForm: React.FC<Props> = ({
 			initialValueByName={reviewAnnotation.metadata}
 			onSubmit={onSubmit}
 		>
-			{({ isSubmitDisabled, onFieldChange, onSubmit, valueByName }) => (
+			{({
+				isSubmitDisabled,
+				onFocusableRef,
+				onFieldChange,
+				onSubmit,
+				valueByName,
+			}) => (
 				<CommentAddOrEditFormContent
-					focusableRef={focusableRef}
 					isSubmitDisabled={isSubmitDisabled}
 					onFieldChange={onFieldChange}
+					onFocusableRef={onFocusableRef}
 					onCancel={onCancel}
 					onReviewAnnotationRefresh={onReviewAnnotationRefresh}
 					onSubmit={onSubmit}
