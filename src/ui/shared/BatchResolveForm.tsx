@@ -16,7 +16,7 @@ import type {
 } from 'fontoxml-design-system/src/types';
 import editAnnotation from 'fontoxml-feedback/src/editAnnotation';
 import ReviewAnnotationStatus from 'fontoxml-feedback/src/ReviewAnnotationStatus';
-import type { ReviewAnnotationsOverviewBatchActionFormComponentProps } from 'fontoxml-feedback/src/types';
+import type { ReviewBatchActionFormComponentProps } from 'fontoxml-feedback/src/types';
 import t from 'fontoxml-localization/src/t';
 
 import resolutions from '../feedbackResolutions';
@@ -48,7 +48,7 @@ type OnFieldChange = Exclude<
 	undefined
 >;
 
-type Props = ReviewAnnotationsOverviewBatchActionFormComponentProps;
+type Props = ReviewBatchActionFormComponentProps;
 
 const BatchResolveForm = ({
 	applicableInstances,
